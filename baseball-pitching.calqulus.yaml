@@ -1,0 +1,2180 @@
+############
+## SPACES ##
+############
+
+# Calculated from respective position of feet at Release
+# Assuming Release is entered manually in QTM for now
+
+- parameter: Feet_unit_vector
+  where: 
+    name: Pitching*
+  steps:
+    - subtract: [LeadForefoot2@Release, BackForefoot2@Release]
+    - convert:
+      from: mm
+      to: m
+    - unitVector:
+    - round:
+
+- space: VirtualLab
+  origin: [0,0,0]
+  primaryAxis: [Feet_unit_vector?name=Pitching*]
+  secondaryAxis: [[0,0,0], [0,0,1]]
+  order: yz
+
+- parameter: VirtualLabOrigin
+  steps:
+    #- marker: RForefoot2
+    - multiply: [BackForefoot2, 0]
+
+- segment: VirtualLabSegment
+  steps:
+    - segment:
+      origin: VirtualLabOrigin
+      primaryAxis: Feet_unit_vector?name=Pitching*
+      secondaryAxis: [[0,0,0], [0,0,1]]
+      order: yz  
+
+############
+## EVENTS ##
+############
+- event: PLOTSTART_SETUP
+  where: 
+    name: Pitching*
+  steps:
+    - import: SETUP
+
+- event: PLOTSTART_Footstrike
+  where: 
+    name: Pitching*
+  steps:
+    - import: Footstrike
+
+- event: PLOTSTART_MaxKneeHeight
+  where: 
+    name: Pitching*
+  steps:
+    - import: MaxKneeHeight
+
+- event: PLOTEND
+  where: 
+    name: Pitching*
+  steps:
+    - import: Release100msAfter
+
+- event: MaxKneeHeight
+  where: 
+    name: Pitching*
+  steps:
+    - peakFinder: BackShank.z
+      width: 100
+
+- event: Footstrike
+  where: 
+    name: Pitching*
+  steps:
+    - lowpass: LeadForefoot2
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 0.4
+      direction: down
+    - eventMask: [$prev, MaxKneeHeight, Release]
+
+- event: SETUP
+  where: 
+    name: Pitching*
+  steps:
+    - velocity: LeadHeelBack.z
+    - threshold:
+      value: 0.02
+      direction: up
+    - eventMask: [$prev, 1, MaxKneeHeight]
+    - import: $prev@-1  #last instance before MaxKneeHeight
+
+- event: Release100msAfter
+  where: 
+    name: Pitching*
+  steps:
+    - divide: [$framerate, 10] 
+    - add: [Release, $prev] # use '0.1s' after available
+
+- event: Max_Elbow_Flex
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Angle
+    - eventMask: [$prev, Footstrike, Release100msAfter]
+    - max: $prev.x
+      frames: true
+
+- event: Max_Forearm_PronSup
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Angle
+    - eventMask: [$prev, Footstrike, Release100msAfter]
+    - max: $prev.z
+      frames: true
+
+- event: Max_Elbow_Flex_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel
+    - lowpass:
+      order: 6
+      cutoff: 12
+    - eventMask: [$prev, Footstrike, Release100msAfter]
+    - max: $prev.x
+      frames: true
+
+- event: Max_Forearm_PronSup_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel
+    - lowpass:
+      order: 6
+      cutoff: 12
+    - eventMask: [$prev, Footstrike, Release100msAfter]
+    - max: $prev.z
+      frames: true
+
+- event: Max_Shoulder_Int_Rot
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle
+    - eventMask: [$prev, SETUP, Release]
+    - min: $prev.z
+      frames: true
+
+- event: EOF
+  where: 
+    name: Pitching*
+  steps:
+    - subtract: [$length, 1]
+
+- event: Max_Shoulder_Int_Rot_FollowThru
+  where: 
+    name: Pitching*
+  steps:
+    - negate: Pitching_Shoulder_Angle
+    - eventMask: [$prev, Release, EOF]
+    - max: $prev.z
+      frames: true
+
+- event: Max_Shoulder_Rot
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle
+    - eventMask: [$prev, SETUP, Release]
+    - max: $prev.z
+      frames: true
+
+- event: MaxPelvisVel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pelvis_Ang_Vel
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.z
+      frames: true
+
+- event: MaxThoraxVel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Thorax_Ang_Vel
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.z
+      frames: true
+
+- event: MaxHumerusVel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Humerus_Ang_Vel
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.z
+      frames: true
+
+- event: MaxHandVel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Ang_Vel
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.x
+      frames: true
+
+- event: MaxPelvisLinearVel_ev
+  where: 
+    name: Pitching*
+  steps:
+    - lowpass: Pelvis_COG_Vel
+      order: 6
+      cutoff: 12
+    - eventMask: [$prev, SETUP, Release]
+    - max: $prev.y
+      frames: true
+
+- event: MaxTrunkLinearVel_ev
+  where: 
+    name: Pitching*
+  steps:
+    - lowpass: Trunk_COG_Vel
+      order: 6
+      cutoff: 12
+    - eventMask: [$prev, SETUP, Release]
+    - max: $prev.y
+      frames: true
+
+- event: MaxShoulderHorAngle
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.x
+      frames: true
+
+- event: MaxShoulder_AngVel_HzShldAbd
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_AngVel_HzShldAbd
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.x
+      frames: true
+
+- event: PelvisRot_Stop
+  where: 
+    name: Pitching*
+  steps:
+    - threshold: Pelvis_Ang_Vel.z
+      value: 0
+      direction: down
+    - eventMask: [$prev, MaxPelvisVel, EOF]
+    - import: $prev@1
+
+
+############
+## SERIES ##
+############
+# find out which max hand linear velocity magnitude is higher
+- parameter: Left_Hand_Vel_max
+  where: 
+    name: Pitching*
+  steps:
+    - velocity: LeftHand
+    - magnitude:
+    - max:
+
+- parameter: Right_Hand_Vel_max
+  where: 
+    name: Pitching*
+  steps:
+    - velocity: RightHand
+    - magnitude:
+    - max:
+
+# define body side
+- parameter: PitchingShoulder
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightShoulder
+      else: LeftShoulder
+
+- parameter: PitchingArm
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightArm
+      else: LeftArm
+
+- parameter: PitchingForearm
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightForearm
+      else: LeftForearm
+
+- parameter: PitchingHand
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightHand
+      else: LeftHand
+
+- parameter: GloveShoulder
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftShoulder
+      else: RightShoulder
+
+- parameter: GloveArm
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftArm
+      else: RightArm
+
+- parameter: LeadThigh
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftUpLeg
+      else: RightUpLeg
+
+- parameter: LeadShank
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftLeg
+      else: RightLeg
+
+- parameter: LeadFoot
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftFoot
+      else: RightFoot
+
+- parameter: BackThigh
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightUpLeg
+      else: LeftUpLeg
+
+- parameter: BackShank
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightLeg
+      else: LeftLeg
+
+- parameter: BackFoot
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightFoot
+      else: LeftFoot
+
+- parameter: BackToeBase
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightToeBase
+      else: LeftToeBase
+
+- parameter: LeadForefoot2
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LForefoot2
+      else: RForefoot2
+
+- parameter: BackForefoot2
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RForefoot2
+      else: LForefoot2
+
+- parameter: LeadHeelBack
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LHeelBack
+      else: RHeelBack
+
+# Set side conventions
+- parameter: Pitching_Shoulder_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Glove_Shoulder_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[-1, 1, -1]]
+
+- parameter: Hand_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, -1, 1]]
+
+- parameter: Knee_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[-1, -1, -1]]
+
+- parameter: Back_Foot_wrt_Lab_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, 1]]
+
+- parameter: Hip_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, -1]]
+      else: [[1, -1, -1]]
+
+- parameter: Hip_Shoulder_Sep_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Trunk_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Trunk_Ang_Vel_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[-1, -1, -1]]
+  
+- parameter: Trunk_wrt_Pelvis_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[-1, -1, -1]]
+
+- parameter: Pelvis_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Pelvis_Ang_Vel_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[-1, 1, -1]]
+  
+- parameter: Ankle_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, -1]]
+      else: [[1, -1, -1]]
+
+- parameter: Elbow_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, -1]]
+      else: [[1, 1, 1]]
+
+- parameter: Pitching_Humerus_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: COG_Vel_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, 1]]
+
+- parameter: Head_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, 1, -1]]
+      else: [[1, 1, 1]]
+
+- parameter: Head_Ang_Vel_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[1, -1, -1]]
+  
+# Pitching Hand Angle
+- parameter: Pitching_Hand_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [PitchingForearm, PitchingHand]
+    - multiply: [$prev, Hand_Convention]
+
+# Pitching hand ang vel
+- parameter: Pitching_Hand_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [VirtualLabSegment, PitchingHand, VirtualLabSegment, PitchingHand]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Hand_Convention]
+
+- parameter: Pitching_Elbow_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [PitchingArm, PitchingForearm]
+    - multiply: [$prev, Elbow_Convention]
+
+- parameter: Pitching_Elbow_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [PitchingArm, PitchingForearm, PitchingArm, PitchingForearm]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Elbow_Convention]
+
+# Pitching Shoulder angle
+- parameter: Pitching_Shoulder_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Spine2, PitchingArm]
+      rotationOrder: ZYZ
+    - multiply: [$prev, Pitching_Shoulder_Convention]
+
+- parameter: Pitching_Shoulder_Angle_XYZ
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Spine2, PitchingArm]
+    - multiply: [$prev, Pitching_Shoulder_Convention]
+
+# Pitching Shoulder angular velocity
+- parameter: Pitching_Shoulder_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [PitchingShoulder, PitchingArm, Spine2, PitchingArm]
+      useRotationOrder: true
+      rotationOrder: ZYZ
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Pitching_Shoulder_Convention]
+
+# Pitching Shoulder Ang Vel Horizontal Shoulder Abduction
+- parameter: Pitching_Shoulder_AngVel_HzShldAbd
+  where: 
+    name: Pitching*
+  steps:
+    - velocity: Pitching_Shoulder_Angle
+
+# Glove Shoulder Angle
+- parameter: Glove_Shoulder_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Spine2, GloveArm]
+      rotationOrder: ZYZ
+    - multiply: [$prev, Glove_Shoulder_Convention]
+
+- parameter: Glove_Shoulder_Angle_XYZ
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Spine2, GloveArm]
+      rotationOrder: XYZ
+    - multiply: [$prev, Glove_Shoulder_Convention]
+
+# Glove Shoulder Ang Vel
+- parameter: Glove_Shoulder_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [GloveShoulder, GloveArm, Spine2, GloveArm]
+      useRotationOrder: true
+      rotationOrder: ZYZ
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Glove_Shoulder_Convention]
+
+# Lead Hip Angle
+- parameter: Lead_Hip_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Hips, LeadThigh]
+    - multiply: [$prev, Hip_Convention]
+
+# Lead Hip Ang Vel
+- parameter: Lead_Hip_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [Hips, LeadThigh, Hips, LeadThigh]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Hip_Convention]
+
+# Lead Knee Angle
+- parameter: Lead_Knee_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [LeadThigh, LeadShank]
+    - multiply: [$prev, Knee_Convention]
+
+# Lead Knee Ang Vel
+- parameter: Lead_Knee_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [LeadThigh, LeadShank, LeadThigh, LeadShank]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Knee_Convention]
+
+# Lead Ankle Angle
+- parameter: Lead_Ankle_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [LeadShank, LeadFoot]
+    - multiply: [$prev, Ankle_Convention]
+
+# Lead Ankle Ang Vel
+- parameter: Lead_Ankle_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [LeadShank, LeadFoot, LeadShank, LeadFoot]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Ankle_Convention]
+
+# Back Hip Angle
+- parameter: Back_Hip_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Hips, BackThigh]
+    - multiply: [$prev, Hip_Convention]
+
+# Back Hip Ang Vel
+- parameter: Back_Hip_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [Hips, BackThigh, Hips, BackThigh]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Hip_Convention]
+
+# Back Knee Angle
+- parameter: Back_Knee_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [BackThigh, BackShank]
+    - multiply: [$prev, Knee_Convention]
+
+# Back Knee Ang Vel
+- parameter: Back_Knee_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [BackThigh, BackShank, BackThigh, BackShank]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Knee_Convention]
+
+# Back Ankle Angle
+- parameter: Back_Ankle_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [BackShank, BackFoot]
+    - multiply: [$prev, Ankle_Convention]
+
+# Back Ankle Ang Vel
+- parameter: Back_Ankle_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [BackShank, BackFoot, BackShank, BackFoot]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Ankle_Convention]
+
+# Trunk wrt Pelvis Angle
+- parameter: Trunk_wrt_Pelvis_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Hips, Spine2]
+    - multiply: [$prev, Trunk_wrt_Pelvis_Convention]
+
+# Trunk angle
+- parameter: Trunk_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Spine2]
+      space: VirtualLab
+    - multiply: [$prev, Trunk_Convention]
+
+# Trunk angular velocity
+- parameter: Thorax_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [VirtualLabSegment, Spine2, VirtualLabSegment, Spine2]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Trunk_Ang_Vel_Convention]
+
+# Pelvis angle
+- parameter: Pelvis_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Hips]
+      space: VirtualLab
+    - multiply: [$prev, Pelvis_Convention]
+
+# Pelvis angular velocity
+- parameter: Pelvis_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [VirtualLabSegment, Hips, VirtualLabSegment, Hips]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Pelvis_Ang_Vel_Convention]
+
+# Back Foot wrt lab
+- parameter: Back_Foot_wrt_Lab
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [BackFoot]
+      space: VirtualLab
+    - multiply: [$prev, Back_Foot_wrt_Lab_Convention]
+
+# Pitching humerus ang vel
+- parameter: Pitching_Humerus_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [VirtualLabSegment, PitchingArm, VirtualLabSegment, PitchingArm]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Pitching_Humerus_Convention]
+
+# Hip Shoulders Separation
+- parameter: Hip Shoulders Sep
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [Hips, Spine2]
+      rotationOrder: ZYX
+    - multiply: [$prev, Hip_Shoulder_Sep_Convention]
+
+- parameter: Trunk_COG_Vel_MPH # we do not have segment COG, so using origin instead
+  where: 
+    name: Pitching*
+  steps:
+    - convert: Spine2
+      from: mm
+      to: m
+      space: VirtualLab
+    - vector: [$prev.x,$prev.y,$prev.z]
+    - multiply: [$prev, COG_Vel_Convention]
+      export: Trunk_COG
+    - velocity: $prev => speed
+      export: Trunk_COG_Vel
+    - convert: speed
+      from: m/s
+      to: ft/s
+      export: Trunk_COG_Vel_Feet
+    - convert: speed
+      from: m/s
+      to: mph
+    #- multiply: [$prev, COG_Vel_Convention]
+
+- parameter: Pelvis_COG_Vel_MPH # we do not have segment COG, so using origin instead
+  where: 
+    name: Pitching*
+  steps:
+    - convert: Hips
+      from: mm
+      to: m
+      space: VirtualLab
+    - vector: [$prev.x,$prev.y,$prev.z]
+    - multiply: [$prev, COG_Vel_Convention]
+      export: Pelvis_COG
+    - velocity: $prev => speed
+      export: Pelvis_COG_Vel
+    - convert: speed
+      from: m/s
+      to: ft/s
+      export: Pelvis_COG_Vel_Feet
+    - convert: speed
+      from: m/s
+      to: mph
+    #- multiply: [$prev, COG_Vel_Convention]
+
+- parameter: Back_Foot_COG
+  where: 
+    name: Pitching*
+  steps:
+    - convert: BackToeBase
+      from: mm
+      to: m
+      space: VirtualLab
+
+- parameter: Head_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: Head
+      space: VirtualLab
+    - multiply: [$prev, Head_Convention]
+ 
+- parameter: Head_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - angularVelocity: [VirtualLabSegment, Head, VirtualLabSegment, Head]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
+    - multiply: [$prev, Head_Ang_Vel_Convention]
+
+- parameter: Lead_KNEE_dyn
+  where: 
+    name: Pitching*
+  steps:
+    - import: LeadShank
+      space: VirtualLab
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Back_Knee_dyn
+  where: 
+    name: Pitching*
+  steps:
+    - import: BackShank
+      space: VirtualLab
+    - convert: 
+      from: mm
+      to: m
+
+#--------------
+# PAF fields
+#--------------
+
+- parameter: BALL_RELEASE_SPEED
+  where:
+    name: Pitching*
+  steps:
+    - import: $field(Ball speed, measurement, numeric)
+
+- parameter: SPIN_RATE
+  where:
+    name: Pitching*
+  steps:
+    - import: $field(Spin rate, measurement, numeric)
+
+- parameter: SPIN_AXIS
+  where:
+    name: Pitching*
+  steps:
+    - import: $field(Spin axis, measurement, numeric)
+
+
+#############
+## METRICS ##
+#############
+- parameter: STRIDE_LENGTH
+  where:
+    name: Pitching*
+  steps:
+    - import: LeadFoot => lead
+      space: VirtualLab
+    - import: BackFoot => throw
+      space: VirtualLab
+    - subtract: [throw.y@SETUP, lead.y@Footstrike]
+    - abs:
+    - convert:
+      from: mm
+      to: m
+
+- parameter: STRIDE_LENGTH_MEAN_PERCENT
+  where:
+    name: Pitching*
+  steps:
+    - divide: [STRIDE_LENGTH, $field(Height)]
+    - multiply: [$prev, 100]
+
+- parameter: Pitching_Shoulder_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@Footstrike
+
+- parameter: Pitching_Shoulder_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Pitching_Shoulder_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@Max_Shoulder_Rot
+
+- parameter: Pitching_Shoulder_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@Release
+
+- parameter: Pitching_Shoulder_Angle_Max
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle
+    - eventMask: [$prev, MaxKneeHeight, Release]
+    - max:
+
+- parameter: Pitching_Shoulder_AngVel_HzShldAbd_Max
+  where:
+    name: Pitching*
+  steps:
+    - max: Pitching_Shoulder_AngVel_HzShldAbd
+
+- parameter: Glove_Shoulder_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Glove_Shoulder_Angle@Footstrike
+
+- parameter: Glove_Shoulder_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Glove_Shoulder_Angle@Max_Shoulder_Rot
+
+- parameter: Glove_Shoulder_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Glove_Shoulder_Angle@Release
+
+- parameter: Shoulder_Vel_Min_Abs
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Pitching_Shoulder_Ang_Vel, MaxKneeHeight, Release100msAfter]
+    - min:
+    - abs:
+
+- parameter: Pitching_Shoulder_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Ang_Vel@Release
+
+- parameter: Pitching_Shoulder_Ang_Vel@Release_Abs
+  where:
+    name: Pitching*
+  steps:
+    - abs: Pitching_Shoulder_Ang_Vel@Release
+
+- parameter: Hip Shoulders Sep@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@Footstrike
+
+- parameter: Hip Shoulders Sep@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Hip Shoulders Sep@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@Max_Shoulder_Rot
+
+- parameter: Hip Shoulders Sep@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@Release
+
+- parameter: Pitching_Elbow_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Angle@Footstrike
+
+- parameter: Pitching_Elbow_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Angle@Max_Shoulder_Rot
+
+- parameter: Pitching_Elbow_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Pitching_Elbow_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Angle@Release
+
+- parameter: Pitching_Elbow_Angle@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Angle@Release100msAfter
+
+- parameter: Pitching_Elbow_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel@Footstrike
+
+- parameter: Pitching_Elbow_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel@Max_Shoulder_Rot
+
+- parameter: Pitching_Elbow_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Pitching_Elbow_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel@Release
+
+- parameter: Pitching_Elbow_Ang_Vel@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel@Release100msAfter
+
+- parameter: Pitching_Hand_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Angle@MaxKneeHeight
+
+- parameter: Pitching_Hand_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Angle@Footstrike
+
+- parameter: Pitching_Hand_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Angle@Max_Shoulder_Rot
+
+- parameter: Pitching_Hand_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Pitching_Hand_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Angle@Release
+
+- parameter: Lead_Knee_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Footstrike
+
+- parameter: Lead_Knee_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Max_Shoulder_Rot
+
+- parameter: Lead_Knee_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Lead_Knee_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Release
+
+- parameter: Lead_Ankle_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Footstrike
+
+- parameter: Lead_Ankle_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Max_Shoulder_Rot
+
+- parameter: Lead_Ankle_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Lead_Ankle_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Setup
+
+- parameter: Lead_Ankle_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@MaxKneeHeight
+
+- parameter: Lead_Ankle_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Release
+
+- parameter: Lead_Knee_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Ang_Vel@Footstrike
+
+- parameter: Lead_Knee_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Ang_Vel@Max_Shoulder_Rot
+
+- parameter: Lead_Knee_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Lead_Knee_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Ang_Vel@Release
+
+- parameter: Trunk_wrt_Pelvis_FE@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_wrt_Pelvis_Angle@Footstrike
+
+- parameter: Trunk_wrt_Pelvis_FE@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_wrt_Pelvis_Angle@Max_Shoulder_Rot
+
+- parameter: Trunk_wrt_Pelvis_FE@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_wrt_Pelvis_Angle@Max_Shoulder_Rot
+
+- parameter: Trunk_wrt_Pelvis_FE@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_wrt_Pelvis_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Trunk_wrt_Pelvis_FE@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_wrt_Pelvis_Angle@Release
+
+- parameter: Pelvis_Ang_Vel_max
+  where:
+    name: Pitching*
+  steps:
+    - lowpass: Pelvis_Ang_Vel
+    - max: $prev.z
+
+- parameter: Thorax_Ang_Vel_max
+  where:
+    name: Pitching*
+  steps:
+    - max: Thorax_Ang_Vel.z
+
+- parameter: Pitching_Humerus_Ang_Vel_max
+  where:
+    name: Pitching*
+  steps:
+    - max: Pitching_Humerus_Ang_Vel.z
+
+- parameter: Pitching_Hand_Ang_Vel_max
+  where:
+    name: Pitching*
+  steps:
+    - max: Pitching_Hand_Ang_Vel.x
+
+- parameter: Pelvis_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Footstrike
+
+- parameter: Pelvis_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Max_Shoulder_Rot
+
+- parameter: Pelvis_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Trunk_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Footstrike
+
+- parameter: Trunk_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Max_Shoulder_Rot
+
+- parameter: Trunk_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Trunk_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Release
+
+- parameter: Pitching_Shoulder_Angle_Min
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Pitching_Shoulder_Angle, MaxKneeHeight, Release]
+    - min:
+
+- parameter: Back_Foot_wrt_Lab@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Foot_wrt_Lab@Footstrike
+
+- parameter: time_MaxPelvisVel_MaxThoraxVel
+  where:
+    name: Pitching*
+  steps:
+    - eventTime: MaxPelvisVel => pelvis
+    - eventTime: MaxThoraxVel => thorax
+    - subtract: [thorax, pelvis]
+    
+- parameter: MaxPelvisVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxPelvisVel]
+
+- parameter: MaxThoraxVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxThoraxVel]
+
+- parameter: MaxHumerusVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxHumerusVel]
+
+- parameter: MaxHandVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxHandVel]
+
+- parameter: Pitching_Elbow_Ang_Vel_min
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Pitching_Elbow_Ang_Vel, Max_Shoulder_Rot, Release]
+    - min:
+
+- parameter: Trunk Rot wrt Pelvis Rot@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - subtract: [Trunk_Angle.z@Footstrike, Pelvis_Angle.z@Footstrike]
+
+- parameter: Trunk Rot wrt Pelvis Rot@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - subtract: [Trunk_Angle.z@Max_Shoulder_Int_Rot_FollowThru, Pelvis_Angle.z@Max_Shoulder_Int_Rot_FollowThru]
+
+- parameter: Trunk Rot wrt Pelvis Rot@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - subtract: [Trunk_Angle.z@Max_Shoulder_Rot, Pelvis_Angle.z@Max_Shoulder_Rot]
+
+- parameter: Trunk Rot wrt Pelvis Rot@Release
+  where:
+    name: Pitching*
+  steps:
+    - subtract: [Trunk_Angle.z@Release, Pelvis_Angle.z@Release]
+
+- parameter: Pitching_Shoulder_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Ang_Vel@Footstrike
+
+- parameter: Pitching_Shoulder_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Pitching_Shoulder_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Ang_Vel@Max_Shoulder_Rot
+
+- parameter: Pitching_Shoulder_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Ang_Vel@Release
+
+# 8 cylinders
+- parameter: LAR_Seg_Length
+  where:
+    name: Pitching*
+  steps:
+    - distance: [LeftArm, LeftForearm]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: RAR_Seg_Length
+  where:
+    name: Pitching*
+  steps:
+    - distance: [RightArm, RightForearm]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: LTH_Seg_Length
+  where:
+    name: Pitching*
+  steps:
+    - distance: [LeftUpLeg, LeftLeg]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: RTH_Seg_Length
+  where:
+    name: Pitching*
+  steps:
+    - distance: [RightUpLeg, RightLeg]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: RTA_Seg_Length
+  where:
+    name: Pitching*
+  steps:
+    - distance: [Spine, Neck]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: MaxPelvisLinearVel
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG_Vel@MaxPelvisLinearVel_ev
+
+- parameter: MaxTrunkLinearVel
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG_Vel@MaxTrunkLinearVel_ev
+
+
+- parameter: SetupTime #always zero
+  where:
+    name: Pitching*
+  steps:
+    - subtract: [1, 1]
+
+- parameter: MaxKneeHeightTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxKneeHeight]
+
+- parameter: MaxPelvisLinearVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxPelvisLinearVel_ev]
+
+- parameter: MaxPelvisVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxPelvisVel]
+
+- parameter: MaxTrunkLinearVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxTrunkLinearVel_ev]
+
+- parameter: MaxThoraxVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxThoraxVel]
+
+- parameter: FootstrikeTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, Footstrike]
+
+- parameter: Max_Shoulder_Int_RotTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, Max_Shoulder_Int_Rot]
+
+- parameter: MaxShoulderHorAngleTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxShoulderHorAngle]
+
+- parameter: MaxHumerusVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxHumerusVel]
+
+- parameter: Max_Shoulder_RotTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, Max_Shoulder_Rot]
+
+- parameter: PeakShoulder_AngVel_HzShldAbdTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxShoulder_AngVel_HzShldAbd]
+
+- parameter: Max_Elbow_FlexTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, Max_Elbow_Flex]
+
+- parameter: Max_Elbow_Flex_Ang_VelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, Max_Elbow_Flex_Ang_Vel]
+
+- parameter: Max_Forearm_PronSupTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, Max_Forearm_PronSup]
+
+- parameter: Max_Forearm_PronSup_Ang_VelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, Max_Forearm_PronSup_Ang_Vel]
+
+- parameter: PelvisRot_StopTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, PelvisRot_Stop]
+
+- parameter: ReleaseTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, Release]
+
+- parameter: Lead_Hip_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Setup
+
+- parameter: Lead_Hip_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@MaxKneeHeight
+
+- parameter: Lead_Hip_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Max_Shoulder_Rot
+
+- parameter: Lead_Hip_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Footstrike
+
+- parameter: Lead_Hip_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Release
+
+- parameter: Lead_Knee_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Setup
+
+- parameter: Lead_Knee_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@MaxKneeHeight
+
+- parameter: Lead_Knee_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Footstrike
+
+- parameter: Back_Hip_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Hip_Angle@Setup
+
+- parameter: Back_Hip_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Hip_Angle@MaxKneeHeight
+
+- parameter: Back_Hip_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Hip_Angle@Footstrike
+
+- parameter: Back_Hip_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Hip_Angle@Max_Shoulder_Rot
+
+- parameter: Back_Hip_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Hip_Angle@Release
+
+- parameter: Back_Knee_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Angle@Setup
+
+- parameter: Back_Knee_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Angle@MaxKneeHeight
+
+- parameter: Back_Knee_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Angle@Footstrike
+
+- parameter: Back_Knee_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Angle@Max_Shoulder_Rot
+
+- parameter: Back_Knee_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Angle@Release
+
+- parameter: Back_Ankle_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Ankle_Angle@Setup
+
+- parameter: Back_Ankle_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Ankle_Angle@MaxKneeHeight
+
+- parameter: Back_Ankle_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Ankle_Angle@Max_Shoulder_Rot
+
+- parameter: Back_Ankle_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Ankle_Angle@Footstrike
+
+- parameter: Back_Ankle_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Ankle_Angle@Release
+
+- parameter: Trunk_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Setup
+
+- parameter: Trunk_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@MaxKneeHeight
+
+- parameter: Trunk_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Footstrike
+
+- parameter: Pelvis_COG_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG_Vel@Footstrike
+
+- parameter: Pelvis_COG@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG@Footstrike
+
+- parameter: Pelvis_COG_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG_Vel@Max_Shoulder_Rot
+
+- parameter: Pelvis_COG_Vel@PelvisRot_Stop
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG_Vel@PelvisRot_Stop
+
+- parameter: Pelvis_COG@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG@Max_Shoulder_Rot
+
+- parameter: Pelvis_COG@PelvisRot_Stop
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG@PelvisRot_Stop
+
+- parameter: Pelvis_COG_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG_Vel@Release
+
+- parameter: Pelvis_COG@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG@Release
+
+- parameter: Pelvis_COG_Vel@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG_Vel@Release100msAfter
+
+- parameter: Pelvis_COG@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG@Release100msAfter
+
+- parameter: Trunk_COG_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG_Vel@Footstrike
+
+- parameter: Trunk_COG_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG_Vel@Max_Shoulder_Rot
+
+- parameter: Trunk_COG_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG_Vel@Release
+
+- parameter: Head_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Head_Angle@MaxKneeHeight
+
+- parameter: Head_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Head_Angle@Footstrike
+
+- parameter: Head_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Head_Angle@Max_Shoulder_Rot
+
+- parameter: Head_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Head_Angle@Release
+
+- parameter: Head_Angle@PelvisRot_Stop
+  where:
+    name: Pitching*
+  steps:
+    - import: Head_Angle@PelvisRot_Stop
+
+- parameter: Trunk_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Head_Angle@MaxKneeHeight
+
+- parameter: Trunk_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Footstrike
+
+- parameter: Trunk_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Max_Shoulder_Rot
+
+- parameter: Trunk_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@Release
+
+- parameter: Trunk_Angle@PelvisRot_Stop
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_Angle@PelvisRot_Stop
+
+- parameter: Pelvis_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@MaxKneeHeight
+
+- parameter: Pelvis_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Footstrike
+
+- parameter: Pelvis_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Max_Shoulder_Rot
+
+- parameter: Pelvis_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Release
+
+- parameter: Pelvis_Angle@PelvisRot_Stop
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@PelvisRot_Stop
+
+- parameter: Hip Shoulders Sep@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@MaxKneeHeight
+
+- parameter: Hip Shoulders Sep@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@Footstrike
+
+- parameter: Hip Shoulders Sep@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@Max_Shoulder_Rot
+
+- parameter: Hip Shoulders Sep@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@Release
+
+- parameter: Hip Shoulders Sep@PelvisRot_Stop
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep@PelvisRot_Stop
+
+- parameter: Pitching_Shoulder_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@MaxKneeHeight
+
+- parameter: Pitching_Shoulder_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@Footstrike
+
+- parameter: Pitching_Shoulder_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@Max_Shoulder_Rot
+
+- parameter: Pitching_Shoulder_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@Release
+
+- parameter: Pitching_Shoulder_Angle@PelvisRot_Stop
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle@PelvisRot_Stop
+
+- parameter: Pelvis_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Ang_Vel.z@Footstrike
+
+- parameter: Pelvis_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Ang_Vel.z@Max_Shoulder_Rot
+
+- parameter: Pelvis_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Ang_Vel.z@Release
+
+- parameter: Pelvis_Ang_Vel@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Ang_Vel.z@Release100msAfter
+
+- parameter: Thorax_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Ang_Vel.z@Footstrike
+
+- parameter: Thorax_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Ang_Vel.z@Max_Shoulder_Rot
+
+- parameter: Thorax_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Ang_Vel.z@Release
+
+- parameter: Thorax_Ang_Vel@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Ang_Vel.z@Release100msAfter
+
+- parameter: Pitching_Humerus_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Humerus_Ang_Vel.z@Footstrike
+
+- parameter: Pitching_Humerus_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Humerus_Ang_Vel.z@Max_Shoulder_Rot
+
+- parameter: Pitching_Humerus_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Humerus_Ang_Vel.z@Release
+
+- parameter: Pitching_Humerus_Ang_Vel@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Humerus_Ang_Vel.z@Release100msAfter
+
+- parameter: Pitching_Shoulder_AngVel_HzShldAbd@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_AngVel_HzShldAbd@Footstrike
+
+- parameter: Pitching_Shoulder_AngVel_HzShldAbd@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_AngVel_HzShldAbd@Max_Shoulder_Rot
+
+- parameter: Pitching_Shoulder_AngVel_HzShldAbd@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_AngVel_HzShldAbd@Release
+
+- parameter: Pitching_Shoulder_AngVel_HzShldAbd@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_AngVel_HzShldAbd@Release100msAfter
+
+- parameter: Pitching_Hand_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Ang_Vel.x@Footstrike
+
+- parameter: Pitching_Hand_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Ang_Vel.x@Max_Shoulder_Rot
+
+- parameter: Pitching_Hand_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Ang_Vel.x@Release
+
+- parameter: Pitching_Hand_Ang_Vel@Release100msAfter
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Ang_Vel.x@Release100msAfter
+
+- parameter: Pitching_Elbow_Angle_max
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Pitching_Elbow_Angle, Footstrike, Release100msAfter]
+    - max: 
+
+- parameter: Pitching_Elbow_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Angle@MaxKneeHeight
+
+- parameter: Pitching_Elbow_Ang_Vel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel@MaxKneeHeight
+
+- parameter: Pitching_Shoulder_Angle_XYZ@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle_XYZ@Footstrike
+
+- parameter: Pitching_Shoulder_Angle_XYZ@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle_XYZ@MaxKneeHeight
+
+- parameter: Pitching_Shoulder_Angle_XYZ@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle_XYZ@Max_Shoulder_Rot
+
+- parameter: Pitching_Shoulder_Angle_XYZ@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Angle_XYZ@Release
+
+
