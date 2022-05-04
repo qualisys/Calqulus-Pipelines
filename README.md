@@ -8,4 +8,4 @@ You can use these pipelines to learn how the Qualisys PAF Core analyses are calc
 
 ## Documentation
 
-The [documentation](https://github.com/qualisys/Calqulus/blob/main/docs/index.md) in the Qualisys/Calqulus repository covers how the pipelines are structured and how to use the different steps.
+The [documentation](https://github.com/qualisys/Calqulus-Steps/blob/main/docs/index.md) in the Qualisys/Calqulus-Steps repository covers how the pipelines are structured and how to use the different steps.
