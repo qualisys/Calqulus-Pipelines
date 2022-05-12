@@ -545,3 +545,29 @@
   set: left
   steps:
     - subtract: [Thorax Forward Tilt max, Thorax Forward Tilt min]
+
+# Head
+- parameter: Head Forward Tilt max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Head Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Head Forward Tilt min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Head Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Head Forward Tilt range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Head Forward Tilt max, Head Forward Tilt min]
