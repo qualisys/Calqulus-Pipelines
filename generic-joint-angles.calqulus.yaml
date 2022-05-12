@@ -19,8 +19,6 @@
 
 # Create a space named VirtualLab, that is defined by the orientation of Hips (Pelvis) segment.
 - space: VirtualLab
-  where:
-    name: Measurement*
   alignWithSegment:
     segment: Hips
 
