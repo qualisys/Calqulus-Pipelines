@@ -45,17 +45,6 @@
     name: Measurement*
   steps:
     - import: [$length]
-  
-
-- event: Left_knee_flex_max
-  where:
-    name: Measurement*
-  set: left # Used to specify which set the exported parameter will use. In most cases, this will be either left or right.
-  steps:
-    - max: Left Knee Angles.x
-#    - peakFinder: Left Knee Angles.x # To do calculation on x component of the signal, select the component by adding '.x'
-#    - eventMask: [$prev, BOF, EOF]
-
 
 ############
 ## SERIES ##
@@ -196,3 +185,363 @@
 #############
 ## Metrics ##
 #############
+
+# Find global maximum/minimum/range
+
+# Pelvis
+- parameter: Pelvis Tilt max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Pelvic Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Pelvis Tilt min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Pelvic Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Pelvis Tilt range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Pelvis Tilt max, Pelvis Tilt min]
+
+# Hips
+- parameter: Left Hip Flex max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Hip Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Left Hip Flex min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Hip Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Left Hip Flex range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Left Hip Flex max, Left Hip Flex min]
+
+- parameter: Right Hip Flex max
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Hip Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Right Hip Flex min
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Hip Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Right Hip Flex range
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - subtract: [Right Hip Flex max, Right Hip Flex min]
+
+# Knees
+- parameter: Left Knee Flex max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Knee Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Left Knee Flex min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Knee Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Left Knee Flex range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Left Knee Flex max, Left Knee Flex min]
+
+- parameter: Right Knee Flex max
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Knee Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Right Knee Flex min
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Knee Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Right Knee Flex range
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - subtract: [Right Knee Flex max, Right Knee Flex min]
+
+# Ankles
+- parameter: Left Ankle Flex max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Ankle Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Left Ankle Flex min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Ankle Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Left Ankle Flex range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Left Ankle Flex max, Left Ankle Flex min]
+
+- parameter: Right Ankle Flex max
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Ankle Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Right Ankle Flex min
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Ankle Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Right Ankle Flex range
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - subtract: [Right Ankle Flex max, Right Ankle Flex min]
+
+# Shoulders
+- parameter: Left Shoulder Flex max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Shoulder Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Left Shoulder Flex min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Shoulder Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Left Shoulder Flex range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Left Shoulder Flex max, Left Shoulder Flex min]
+
+- parameter: Right Shoulder Flex max
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Shoulder Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Right Shoulder Flex min
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Shoulder Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Right Shoulder Flex range
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - subtract: [Right Shoulder Flex max, Right Shoulder Flex min]
+
+# Elbows
+- parameter: Left Elbow Flex max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Elbow Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Left Elbow Flex min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Elbow Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Left Elbow Flex range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Left Elbow Flex max, Left Elbow Flex min]
+
+- parameter: Right Elbow Flex max
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Elbow Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Right Elbow Flex min
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Elbow Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Right Elbow Flex range
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - subtract: [Right Elbow Flex max, Right Elbow Flex min]
+
+# Wrists
+- parameter: Left Wrist Flex max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Wrist Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Left Wrist Flex min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Left Wrist Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Left Wrist Flex range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Left Wrist Flex max, Left Wrist Flex min]
+
+- parameter: Right Wrist Flex max
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Wrist Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Right Wrist Flex min
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - import: Right Wrist Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Right Wrist Flex range
+  where:
+    name: Measurement*
+  set: right
+  steps:
+    - subtract: [Right Wrist Flex max, Right Wrist Flex min]
+
+# Thorax
+- parameter: Thorax Forward Tilt max
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Thorax Angles
+    - eventMask: [$prev, BOF, EOF]
+    - max: $prev.x
+
+- parameter: Thorax Forward Tilt min
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - import: Thorax Angles
+    - eventMask: [$prev, BOF, EOF]
+    - min: $prev.x
+
+- parameter: Thorax Forward Tilt range
+  where:
+    name: Measurement*
+  set: left
+  steps:
+    - subtract: [Thorax Forward Tilt max, Thorax Forward Tilt min]
