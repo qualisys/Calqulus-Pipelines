@@ -1,0 +1,18 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - '*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+  repositories:
+    - repository: calqulus-ci
+      type: git
+      name: Calqulus-CI-Templates
+      ref: feature/pipelines-ci
+
+extends:
+  template: calqulus-pipelines.yml@calqulus-ci
