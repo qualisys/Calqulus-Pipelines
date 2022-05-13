@@ -14,5 +14,13 @@ resources:
       name: Calqulus-CI-Templates
       ref: feature/pipelines-ci
 
+parameters:
+  - name: calqulusVersionOverride
+    displayName: Use this Calqulus version
+    type: string
+    default: '<enter ref>'
+
 extends:
   template: calqulus-pipelines.yml@calqulus-ci
+  parameters:
+    calqulusVersionOverride: ${{ parameters.calqulusVersionOverride }}
