@@ -2517,7 +2517,7 @@
       to: degrees
 
 # Trajectories
-- parameter: Left_FM2_VLab
+- parameter: Left_Toe_VLab
   where:
     name: Cycling*
   set: left
@@ -2550,7 +2550,7 @@
       from: mm
       to: m
 
-- parameter: Right_FM2_VLab
+- parameter: Right_Toe_VLab
   where:
     name: Cycling*
   set: right
