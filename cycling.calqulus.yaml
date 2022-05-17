@@ -439,17 +439,21 @@
 - marker: L_crank_filtered
   steps:
     - marker: L_crank
+      # Gap fill as it is important to get clean data for further processing
+    - gapFill:
     - lowpass: $prev
       order: 2
-      cutoff: 10
+      cutoff: 6
       extrapolate: 100
 
 - marker: R_crank_filtered
   steps:
     - marker: R_crank
+      # Gap fill as it is important to get clean data for further processing
+    - gapFill:
     - lowpass: $prev
       order: 2
-      cutoff: 10
+      cutoff: 6
       extrapolate: 100
 
 # Left crank angle
@@ -515,9 +519,6 @@
     - multiply: [$prev, 57.2958] #to deg
     - add: [180, $prev]
 
-    # Gap fill as it is important to get clean data for further processing
-    - gapFill:
-
 # Right crank angle 
 - event: R_TDC_Temp
   where:
@@ -578,9 +579,6 @@
     - atan2: [R_Pedal_Y, R_Pedal_Z]
     - multiply: [$prev, 57.2958] #to deg
     - add: [180, $prev]
-
-    # Gap fill as it is important to get clean data for further processing
-    - gapFill:
 
 ############
 ## EVENTS ##
