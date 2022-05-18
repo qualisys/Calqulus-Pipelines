@@ -101,7 +101,7 @@
   set: left
   steps:
     - angle: [LeftLeg, LeftFoot]
-    - multiply: [$prev, [1, 1, 1]]
+    - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Ankle Angles
   where:
@@ -109,6 +109,7 @@
   set: right
   steps:
     - angle: [RightLeg, RightFoot]
+    - multiply: [$prev, [1, 1, -1]]
 
 # --- Thorax ---
 
