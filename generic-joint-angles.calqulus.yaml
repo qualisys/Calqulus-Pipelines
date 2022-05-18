@@ -163,7 +163,7 @@
   set: left
   steps:
     - angle: [LeftForeArm, LeftHand]
-    - multiply: [$prev, [1, 1, -1]]
+    - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Wrist Angles
   where:
@@ -171,6 +171,7 @@
   set: right
   steps:
     - angle: [RightForeArm, RightHand]
+    - multiply: [$prev, [1, 1, -1]]
 
 # --- Head ---
 
