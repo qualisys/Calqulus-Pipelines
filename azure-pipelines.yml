@@ -1,0 +1,30 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - '*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+  repositories:
+  - repository: calqulus-ci
+    type: git
+    name: Calqulus-CI-Templates
+
+parameters:
+- name: calqulusVersionOverride
+  displayName: Use this Calqulus version
+  type: string
+  default: '<enter ref>'
+- name: skipLastSuccessfulBuild
+  displayName: Skip checking regressions against last successful build
+  type: boolean
+  default: false
+
+extends:
+  template: calqulus-pipelines.yml@calqulus-ci
+  parameters:
+    calqulusVersionOverride: ${{ parameters.calqulusVersionOverride }}
+    skipLastSuccessfulBuild: ${{ parameters.skipLastSuccessfulBuild }}
