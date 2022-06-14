@@ -14,17 +14,17 @@ resources:
     name: Calqulus-CI-Templates
 
 parameters:
-- name: calqulusVersionOverride
-  displayName: Use this Calqulus version
-  type: string
-  default: '<enter ref>'
 - name: skipLastSuccessfulBuild
   displayName: Skip checking regressions against last successful build
   type: boolean
   default: false
+- name: useLatestPublishedCalqulus
+  displayName: Use the latest published Calqulus version
+  type: boolean
+  default: true
 
 extends:
   template: calqulus-pipelines.yml@calqulus-ci
   parameters:
-    calqulusVersionOverride: ${{ parameters.calqulusVersionOverride }}
     skipLastSuccessfulBuild: ${{ parameters.skipLastSuccessfulBuild }}
+    useLatestPublishedCalqulus: ${{ parameters.useLatestPublishedCalqulus }}
