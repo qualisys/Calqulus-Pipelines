@@ -1,0 +1,284 @@
+############
+## SPACES ##
+############
+
+# Calculated from respective position of feet at Impact
+# Assuming Impact is entered manually in QTM for now
+
+- parameter: Feet_unit_vector
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [LeadForefoot2@Impact, BackForefoot2@Impact]
+    - convert:
+      from: mm
+      to: m
+    - unitVector:
+    - round:
+
+- space: VirtualLab
+  origin: [0,0,0]
+  primaryAxis: [Feet_unit_vector?name=Batting*]
+  secondaryAxis: [[0,0,0], [0,0,1]]
+  order: yz
+
+- parameter: VirtualLabOrigin
+  steps:
+    #- marker: RForefoot2
+    - multiply: [BackForefoot2, 0]
+
+- segment: VirtualLabSegment
+  steps:
+    - segment:
+      origin: VirtualLabOrigin
+      primaryAxis: Feet_unit_vector?name=Batting*
+      secondaryAxis: [[0,0,0], [0,0,1]]
+      order: yz  
+
+############
+## EVENTS ##
+############
+
+#    commencement of the downswing (DS), 
+
+#    forward stride start (FSS),
+- event: Footstrike
+  where: 
+    name: Batting*
+  steps:
+    - lowpass: LeadForefoot2
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 0.4
+      direction: down
+    - eventMask: [$prev, MaxKneeHeight, Impact]
+
+#    forward stride end (FSE), 
+
+#    bat-ball impact (IMP)
+
+- event: PLOTEND
+  where: 
+    name: Batting*
+  steps:
+    - import: Release100msAfter
+
+
+
+- event: EOF
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [$length, 1]
+
+
+
+############
+## SERIES ##
+############
+# find out which max hand linear velocity magnitude is higher
+- parameter: Left_Hand_Vel_max
+  where: 
+    name: Batting*
+  steps:
+    - velocity: LeftHand
+    - magnitude:
+    - max:
+
+- parameter: Right_Hand_Vel_max
+  where: 
+    name: Batting*
+  steps:
+    - velocity: RightHand
+    - magnitude:
+    - max:
+
+# define body side
+- parameter: LeadForefoot2
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LForefoot2
+      else: RForefoot2
+
+- parameter: BackForefoot2
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RForefoot2
+      else: LForefoot2
+
+# Set side conventions
+- parameter: Pitching_Shoulder_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Glove_Shoulder_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[-1, 1, -1]]
+
+- parameter: Hand_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, -1, 1]]
+
+- parameter: Knee_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[-1, -1, -1]]
+
+- parameter: Back_Foot_wrt_Lab_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, 1]]
+
+- parameter: Hip_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, -1]]
+      else: [[1, -1, -1]]
+
+- parameter: Hip_Shoulder_Sep_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Trunk_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Trunk_Ang_Vel_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[-1, -1, -1]]
+  
+- parameter: Trunk_wrt_Pelvis_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[-1, -1, -1]]
+
+- parameter: Pelvis_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Pelvis_Ang_Vel_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[-1, 1, -1]]
+  
+- parameter: Ankle_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, -1]]
+      else: [[1, -1, -1]]
+
+- parameter: Elbow_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, -1]]
+      else: [[1, 1, 1]]
+
+- parameter: Pitching_Humerus_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: COG_Vel_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, 1]]
+
+- parameter: Head_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, 1, -1]]
+      else: [[1, 1, 1]]
+
+- parameter: Head_Ang_Vel_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[1, -1, -1]]
+
+# X-factor (transverse plane pelvis-thorax separation angle),
+
+# Lead and Rear Elbow Flexion-Extension angle,
+
+# Wrist cocking angle (angle formed between the club/bat and the lead forearm)
+
+# Lead Knee flexion-extension 
+
+
+#############
+## METRICS ##
+#############
+
+# Wrist uncocking between min-IMP: The change in wrist cocking angle between its minimum value during the downswing and IMP value
+
+# X-factor at DS
+
+# Lead/Rear elbow extension DS-IMP: the change in lead/rear elbow angle between its minimum value during the downswing and IMP value
+
+# Lead Knee FSE-IMP: the change in lead knee angle between FSE-IMP
