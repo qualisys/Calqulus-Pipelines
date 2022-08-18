@@ -271,6 +271,39 @@
 #--------------
 # METRICS
 #--------------
+# COM/Hips
+- parameter: COM_Velocity_Horizontal@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips
+      space: VirtualLab
+    - lowpass:
+      order: 2
+      cutoff: 12
+      extrapolate: 200
+    - velocity: $prev.y
+    - convert:
+      from: mm
+      to: m
+    - import: $prev@BackFootContact
+
+- parameter: COM_Velocity_Vertical@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips
+      space: VirtualLab
+    - lowpass:
+      order: 2
+      cutoff: 12
+      extrapolate: 200
+    - velocity: $prev.z
+    - convert:
+      from: mm
+      to: m
+    - import: $prev@BackFootContact
+
 # Hip
 - parameter: Back_Hip_Angle@BackFootContact
   where:
