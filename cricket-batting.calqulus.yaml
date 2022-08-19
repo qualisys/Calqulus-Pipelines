@@ -139,6 +139,12 @@
   steps:
     - subtract: [$length, 1]
 
+- event: PLOTSTART
+  where: 
+    name: Batting*
+  steps:
+    - import: BOF
+
 - event: PLOTEND
   where: 
     name: Batting*
