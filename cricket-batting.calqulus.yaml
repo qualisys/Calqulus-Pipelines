@@ -86,7 +86,7 @@
     - import: $prev@-1  #last instance before Impact
 
 # Forward stride start (FSS),
-- event: Foot_off
+- event: FootOff
   where: 
     name: Batting*
   steps:
@@ -465,10 +465,68 @@
     - angle: [RearThigh, RearShank]
     - multiply: [$prev, Knee_Convention]
 
+# Bat angle
+- parameter: Bat_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [VirtualLabSegment, Bat]
+    # to do: resolve discontinuity
+
+# Pelvis Angle
+- parameter: Pelvis_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [Hips]
+      space: VirtualLab
+    - multiply: [$prev, Pelvis_Convention]
+
+# Trunk angle
+- parameter: Trunk_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [Spine2]
+      space: VirtualLab
+    - multiply: [$prev, Trunk_Convention]
+
+# Feet distance
+- parameter: Feet_distance
+  where: 
+    name: Batting*
+  steps:
+    - distance: [LeftFoot, RightFoot]
+
 #############
 ## METRICS ##
 #############
+# Maximum bat speed
+- parameter: Bat_speed_max
+  where: 
+    name: Batting*
+  steps:
+    - add: [BAT - 3, BAT - 4] #fix marker names after we decide naming
+    - divide: [$prev, 2]
+    - velocity:
+    - convert:
+      from: mm/s
+      to: m/s
+    - max:
 
+# Bat angle at Downswing and Impact
+- parameter: Bat_angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Bat_angle@Impact
+
+- parameter: Bat_angle@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: Bat_angle@Downswing
+  
 # Wrist uncocking between min-IMP: The change in wrist cocking angle between its minimum value during the downswing and IMP value
 - parameter: Wrist_uncocking_min_Imp
   where: 
@@ -483,12 +541,37 @@
       output: wrist_Imp
     - subtract: [wrist_Imp, min]
 
+- parameter: Wrist_Cocking_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Wrist_Cocking_Angle@Impact
+
+- parameter: Wrist_Cocking_Angle@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: Wrist_Cocking_Angle@Downswing
+
 # X-factor at DS
 - parameter: x_factor@Downswing
   where: 
     name: Batting*
   steps:
     - import: x_factor@Downswing
+
+- parameter: x_factor@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: x_factor@Impact
+
+# X-factor max between DS-IM
+- parameter: x_factor_max_DS_Imp
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [x_factor@Impact, x_factor@Downswing]
 
 # Lead/Rear elbow extension DS-IMP: the change in lead/rear elbow angle between its minimum value during the downswing and IMP value
 - parameter: Lead_Elbow_DS_Imp
@@ -514,7 +597,31 @@
     - max:
       output: elb_max
     - subtract: [elb_max, elb_imp]
-    
+
+- parameter: Lead_Elbow_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Lead_Elbow_Angle@Impact
+
+- parameter: Lead_Elbow_Angle@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: Lead_Elbow_Angle@Downswing
+
+- parameter: Rear_Elbow_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Rear_Elbow_Angle@Impact
+
+- parameter: Rear_Elbow_Angle@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: Rear_Elbow_Angle@Downswing
+
 # Lead Knee FSE-IMP: the change in lead knee angle between FSE-IMP
 - parameter: Lead_Knee_FS_Imp
   where: 
@@ -526,3 +633,36 @@
       output: knee_fs
     - subtract: [knee_imp, knee_fs]
 
+- parameter: Lead_Knee_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Lead_Knee_Angle@Impact
+
+# Bat 
+- parameter: Bat_angular rotation_DS_Imp
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [Bat_angle@Downswing, Bat_angle@Impact]
+
+# Pelvis angles
+- parameter: Pelvis_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Bat_angle@Impact
+
+# Thorax angle
+- parameter: Trunk_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Trunk_Angle@Impact
+
+# Base length at impact
+- parameter: Feet_distance@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Feet_distance@Impact
