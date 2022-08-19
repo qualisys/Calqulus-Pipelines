@@ -666,3 +666,6 @@
     name: Batting*
   steps:
     - import: Feet_distance@Impact
+    - convert:
+      from: mm
+      to: m
