@@ -471,6 +471,7 @@
     name: Batting*
   steps:
     - angle: [VirtualLabSegment, Bat]
+      space: VirtualLab
     # to do: resolve discontinuity
 
 # Pelvis Angle
@@ -497,6 +498,7 @@
     name: Batting*
   steps:
     - distance: [LeftFoot, RightFoot]
+      space: VirtualLab
 
 #############
 ## METRICS ##
@@ -526,7 +528,15 @@
     name: Batting*
   steps:
     - import: Bat_angle@Downswing
-  
+
+# Bat between DS in Impact
+- parameter: Bat_angular rotation_DS_Imp
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [Bat_angle@Downswing, Bat_angle@Impact]
+
+ 
 # Wrist uncocking between min-IMP: The change in wrist cocking angle between its minimum value during the downswing and IMP value
 - parameter: Wrist_uncocking_min_Imp
   where: 
@@ -571,7 +581,7 @@
   where: 
     name: Batting*
   steps:
-    - subtract: [x_factor@Impact, x_factor@Downswing]
+    - subtract: [x_factor@Downswing, x_factor@Impact]
 
 # Lead/Rear elbow extension DS-IMP: the change in lead/rear elbow angle between its minimum value during the downswing and IMP value
 - parameter: Lead_Elbow_DS_Imp
@@ -638,13 +648,6 @@
     name: Batting*
   steps:
     - import: Lead_Knee_Angle@Impact
-
-# Bat 
-- parameter: Bat_angular rotation_DS_Imp
-  where: 
-    name: Batting*
-  steps:
-    - subtract: [Bat_angle@Downswing, Bat_angle@Impact]
 
 # Pelvis angles
 - parameter: Pelvis_Angle@Impact
