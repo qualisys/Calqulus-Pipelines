@@ -472,7 +472,7 @@
   steps:
     - angle: [VirtualLabSegment, Bat]
       space: VirtualLab
-    # to do: resolve discontinuity
+      unwrap: Impact
 
 # Pelvis Angle
 - parameter: Pelvis_Angle
