@@ -179,6 +179,30 @@
       then: LeftFoot
       else: RightFoot
 
+- parameter: BowlingArm
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightArm
+      else: LeftArm
+
+- parameter: BowlingForearm
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightForearm
+      else: LeftForearm
+
+- parameter: BowlingHand
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightHand
+      else: LeftHand
+
 - parameter: Hip_Convention
   where: 
     name: Bowling*
@@ -196,6 +220,70 @@
       else: [[-1, -1, -1]]
 
 - parameter: Ankle_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: Back_Foot_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: Front_Foot_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, -1]]
+      else: [[1, 1, 1]]
+
+- parameter: Hips_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Shoulder_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Hips_Shoulder_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Bowling_Shoulder_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: Bowling_Elbow_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: Bowling_Wrist_Convention
   where: 
     name: Bowling*
   steps:
@@ -251,6 +339,77 @@
   steps:
     - angle: [FrontShank, FrontFoot]
     - multiply: [$prev, Ankle_Convention]
+
+# Back foot alignment (transverse plane foot-virtuallab angle)
+- parameter: Back_Foot_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, BackFoot]
+      rotationOrder: ZYX
+    - multiply: [$prev, Back_Foot_VirtualLab_Convention]
+
+# Front foot alignment (transverse plane foot-virtuallab angle)
+- parameter: Front_Foot_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, FrontFoot]
+      rotationOrder: ZYX
+    - multiply: [$prev, Front_Foot_VirtualLab_Convention]
+
+# Pelvis alignment (transverse plane pelvis-virtuallab angle)
+- parameter: Hips_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, Hips]
+      rotationOrder: ZYX
+    - multiply: [$prev, Hips_VirtualLab_Convention]
+
+# Shoulder alignment (transverse plane shoulder-virtuallab angle)
+- parameter: Shoulder_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, Spine2]
+      rotationOrder: ZYX
+    - multiply: [$prev, Shoulder_VirtualLab_Convention]
+
+# Hips-Shoulder separation angle (transverse plane pelvis-thorax angle)
+- parameter: Hips_Shoulder_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [Hips, Spine2]
+      rotationOrder: ZYX
+    - multiply: [$prev, Hips_Shoulder_Convention]
+
+# Bowling Shoulder angle
+- parameter: Bowling_Shoulder_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [Spine2, BowlingArm]
+      rotationOrder: XYZ
+      unwrap: true
+    - multiply: [$prev, Bowling_Shoulder_Convention]
+
+# Bowling Elbow angle
+- parameter: Bowling_Elbow_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [BowlingArm, BowlingForearm]
+    - multiply: [$prev, Bowling_Elbow_Convention]
+
+# Bowling Wrist angle
+- parameter: Bowling_Wrist_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [BowlingForearm, BowlingHand]
+    - multiply: [$prev, Bowling_Wrist_Convention]
 
 #--------------
 # PAF FIELDS
