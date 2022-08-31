@@ -46,9 +46,9 @@
     name: Batting*
   steps:
     - segment:
-      origin: BAT - 1
-      primaryAxis: [BAT - 3, BAT - 4]
-      secondaryAxis: [BAT - 3, BAT - 1]
+      origin: BatTopIn
+      primaryAxis: [BatBottomIn, BatBottomOut]
+      secondaryAxis: [BatBottomIn, BatTopIn]
       order: xz
 
 ############
@@ -60,7 +60,7 @@
   where: 
     name: Batting*
   steps:
-    - import: BAT - 4 # we might need to rename after we agree on naming and placement of bat markers
+    - import: BatBottomOut # we might need to rename after we agree on naming and placement of bat markers
     - velocity:
     - magnitude:
     - negate:
@@ -508,7 +508,7 @@
   where: 
     name: Batting*
   steps:
-    - add: [BAT - 3, BAT - 4] #fix marker names after we decide naming
+    - add: [BatBottomIn, BatBottomOut] #fix marker names after we decide naming
     - divide: [$prev, 2]
     - velocity:
     - convert:
