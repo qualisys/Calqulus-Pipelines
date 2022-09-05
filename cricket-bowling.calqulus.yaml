@@ -251,7 +251,7 @@
       then: [[-1, -1, -1]]
       else: [[1, -1, 1]]
 
-- parameter: Shoulder_VirtualLab_Convention
+- parameter: Spine2_VirtualLab_Convention
   where: 
     name: Bowling*
   steps:
@@ -368,13 +368,13 @@
     - multiply: [$prev, Hips_VirtualLab_Convention]
 
 # Shoulder alignment (transverse plane shoulder-virtuallab angle)
-- parameter: Shoulder_VirtualLab_Angle
+- parameter: Spine2_VirtualLab_Angle
   where: 
     name: Bowling*
   steps:
     - angle: [VirtualLabSegment, Spine2]
       rotationOrder: ZYX
-    - multiply: [$prev, Shoulder_VirtualLab_Convention]
+    - multiply: [$prev, Spine2_VirtualLab_Convention]
 
 # Hips-Shoulder separation angle (transverse plane pelvis-thorax angle)
 - parameter: Hips_Shoulder_Angle
