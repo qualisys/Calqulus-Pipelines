@@ -497,7 +497,7 @@
       space: VirtualLab
     - segment: BackFoot => back_foot
       space: VirtualLab
-    - subtract: [front_foot.y@FrontFootContact, back_foot.y@FrontFottContact]
+    - subtract: [front_foot.y@FrontFootContact, back_foot.y@FrontFootContact]
     - convert: $prev
       from: mm
       to: m
