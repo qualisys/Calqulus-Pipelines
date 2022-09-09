@@ -463,7 +463,7 @@
 # METRICS
 #--------------
 # Ball speed at FrontFootContact
-- parameter: ball_speed@Release
+- parameter: ball_speed_marker
   where:
     name: Bowling*
     fields:
@@ -481,12 +481,20 @@
       to: m
     - import: $prev@Release
 
-- parameter: ball_speed@Release
+- parameter: ball_speed_field
   where:
     name: Bowling*
     fields:
   steps:
     - import: BALL_SPEED_RELEASE
+
+- parameter: ball_speed@Release
+  where:
+      name: Bowling*
+  steps:
+    - if: ball_speed_field > 0
+      then: ball_speed_field
+      else: ball_speed_marker
 
 # Stride length at FFC
 - parameter: stride_length@FrontFootContact
