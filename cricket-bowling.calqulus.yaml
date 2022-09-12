@@ -645,23 +645,23 @@
     - import: Front_Foot_VirtualLab_Angle_XYZ@FrontFootContact
 
 #Foot alignment aka angle with respect to virtual lab (transverse plane)
-- parameter: Back_Foot_VirtualLab_Angle_ZYX@BackFootContact
+- parameter: Back_Foot_VirtualLab_Angle@BackFootContact
   where:
     name: Bowling*
   steps:
-    - import: Back_Foot_VirtualLab_Angle_ZYX@BackFootContact
+    - import: Back_Foot_VirtualLab_Angle@BackFootContact
 
-- parameter: Back_Foot_VirtualLab_Angle_ZYX@FrontFootContact
+- parameter: Back_Foot_VirtualLab_Angle@FrontFootContact
   where:
     name: Bowling*
   steps:
-    - import: Back_Foot_VirtualLab_Angle_ZYX@FrontFootContact
+    - import: Back_Foot_VirtualLab_Angle@FrontFootContact
 
-- parameter: Back_Foot_VirtualLab_Angle_ZYX@Release
+- parameter: Back_Foot_VirtualLab_Angle@Release
   where:
     name: Bowling*
   steps:
-    - import: Back_Foot_VirtualLab_Angle_ZYX@Release
+    - import: Back_Foot_VirtualLab_Angle@Release
 
 - parameter: Front_Foot_VirtualLab_Angle@BackFootContact
   where:
