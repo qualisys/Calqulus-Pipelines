@@ -463,14 +463,13 @@
 # METRICS
 #--------------
 # Ball speed at FrontFootContact
-- parameter: ball_speed_marker
+- parameter: ball_speed@Release
   where:
     name: Bowling*
     fields:
-      Ball velocity: 0
+      Ball velocity: Calculated
   steps:
-    - marker: Ball
-    - lowpass:
+    - lowpass: Ball
       order: 2
       cutoff: 24
       extrapolate: 5
@@ -481,20 +480,11 @@
       to: m
     - import: $prev@Release
 
-- parameter: ball_speed_field
-  where:
-    name: Bowling*
-    fields:
-  steps:
-    - import: BALL_SPEED_RELEASE
-
 - parameter: ball_speed@Release
   where:
-      name: Bowling*
+    name: Bowling*
   steps:
-    - if: ball_speed_field > 0
-      then: ball_speed_field
-      else: ball_speed_marker
+    - import: BALL_SPEED_RELEASE
 
 # Stride length at FFC
 - parameter: stride_length@FrontFootContact
