@@ -360,25 +360,15 @@
     - multiply: [$prev, Ankle_Convention]
 
 # Back foot alignment (transverse plane foot-virtuallab angle)
-- parameter: Back_Foot_VirtualLab_Angle_ZYX
+- parameter: Back_Foot_VirtualLab_Angle
   where: 
     name: Bowling*
   steps:
     - angle: [VirtualLabSegment, BackFoot]
-      rotationOrder: ZYX
     - multiply: [$prev, Back_Foot_VirtualLab_Convention]
 
 # Front foot alignment (transverse plane foot-virtuallab angle)
-- parameter: Front_Foot_VirtualLab_Angle_ZYX
-  where: 
-    name: Bowling*
-  steps:
-    - angle: [VirtualLabSegment, FrontFoot]
-      rotationOrder: ZYX
-    - multiply: [$prev, Front_Foot_VirtualLab_Convention]
-
-# Front foot alignment (transverse plane foot-virtuallab angle)
-- parameter: Front_Foot_VirtualLab_Angle_XYZ
+- parameter: Front_Foot_VirtualLab_Angle
   where: 
     name: Bowling*
   steps:
@@ -673,23 +663,23 @@
   steps:
     - import: Back_Foot_VirtualLab_Angle_ZYX@Release
 
-- parameter: Front_Foot_VirtualLab_Angle_ZYX@BackFootContact
+- parameter: Front_Foot_VirtualLab_Angle@BackFootContact
   where:
     name: Bowling*
   steps:
-    - import: Front_Foot_VirtualLab_Angle_ZYX@BackFootContact
+    - import: Front_Foot_VirtualLab_Angle@BackFootContact
 
-- parameter: Front_Foot_VirtualLab_Angle_ZYX@FrontFootContact
+- parameter: Front_Foot_VirtualLab_Angle@FrontFootContact
   where:
     name: Bowling*
   steps:
-    - import: Front_Foot_VirtualLab_Angle_ZYX@FrontFootContact
+    - import: Front_Foot_VirtualLab_Angle@FrontFootContact
 
-- parameter: Front_Foot_VirtualLab_Angle_ZYX@Release
+- parameter: Front_Foot_VirtualLab_Angle@Release
   where:
     name: Bowling*
   steps:
-    - import: Front_Foot_VirtualLab_Angle_ZYX@Release
+    - import: Front_Foot_VirtualLab_Angle@Release
 
 #Angle between Hip-Ankle line with the vertical axis
 - parameter: Plant_Angle@FrontFootContact
