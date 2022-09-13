@@ -638,11 +638,11 @@
 
 #Foot
 #Foot angle with respect to virtual lab (sagittal plane)
-- parameter: Front_Foot_VirtualLab_Angle_XYZ@FrontFootContact
+- parameter: Front_Foot_VirtualLab_Angle@FrontFootContact
   where:
     name: Bowling*
   steps:
-    - import: Front_Foot_VirtualLab_Angle_XYZ@FrontFootContact
+    - import: Front_Foot_VirtualLab_Angle@FrontFootContact
 
 #Foot alignment aka angle with respect to virtual lab (transverse plane)
 - parameter: Back_Foot_VirtualLab_Angle@BackFootContact
