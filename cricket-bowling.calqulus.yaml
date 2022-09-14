@@ -786,3 +786,4 @@
   steps:
     - import: Bowling_Elbow_Angle
     - eventMask: [$prev, BowlingArmHorizontal, Release]
+    - max:
