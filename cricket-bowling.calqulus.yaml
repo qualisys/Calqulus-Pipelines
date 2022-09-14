@@ -1,7 +1,6 @@
 ############
 ## SPACES ##
 ############
-
 # Calculated from respective position of feet at Release
 # Assuming Release is entered manually in QTM for now
 
@@ -112,11 +111,11 @@
       value: -90
       direction: down
 
-#--------------
-# SERIES
-#--------------
+############
+## SERIES ##
+############
 # Define body side
-# find out which max hand linear velocity magnitude is higher
+# Find out which max hand linear velocity magnitude is higher
 - parameter: Left_Hand_Vel_max
   where: 
     name: Bowling*
@@ -133,7 +132,7 @@
     - magnitude:
     - max:
 
-# define body side
+# Define body side
 - parameter: Front_HeelBack
   where: 
     name: Bowling*
@@ -408,7 +407,6 @@
     name: Bowling*
   steps:
     - angle: [Spine2, BowlingArm]
-      rotationOrder: XYZ
       unwrap: true
     - multiply: [$prev, Bowling_Shoulder_Convention]
 
@@ -428,9 +426,9 @@
     - angle: [BowlingForearm, BowlingHand]
     - multiply: [$prev, Bowling_Wrist_Convention]
 
-#--------------
-# PAF FIELDS
-#--------------
+############
+## FIELDS ##
+############
 - parameter: BALL_SPEED_RELEASE
   where:
     name: Bowling*
@@ -449,9 +447,9 @@
   steps:
     - import: $field(Bowling type, measurement)
 
-#--------------
-# METRICS
-#--------------
+############
+## METRICS ##
+############
 # Ball speed at FrontFootContact
 - parameter: ball_speed@Release
   where:
@@ -562,7 +560,7 @@
   steps:
     - import: Front_Hip_Angle@Release
 
-#Knee
+# Knee
 - parameter: Back_Knee_Angle@BackFootContact
   where:
     name: Bowling*
@@ -599,7 +597,7 @@
   steps:
     - import: Front_Knee_Angle@Release
 
-#Ankle
+# Ankle
 - parameter: Back_Ankle_Angle@BackFootContact
   where:
     name: Bowling*
@@ -636,15 +634,15 @@
   steps:
     - import: Front_Ankle_Angle@Release
 
-#Foot
-#Foot angle with respect to virtual lab (sagittal plane)
+# Foot
+# Foot angle with respect to virtual lab (sagittal plane)
 - parameter: Front_Foot_VirtualLab_Angle@FrontFootContact
   where:
     name: Bowling*
   steps:
     - import: Front_Foot_VirtualLab_Angle@FrontFootContact
 
-#Foot alignment aka angle with respect to virtual lab (transverse plane)
+# Foot alignment aka angle with respect to virtual lab (transverse plane)
 - parameter: Back_Foot_VirtualLab_Angle@BackFootContact
   where:
     name: Bowling*
@@ -681,7 +679,7 @@
   steps:
     - import: Front_Foot_VirtualLab_Angle@Release
 
-#Angle between Hip-Ankle line with the vertical axis
+# Angle between Hip-Ankle line with the vertical axis
 - parameter: Plant_Angle@FrontFootContact
   where:
     name: Bowling*
@@ -691,7 +689,7 @@
       from: radians
       to: degrees
 
-#Pelvis alignment
+# Pelvis alignment
 - parameter: Hips_VirtualLab_Angle@BackFootContact
   where:
     name: Bowling*
@@ -710,7 +708,7 @@
   steps:
     - import: Hips_VirtualLab_Angle@Release
 
-#Shoulder alignment
+# Shoulder alignment
 - parameter: Spine2_VirtualLab_Angle@BackFootContact
   where:
     name: Bowling*
@@ -729,7 +727,7 @@
   steps:
     - import: Spine2_VirtualLab_Angle@Release
 
-#Pelvis-Shoulder separation
+# Pelvis-Shoulder separation
 - parameter: Hips_Shoulder_Angle@BackFootContact
   where:
     name: Bowling*
@@ -748,7 +746,7 @@
   steps:
     - import: Hips_Shoulder_Angle@Release
 
-#Bowling shoulder
+# Bowling shoulder
 - parameter: Bowling_Shoulder_Angle@BackFootContact
   where:
     name: Bowling*
@@ -767,7 +765,7 @@
   steps:
     - import: Bowling_Shoulder_Angle@Release
 
-#Bowling elbow
+# Bowling elbow
 - parameter: Bowling_Elbow_Angle@FrontFootContact
   where:
     name: Bowling*
@@ -787,3 +785,16 @@
     - import: Bowling_Elbow_Angle
     - eventMask: [$prev, BowlingArmHorizontal, Release]
     - max:
+
+# Bowling wrist
+- parameter: Bowling_Wrist_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Wrist_Angle@FrontFootContact
+
+- parameter: Bowling_Wrist_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Wrist_Angle@Release
