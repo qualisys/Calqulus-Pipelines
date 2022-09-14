@@ -749,6 +749,12 @@
     - import: Hips_Shoulder_Angle@Release
 
 #Bowling shoulder
+- parameter: Bowling_Shoulder_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Shoulder_Angle@BackFootContact
+
 - parameter: Bowling_Shoulder_Angle@FrontFootContact
   where:
     name: Bowling*
