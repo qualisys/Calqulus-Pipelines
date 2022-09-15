@@ -490,8 +490,8 @@
     - divide: [$prev, HEIGHT]
     - multiply: [$prev, 100]
 
-# COM/Hips
-- parameter: COM_Velocity_Horizontal@BackFootContact
+# COM/Hips velocity at BFC
+- parameter: COM_Velocity_Anterior@BackFootContact
   where:
     name: Bowling*
   steps:
