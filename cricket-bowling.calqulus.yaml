@@ -766,6 +766,12 @@
     - import: Bowling_Shoulder_Angle@Release
 
 # Bowling elbow
+- parameter: Bowling_Elbow_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Elbow_Angle@BackFootContact
+
 - parameter: Bowling_Elbow_Angle@FrontFootContact
   where:
     name: Bowling*
@@ -787,6 +793,12 @@
     - max:
 
 # Bowling wrist
+- parameter: Bowling_Wrist_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Wrist_Angle@BackFootContact
+
 - parameter: Bowling_Wrist_Angle@FrontFootContact
   where:
     name: Bowling*
