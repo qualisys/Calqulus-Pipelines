@@ -104,7 +104,7 @@
       distance: 20
       height: 0.65
 
-- event: LTO
+- event: LTO_temp
   set: left
   where:
     name: Running*
@@ -113,6 +113,14 @@
       width: 3
       distance: 20
       height: 0.65
+
+- event: LTO
+  set: left
+  where:
+    name: Running*
+  steps:
+    - refineEvent: LTO_temp
+      sequence: [LFS, LTO_temp]
 
 - event: L_MID_STANCE
   set: left
@@ -181,7 +189,7 @@
       distance: 20
       height: 0.65
 
-- event: RTO
+- event: RTO_temp
   set: right
   where:
     name: Running*
@@ -190,6 +198,14 @@
       width: 3
       distance: 20
       height: 0.65
+
+- event: RTO
+  set: right
+  where:
+    name: Running*
+  steps:
+    - refineEvent: RTO_temp
+      sequence: [RFS, RTO_temp]
 
 - event: R_MID_STANCE
   set: right
