@@ -266,7 +266,7 @@
     name: Bowling*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, -1]]
+      then: [[-1, 1, -1]]
       else: [[1, -1, 1]]
 
 - parameter: Spine2_VirtualLab_Convention
@@ -375,6 +375,7 @@
     - multiply: [$prev, Front_Foot_VirtualLab_Convention]
 
 # Pelvis alignment (transverse plane pelvis-virtuallab angle)
+# Pelvis obliquity
 - parameter: Hips_VirtualLab_Angle
   where: 
     name: Bowling*
@@ -695,7 +696,7 @@
       from: radians
       to: degrees
 
-# Pelvis alignment
+# Pelvis alignment and obliquity
 - parameter: Hips_VirtualLab_Angle@BackFootContact
   where:
     name: Bowling*
