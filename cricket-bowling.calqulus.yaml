@@ -785,6 +785,12 @@
   steps:
     - import: Bowling_Elbow_Angle@FrontFootContact
 
+- parameter: Bowling_Elbow_Angle@BowlingArmHorizontal
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Elbow_Angle@BowlingArmHorizontal
+
 - parameter: Bowling_Elbow_Angle@Release
   where:
     name: Bowling*
