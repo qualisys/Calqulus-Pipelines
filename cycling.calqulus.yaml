@@ -590,7 +590,7 @@
   set: left
   steps:
     - peakFinder: Left_Crank_Angle
-      height: 357
+      height: 355
       width: 10
 
 - event: L_TDC1
@@ -633,7 +633,7 @@
   set: right
   steps:
     - peakFinder: Right_Crank_Angle
-      height: 357
+      height: 355
       width: 10
 
 - event: R_TDC1
