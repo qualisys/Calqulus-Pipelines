@@ -441,7 +441,12 @@
   steps:
     - import: $field(Height, measurement, numeric)
 
+- parameter: WEIGHT
+  where:
     name: Bowling*
+  steps:
+    - import: $field(Weight, measurement, numeric)
+
 - parameter: BOWLING_TYPE
   where:
     name: Bowling*
