@@ -795,7 +795,8 @@
   where:
     name: Bowling*
   steps:
-    - subtract: [Bowling_Elbow_Angle@Release, Bowling_Elbow_Angle@BowlingArmHorizontal] 
+    - subtract: [Bowling_Elbow_Angle@Release, Bowling_Elbow_Angle@BowlingArmHorizontal]
+    - negate:
     
 # Bowling wrist
 - parameter: Bowling_Wrist_Angle@BackFootContact
