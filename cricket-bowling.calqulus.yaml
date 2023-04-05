@@ -791,14 +791,12 @@
   steps:
     - import: Bowling_Elbow_Angle@Release
 
-- parameter: Bowling_Elbow_Angle_BowlingPhase_Max
+- parameter: Bowling_Elbow_Angle_Delivery_Range
   where:
     name: Bowling*
   steps:
-    - import: Bowling_Elbow_Angle
-    - eventMask: [$prev, BowlingArmHorizontal, Release]
-    - max:
-
+    - subtract: [Bowling_Elbow_Angle@Release, Bowling_Elbow_Angle@BowlingArmHorizontal] 
+    
 # Bowling wrist
 - parameter: Bowling_Wrist_Angle@BackFootContact
   where:
