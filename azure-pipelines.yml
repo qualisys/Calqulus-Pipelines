@@ -11,7 +11,7 @@ resources:
   repositories:
   - repository: calqulus-ci
     type: git
-    name: Calqulus-CI-Templates
+    name: app-calqulus-ci-templates
 
 parameters:
 - name: skipLastSuccessfulBuild
