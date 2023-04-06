@@ -34,13 +34,13 @@
 # Create event at left knee maximum flexion
 - event: BOF
   where:
-    name: Measurement*
+    name: '!Static*'
   steps:
     - import: [0]
   
 - event: EOF
   where:
-    name: Measurement*
+    name: '!Static*'
   steps:
     - import: [$length]
 
@@ -54,7 +54,7 @@
 
 - parameter: Pelvic Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   steps:
     - angle: Hips # angle is calculated relative to axes of global coordinate system, if only single input exists
       space: VirtualLab # calculate angle relative to virtual lab
@@ -64,7 +64,7 @@
 
 - parameter: Left Hip Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - angle: [Hips, LeftUpLeg] # when two segments are specified, joint angle between the segments is calculated
@@ -72,7 +72,7 @@
 
 - parameter: Right Hip Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - angle: [Hips, RightUpLeg]
@@ -81,7 +81,7 @@
 
 - parameter: Left Knee Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - angle: [LeftUpLeg, LeftLeg]
@@ -89,7 +89,7 @@
 
 - parameter: Right Knee Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - angle: [RightUpLeg, RightLeg]
@@ -105,7 +105,7 @@
 
 - parameter: Right Ankle Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - angle: [RightLeg, RightFoot]
@@ -115,7 +115,7 @@
 
 - parameter: Thorax Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   steps:
     - angle: [Hips, Spine2]
     - multiply: [$prev, [-1, -1, 1]]
@@ -124,7 +124,7 @@
 
 - parameter: Left Shoulder Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - angle: [Spine2, LeftArm]
@@ -132,7 +132,7 @@
 
 - parameter: Right Shoulder Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - angle: [Spine2, RightArm]
@@ -142,7 +142,7 @@
 
 - parameter: Left Elbow Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - angle: [LeftArm, LeftForeArm]
@@ -150,7 +150,7 @@
 
 - parameter: Right Elbow Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - angle: [RightArm, RightForeArm]
@@ -159,7 +159,7 @@
 
 - parameter: Left Wrist Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - angle: [LeftForeArm, LeftHand]
@@ -167,7 +167,7 @@
 
 - parameter: Right Wrist Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - angle: [RightForeArm, RightHand]
@@ -177,7 +177,7 @@
 
 - parameter: Head Angles
   where:
-    name: Measurement*
+    name: '!Static*'
   steps:
     - angle: [Head, Spine2]
 
@@ -191,7 +191,7 @@
 # Pelvis
 - parameter: Pelvis Tilt max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Pelvic Angles
@@ -200,7 +200,7 @@
 
 - parameter: Pelvis Tilt min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Pelvic Angles
@@ -209,7 +209,7 @@
 
 - parameter: Pelvis Tilt range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Pelvis Tilt max, Pelvis Tilt min]
@@ -217,7 +217,7 @@
 # Hips
 - parameter: Left Hip Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Hip Angles
@@ -226,7 +226,7 @@
 
 - parameter: Left Hip Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Hip Angles
@@ -235,14 +235,14 @@
 
 - parameter: Left Hip Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Left Hip Flex max, Left Hip Flex min]
 
 - parameter: Right Hip Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Hip Angles
@@ -251,7 +251,7 @@
 
 - parameter: Right Hip Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Hip Angles
@@ -260,7 +260,7 @@
 
 - parameter: Right Hip Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - subtract: [Right Hip Flex max, Right Hip Flex min]
@@ -268,7 +268,7 @@
 # Knees
 - parameter: Left Knee Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Knee Angles
@@ -277,7 +277,7 @@
 
 - parameter: Left Knee Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Knee Angles
@@ -286,14 +286,14 @@
 
 - parameter: Left Knee Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Left Knee Flex max, Left Knee Flex min]
 
 - parameter: Right Knee Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Knee Angles
@@ -302,7 +302,7 @@
 
 - parameter: Right Knee Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Knee Angles
@@ -311,7 +311,7 @@
 
 - parameter: Right Knee Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - subtract: [Right Knee Flex max, Right Knee Flex min]
@@ -319,7 +319,7 @@
 # Ankles
 - parameter: Left Ankle Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Ankle Angles
@@ -328,7 +328,7 @@
 
 - parameter: Left Ankle Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Ankle Angles
@@ -337,14 +337,14 @@
 
 - parameter: Left Ankle Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Left Ankle Flex max, Left Ankle Flex min]
 
 - parameter: Right Ankle Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Ankle Angles
@@ -353,7 +353,7 @@
 
 - parameter: Right Ankle Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Ankle Angles
@@ -362,7 +362,7 @@
 
 - parameter: Right Ankle Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - subtract: [Right Ankle Flex max, Right Ankle Flex min]
@@ -370,7 +370,7 @@
 # Shoulders
 - parameter: Left Shoulder Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Shoulder Angles
@@ -379,7 +379,7 @@
 
 - parameter: Left Shoulder Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Shoulder Angles
@@ -388,14 +388,14 @@
 
 - parameter: Left Shoulder Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Left Shoulder Flex max, Left Shoulder Flex min]
 
 - parameter: Right Shoulder Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Shoulder Angles
@@ -404,7 +404,7 @@
 
 - parameter: Right Shoulder Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Shoulder Angles
@@ -413,7 +413,7 @@
 
 - parameter: Right Shoulder Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - subtract: [Right Shoulder Flex max, Right Shoulder Flex min]
@@ -421,7 +421,7 @@
 # Elbows
 - parameter: Left Elbow Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Elbow Angles
@@ -430,7 +430,7 @@
 
 - parameter: Left Elbow Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Elbow Angles
@@ -439,14 +439,14 @@
 
 - parameter: Left Elbow Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Left Elbow Flex max, Left Elbow Flex min]
 
 - parameter: Right Elbow Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Elbow Angles
@@ -455,7 +455,7 @@
 
 - parameter: Right Elbow Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Elbow Angles
@@ -464,7 +464,7 @@
 
 - parameter: Right Elbow Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - subtract: [Right Elbow Flex max, Right Elbow Flex min]
@@ -472,7 +472,7 @@
 # Wrists
 - parameter: Left Wrist Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Wrist Angles
@@ -481,7 +481,7 @@
 
 - parameter: Left Wrist Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Left Wrist Angles
@@ -490,14 +490,14 @@
 
 - parameter: Left Wrist Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Left Wrist Flex max, Left Wrist Flex min]
 
 - parameter: Right Wrist Flex max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Wrist Angles
@@ -506,7 +506,7 @@
 
 - parameter: Right Wrist Flex min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - import: Right Wrist Angles
@@ -515,7 +515,7 @@
 
 - parameter: Right Wrist Flex range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: right
   steps:
     - subtract: [Right Wrist Flex max, Right Wrist Flex min]
@@ -523,7 +523,7 @@
 # Thorax
 - parameter: Thorax Forward Tilt max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Thorax Angles
@@ -532,7 +532,7 @@
 
 - parameter: Thorax Forward Tilt min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Thorax Angles
@@ -541,7 +541,7 @@
 
 - parameter: Thorax Forward Tilt range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Thorax Forward Tilt max, Thorax Forward Tilt min]
@@ -549,7 +549,7 @@
 # Head
 - parameter: Head Forward Tilt max
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Head Angles
@@ -558,7 +558,7 @@
 
 - parameter: Head Forward Tilt min
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - import: Head Angles
@@ -567,7 +567,7 @@
 
 - parameter: Head Forward Tilt range
   where:
-    name: Measurement*
+    name: '!Static*'
   set: left
   steps:
     - subtract: [Head Forward Tilt max, Head Forward Tilt min]
