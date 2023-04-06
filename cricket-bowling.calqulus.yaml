@@ -274,7 +274,7 @@
     name: Bowling*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, -1]]
+      then: [[-1, 1, -1]]
       else: [[1, -1, 1]]
 
 - parameter: Hips_Shoulder_Convention
@@ -385,6 +385,7 @@
     - multiply: [$prev, Hips_VirtualLab_Convention]
 
 # Shoulder alignment (transverse plane shoulder-virtuallab angle)
+# Shoulder obliquity
 - parameter: Spine2_VirtualLab_Angle
   where: 
     name: Bowling*
