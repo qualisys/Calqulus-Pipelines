@@ -48,6 +48,25 @@
   steps:
     - import: Release100msAfter
 
+- event: FrontFootPenultimateContact
+  where: 
+    name: Bowling*
+  steps:
+    - lowpass: Front_Forefoot2
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 1
+      direction: down
+    - eventMask: [$prev, 1, BackFootContact]
+    - subtract: [$prev, 1]
+
 - event: BackFootContact
   where: 
     name: Bowling*
@@ -152,6 +171,14 @@
     - max:
 
 # Define body side
+- parameter: Front_Forefoot2
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LForefoot2
+      else: RForefoot2
+
 - parameter: Front_HeelBack
   where: 
     name: Bowling*
@@ -495,6 +522,29 @@
     name: Bowling*
   steps:
     - eventDuration: [BackFootContact, BackFootToeOff]
+
+# Stride length between FFPC-BFC (penultimate step)
+- parameter: stride_length_penultimate
+  where:
+    name: Bowling*
+  steps:
+    - import: FrontFoot => front_foot
+      space: VirtualLab
+    - import: BackFoot => back_foot
+      space: VirtualLab
+    - subtract: [back_foot.y@BackFootContact, front_foot.y@FrontFootPenultimateContact]
+    - convert: $prev
+      from: mm
+      to: m
+
+# Stride length between FFPC-BFC (penultimate step) normalized to body height
+- parameter: stride_length_penultimate_normalized
+  where:
+    name: Bowling*
+  steps:
+    - import: stride_length_penultimate
+    - divide: [$prev, HEIGHT]
+    - multiply: [$prev, 100]
 
 # Stride length at FFC
 - parameter: stride_length@FrontFootContact
