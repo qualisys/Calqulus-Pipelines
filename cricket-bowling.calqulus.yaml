@@ -546,8 +546,8 @@
     - divide: [$prev, HEIGHT]
     - multiply: [$prev, 100]
 
-# Stride length at FFC
-- parameter: stride_length@FrontFootContact
+# Stride length between BFC and FFC
+- parameter: stride_length
   where:
     name: Bowling*
   steps:
@@ -555,10 +555,17 @@
       space: VirtualLab
     - import: BackFoot => back_foot
       space: VirtualLab
-    - subtract: [front_foot.y@FrontFootContact, back_foot.y@FrontFootContact]
+    - subtract: [front_foot.y@FrontFootContact, back_foot.y@BackFootContact]
     - convert: $prev
       from: mm
       to: m
+
+# Stride length between BFC and FFC normalized to body height
+- parameter: stride_length_normalized
+  where:
+    name: Bowling*
+  steps:
+    - import: stride_length
     - divide: [$prev, HEIGHT]
     - multiply: [$prev, 100]
 
