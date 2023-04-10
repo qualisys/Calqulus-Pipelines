@@ -569,6 +569,19 @@
     - divide: [$prev, HEIGHT]
     - multiply: [$prev, 100]
 
+# COM/Hips range between FFPC-BFC (penultimate step)
+- parameter: COM_Range_Vertical_Penultimate
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips
+    - eventMask: [$prev.z, FrontFootPenultimateContact, BackFootContact]
+    - max: $prev
+    - subtract: [$prev, Hips.z@BackFootContact]
+    - convert:
+      from: mm
+      to: m
+
 # COM/Hips velocity at BFC
 - parameter: COM_Velocity_Anterior@BackFootContact
   where:
