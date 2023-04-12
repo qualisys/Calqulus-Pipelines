@@ -481,7 +481,7 @@
   where:
     name: Bowling*
   steps:
-    - import: $field(Ball velocity, measurement, numeric)
+    - import: $field(Ball velocity in mps, measurement, numeric)
 
 - parameter: HEIGHT
   where:
@@ -497,7 +497,7 @@
   where:
     name: Bowling*
     fields:
-      Ball velocity: Calculated
+      Ball velocity in mps: Calculated
   steps:
     - lowpass: Ball
       order: 2
