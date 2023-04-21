@@ -43,11 +43,14 @@
     - convert:
       from: mm
       to: m
+    - lowpass:
+      cutoff: 16
+      extrapolate: 100
       export: Left_MID_FOOT
+    - velocity:
     - lowpass:
       extrapolate: 100
-      cutoff: 6
-    - velocity:
+      cutoff: 9
 
 - parameter: Left_MID_FOOT_acc
   set: left
@@ -60,9 +63,12 @@
       from: mm
       to: m
     - lowpass:
+      cutoff: 16
       extrapolate: 100
-      cutoff: 6
     - acceleration:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 9
 
 - parameter: Right_MID_FOOT_vel
   set: right
@@ -74,11 +80,13 @@
     - convert:
       from: mm
       to: m
-      export: Right_MID_FOOT
     - lowpass:
-      extrapolate: 100
-      cutoff: 6
+      cutoff: 16
+      export: Right_MID_FOOT
     - velocity:
+    - lowpass:
+      extrapolate: 0
+      cutoff: 9
 
 - parameter: Right_MID_FOOT_acc
   set: right
@@ -91,9 +99,12 @@
       from: mm
       to: m
     - lowpass:
+      cutoff: 16
       extrapolate: 100
-      cutoff: 6
     - acceleration:
+    - lowpass:
+      extrapolate: 0
+      cutoff: 9
 
 # Toe off
 - event: LTOE_RISE
