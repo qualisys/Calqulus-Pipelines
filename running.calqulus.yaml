@@ -30,23 +30,433 @@
 ## EVENTS ##
 ############
 
-# - event: LFS
-#   steps:
-#     - velocity: LeftToeBase.z => ltb_vel
-#     - negate: ltb_vel => ltb_vel_inv
-#     - peakFinder: ltb_vel_inv
-#       width: 3
-#       distance: 100
-#       height: 1
+# --- Treadmill running ---
+# FS and TO event detection is based on foot velocity and acceleration
+# First calculate midfoot velocity and acceleration
+- parameter: Left_MID_FOOT_vel
+  set: left
+  where:
+    name: Running*
+  steps:
+    - segment: LeftFoot
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+      export: Left_MID_FOOT
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+    - velocity:
 
-# - event: RFS
-#   steps:
-#     - velocity: RightToeBase.z => rtb_vel
-#     - negate: rtb_vel => rtb_vel_inv
-#     - peakFinder: rtb_vel_inv
-#       width: 3
-#       distance: 100
-#       height: 1
+- parameter: Left_MID_FOOT_acc
+  set: left
+  where:
+    name: Running*
+  steps:
+    - segment: LeftFoot
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+    - acceleration:
+
+- parameter: Right_MID_FOOT_vel
+  set: right
+  where:
+    name: Running*
+  steps:
+    - segment: RightFoot
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+      export: Right_MID_FOOT
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+    - velocity:
+
+- parameter: Right_MID_FOOT_acc
+  set: right
+  where:
+    name: Running*
+  steps:
+    - segment: RightFoot
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+    - acceleration:
+
+# Toe off
+- event: LTOE_RISE
+  set: left
+  where:
+    name: Running*
+  steps:
+    - threshold: Left_MID_FOOT_acc.z => sig1
+      value: 0
+      direction: down
+    - eventMask: [sig1, L_MID_STANCE, R_MID_STANCE]
+
+- event: LTO_treadmill
+  set: left
+  where:
+    name: Running*
+  steps:
+    - peakFinder: Left_MID_FOOT_acc.z => sig2
+    - eventMask: [sig2, LTOE_RISE, LTOE_RISE]
+      keep: -1
+
+- event: RTOE_RISE
+  set: right
+  where:
+    name: Running*
+  steps:
+    - threshold: Right_MID_FOOT_acc.z => sig1
+      value: 0
+      direction: down
+    - eventMask: [sig1, R_MID_STANCE, L_MID_STANCE]
+      output: RTOE_RISE
+
+- event: RTO_treadmill
+  set: right
+  where:
+    name: Running*
+  steps:
+    - peakFinder: Right_MID_FOOT_acc.z => sig2
+    - eventMask: [sig2, RTOE_RISE, RTOE_RISE]
+      keep: -1
+
+# Footstrike
+- event: LFS_treadmill
+  set: left
+  where:
+    name: Running*
+  steps:
+    - peakFinder: Left_MID_FOOT_vel.z => sig
+      width: 10
+      distance: 50
+    - eventMask: [sig, L_MID_STANCE, R_MID_STANCE]
+      keep: -1
+      output: L_PEAK_MID_FOOT_VEL_z
+
+    # z velocity of foot has to be negative, otherwise foot is not on its way down
+    - threshold: Left_MID_FOOT_vel.z => sig1
+      value: 0
+      direction: up
+    - eventMask: [sig1, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
+      keep: -1
+      output: L_MID_FOOT_vel_negative
+
+    # temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+    - threshold: Left_MID_FOOT_vel.y
+      value: 0
+      direction: down
+      output: temp_event_1
+
+    - peakFinder: Left_MID_FOOT_vel.y => sig2
+    - eventMask: [sig2, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
+      keep: -1
+      output: temp_event_2
+
+    - peakFinder: Left_MID_FOOT_acc.z => sig3
+    - eventMask: [sig3, temp_event_2, L_MID_FOOT_vel_negative]
+      keep: -1
+
+- event: RFS_treadmill
+  set: right
+  where:
+    name: Running*
+  steps:
+    - peakFinder: Right_MID_FOOT_vel.z => sig
+      width: 10
+      distance: 50
+    - eventMask: [sig, R_MID_STANCE, L_MID_STANCE]
+      keep: -1
+      output: R_PEAK_MID_FOOT_VEL_z
+
+    # z velocity of foot has to be negative, otherwise foot is not on its way down
+    - threshold: Right_MID_FOOT_vel.z => sig1
+      value: 0
+      direction: up
+    - eventMask: [sig1, R_PEAK_MID_FOOT_VEL_z, R_PEAK_MID_FOOT_VEL_z]
+      keep: -1
+      output: R_MID_FOOT_vel_negative
+
+    # temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+    - threshold: Right_MID_FOOT_vel.y
+      value: 0
+      direction: down
+      output: temp_event_1
+
+    - peakFinder: Right_MID_FOOT_vel.y => sig2
+    - eventMask: [sig2, R_PEAK_MID_FOOT_VEL_z, temp_event_1]
+      keep: -1
+      output: temp_event_2
+
+    - peakFinder: Right_MID_FOOT_acc.z => sig3
+    - eventMask: [sig3, temp_event_2, R_MID_FOOT_vel_negative]
+      keep: -1
+
+# Midstance event is based on pelvis position wrt foot position
+- parameter: Pelvis_CGPos
+  where:
+    name: Running*
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+
+- event: L_MID_STANCE
+  set: left
+  where:
+    name: Running*
+  steps:
+    - subtract: [Left_MID_FOOT, Pelvis_CGPos]
+    - threshold: $prev.y
+      value: 0
+      direction: down
+
+- event: R_MID_STANCE
+  set: right
+  where:
+    name: Running*
+  steps:
+    - subtract: [Right_MID_FOOT, Pelvis_CGPos]
+    - threshold: $prev.y
+      value: 0
+      direction: down
+
+# --- Overground running ---
+# Based on position of distal end and proximal end of foot
+
+# Footstrike
+- parameter: LForefoot2_wrt_Pelvis
+  set: left
+  where:
+    name: Running*
+  steps:
+    - marker: LForefoot2 => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [foot, pelvis]
+  
+- parameter: LHeelBack_wrt_Pelvis
+  set: left
+  where:
+    name: Running*
+  steps:
+    - marker: LHeelBack => heel
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [heel, pelvis]
+  
+- parameter: RForefoot2_wrt_Pelvis
+  set: right
+  where:
+    name: Running*
+  steps:
+    - marker: RForefoot2 => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [foot, pelvis]
+  
+- parameter: RHeelBack_wrt_Pelvis
+  set: right
+  where:
+    name: Running*
+  steps:
+    - marker: RHeelBack => heel
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [heel, pelvis]
+
+- event: LFS_overground
+  set: left
+  where:
+    name: Running*
+  steps:
+    - peakFinder: [LForefoot2_wrt_Pelvis.y]
+      height: 0
+      output: temp1
+
+    - multiply: [$framerate, 0.05]
+    - add: [temp1, $prev]
+      output: temp2
+
+    - import: LHeelBack_wrt_Pelvis
+    - negate:
+    - eventMask: [$prev.z, temp1, temp2]
+    - max:
+      frames: true
+
+- event: RFS_overground
+  set: right
+  where:
+    name: Running*
+  steps:
+    - peakFinder: [RForefoot2_wrt_Pelvis.y]
+      height: 0
+      output: temp1
+
+    - multiply: [$framerate, 0.05]
+    - add: [temp1, $prev]
+      output: temp2
+
+    - import: RHeelBack_wrt_Pelvis
+    - negate:
+    - eventMask: [$prev.z, temp1, temp2]
+    - max:
+      frames: true
+
+# Toe Off
+- event: LTO_overground
+  set: left
+  where:
+    name: Running*
+  steps:
+    - divide: [$framerate, 40]
+      output: shift
+    - threshold: LForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: down
+    - subtract: [$prev,shift] # move event back by $framerate/40
+      frames: true
+      output: temp1
+
+    - threshold: LForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: down
+      output: temp1a
+
+    - threshold: LForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: up
+      output: temp1b
+
+    - eventMask: [LForefoot2_wrt_Pelvis.y,temp1a,temp1b]
+    - min:
+      frames: true
+      output: temp2
+
+    - marker: LForefoot2 => sig
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+    - acceleration:
+    - eventMask: [$prev.z,temp1,temp2]
+    - max:
+      frames: true
+      
+- event: RTO_overground
+  set: right
+  where:
+    name: Running*
+  steps:
+    - divide: [$framerate, 40]
+      output: shift
+    - threshold: RForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: down
+    - subtract: [$prev,shift] # move event back by $framerate/40
+      frames: true
+      output: temp1
+
+    - threshold: RForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: down
+      output: temp1a
+
+    - threshold: RForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: up
+      output: temp1b
+
+    - eventMask: [RForefoot2_wrt_Pelvis.y,temp1a,temp1b]
+    - min:
+      frames: true
+      output: temp2
+
+    - marker: RForefoot2 => sig
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+    - acceleration:
+    - eventMask: [$prev.z,temp1,temp2]
+    - max:
+      frames: true
+
+# Find out if running on treadmill or overground
+# If pelvis AP range is more than 1 m we assume overground running
+- parameter: Pelvis_COG_range
+  where:
+    name: Running*
+  steps:
+    - import: Hips
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - range: $prev.y
+
+- event: LFS      
+  set: left
+  where:
+    name: Running*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: LFS_overground
+      else: LFS_treadmill
+
+- event: RFS      
+  set: right
+  where:
+    name: Running*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: RFS_overground
+      else: RFS_treadmill
+
+- event: LTO      
+  set: left
+  where:
+    name: Running*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: LTO_overground
+      else: LTO_treadmill
+
+- event: RTO      
+  set: right
+  where:
+    name: Running*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: RTO_overground
+      else: RTO_treadmill
+
+# --- ZENI ---
+# Legacy event detection. Not used.
 
 # Left ZENI Foot-Strike, Toe-Off and Mid-Stance
 - parameter: Left_ZENI
@@ -94,7 +504,7 @@
     - negate: abs_toe_diff
       export: Left_ZENI_toe_diff_abs_inv
 
-- event: LFS
+- event: LFS_ZENI
   set: left
   where:
     name: Running*
@@ -114,7 +524,7 @@
       distance: 20
       height: 0.65
 
-- event: LTO
+- event: LTO_ZENI
   set: left
   where:
     name: Running*
@@ -122,7 +532,7 @@
     - refineEvent: LTO_temp
       sequence: [LFS, LTO_temp]
 
-- event: L_MID_STANCE
+- event: L_MID_STANCE_ZENI
   set: left
   where:
     name: Running*
@@ -131,7 +541,6 @@
       width: 10
       prominence: 100
     - eventMask: [sign_change, LFS, LTO]
-
 
   # Right ZENI Foot-Strike, Toe-Off and Mid-Stance
 - parameter: Right_ZENI
@@ -179,7 +588,7 @@
     - negate: abs_toe_diff
       export: Right_ZENI_toe_diff_abs_inv
 
-- event: RFS
+- event: RFS_ZENI
   set: right
   where:
     name: Running*
@@ -199,7 +608,7 @@
       distance: 20
       height: 0.65
 
-- event: RTO
+- event: RTO_ZENI
   set: right
   where:
     name: Running*
@@ -207,7 +616,7 @@
     - refineEvent: RTO_temp
       sequence: [RFS, RTO_temp]
 
-- event: R_MID_STANCE
+- event: R_MID_STANCE_ZENI
   set: right
   where:
     name: Running*
@@ -216,7 +625,9 @@
       width: 10
       prominence: 100
     - eventMask: [sign_change, RFS, RTO]
+# --- end of ZENI detection ---
 
+# --- Additional events ---
 - event: L_peak_knee_flex
   set: left
   where:
@@ -326,7 +737,6 @@
         pattern: LH
         keep: [0]
 
-
 - event: R_peak_knee_extension_stride
   set: right
   where:
@@ -339,32 +749,6 @@
         ranges: L 20 H
         pattern: LH
         keep: [0]
-
-
-# Alternative LTO implementation which works better than Zeni
-# with demo data, but probably not generally applicable.
-- event: LTO_alt
-  set: left
-  where:
-    name: Running*
-  steps:
-    - lowpass: LeftToeBase => ltb_filtered
-      extrapolate: 100
-      order: 6
-      cutoff: 20
-    - acceleration: ltb_filtered.z => ltb_acc
-    - max: ltb_acc => max_ltb_acc
-    - divide: [ltb_acc, max_ltb_acc]
-      output: norm_ltb_acc
-    - peakFinder: norm_ltb_acc
-      width: 3
-      distance: 20
-      height: 0.20
-      sequence:
-        ranges: L 50 H
-        pattern: LLH
-        keep: [0]
-
 
 ############
 ## SERIES ##
@@ -877,11 +1261,11 @@
       output: pel
     - subtract: [pel.y, RIGHT_ANKLE.y]
 
-
 #############
 ## Metrics ##
 #############
-# treadmill speed (calculated from left foot and right foot at midstance)
+
+# Treadmill speed (calculated from left foot and right foot at midstance)
 - parameter: left_treadmill_speed
   where:
     name: Running*
@@ -934,7 +1318,7 @@
   steps:
     - divide: [1, actual_running_speed_ms]
 
-# stride angle
+# Stride angle
 - parameter: Left Stride Angle@max
   where:
     name: Running*
@@ -959,7 +1343,7 @@
       output: angle
     - max: angle.x
 
-# steps/min
+# Steps/min
 # 60 / ((left mean step time + right mean step time) / 2)
 - parameter: Steps_Per_Minute_Mean
   where:
@@ -982,7 +1366,7 @@
   - concatenate: [Left_Steps_Per_Minute_Mean, Right_Steps_Per_Minute_Mean]
   - mean: $prev
 
-# step length
+# Step length
 - parameter: Right_Step_Length_Mean
   where:
     name: Running*
@@ -1026,7 +1410,7 @@
     - concatenate: [Right_Step_Length_Mean,Left_Step_Length_Mean]
     - mean: $prev
 
-# stride length
+# Stride length
 - parameter: Right_Stride_Length_Mean
   where:
     name: Running*
@@ -1070,8 +1454,8 @@
     - concatenate: [Right_Stride_Length_Mean, Left_Stride_Length_Mean]
     - mean: $prev
 
-# stride width
-# note V3D is calculation it using stride vector
+# Stride width
+# note V3D script is calculating it using stride vector
 - parameter: Right_Stride_Width_Mean
   where:
     name: Running*
@@ -1106,7 +1490,7 @@
       from: mm
       to: m
 
-# strides per minute
+# Strides per minute
 - parameter: Left_Strides_Per_Minute_Mean
   where:
     name: Running*
@@ -1121,7 +1505,7 @@
     - divide: [60, right_stride_time]
     - mean: $prev
 
-# vertical pelvis movement
+# Vertical pelvis movement
 - parameter: Pelvis_Height_RANGE
   where:
     name: Running*
@@ -1135,7 +1519,7 @@
       from: mm
       to: m
 
-#contact time
+# Contact time
 - parameter: Stance_Time_Mean_MEAN
   where:
     name: Running*
@@ -1151,7 +1535,7 @@
   - concatenate: [left_contact_time_mean, right_contact_time_mean]
   - mean: $prev
 
-#flight time
+# Flight time
 - parameter: Flight_Time_Mean_MEAN
   where:
     name: Running*
@@ -1186,7 +1570,7 @@
   steps:
   - divide: [Flight_time_RTO_LFS, Right_Stance_Time_Mean]
 
-#foot position at FS
+# Foot position at FS
 - parameter: Left_HEEL_PELVIS_MEAN_X
   set: left
   where:
@@ -1223,7 +1607,7 @@
       export: RHEEL_PELVIS_X 
     - mean: heel_pelvis@RFS
 
-# number of steps
+# Number of steps
 - parameter: Cycle_Time_Count
   where:
     name: Running*
@@ -1470,7 +1854,7 @@
       truncate: true
     - min: $prev
 
-# foot wrt lab at footstrike
+# Foot wrt lab at footstrike
 - parameter: L_FOOT_CONTACT_ANGLE@LFS
   where:
     name: Running*
