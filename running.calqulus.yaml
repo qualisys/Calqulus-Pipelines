@@ -50,7 +50,7 @@
     - velocity:
     - lowpass:
       extrapolate: 100
-      cutoff: 8
+      cutoff: 20
 
 - parameter: Left_MID_FOOT_acc
   set: left
@@ -69,6 +69,14 @@
     - lowpass:
       extrapolate: 100
       cutoff: 16
+
+- parameter: LHeelBack_vel
+  set: left
+  where:
+    name: Running*
+  steps:
+    - marker: LHeelBack => sig
+    - velocity:
 
 - parameter: Right_MID_FOOT_vel
   set: right
@@ -107,89 +115,77 @@
       extrapolate: 100
       cutoff: 16
 
+- parameter: RHeelBack_vel
+  set: right
+  where:
+    name: Running*
+  steps:
+    - marker: RHeelBack => sig
+    - velocity:
+
 # Toe off
 - event: LTOE_RISE
   set: left
   where:
     name: Running*
   steps:
-    - threshold: Left_MID_FOOT_acc.z => sig1
+    - threshold: Left_MID_FOOT_acc.z => sig
       value: 0
       direction: down
-    - eventMask: [sig1, L_MID_STANCE, R_MID_STANCE]
+    - eventMask: [sig, R_MID_STANCE, R_MID_STANCE]
       keep: -1
+
+# - event: LTO_treadmill_old
+#   set: left
+#   where:
+#     name: Running*
+#   steps:
+#     - peakFinder: Left_MID_FOOT_acc.z => sig2
+#     - eventMask: [sig2, LTOE_RISE, LTOE_RISE]
+#       keep: -1
 
 - event: LTO_treadmill
   set: left
   where:
     name: Running*
   steps:
-    - peakFinder: Left_MID_FOOT_acc.z => sig2
-    - eventMask: [sig2, LTOE_RISE, LTOE_RISE]
-      keep: -1
+    - import: LHeelBack_vel.z => sig
+    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
+    - max:
+      frames: true
 
 - event: RTOE_RISE
   set: right
   where:
     name: Running*
   steps:
-    - threshold: Right_MID_FOOT_acc.z => sig1
+    - threshold: Right_MID_FOOT_acc.z => sig
       value: 0
       direction: down
-    - eventMask: [sig1, R_MID_STANCE, L_MID_STANCE]
+    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
       keep: -1
+
+# - event: RTO_treadmill
+#   set: right
+#   where:
+#     name: Running*
+#   steps:
+#     - peakFinder: Right_MID_FOOT_acc.z => sig
+#     - eventMask: [sig, RTOE_RISE, RTOE_RISE]
+#       keep: -1
 
 - event: RTO_treadmill
   set: right
   where:
     name: Running*
   steps:
-    - peakFinder: Right_MID_FOOT_acc.z => sig2
-    - eventMask: [sig2, RTOE_RISE, RTOE_RISE]
-      keep: -1
+    - import: RHeelBack_vel.z => sig
+    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
+    - max:
+      frames: true
 
 # Footstrike
-# - event: L_PEAK_MID_FOOT_VEL_z
-#   set: left
-#   where:
-#     name: Running*
-#   steps:
-#     - peakFinder: Left_MID_FOOT_vel.z => sig
-#       width: 10
-#       distance: 50
-#     - eventMask: [sig, L_MID_STANCE, R_MID_STANCE]
-#       keep: -1
-
-# - event: L_MID_FOOT_vel_negative
-#   set: left
-#   where:
-#     name: Running*
-#   steps:
-#     - threshold: Left_MID_FOOT_vel.z => sig1
-#       value: 0
-#       direction: up
-#     - eventMask: [sig1, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
-#       keep: -1
-
-# - event: temp_event_1
-#   set: left
-#   where:
-#     name: Running*
-#   steps:
-#     - threshold: Left_MID_FOOT_vel.y
-#       value: 0
-#       direction: down
-
-# - event: temp_event_2
-#   set: left
-#   where:
-#     name: Running*
-#   steps:
-#     - peakFinder: Left_MID_FOOT_vel.y => sig2
-#     - eventMask: [sig2, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
-#       keep: -1
-  
-- event: LFS_treadmill
+- event: L_PEAK_MID_FOOT_VEL_z
   set: left
   where:
     name: Running*
@@ -199,29 +195,69 @@
       distance: 50
     - eventMask: [sig, L_MID_STANCE, R_MID_STANCE]
       keep: -1
-      output: L_PEAK_MID_FOOT_VEL_z
 
-    #z velocity of foot has to be negative, otherwise foot is not on its way down
-    - threshold: Left_MID_FOOT_vel.z => sig1
+- event: L_MID_FOOT_vel_negative
+  set: left
+  where:
+    name: Running*
+  steps:
+    - threshold: Left_MID_FOOT_vel.z => sig
       value: 0
       direction: up
-    - eventMask: [sig1, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
+    - eventMask: [sig, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
       keep: -1
-      output: L_MID_FOOT_vel_negative
 
-    #temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+- event: temp_event_1
+  set: left
+  where:
+    name: Running*
+  steps:
     - threshold: Left_MID_FOOT_vel.y
       value: 0
       direction: down
-      output: temp_event_1
 
-    - peakFinder: Left_MID_FOOT_vel.y => sig2
-    - eventMask: [sig2, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
+- event: temp_event_2
+  set: left
+  where:
+    name: Running*
+  steps:
+    - peakFinder: Left_MID_FOOT_vel.y => sig
+    - eventMask: [sig, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
       keep: -1
-      output: temp_event_2
+  
+- event: LFS_treadmill
+  set: left
+  where:
+    name: Running*
+  steps:
+    # - peakFinder: Left_MID_FOOT_vel.z => sig
+    #   width: 10
+    #   distance: 50
+    # - eventMask: [sig, L_MID_STANCE, R_MID_STANCE]
+    #   keep: -1
+    #   output: L_PEAK_MID_FOOT_VEL_z
 
-    - peakFinder: Left_MID_FOOT_acc.z => sig3
-    - eventMask: [sig3, temp_event_2, L_MID_FOOT_vel_negative]
+    # #z velocity of foot has to be negative, otherwise foot is not on its way down
+    # - threshold: Left_MID_FOOT_vel.z => sig1
+    #   value: 0
+    #   direction: up
+    # - eventMask: [sig1, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
+    #   keep: -1
+    #   output: L_MID_FOOT_vel_negative
+
+    # #temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+    # - threshold: Left_MID_FOOT_vel.y
+    #   value: 0
+    #   direction: down
+    #   output: temp_event_1
+
+    # - peakFinder: Left_MID_FOOT_vel.y => sig2
+    # - eventMask: [sig2, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
+    #   keep: -1
+    #   output: temp_event_2
+
+    - peakFinder: Left_MID_FOOT_acc.z => sig
+    - eventMask: [sig, temp_event_2, L_MID_FOOT_vel_negative]
       keep: -1
 
 - event: RFS_treadmill
