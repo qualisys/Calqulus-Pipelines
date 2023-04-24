@@ -44,13 +44,13 @@
       from: mm
       to: m
     - lowpass:
-      cutoff: 16
       extrapolate: 100
+      cutoff: 20
       export: Left_MID_FOOT
     - velocity:
     - lowpass:
       extrapolate: 100
-      cutoff: 9
+      cutoff: 8
 
 - parameter: Left_MID_FOOT_acc
   set: left
@@ -63,12 +63,12 @@
       from: mm
       to: m
     - lowpass:
-      cutoff: 16
       extrapolate: 100
+      cutoff: 20
     - acceleration:
     - lowpass:
       extrapolate: 100
-      cutoff: 9
+      cutoff: 16
 
 - parameter: Right_MID_FOOT_vel
   set: right
@@ -81,12 +81,13 @@
       from: mm
       to: m
     - lowpass:
-      cutoff: 16
+      extrapolate: 100
+      cutoff: 20
       export: Right_MID_FOOT
     - velocity:
     - lowpass:
-      extrapolate: 0
-      cutoff: 9
+      extrapolate: 100
+      cutoff: 8
 
 - parameter: Right_MID_FOOT_acc
   set: right
@@ -99,12 +100,12 @@
       from: mm
       to: m
     - lowpass:
-      cutoff: 16
       extrapolate: 100
+      cutoff: 20
     - acceleration:
     - lowpass:
-      extrapolate: 0
-      cutoff: 9
+      extrapolate: 100
+      cutoff: 16
 
 # Toe off
 - event: LTOE_RISE
@@ -148,6 +149,46 @@
       keep: -1
 
 # Footstrike
+# - event: L_PEAK_MID_FOOT_VEL_z
+#   set: left
+#   where:
+#     name: Running*
+#   steps:
+#     - peakFinder: Left_MID_FOOT_vel.z => sig
+#       width: 10
+#       distance: 50
+#     - eventMask: [sig, L_MID_STANCE, R_MID_STANCE]
+#       keep: -1
+
+# - event: L_MID_FOOT_vel_negative
+#   set: left
+#   where:
+#     name: Running*
+#   steps:
+#     - threshold: Left_MID_FOOT_vel.z => sig1
+#       value: 0
+#       direction: up
+#     - eventMask: [sig1, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
+#       keep: -1
+
+# - event: temp_event_1
+#   set: left
+#   where:
+#     name: Running*
+#   steps:
+#     - threshold: Left_MID_FOOT_vel.y
+#       value: 0
+#       direction: down
+
+# - event: temp_event_2
+#   set: left
+#   where:
+#     name: Running*
+#   steps:
+#     - peakFinder: Left_MID_FOOT_vel.y => sig2
+#     - eventMask: [sig2, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
+#       keep: -1
+  
 - event: LFS_treadmill
   set: left
   where:
@@ -160,7 +201,7 @@
       keep: -1
       output: L_PEAK_MID_FOOT_VEL_z
 
-    # z velocity of foot has to be negative, otherwise foot is not on its way down
+    #z velocity of foot has to be negative, otherwise foot is not on its way down
     - threshold: Left_MID_FOOT_vel.z => sig1
       value: 0
       direction: up
@@ -168,7 +209,7 @@
       keep: -1
       output: L_MID_FOOT_vel_negative
 
-    # temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+    #temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
     - threshold: Left_MID_FOOT_vel.y
       value: 0
       direction: down
