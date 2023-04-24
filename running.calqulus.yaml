@@ -116,6 +116,7 @@
       value: 0
       direction: down
     - eventMask: [sig1, L_MID_STANCE, R_MID_STANCE]
+      keep: -1
 
 - event: LTO_treadmill
   set: left
@@ -135,7 +136,7 @@
       value: 0
       direction: down
     - eventMask: [sig1, R_MID_STANCE, L_MID_STANCE]
-      output: RTOE_RISE
+      keep: -1
 
 - event: RTO_treadmill
   set: right
