@@ -98,6 +98,8 @@
 # --- Ankle ---
 
 - parameter: Left Ankle Angles
+  where:
+    name: '!Static*'
   set: left
   steps:
     - angle: [LeftLeg, LeftFoot]
