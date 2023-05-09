@@ -1,0 +1,909 @@
+############
+## SPACES ##
+############
+# Calculated from respective position of feet at Release
+# Assuming Release is entered manually in QTM for now
+
+- parameter: Feet_unit_vector
+  where: 
+    name: Bowling*
+  steps:
+    - subtract: [Front_HeelBack@Release, Back_Forefoot2@Release]
+    - convert:
+      from: mm
+      to: m
+    - unitVector:
+    - round:
+
+- space: VirtualLab
+  origin: [0,0,0]
+  primaryAxis: [Feet_unit_vector?name=Bowling*]
+  secondaryAxis: [[0,0,0], [0,0,1]]
+  order: yz
+
+- parameter: VirtualLabOrigin
+  steps:
+    - multiply: [RForefoot2, 0]
+
+- segment: VirtualLabSegment
+  steps:
+    - segment:
+      origin: VirtualLabOrigin
+      primaryAxis: Feet_unit_vector?name=Bowling*
+      secondaryAxis: [[0,0,0], [0,0,1]]
+      order: yz  
+
+############
+## EVENTS ##
+############
+- event: PLOTSTART
+  where: 
+    name: Bowling*
+  steps:
+    - import: BackFootContact
+
+- event: PLOTEND
+  where: 
+    name: Bowling*
+  steps:
+    - import: Release100msAfter
+
+- event: FrontFootPenultimateContact
+  where: 
+    name: Bowling*
+  steps:
+    - lowpass: Front_Forefoot2
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 1
+      direction: down
+    - eventMask: [$prev, 1, BackFootContact]
+    - subtract: [$prev, 1]
+
+- event: BackFootContact
+  where: 
+    name: Bowling*
+  steps:
+    - lowpass: Back_Forefoot2
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 1
+      direction: down
+    - eventMask: [$prev, 1, Release]
+    - subtract: [$prev, 1]
+
+- event: BackFootToeOff
+  where: 
+    name: Bowling*
+  steps:
+    - lowpass: Back_Forefoot2
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 2
+      direction: up
+    - eventMask: [$prev, BackFootContact, Release]
+    - subtract: [$prev, 1]
+
+- event: FrontFootContact
+  where: 
+    name: Bowling*
+  steps:
+    - lowpass: Front_HeelBack
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 2
+      direction: down
+    - eventMask: [$prev, BackFootContact, Release]
+
+- event: Release100msAfter
+  where: 
+    name: Bowling*
+  steps:
+    - divide: [$framerate, 10] 
+    - add: [Release, $prev]
+
+#Bowling arm reaching the horizontal
+- parameter: Bowling_Shoulder_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, BowlingArm]
+      unwrap: true
+    - multiply: [$prev, Bowling_Shoulder_Convention]
+
+- event: BowlingArmHorizontal
+  where: 
+    name: Bowling*
+  steps:
+    - import: Bowling_Shoulder_VirtualLab_Angle.x
+    - eventMask: [$prev, BackFootContact, Release]
+    - threshold:
+      value: -90
+      direction: down
+
+############
+## SERIES ##
+############
+# Define body side
+# Find out which max hand linear velocity magnitude is higher
+- parameter: Left_Hand_Vel_max
+  where: 
+    name: Bowling*
+  steps:
+    - velocity: LeftHand
+    - magnitude:
+    - max:
+
+- parameter: Right_Hand_Vel_max
+  where: 
+    name: Bowling*
+  steps:
+    - velocity: RightHand
+    - magnitude:
+    - max:
+
+# Define body side
+- parameter: Front_Forefoot2
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LForefoot2
+      else: RForefoot2
+
+- parameter: Front_HeelBack
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LHeelBack
+      else: RHeeLBack
+
+- parameter: Back_Forefoot2
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RForefoot2
+      else: LForefoot2
+
+- parameter: BackThigh
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightUpLeg
+      else: LeftUpLeg
+
+- parameter: FrontThigh
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftUpLeg
+      else: RightUpLeg
+
+- parameter: BackShank
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightLeg
+      else: LeftLeg
+
+- parameter: FrontShank
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftLeg
+      else: RightLeg
+
+- parameter: BackFoot
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightFoot
+      else: LeftFoot
+
+- parameter: FrontFoot
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftFoot
+      else: RightFoot
+
+- parameter: BowlingArm
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightArm
+      else: LeftArm
+
+- parameter: BowlingForearm
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightForearm
+      else: LeftForearm
+
+- parameter: BowlingHand
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightHand
+      else: LeftHand
+
+- parameter: Hip_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, -1, -1]]
+
+- parameter: Knee_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, 1]]
+      else: [[-1, -1, -1]]
+
+- parameter: Ankle_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: Back_Foot_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: Front_Foot_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, -1]]
+      else: [[1, 1, 1]]
+
+- parameter: Hips_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, 1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Spine2_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, 1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Hips_Shoulder_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Bowling_Shoulder_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: Bowling_Elbow_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: Bowling_Wrist_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[1, 1, -1]]
+
+# Curves
+# Back hip angle
+- parameter: Back_Hip_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [Hips, BackThigh]
+    - multiply: [$prev, Hip_Convention]
+
+# Front hip angle
+- parameter: Front_Hip_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [Hips, FrontThigh]
+    - multiply: [$prev, Hip_Convention]
+
+# Back knee angle
+- parameter: Back_Knee_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [BackThigh, BackShank]
+    - multiply: [$prev, Knee_Convention]
+
+# Front knee angle
+- parameter: Front_Knee_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [FrontThigh, FrontShank]
+    - multiply: [$prev, Knee_Convention]
+
+# Back ankle angle
+- parameter: Back_Ankle_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [BackShank, BackFoot]
+    - multiply: [$prev, Ankle_Convention]
+
+# Front ankle angle
+- parameter: Front_Ankle_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [FrontShank, FrontFoot]
+    - multiply: [$prev, Ankle_Convention]
+
+# Back foot alignment (transverse plane foot-virtuallab angle)
+- parameter: Back_Foot_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, BackFoot]
+    - multiply: [$prev, Back_Foot_VirtualLab_Convention]
+
+# Front foot alignment (transverse plane foot-virtuallab angle)
+- parameter: Front_Foot_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, FrontFoot]
+    - multiply: [$prev, Front_Foot_VirtualLab_Convention]
+
+# Pelvis alignment (transverse plane pelvis-virtuallab angle)
+# Pelvis obliquity
+- parameter: Hips_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, Hips]
+      rotationOrder: ZYX
+    - multiply: [$prev, Hips_VirtualLab_Convention]
+
+# Shoulder alignment (transverse plane shoulder-virtuallab angle)
+# Shoulder obliquity
+- parameter: Spine2_VirtualLab_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [VirtualLabSegment, Spine2]
+      rotationOrder: ZYX
+    - multiply: [$prev, Spine2_VirtualLab_Convention]
+
+# Hips-Shoulder separation angle (transverse plane pelvis-thorax angle)
+- parameter: Hips_Shoulder_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [Hips, Spine2]
+      rotationOrder: ZYX
+    - multiply: [$prev, Hips_Shoulder_Convention]
+
+# Bowling Shoulder angle
+- parameter: Bowling_Shoulder_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [Spine2, BowlingArm]
+      unwrap: true
+    - multiply: [$prev, Bowling_Shoulder_Convention]
+
+# Bowling Elbow angle
+- parameter: Bowling_Elbow_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [BowlingArm, BowlingForearm]
+    - multiply: [$prev, Bowling_Elbow_Convention]
+
+# Bowling Wrist angle
+- parameter: Bowling_Wrist_Angle
+  where: 
+    name: Bowling*
+  steps:
+    - angle: [BowlingForearm, BowlingHand]
+    - multiply: [$prev, Bowling_Wrist_Convention]
+
+############
+## FIELDS ##
+############
+- parameter: BALL_SPEED_RELEASE
+  where:
+    name: Bowling*
+  steps:
+    - import: $field(Ball velocity in mps, measurement, numeric)
+
+- parameter: HEIGHT
+  where:
+    name: Bowling*
+  steps:
+    - import: $field(Height, measurement, numeric)
+
+############
+## METRICS ##
+############
+# Ball speed at FrontFootContact
+- parameter: ball_speed@Release
+  where:
+    name: Bowling*
+    fields:
+      Ball velocity in mps: Calculated
+  steps:
+    - lowpass: Ball
+      order: 2
+      cutoff: 24
+      extrapolate: 5
+    - velocity:
+    - magnitude:
+    - convert:
+      from: mm
+      to: m
+    - import: $prev@Release
+
+- parameter: ball_speed@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: BALL_SPEED_RELEASE
+
+# Back Foot Contact Time
+- parameter: BF_contact_time
+  where:
+    name: Bowling*
+  steps:
+    - eventDuration: [BackFootContact, BackFootToeOff]
+
+# Stride length between FFPC-BFC (penultimate step)
+- parameter: stride_length_penultimate
+  where:
+    name: Bowling*
+  steps:
+    - import: FrontFoot => front_foot
+      space: VirtualLab
+    - import: BackFoot => back_foot
+      space: VirtualLab
+    - subtract: [back_foot.y@BackFootContact, front_foot.y@FrontFootPenultimateContact]
+    - convert: $prev
+      from: mm
+      to: m
+
+# Stride length between FFPC-BFC (penultimate step) normalized to body height
+- parameter: stride_length_penultimate_normalized
+  where:
+    name: Bowling*
+  steps:
+    - import: stride_length_penultimate
+    - divide: [$prev, HEIGHT]
+    - multiply: [$prev, 100]
+
+# Stride length between BFC and FFC
+- parameter: stride_length
+  where:
+    name: Bowling*
+  steps:
+    - import: FrontFoot => front_foot
+      space: VirtualLab
+    - import: BackFoot => back_foot
+      space: VirtualLab
+    - subtract: [front_foot.y@FrontFootContact, back_foot.y@BackFootContact]
+    - convert: $prev
+      from: mm
+      to: m
+
+# Stride length between BFC and FFC normalized to body height
+- parameter: stride_length_normalized
+  where:
+    name: Bowling*
+  steps:
+    - import: stride_length
+    - divide: [$prev, HEIGHT]
+    - multiply: [$prev, 100]
+
+# COM/Hips range between FFPC-BFC (penultimate step)
+- parameter: COM_Range_Vertical_Penultimate
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips
+    - eventMask: [$prev.z, FrontFootPenultimateContact, BackFootContact]
+    - max: $prev
+    - subtract: [$prev, Hips.z@BackFootContact]
+    - convert:
+      from: mm
+      to: m
+
+# COM/Hips velocity at BFC
+- parameter: COM_Velocity_Anterior@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips
+      space: VirtualLab
+    - lowpass:
+      order: 2
+      cutoff: 12
+      extrapolate: 200
+    - velocity: $prev.y
+    - convert:
+      from: mm
+      to: m
+    - import: $prev@BackFootContact
+
+- parameter: COM_Velocity_Vertical@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips
+      space: VirtualLab
+    - lowpass:
+      order: 2
+      cutoff: 12
+      extrapolate: 200
+    - velocity: $prev.z
+    - convert:
+      from: mm
+      to: m
+    - import: $prev@BackFootContact
+
+# Hip
+- parameter: Back_Hip_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Hip_Angle@BackFootContact
+
+- parameter: Back_Hip_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Hip_Angle@FrontFootContact
+
+- parameter: Back_Hip_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Hip_Angle@Release
+
+- parameter: Front_Hip_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Hip_Angle@BackFootContact
+
+- parameter: Front_Hip_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Hip_Angle@FrontFootContact
+
+- parameter: Front_Hip_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Hip_Angle@Release
+
+# Knee
+- parameter: Back_Knee_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Knee_Angle@BackFootContact
+
+- parameter: Back_Knee_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Knee_Angle@FrontFootContact
+
+- parameter: Back_Knee_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Knee_Angle@Release
+
+- parameter: Front_Knee_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Knee_Angle@BackFootContact
+
+- parameter: Front_Knee_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Knee_Angle@FrontFootContact
+
+- parameter: Front_Knee_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Knee_Angle@Release
+
+# Ankle
+- parameter: Back_Ankle_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Ankle_Angle@BackFootContact
+
+- parameter: Back_Ankle_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Ankle_Angle@FrontFootContact
+
+- parameter: Back_Ankle_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Ankle_Angle@Release
+
+- parameter: Front_Ankle_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Ankle_Angle@BackFootContact
+
+- parameter: Front_Ankle_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Ankle_Angle@FrontFootContact
+
+- parameter: Front_Ankle_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Ankle_Angle@Release
+
+# Foot
+# Foot angle with respect to virtual lab (sagittal plane)
+- parameter: Front_Foot_VirtualLab_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Foot_VirtualLab_Angle@FrontFootContact
+
+# Foot alignment aka angle with respect to virtual lab (transverse plane)
+- parameter: Back_Foot_VirtualLab_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Foot_VirtualLab_Angle@BackFootContact
+
+- parameter: Back_Foot_VirtualLab_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Foot_VirtualLab_Angle@FrontFootContact
+
+- parameter: Back_Foot_VirtualLab_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Back_Foot_VirtualLab_Angle@Release
+
+- parameter: Front_Foot_VirtualLab_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Foot_VirtualLab_Angle@BackFootContact
+
+- parameter: Front_Foot_VirtualLab_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Foot_VirtualLab_Angle@FrontFootContact
+
+- parameter: Front_Foot_VirtualLab_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Front_Foot_VirtualLab_Angle@Release
+
+# Angle between Hip-Ankle line with the vertical axis
+- parameter: Plant_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - angle: [[0,0,1], [0,0,0], FrontThigh@FrontFootContact, FrontFoot@FrontFootContact]
+    - convert:
+      from: radians
+      to: degrees
+
+# Pelvis alignment and obliquity
+- parameter: Hips_VirtualLab_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips_VirtualLab_Angle@BackFootContact
+
+- parameter: Hips_VirtualLab_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips_VirtualLab_Angle@FrontFootContact
+
+- parameter: Hips_VirtualLab_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips_VirtualLab_Angle@Release
+
+# Shoulder alignment
+- parameter: Spine2_VirtualLab_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Spine2_VirtualLab_Angle@BackFootContact
+
+- parameter: Spine2_VirtualLab_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Spine2_VirtualLab_Angle@FrontFootContact
+
+- parameter: Spine2_VirtualLab_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Spine2_VirtualLab_Angle@Release
+
+# Pelvis-Shoulder separation
+- parameter: Hips_Shoulder_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips_Shoulder_Angle@BackFootContact
+
+- parameter: Hips_Shoulder_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips_Shoulder_Angle@FrontFootContact
+
+- parameter: Hips_Shoulder_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Hips_Shoulder_Angle@Release
+
+# Bowling shoulder
+- parameter: Bowling_Shoulder_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Shoulder_Angle@BackFootContact
+
+- parameter: Bowling_Shoulder_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Shoulder_Angle@FrontFootContact
+
+- parameter: Bowling_Shoulder_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Shoulder_Angle@Release
+
+# Bowling elbow
+- parameter: Bowling_Elbow_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Elbow_Angle@BackFootContact
+
+- parameter: Bowling_Elbow_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Elbow_Angle@FrontFootContact
+
+- parameter: Bowling_Elbow_Angle@BowlingArmHorizontal
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Elbow_Angle@BowlingArmHorizontal
+
+- parameter: Bowling_Elbow_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Elbow_Angle@Release
+
+- parameter: Bowling_Elbow_Angle_Delivery_Range
+  where:
+    name: Bowling*
+  steps:
+    - subtract: [Bowling_Elbow_Angle@Release, Bowling_Elbow_Angle@BowlingArmHorizontal]
+    - multiply: [$prev, -1]
+    
+# Bowling wrist
+- parameter: Bowling_Wrist_Angle@BackFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Wrist_Angle@BackFootContact
+
+- parameter: Bowling_Wrist_Angle@FrontFootContact
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Wrist_Angle@FrontFootContact
+
+- parameter: Bowling_Wrist_Angle@Release
+  where:
+    name: Bowling*
+  steps:
+    - import: Bowling_Wrist_Angle@Release

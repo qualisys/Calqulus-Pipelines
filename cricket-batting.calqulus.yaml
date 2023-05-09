@@ -1,0 +1,674 @@
+############
+## SPACES ##
+############
+
+# Calculated from respective position of feet at Impact
+# Assuming Impact is entered manually in QTM for now
+
+- parameter: Feet_unit_vector
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [LeadForefoot2@Impact, BackForefoot2@Impact]
+    - convert:
+      from: mm
+      to: m
+    - unitVector:
+    - round:
+
+- space: VirtualLab
+  origin: [0,0,0]
+  primaryAxis: [Feet_unit_vector?name=Batting*]
+  secondaryAxis: [[0,0,0], [0,0,1]]
+  order: yz
+
+- parameter: VirtualLabOrigin
+  where: 
+    name: Batting*
+  steps:
+    #- marker: RForefoot2
+    - multiply: [BackForefoot2, 0]
+
+##############
+## SEGMENTS ##
+##############
+
+- segment: VirtualLabSegment
+  steps:
+    - segment:
+      origin: VirtualLabOrigin
+      primaryAxis: Feet_unit_vector?name=Batting*
+      secondaryAxis: [[0,0,0], [0,0,1]]
+      order: yz  
+
+- segment: Bat
+  where: 
+    name: Batting*
+  steps:
+    - segment:
+      origin: BatTopIn
+      primaryAxis: [BatBottomIn, BatBottomOut]
+      secondaryAxis: [BatBottomIn, BatTopIn]
+      order: xz
+
+############
+## EVENTS ##
+############
+
+# Commencement of the downswing (DS), 
+- event: Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: BatBottomOut # we might need to rename after we agree on naming and placement of bat markers
+    - velocity:
+    - magnitude:
+    - negate:
+    - peakFinder: $prev
+    - eventMask: [$prev, BOF, Impact]
+    - import: $prev@-1  #last instance before Impact
+
+- parameter: Bat_Ang_Vel
+  where: 
+    name: Batting*
+  steps:
+    - angularVelocity: [VirtualLabSegment, Bat, VirtualLabSegment, Bat]
+
+- event: Downswing_new
+  where: 
+    name: Batting*
+  steps:
+    - import: Bat_Ang_Vel.y
+    - threshold:
+      value: 0
+      direction: up
+    - eventMask: [$prev, BOF, Impact]
+    - import: $prev@-1  #last instance before Impact
+
+# Forward stride start (FSS),
+- event: FootOff
+  where: 
+    name: Batting*
+  steps:
+    - lowpass: LeadForefoot2
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+      #export: LeadFoot_disp
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 0.1
+      direction: up
+    - eventMask: [$prev, BOF, Impact]
+
+# Forward stride end (FSE), 
+- event: Footstrike
+  where: 
+    name: Batting*
+  steps:
+    - lowpass: LeadForefoot2
+      extrapolate: 200
+      order: 2
+      cutoff: 12
+    - velocity:
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - threshold:
+      value: 0.1
+      direction: down
+    - eventMask: [$prev, BOF, Impact]
+
+# Bat-ball impact (IMP)
+#   set manually in QTM as 'Impact'
+
+- event: BOF
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [2, 1]
+
+- event: EOF
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [$length, 1]
+
+- event: PLOTSTART
+  where: 
+    name: Batting*
+  steps:
+    - import: BOF
+
+- event: PLOTEND
+  where: 
+    name: Batting*
+  steps:
+    - import: EOF
+
+############
+## SERIES ##
+############
+
+# Find out which foot moves using its displacement. Moving foot defines handedness.
+- parameter: Left_Foot_range
+  where: 
+    name: Batting*
+  steps:
+    - import: LeftFoot
+    - magnitude:
+    - max:
+      output: l_max
+    - min: $prev(2)
+      output: l_min
+    - subtract: [l_max, l_min]
+
+- parameter: Right_Foot_range
+  where: 
+    name: Batting*
+  steps:
+    - import: RightFoot
+    - magnitude:
+    - max:
+      output: r_max
+    - min: $prev(2)
+      output: r_min
+    - subtract: [r_max, r_min]
+
+# Define body side
+- parameter: LeadForefoot2
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: LForefoot2
+      else: RForefoot2
+
+- parameter: BackForefoot2
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: RForefoot2
+      else: LForefoot2
+
+- parameter: LeadArm
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: RightArm
+      else: LeftArm
+
+- parameter: LeadForearm
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: RightForearm
+      else: LeftForearm
+
+- parameter: RearArm
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: LeftArm
+      else: RightArm
+
+- parameter: RearForearm
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: LeftForearm
+      else: RightForearm
+
+- parameter: LeadThigh
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: LeftUpLeg
+      else: RightUpLeg
+
+- parameter: LeadShank
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: LeftLeg
+      else: RightLeg
+
+- parameter: RearThigh
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: RightUpLeg
+      else: LeftUpLeg
+
+- parameter: RearShank
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: RightLeg
+      else: LeftLeg
+
+# Set side conventions
+- parameter: Pitching_Shoulder_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Glove_Shoulder_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, -1, 1]]
+      else: [[-1, 1, -1]]
+
+- parameter: Hand_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, -1, 1]]
+      else: [[1, -1, 1]]
+
+- parameter: Knee_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, -1, 1]]
+      else: [[-1, -1, -1]]
+
+- parameter: Back_Foot_wrt_Lab_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, 1, 1]]
+      else: [[1, 1, 1]]
+
+- parameter: Hip_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, -1, -1]]
+      else: [[1, -1, -1]]
+
+- parameter: Hip_Shoulder_Sep_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Trunk_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Trunk_Ang_Vel_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, -1, 1]]
+      else: [[-1, -1, -1]]
+  
+- parameter: Trunk_wrt_Pelvis_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, -1, -1]]
+      else: [[-1, -1, -1]]
+
+- parameter: Pelvis_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, -1, -1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Pelvis_Ang_Vel_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, -1, 1]]
+      else: [[-1, 1, -1]]
+  
+- parameter: Ankle_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, -1, -1]]
+      else: [[1, -1, -1]]
+
+- parameter: Elbow_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, 1, -1]]
+      else: [[1, 1, 1]]
+
+- parameter: Pitching_Humerus_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, 1, 1]]
+      else: [[1, 1, -1]]
+
+- parameter: COG_Vel_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[1, 1, 1]]
+      else: [[1, 1, 1]]
+
+- parameter: Head_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, 1, -1]]
+      else: [[1, 1, 1]]
+
+- parameter: Head_Ang_Vel_Convention
+  where: 
+    name: Batting*
+  steps:
+    - if: Left_Foot_range > Right_Foot_range
+      then: [[-1, -1, 1]]
+      else: [[1, -1, -1]]
+
+# X-factor (transverse plane pelvis-thorax separation angle),
+- parameter: x_factor
+  where: 
+    name: Batting*
+  steps:
+    - angle: [Hips, Spine2]
+      rotationOrder: ZYX
+    - multiply: [$prev, Hip_Shoulder_Sep_Convention]
+
+# Lead and Rear Elbow angle
+- parameter: Lead_Elbow_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [LeadArm, LeadForearm]
+    - multiply: [$prev, Elbow_Convention]
+
+- parameter: Rear_Elbow_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [RearArm, RearForearm]
+    - multiply: [$prev, Elbow_Convention]
+
+# Wrist cocking angle (angle formed between the club/bat and the lead forearm)
+- parameter: Wrist_Cocking_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [LeadForearm, Bat]
+      rotationOrder: ZYX
+    - multiply: [$prev, [1,1,-1]]
+
+
+#- parameter: Wrist_Cocking_Angle_3d
+#  where: 
+#    name: Batting*
+#  steps:
+#    - angle: [BAT - 4, BAT - 5, RWristOut, RElbowOut]
+#      project: xz
+#    - convert:
+#      from: rad
+#      to: deg
+
+# Lead and Rear Knee angles 
+- parameter: Lead_Knee_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [LeadThigh, LeadShank]
+    - multiply: [$prev, Knee_Convention]
+
+- parameter: Rear_Knee_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [RearThigh, RearShank]
+    - multiply: [$prev, Knee_Convention]
+
+# Bat angle
+- parameter: Bat_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [VirtualLabSegment, Bat]
+      space: VirtualLab
+      unwrap: Impact
+
+# Pelvis Angle
+- parameter: Pelvis_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [Hips]
+      space: VirtualLab
+    - multiply: [$prev, Pelvis_Convention]
+
+# Trunk angle
+- parameter: Trunk_Angle
+  where: 
+    name: Batting*
+  steps:
+    - angle: [Spine2]
+      space: VirtualLab
+    - multiply: [$prev, Trunk_Convention]
+
+# Feet distance
+- parameter: Feet_distance
+  where: 
+    name: Batting*
+  steps:
+    - distance: [LeftFoot, RightFoot]
+      space: VirtualLab
+
+#############
+## METRICS ##
+#############
+# Maximum bat speed
+- parameter: Bat_speed_max
+  where: 
+    name: Batting*
+  steps:
+    - add: [BatBottomIn, BatBottomOut] #fix marker names after we decide naming
+    - divide: [$prev, 2]
+    - velocity:
+    - convert:
+      from: mm/s
+      to: m/s
+    - max:
+
+# Bat angle at Downswing and Impact
+- parameter: Bat_angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Bat_angle@Impact
+
+- parameter: Bat_angle@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: Bat_angle@Downswing
+
+# Bat between DS in Impact
+- parameter: Bat_angular rotation_DS_Imp
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [Bat_angle@Downswing, Bat_angle@Impact]
+
+ 
+# Wrist uncocking between min-IMP: The change in wrist cocking angle between its minimum value during the downswing and IMP value
+- parameter: Wrist_uncocking_min_Imp
+  where: 
+    name: Batting*
+  steps:
+    - import: Wrist_Cocking_Angle
+      output: wrist_angle
+    - eventMask: [$prev, BOF, Impact]
+    - min: $prev.x
+      output: min
+    - import: wrist_angle@Impact
+      output: wrist_Imp
+    - subtract: [wrist_Imp, min]
+
+- parameter: Wrist_Cocking_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Wrist_Cocking_Angle@Impact
+
+- parameter: Wrist_Cocking_Angle@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: Wrist_Cocking_Angle@Downswing
+
+# X-factor at DS
+- parameter: x_factor@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: x_factor@Downswing
+
+- parameter: x_factor@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: x_factor@Impact
+
+# X-factor max between DS-IM
+- parameter: x_factor_max_DS_Imp
+  where: 
+    name: Batting*
+  steps:
+    - subtract: [x_factor@Downswing, x_factor@Impact]
+
+# Lead/Rear elbow extension DS-IMP: the change in lead/rear elbow angle between its minimum value during the downswing and IMP value
+- parameter: Lead_Elbow_DS_Imp
+  where: 
+    name: Batting*
+  steps:
+    - import: Lead_Elbow_Angle@Impact
+      output: elb_imp
+    - import: Lead_Elbow_Angle
+    - eventMask: [$prev, Downswing, Impact]
+    - max:
+      output: elb_max
+    - subtract: [elb_max, elb_imp]
+    
+- parameter: Rear_Elbow_DS_Imp
+  where: 
+    name: Batting*
+  steps:
+    - import: Rear_Elbow_Angle@Impact
+      output: elb_imp
+    - import: Rear_Elbow_Angle
+    - eventMask: [$prev, Downswing, Impact]
+    - max:
+      output: elb_max
+    - subtract: [elb_max, elb_imp]
+
+- parameter: Lead_Elbow_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Lead_Elbow_Angle@Impact
+
+- parameter: Lead_Elbow_Angle@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: Lead_Elbow_Angle@Downswing
+
+- parameter: Rear_Elbow_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Rear_Elbow_Angle@Impact
+
+- parameter: Rear_Elbow_Angle@Downswing
+  where: 
+    name: Batting*
+  steps:
+    - import: Rear_Elbow_Angle@Downswing
+
+# Lead Knee FSE-IMP: the change in lead knee angle between FSE-IMP
+- parameter: Lead_Knee_FS_Imp
+  where: 
+    name: Batting*
+  steps:
+    - import: Lead_Knee_Angle@Impact
+      output: knee_imp
+    - import: Lead_Knee_Angle@Footstrike
+      output: knee_fs
+    - subtract: [knee_imp, knee_fs]
+
+- parameter: Lead_Knee_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Lead_Knee_Angle@Impact
+
+# Pelvis angles
+- parameter: Pelvis_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Bat_angle@Impact
+
+# Thorax angle
+- parameter: Trunk_Angle@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Trunk_Angle@Impact
+
+# Base length at impact
+- parameter: Feet_distance@Impact
+  where: 
+    name: Batting*
+  steps:
+    - import: Feet_distance@Impact
+    - convert:
+      from: mm
+      to: m
