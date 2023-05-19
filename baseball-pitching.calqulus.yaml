@@ -86,6 +86,7 @@
       value: 0.4
       direction: down
     - eventMask: [$prev, MaxKneeHeight, Release]
+    - import: $prev@-1
 
 - event: SETUP
   where: 
