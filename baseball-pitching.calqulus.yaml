@@ -93,6 +93,7 @@
     name: Pitching*
   steps:
     - velocity: LeadHeelBack.z
+    - subtract: [$prev, $prev@2]
     - threshold:
       value: 0.02
       direction: up
