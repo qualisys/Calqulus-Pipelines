@@ -266,8 +266,10 @@
       value: 0
       direction: down
     - eventMask: [$prev, MaxPelvisVel, EOF]
-    - import: $prev@1
-
+    - if: $prev@1
+      then: $prev@1
+      else: EOF
+      export: test
 
 ############
 ## SERIES ##
