@@ -64,11 +64,11 @@
       to: m
     - lowpass:
       extrapolate: 100
-      cutoff: 10
+      cutoff: 8
     - acceleration:
     - lowpass:
       extrapolate: 100
-      cutoff: 18
+      cutoff: 20
 
 - parameter: LHeelBack_vel
   set: left
