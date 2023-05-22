@@ -68,7 +68,7 @@
     - acceleration:
     - lowpass:
       extrapolate: 100
-      cutoff: 12
+      cutoff: 16
 
 - parameter: LHeelBack_vel
   set: left
