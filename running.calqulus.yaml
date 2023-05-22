@@ -45,12 +45,12 @@
       to: m
     - lowpass:
       extrapolate: 100
-      cutoff: 12
+      cutoff: 20
       export: Left_MID_FOOT
     - velocity:
     - lowpass:
       extrapolate: 100
-      cutoff: 12
+      cutoff: 20
 
 - parameter: Left_MID_FOOT_acc
   set: left
@@ -68,7 +68,7 @@
     - acceleration:
     - lowpass:
       extrapolate: 100
-      cutoff: 16
+      cutoff: 12
 
 - parameter: LHeelBack_vel
   set: left
@@ -89,13 +89,13 @@
       from: mm
       to: m
     - lowpass:
-      extrapolate: 50
-      cutoff: 16
+      extrapolate: 100
+      cutoff: 20
       export: Right_MID_FOOT
     - velocity:
     - lowpass:
-      extrapolate: 50
-      cutoff: 16
+      extrapolate: 100
+      cutoff: 20
 
 - parameter: Right_MID_FOOT_acc
   set: right
@@ -108,11 +108,11 @@
       from: mm
       to: m
     - lowpass:
-      extrapolate: 50
+      extrapolate: 100
       cutoff: 12
     - acceleration:
     - lowpass:
-      extrapolate: 50
+      extrapolate: 100
       cutoff: 12
 
 - parameter: RHeelBack_vel
