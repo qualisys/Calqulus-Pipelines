@@ -50,7 +50,7 @@
     - velocity:
     - lowpass:
       extrapolate: 100
-      cutoff: 16
+      cutoff: 12
 
 - parameter: Left_MID_FOOT_acc
   set: left
