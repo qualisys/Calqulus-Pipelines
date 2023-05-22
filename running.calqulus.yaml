@@ -45,12 +45,12 @@
       to: m
     - lowpass:
       extrapolate: 100
-      cutoff: 12
+      cutoff: 16
       export: Left_MID_FOOT
     - velocity:
     - lowpass:
       extrapolate: 100
-      cutoff: 12
+      cutoff: 16
 
 - parameter: Left_MID_FOOT_acc
   set: left
