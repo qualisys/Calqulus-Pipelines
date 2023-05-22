@@ -64,7 +64,7 @@
       to: m
     - lowpass:
       extrapolate: 100
-      cutoff: 16
+      cutoff: 12
     - acceleration:
     - lowpass:
       extrapolate: 100
