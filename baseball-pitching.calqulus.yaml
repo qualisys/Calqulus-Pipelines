@@ -66,8 +66,8 @@
   where: 
     name: Pitching*
   steps:
-    - peakFinder: LeadShank.z
-      width: 100
+    - max: LeadShank.z
+      frames: true
 
 - event: Footstrike
   where: 
