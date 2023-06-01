@@ -26,8 +26,8 @@
   where: 
     name: Batting*
   steps:
-    #- marker: RForefoot2
-    - multiply: [BackForefoot2, 0]
+    - marker: RForefoot2
+    - multiply: [$prev, 0]
 
 ##############
 ## SEGMENTS ##
