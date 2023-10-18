@@ -1,0 +1,560 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [1]
+
+- event: EOF
+  steps:
+    - import: [$length]
+
+- parameter: RPV_CGVel
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - velocity:
+    - convert: $prev
+      from: mm/s
+      to: m/s
+
+# Bilateral and left
+- parameter: Left_MID_FOOT_vel
+  where:
+    name: CMJ_[LB]*
+  set: left
+  steps:
+    - segment: LeftToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+      export: LFT_DistEnd
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+
+- event: temp_L_max
+  where:
+    name: CMJ_[LB]*
+  set: left
+  steps:
+    - import: Left_MID_FOOT_vel.z
+    - max:
+      frames: true
+
+- event: LOFF
+  where:
+    name: CMJ_[LB]*
+  set: left
+  steps:
+    - threshold: Left_MID_FOOT_vel.z
+      value: 0.5
+      direction: up
+    - eventMask: [$prev, BOF, temp_L_max]
+      keep: -1
+    - add: [$prev, 1]
+    
+- event: LON
+  where:
+    name: CMJ_[LB]*
+  set: left
+  steps:
+    - min: RPV_CGVel.z
+      frames: true
+    - subtract: [$prev, 1]
+
+- event: TouchDown_L
+  where:
+    name: CMJ_[LB]*
+  set: left
+  steps:
+    - import: LON
+
+- event: TakeOff_L
+  where:
+    name: CMJ_[LB]*
+  set: left
+  steps:
+    - import: LOFF
+
+- event: PlotStart_L
+  where:
+    name: CMJ_[LB]*
+  set: left
+  steps:
+    - divide: [$framerate, 10]
+      output: shift
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: down
+    - eventMask: [$prev, BOF, TakeOff_L]
+      keep: -1
+    - subtract: [$prev, shift] #shift by -0.1 s
+
+- event: Pelvis_lowest
+  where:
+    name: CMJ_[LB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+    - min:
+      frames: true
+
+- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  where:
+    name: CMJ_[LB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+    - min:
+      frames: true
+
+- event: Eccentric_end
+  where:
+    name: CMJ_[LB]*
+  steps:
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+
+# Bilateral and right
+- parameter: Right_MID_FOOT_vel
+  where:
+    name: CMJ_[RB]*
+  set: right
+  steps:
+    - segment: RightToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+      export: LFT_DistEnd
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+
+- event: temp_R_max
+  where:
+    name: CMJ_[RB]*
+  set: right
+  steps:
+    - import: Right_MID_FOOT_vel.z
+    - max:
+      frames: true
+
+- event: ROFF
+  where:
+    name: CMJ_[RB]*
+  set: right
+  steps:
+    - threshold: Right_MID_FOOT_vel.z
+      value: 0.5
+      direction: up
+    - eventMask: [$prev, BOF, temp_R_max]
+      keep: -1
+    - add: [$prev, 1]
+    
+- event: RON
+  where:
+    name: CMJ_[RB]*
+  set: right
+  steps:
+    - min: RPV_CGVel.z
+      frames: true
+    - subtract: [$prev, 1]
+
+- event: TouchDown_R
+  where:
+    name: CMJ_[RB]*
+  set: right
+  steps:
+    - import: RON
+
+- event: TakeOff_R
+  where:
+    name: CMJ_[RB]*
+  set: right
+  steps:
+    - import: ROFF
+
+- event: PlotStart_R
+  where:
+    name: CMJ_[RB]*
+  set: right
+  steps:
+    - divide: [$framerate, 10]
+      output: shift
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: down
+    - eventMask: [$prev, BOF, TakeOff_R]
+      keep: -1
+    - subtract: [$prev, shift] #shift by -0.1 s
+
+- event: Pelvis_lowest
+  where:
+    name: CMJ_[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - min:
+      frames: true
+
+- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  where:
+    name: CMJ_[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - min:
+      frames: true
+
+- event: Eccentric_end
+  where:
+    name: CMJ_[RB]*
+  steps:
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+
+- event: TakeOff
+  where:
+    name: CMJ_B*
+  steps:
+    - concatenate: [LOFF, ROFF]
+    - mean: 
+
+- event: PlotStart
+  where:
+    name: CMJ_B*
+  steps:
+    - concatenate: [PlotStart_L, PlotStart_R]
+    - mean: 
+
+- event: TouchDown
+  where:
+    name: CMJ_B*
+  steps:
+    - concatenate: [LON, RON]
+    - mean: 
+
+- event: TakeOff
+  where:
+    name: CMJ_L*
+  steps:
+    - mean: LOFF
+
+- event: PlotStart
+  where:
+    name: CMJ_L*
+  steps:
+    - mean: PlotStart_L
+
+- event: TouchDown
+  where:
+    name: CMJ_L*
+  steps:
+    - mean: LON
+
+- event: TakeOff
+  where:
+    name: CMJ_R*
+  steps:
+    - mean: ROFF
+
+- event: PlotStart
+  where:
+    name: CMJ_R*
+  steps:
+    - mean: PlotStart_R
+  
+- event: TouchDown
+  where:
+    name: CMJ_R*
+  steps:
+    - mean: RON
+  
+- event: PlotEnd # We might need to review this after dependency issue is resolved
+  where:
+    name: CMJ_[LB]*
+  steps:
+    - subtract: [EOF, TouchDown_L]
+      output: diff
+    - multiply: [0.75, $framerate]
+      output: myShift
+    - multiply: [TouchDown_L, 1]
+    - add: [$prev, $prev(2)] #place PlotEnd 0.75 s after TouchDown
+    - if: diff <= myShift
+      then: EOF
+      else: $prev
+
+- event: PlotEnd
+  where:
+    name: CMJ_[RB]*
+  steps:
+    - subtract: [EOF, TouchDown_R]
+      output: diff
+    - multiply: [0.75, $framerate]
+      output: myShift
+    - multiply: [TouchDown_R, 1]
+    - add: [$prev, $prev(2)] #place PlotEnd 0.75 s after TouchDown
+    - if: diff <= myShift
+      then: EOF
+      else: $prev
+
+############
+## SERIES ##
+############
+
+# --- Pelvis ---
+
+- parameter: Left Pelvic Angles
+  set: left
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+    - multiply: [$prev, [-1, -1, -1]]
+
+- parameter: Right Pelvic Angles
+  set: right
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, 1]]
+
+# --- Hips ---
+
+- parameter: Left Hip Angles
+  set: left
+  steps:
+    - jointAngle: [Hips, LeftUpLeg]
+    - multiply: [$prev, [1, -1, 1]]
+
+- parameter: Right Hip Angles
+  set: right
+  steps:
+    - jointAngle: [Hips, RightUpLeg]
+
+# --- Knee ---
+
+- parameter: Left Knee Angles
+  set: left
+  steps:
+    - jointAngle: [LeftUpLeg, LeftLeg]
+    - multiply: [$prev, [-1, -1, -1]]
+
+- parameter: Right Knee Angles
+  set: right
+  steps:
+    - jointAngle: [RightUpLeg, RightLeg]
+    - multiply: [$prev, [-1, 1, 1]]
+
+# --- Ankle ---
+
+- parameter: Left Ankle Angles
+  set: left
+  steps:
+    - jointAngle: [LeftLeg, LeftFoot]
+    - multiply: [$prev, [1, -1, 1]]
+
+- parameter: Right Ankle Angles
+  set: right
+  steps:
+    - jointAngle: [RightLeg, RightFoot]
+
+- parameter: Left Foot Progression
+  set: left
+  steps:
+    - jointAngle: LeftFoot
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, -1]]
+
+- parameter: Right Foot Progression
+  set: right
+  steps:
+    - jointAngle: RightFoot
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, 1]]
+
+# --- Upper body ---
+
+- parameter: Trunk Angles_wrt_LAB
+  steps:
+    - jointAngle: Spine2
+      space: VirtualLab
+    - multiply: [$prev, [-1,1,1]]
+
+- parameter: Shoulder_Pelvis Angle
+  steps:
+    - jointAngle: [Hips, Spine2]
+
+# --- Arms ---
+
+- parameter: Left Elbow Angle
+  set: left
+  steps:
+    - angle: [LeftArm, LeftForeArm, LeftHand]
+    - convert: $prev
+      from: radians
+      to: degrees
+
+- parameter: Right Elbow Angle
+  set: right
+  steps:
+    - angle: [RightArm, RightForeArm, RightHand]
+    - convert: $prev
+      from: radians
+      to: degrees
+
+# COM distance to knee and ankle
+# for now using pelvis COM instead of body COM
+- parameter: Left_Knee_COM_distance
+  set: left
+  steps:
+    - segment: LeftLeg => knee
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, knee]
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Right_Knee_COM_distance
+  set: right
+  steps:
+    - segment: RightLeg => knee
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, knee]
+    - convert: 
+      from: mm
+      to: m
+    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+- parameter: Left_Ankle_COM_distance
+  set: left
+  steps:
+    - segment: LeftFoot => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, foot]
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Right_Ankle_COM_distance
+  set: right
+  steps:
+    - segment: RightFoot => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, foot]
+    - convert: 
+      from: mm
+      to: m
+    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+#############
+## Metrics ##
+#############
+
+# Flight Time
+- parameter: FlightTime_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventDuration: [TakeOff,TouchDown]
+
+- parameter: FlightTime_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventDuration: [TakeOff,TouchDown]
+
+- parameter: FlightTime_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventDuration: [TakeOff,TouchDown]
+
+# Eccentric time
+- parameter: EccentricTime_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventDuration: [PlotStart,Eccentric_end]
+
+- parameter: EccentricTime_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventDuration: [PlotStart,Eccentric_end]
+
+- parameter: EccentricTime_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventDuration: [PlotStart,Eccentric_end]
+
+# Concentric time
+- parameter: ConcentricTime_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventDuration: [Eccentric_end,TakeOff]
+
+- parameter: ConcentricTime_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventDuration: [Eccentric_end,TakeOff]
+
+- parameter: ConcentricTime_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventDuration: [Eccentric_end,TakeOff]
+
+# Flight time to Contraction time ratio
+- parameter: Flight_Contraction_time_ratio_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - divide: [FlightTime_CMJ_B,ConcentricTime_CMJ_B]
+
+- parameter: Flight_Contraction_time_ratio_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - divide: [FlightTime_CMJ_L,ConcentricTime_CMJ_L]
+
+- parameter: Flight_Contraction_time_ratio_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - divide: [FlightTime_CMJ_R,ConcentricTime_CMJ_R]
+
