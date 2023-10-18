@@ -324,18 +324,26 @@
 
 # unified event names for web
 - event: LeftPlotStart
+  where:
+    name: CMJ_[LB]*
   steps:
     - import: PlotStart_L
 
 - event: RightPlotStart
+  where:
+    name: CMJ_[RB]*
   steps:
     - import: PlotStart_R
 
 - event: LeftPlotEnd
+  where:
+    name: CMJ_[LB]*
   steps:
     - import: PlotEnd_L
 
 - event: RightPlotEnd
+  where:
+    name: CMJ_[RB]*
   steps:
     - import: PlotEnd_R
 
