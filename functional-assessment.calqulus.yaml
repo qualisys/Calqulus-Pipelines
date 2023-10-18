@@ -294,7 +294,7 @@
   steps:
     - mean: RON
   
-- event: PlotEnd # We might need to review this after dependency issue is resolved
+- event: PlotEnd_L # We might need to review this after dependency issue is resolved
   where:
     name: CMJ_[LB]*
   steps:
@@ -308,7 +308,7 @@
       then: EOF
       else: $prev
 
-- event: PlotEnd
+- event: PlotEnd_R
   where:
     name: CMJ_[RB]*
   steps:
@@ -321,6 +321,23 @@
     - if: diff <= myShift
       then: EOF
       else: $prev
+
+# unified event names for web
+- event: LeftPlotStart
+  steps:
+    - import: PlotStart_L
+
+- event: RightPlotStart
+  steps:
+    - import: PlotStart_R
+
+- event: LeftPlotEnd
+  steps:
+    - import: PlotEnd_L
+
+- event: RightPlotEnd
+  steps:
+    - import: PlotEnd_R
 
 ############
 ## SERIES ##
