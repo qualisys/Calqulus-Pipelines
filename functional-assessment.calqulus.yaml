@@ -421,6 +421,20 @@
       space: VirtualLab
     - multiply: [$prev, [-1, 1, 1]]
 
+- parameter: Left Foot Pitch Angles
+  set: left
+  steps:
+    - jointAngle: LeftFoot
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, -1]]
+
+- parameter: Right Foot Pitch Angles
+  set: right
+  steps:
+    - jointAngle: RightFoot
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, 1]]
+
 # --- Upper body ---
 
 - parameter: Trunk Angles_wrt_LAB
