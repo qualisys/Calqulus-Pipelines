@@ -443,6 +443,11 @@
       space: VirtualLab
     - multiply: [$prev, [-1,1,1]]
 
+- parameter: Shoulder_Pelvis Angle
+  steps:
+    - jointAngle: [Hips, Spine2]
+    - multiply: [$prev, [-1, -1, -1]]
+
 - parameter: Left Thorax Angles
   steps:
     - jointAngle: [Hips, Spine2]
