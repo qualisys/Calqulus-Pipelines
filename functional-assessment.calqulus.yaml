@@ -443,9 +443,15 @@
       space: VirtualLab
     - multiply: [$prev, [-1,1,1]]
 
-- parameter: Shoulder_Pelvis Angle
+- parameter: Left Thorax Angles
   steps:
     - jointAngle: [Hips, Spine2]
+    - multiply: [$prev, [-1, -1, -1]]
+
+- parameter: Right Thorax Angles
+  steps:
+    - jointAngle: [Hips, Spine2]
+    - multiply: [$prev, [-1, -1, -1]]
 
 # --- Arms ---
 
@@ -597,3 +603,362 @@
   steps:
     - divide: [FlightTime_CMJ_R,ConcentricTime_CMJ_R]
 
+# COM @TakeOff, max, min
+# We use Prlvis COM for now
+- parameter: COM_Z_TO_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Hips@TakeOff
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass_MAX_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Hips
+    - eventMask: [$prev,TakeOff,TakeOff]
+    - max:
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - min: Hips.z
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass@PlotStart_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Hips.z@PlotStart
+    - convert:
+      from: mm
+      to: m
+
+#debugging signal, can be removed
+- parameter: Pelvis_COM
+  steps:
+    - import: Hips
+    - convert:
+      from: mm
+      to: m
+
+# Jump height calculated from pelvis height
+# other options ('takeoff_velocity', 'flight_time', 'static_trial') are not available, yet
+
+- parameter: COM_displacement_MEAN_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips.z,TakeOff,TakeOff]
+    - max: $prev
+    - subtract: [$prev,$prev(3)]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: COM_displacement_MEAN_min_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - subtract: [CenterOfMass@PlotStart_CMJ_B, CenterOfMass_MIN_CMJ_B]
+
+#COM peak eccentric velocity
+- parameter: PelvisCGPos_vel_min_eccentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - min: RPV_CGVel
+    - eventMask: [$prev,PlotStart,Eccentric_end]
+
+#Jump Height to Flight Time Ratio
+- parameter: Jump_height_flight_time_ratio_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_B,FlightTime_CMJ_B]
+
+# COM distance to knee and ankle
+# @TouchDown
+- parameter: Left_Knee_COM_distance@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left_Knee_COM_distance@TouchDown
+
+- parameter: Right_Knee_COM_distance@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right_Knee_COM_distance@TouchDown
+
+- parameter: Left_Ankle_COM_distance@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left_Ankle_COM_distance@TouchDown
+
+- parameter: Right_Ankle_COM_distance@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right_Ankle_COM_distance@TouchDown
+
+# @TakeOff
+- parameter: Left_Knee_COM_distance@TakeOff_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left_Knee_COM_distance@TakeOff
+
+- parameter: Right_Knee_COM_distance@TakeOff_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right_Knee_COM_distance@TakeOff
+
+- parameter: Left_Ankle_COM_distance@TakeOff_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left_Ankle_COM_distance@TakeOff
+
+- parameter: Right_Ankle_COM_distance@TakeOff_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right_Ankle_COM_distance@TakeOff
+
+# @Pelvis_lowest
+- parameter: Left_Knee_COM_distance@Pelvis_lowest_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left_Knee_COM_distance@Pelvis_lowest
+
+- parameter: Right_Knee_COM_distance@Pelvis_lowest_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right_Knee_COM_distance@Pelvis_lowest
+
+- parameter: Left_Ankle_COM_distance@Pelvis_lowest_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left_Ankle_COM_distance@Pelvis_lowest
+
+- parameter: Right_Ankle_COM_distance@Pelvis_lowest_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right_Ankle_COM_distance@Pelvis_lowest
+
+# Other metrics @TouchDown
+- parameter: Left Knee Angles@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Knee Angles@TouchDown
+
+- parameter: Right Knee Angles@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Knee Angles@TouchDown
+
+- parameter: Left Hip Angles@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Hip Angles@TouchDown
+
+- parameter: Right Hip Angles@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Hip Angles@TouchDown
+
+- parameter: Left Thorax Angles@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Thorax Angles@TouchDown
+
+- parameter: Right Thorax Angles@TouchDown_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Thorax Angles@TouchDown
+
+# @COM_MIN
+- parameter: Left Ankle Angles@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Ankle Angles@COM_MIN
+
+- parameter: Right Ankle Angles@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Ankle Angles@COM_MIN
+
+- parameter: Left Knee Angles@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Knee Angles@COM_MIN
+
+- parameter: Right Knee Angles@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Knee Angles@COM_MIN
+
+- parameter: Left Hip Angles@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Hip Angles@COM_MIN
+
+- parameter: Right Hip Angles@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Hip Angles@COM_MIN
+
+- parameter: Left Thorax Angles@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Thorax Angles@COM_MIN
+
+- parameter: Right Thorax Angles@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Thorax Angles@COM_MIN
+
+#Maximum during takeoff
+- parameter: Left Hip Angles_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Hip Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Hip Angles_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Hip Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Knee Angles_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Knee Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Knee Angles_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Knee Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Ankle Angles_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Ankle Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Ankle Angles_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Ankle Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Foot Progression_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Foot Progression, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Foot Progression_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Foot Progression, PlotStart,TakeOff]
+    - max:
+
+#Maximum during landing
+- parameter: Left Hip Angles_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Hip Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Hip Angles_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Hip Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Knee Angles_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Knee Angles_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Ankle Angles_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Ankle Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Ankle Angles_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Ankle Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Foot Progression_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Foot Progression, TouchDown,EOF]
+    - max:
+
+- parameter: Right Foot Progression_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Foot Progression, TouchDown,EOF]
+    - max:
