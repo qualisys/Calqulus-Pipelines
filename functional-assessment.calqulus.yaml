@@ -680,12 +680,38 @@
     - min: RPV_CGVel
     - eventMask: [$prev,PlotStart,Eccentric_end]
 
+- parameter: PelvisCGPos_vel_min_eccentric_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - min: RPV_CGVel
+    - eventMask: [$prev,PlotStart,Eccentric_end]
+
+- parameter: PelvisCGPos_vel_min_eccentric_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - min: RPV_CGVel
+    - eventMask: [$prev,PlotStart,Eccentric_end]
+
 #Jump Height to Flight Time Ratio
 - parameter: Jump_height_flight_time_ratio_CMJ_B
   where:
     name: CMJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_CMJ_B,FlightTime_CMJ_B]
+
+- parameter: Jump_height_flight_time_ratio_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_L,FlightTime_CMJ_L]
+
+- parameter: Jump_height_flight_time_ratio_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_R,FlightTime_CMJ_R]
 
 # COM distance to knee and ankle
 # @TouchDown
@@ -710,6 +736,54 @@
 - parameter: Right_Ankle_COM_distance@TouchDown_CMJ_B
   where:
     name: CMJ_B*
+  steps:
+    - import: Right_Ankle_COM_distance@TouchDown
+
+- parameter: Left_Knee_COM_distance@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left_Knee_COM_distance@TouchDown
+
+- parameter: Right_Knee_COM_distance@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right_Knee_COM_distance@TouchDown
+
+- parameter: Left_Ankle_COM_distance@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left_Ankle_COM_distance@TouchDown
+
+- parameter: Right_Ankle_COM_distance@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right_Ankle_COM_distance@TouchDown
+
+- parameter: Left_Knee_COM_distance@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left_Knee_COM_distance@TouchDown
+
+- parameter: Right_Knee_COM_distance@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right_Knee_COM_distance@TouchDown
+
+- parameter: Left_Ankle_COM_distance@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left_Ankle_COM_distance@TouchDown
+
+- parameter: Right_Ankle_COM_distance@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
@@ -738,6 +812,54 @@
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
+- parameter: Left_Knee_COM_distance@TakeOff_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left_Knee_COM_distance@TakeOff
+
+- parameter: Right_Knee_COM_distance@TakeOff_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right_Knee_COM_distance@TakeOff
+
+- parameter: Left_Ankle_COM_distance@TakeOff_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left_Ankle_COM_distance@TakeOff
+
+- parameter: Right_Ankle_COM_distance@TakeOff_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right_Ankle_COM_distance@TakeOff
+
+- parameter: Left_Knee_COM_distance@TakeOff_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left_Knee_COM_distance@TakeOff
+
+- parameter: Right_Knee_COM_distance@TakeOff_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right_Knee_COM_distance@TakeOff
+
+- parameter: Left_Ankle_COM_distance@TakeOff_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left_Ankle_COM_distance@TakeOff
+
+- parameter: Right_Ankle_COM_distance@TakeOff_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right_Ankle_COM_distance@TakeOff
+
 # @Pelvis_lowest
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_CMJ_B
   where:
@@ -760,6 +882,54 @@
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_CMJ_B
   where:
     name: CMJ_B*
+  steps:
+    - import: Right_Ankle_COM_distance@Pelvis_lowest
+
+- parameter: Left_Knee_COM_distance@Pelvis_lowest_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left_Knee_COM_distance@Pelvis_lowest
+
+- parameter: Right_Knee_COM_distance@Pelvis_lowest_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right_Knee_COM_distance@Pelvis_lowest
+
+- parameter: Left_Ankle_COM_distance@Pelvis_lowest_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left_Ankle_COM_distance@Pelvis_lowest
+
+- parameter: Right_Ankle_COM_distance@Pelvis_lowest_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right_Ankle_COM_distance@Pelvis_lowest
+
+- parameter: Left_Knee_COM_distance@Pelvis_lowest_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left_Knee_COM_distance@Pelvis_lowest
+
+- parameter: Right_Knee_COM_distance@Pelvis_lowest_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right_Knee_COM_distance@Pelvis_lowest
+
+- parameter: Left_Ankle_COM_distance@Pelvis_lowest_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left_Ankle_COM_distance@Pelvis_lowest
+
+- parameter: Right_Ankle_COM_distance@Pelvis_lowest_CMJ_R
+  where:
+    name: CMJ_R*
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
@@ -797,6 +967,78 @@
 - parameter: Right Thorax Angles@TouchDown_CMJ_B
   where:
     name: CMJ_B*
+  steps:
+    - import: Right Thorax Angles@TouchDown
+
+- parameter: Left Knee Angles@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Knee Angles@TouchDown
+
+- parameter: Right Knee Angles@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right Knee Angles@TouchDown
+
+- parameter: Left Hip Angles@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Hip Angles@TouchDown
+
+- parameter: Right Hip Angles@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right Hip Angles@TouchDown
+
+- parameter: Left Thorax Angles@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Thorax Angles@TouchDown
+
+- parameter: Right Thorax Angles@TouchDown_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right Thorax Angles@TouchDown
+
+- parameter: Left Knee Angles@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left Knee Angles@TouchDown
+
+- parameter: Right Knee Angles@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right Knee Angles@TouchDown
+
+- parameter: Left Hip Angles@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left Hip Angles@TouchDown
+
+- parameter: Right Hip Angles@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right Hip Angles@TouchDown
+
+- parameter: Left Thorax Angles@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left Thorax Angles@TouchDown
+
+- parameter: Right Thorax Angles@TouchDown_CMJ_R
+  where:
+    name: CMJ_R*
   steps:
     - import: Right Thorax Angles@TouchDown
 
@@ -846,6 +1088,102 @@
 - parameter: Right Thorax Angles@COM_MIN_CMJ_B
   where:
     name: CMJ_B*
+  steps:
+    - import: Right Thorax Angles@COM_MIN
+
+- parameter: Left Ankle Angles@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Ankle Angles@COM_MIN
+
+- parameter: Right Ankle Angles@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right Ankle Angles@COM_MIN
+
+- parameter: Left Knee Angles@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Knee Angles@COM_MIN
+
+- parameter: Right Knee Angles@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right Knee Angles@COM_MIN
+
+- parameter: Left Hip Angles@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Hip Angles@COM_MIN
+
+- parameter: Right Hip Angles@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right Hip Angles@COM_MIN
+
+- parameter: Left Thorax Angles@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Thorax Angles@COM_MIN
+
+- parameter: Right Thorax Angles@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Right Thorax Angles@COM_MIN
+
+- parameter: Left Ankle Angles@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left Ankle Angles@COM_MIN
+
+- parameter: Right Ankle Angles@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right Ankle Angles@COM_MIN
+
+- parameter: Left Knee Angles@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left Knee Angles@COM_MIN
+
+- parameter: Right Knee Angles@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right Knee Angles@COM_MIN
+
+- parameter: Left Hip Angles@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left Hip Angles@COM_MIN
+
+- parameter: Right Hip Angles@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right Hip Angles@COM_MIN
+
+- parameter: Left Thorax Angles@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Left Thorax Angles@COM_MIN
+
+- parameter: Right Thorax Angles@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
   steps:
     - import: Right Thorax Angles@COM_MIN
 
@@ -906,6 +1244,118 @@
     - eventMask: [Right Foot Progression, PlotStart,TakeOff]
     - max:
 
+- parameter: Left Hip Angles_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Hip Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Hip Angles_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Right Hip Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Knee Angles_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Knee Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Knee Angles_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Right Knee Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Ankle Angles_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Ankle Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Ankle Angles_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Right Ankle Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Foot Progression_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Foot Progression, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Foot Progression_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Right Foot Progression, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Hip Angles_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Left Hip Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Hip Angles_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Hip Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Knee Angles_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Left Knee Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Knee Angles_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Knee Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Ankle Angles_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Left Ankle Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Ankle Angles_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Ankle Angles, PlotStart,TakeOff]
+    - max:
+
+- parameter: Left Foot Progression_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Left Foot Progression, PlotStart,TakeOff]
+    - max:
+
+- parameter: Right Foot Progression_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Foot Progression, PlotStart,TakeOff]
+    - max:
+
 #Maximum during landing
 - parameter: Left Hip Angles_max_landing_CMJ_B
   where:
@@ -959,6 +1409,118 @@
 - parameter: Right Foot Progression_max_landing_CMJ_B
   where:
     name: CMJ_B*
+  steps:
+    - eventMask: [Right Foot Progression, TouchDown,EOF]
+    - max:
+
+- parameter: Left Hip Angles_max_landing_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Hip Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Hip Angles_max_landing_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Right Hip Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Knee Angles_max_landing_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Knee Angles_max_landing_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Ankle Angles_max_landing_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Ankle Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Ankle Angles_max_landing_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Right Ankle Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Foot Progression_max_landing_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Foot Progression, TouchDown,EOF]
+    - max:
+
+- parameter: Right Foot Progression_max_landing_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Right Foot Progression, TouchDown,EOF]
+    - max:
+
+- parameter: Left Hip Angles_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Left Hip Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Hip Angles_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Hip Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Knee Angles_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Knee Angles_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Ankle Angles_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Left Ankle Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Right Ankle Angles_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Ankle Angles, TouchDown,EOF]
+    - max:
+
+- parameter: Left Foot Progression_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Left Foot Progression, TouchDown,EOF]
+    - max:
+
+- parameter: Right Foot Progression_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
   steps:
     - eventMask: [Right Foot Progression, TouchDown,EOF]
     - max:
