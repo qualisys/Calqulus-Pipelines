@@ -666,7 +666,31 @@
       from: mm
       to: m
 
-- parameter: COM_displacement_MEAN_min_CMJ_B
+- parameter: COM_displacement_MEAN_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips.z,TakeOff,TakeOff]
+    - max: $prev
+    - subtract: [$prev,$prev(3)]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: COM_displacement_MEAN_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips.z,TakeOff,TakeOff]
+    - max: $prev
+    - subtract: [$prev,$prev(3)]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: COM_displacement_MEAN_min_CMJ_B #!!!!! Not working
   where:
     name: CMJ_B*
   steps:
