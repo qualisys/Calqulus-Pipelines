@@ -358,14 +358,14 @@
   steps:
     - jointAngle: Hips
       space: VirtualLab
-    - multiply: [$prev, [-1, -1, -1]]
+    - multiply: [$prev, [-1, 1, -1]]
 
 - parameter: Right Pelvic Angles
   set: right
   steps:
     - jointAngle: Hips
       space: VirtualLab
-    - multiply: [$prev, [-1, 1, 1]]
+    - multiply: [$prev, [-1, -1, 1]]
 
 # --- Hips ---
 
@@ -400,12 +400,13 @@
   set: left
   steps:
     - jointAngle: [LeftLeg, LeftFoot]
-    - multiply: [$prev, [1, -1, 1]]
+    - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Ankle Angles
   set: right
   steps:
     - jointAngle: [RightLeg, RightFoot]
+    - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Left Foot Progression
   set: left
@@ -437,7 +438,13 @@
 
 # --- Upper body ---
 
-- parameter: Trunk Angles_wrt_LAB
+- parameter: Left Thorax_Lab Angles
+  steps:
+    - jointAngle: Spine2
+      space: VirtualLab
+    - multiply: [$prev, [-1,1,1]]
+
+- parameter: Right Thorax_Lab Angles
   steps:
     - jointAngle: Spine2
       space: VirtualLab
@@ -453,9 +460,21 @@
     - jointAngle: [Hips, Spine2]
     - multiply: [$prev, [-1, -1, -1]]
 
+- parameter: Left Shoulder Angles
+  steps:
+    - angle: [Spine2, LeftArm]
+      rotationOrder: ZYZ
+    - multiply: [$prev, [-1, 1, 1]]
+
+- parameter: Right Shoulder Angles
+  steps:
+    - angle: [Spine2, RightArm]
+      rotationOrder: ZYZ
+    - multiply: [$prev, [1, -1, -1]]
+
 # --- Arms ---
 
-- parameter: Left Elbow Angle
+- parameter: Left Elbow Angles
   set: left
   steps:
     - angle: [LeftArm, LeftForeArm, LeftHand]
@@ -463,7 +482,7 @@
       from: radians
       to: degrees
 
-- parameter: Right Elbow Angle
+- parameter: Right Elbow Angles
   set: right
   steps:
     - angle: [RightArm, RightForeArm, RightHand]
