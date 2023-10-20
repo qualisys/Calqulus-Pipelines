@@ -96,14 +96,14 @@
     name: CMJ_[LB]*
   set: left
   steps:
-    - divide: [$framerate, 10]
-      output: shift
+    # - divide: [$framerate, 10]
+    #   output: shift
     - threshold: RPV_CGVel.z
       value: 0
       direction: down
     - eventMask: [$prev, BOF, TakeOff_L]
       keep: -1
-    - subtract: [$prev, shift] #shift by -0.1 s
+    # - add: [$prev, shift] #shift by -0.1 s
 
 - event: Pelvis_lowest
   where:
@@ -201,14 +201,14 @@
     name: CMJ_[RB]*
   set: right
   steps:
-    - divide: [$framerate, 10]
-      output: shift
+    # - divide: [$framerate, 10]
+    #   output: shift
     - threshold: RPV_CGVel.z
       value: 0
       direction: down
     - eventMask: [$prev, BOF, TakeOff_R]
       keep: -1
-    - subtract: [$prev, shift] #shift by -0.1 s
+    # - subtract: [$prev, shift] #shift by -0.1 s
 
 - event: Pelvis_lowest
   where:
