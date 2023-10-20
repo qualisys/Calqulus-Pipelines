@@ -412,14 +412,14 @@
   steps:
     - jointAngle: LeftFoot
       space: VirtualLab
-    - multiply: [$prev, [-1, 1, -1]]
+    - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Foot Progression
   set: right
   steps:
     - jointAngle: RightFoot
       space: VirtualLab
-    - multiply: [$prev, [-1, 1, 1]]
+    - multiply: [$prev, [1, 1, 1]]
 
 - parameter: Left Foot Pitch Angles
   set: left
