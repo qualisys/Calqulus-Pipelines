@@ -373,12 +373,13 @@
   set: left
   steps:
     - jointAngle: [Hips, LeftUpLeg]
-    - multiply: [$prev, [1, -1, 1]]
+    - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Hip Angles
   set: right
   steps:
     - jointAngle: [Hips, RightUpLeg]
+    - multiply: [$prev, [1, -1, 1]]
 
 # --- Knee ---
 
