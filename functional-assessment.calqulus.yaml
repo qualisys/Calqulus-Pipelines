@@ -426,14 +426,14 @@
   steps:
     - jointAngle: LeftFoot
       space: VirtualLab
-    - multiply: [$prev, [-1, 1, -1]]
+    - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Foot Pitch Angles
   set: right
   steps:
     - jointAngle: RightFoot
       space: VirtualLab
-    - multiply: [$prev, [-1, 1, 1]]
+    - multiply: [$prev, [1, 1, 1]]
 
 # --- Upper body ---
 
