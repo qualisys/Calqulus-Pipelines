@@ -400,7 +400,7 @@
   set: left
   steps:
     - jointAngle: [LeftLeg, LeftFoot]
-    - multiply: [$prev, [1, -1, -1]]
+    - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Ankle Angles
   set: right
@@ -477,18 +477,14 @@
 - parameter: Left Elbow Angles
   set: left
   steps:
-    - angle: [LeftArm, LeftForeArm, LeftHand]
-    - convert: $prev
-      from: radians
-      to: degrees
+    - angle: [LeftArm, LeftForearm]
+    - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Elbow Angles
   set: right
   steps:
-    - angle: [RightArm, RightForeArm, RightHand]
-    - convert: $prev
-      from: radians
-      to: degrees
+    - angle: [RightArm, RightForearm]
+    - multiply: [$prev, [1, 1, 1]]
 
 # COM distance to knee and ankle
 # for now using pelvis COM instead of body COM
