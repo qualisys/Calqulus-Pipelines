@@ -444,40 +444,40 @@
   steps:
     - jointAngle: Spine2
       space: VirtualLab
-    - multiply: [$prev, [-1,1,1]]
+    - multiply: [$prev, [-1,1,-1]]
 
 - parameter: Right Thorax_Lab Angles
   set: right
   steps:
     - jointAngle: Spine2
       space: VirtualLab
-    - multiply: [$prev, [-1,1,1]]
+    - multiply: [$prev, [-1,-1,1]]
 
 - parameter: Left Thorax Angles
   set: left
   steps:
     - jointAngle: [Hips, Spine2]
-    - multiply: [$prev, [-1, -1, -1]]
+    - multiply: [$prev, [-1, 1, -1]]
 
 - parameter: Right Thorax Angles
   set: right
   steps:
     - jointAngle: [Hips, Spine2]
-    - multiply: [$prev, [-1, -1, -1]]
+    - multiply: [$prev, [-1, -1, 1]]
 
 - parameter: Left Shoulder Angles
   set: left
   steps:
     - angle: [Spine2, LeftArm]
       rotationOrder: ZYZ
-    - multiply: [$prev, [-1, 1, 1]]
+    - multiply: [$prev, [-1, -1, 1]]
 
 - parameter: Right Shoulder Angles
   set: right
   steps:
     - angle: [Spine2, RightArm]
       rotationOrder: ZYZ
-    - multiply: [$prev, [1, -1, -1]]
+    - multiply: [$prev, [1, 1, -1]]
 
 # --- Arms ---
 
