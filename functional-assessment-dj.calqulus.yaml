@@ -209,25 +209,25 @@
   where:
     name: DJ_[LB]*
   steps:
-    - import: PlotStart_L
+    - import: TouchDown_L
 
 - event: RightPlotStart
   where:
     name: DJ_[RB]*
   steps:
-    - import: PlotStart_R
+    - import: TouchDown_R
 
 - event: LeftPlotEnd
   where:
     name: DJ_[LB]*
   steps:
-    - import: PlotEnd_L
+    - import: TakeOff_L
 
 - event: RightPlotEnd
   where:
     name: DJ_[RB]*
   steps:
-    - import: PlotEnd_R
+    - import: TakeOff_R
 
 ############
 ## SERIES ##
