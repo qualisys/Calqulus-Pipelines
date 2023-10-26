@@ -432,103 +432,103 @@
 #############
 
 # Contact time
-- parameter: ContactTime_DJ_B
+- parameter: ContactTime_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventDuration: [TouchDown,TakeOff]
 
-- parameter: ContactTime_DJ_L
+- parameter: ContactTime_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventDuration: [TouchDown,TakeOff]
 
-- parameter: ContactTime_DJ_R
+- parameter: ContactTime_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventDuration: [TouchDown,TakeOff]
 
 # Flight Time
-- parameter: FlightTime_DJ_B
+- parameter: FlightTime_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventDuration: [TakeOff,Landing]
 
-- parameter: FlightTime_DJ_L
+- parameter: FlightTime_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventDuration: [TakeOff,Landing]
 
-- parameter: FlightTime_DJ_R
+- parameter: FlightTime_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventDuration: [TakeOff,Landing]
 
 # Eccentric time
-- parameter: EccentricTime_DJ_B
+- parameter: EccentricTime_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventDuration: [TouchDown,COM_MIN]
 
-- parameter: EccentricTime_DJ_L
+- parameter: EccentricTime_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventDuration: [TouchDown,COM_MIN]
 
-- parameter: EccentricTime_DJ_R
+- parameter: EccentricTime_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventDuration: [TouchDown,COM_MIN]
 
 # Concentric time
-- parameter: ConcentricTime_DJ_B
+- parameter: ConcentricTime_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventDuration: [COM_MIN,TakeOff]
 
-- parameter: ConcentricTime_DJ_L
+- parameter: ConcentricTime_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventDuration: [COM_MIN,TakeOff]
 
-- parameter: ConcentricTime_DJ_R
+- parameter: ConcentricTime_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventDuration: [COM_MIN,TakeOff]
 
 # Flight time to Contraction time ratio
-- parameter: Flight_Contraction_time_ratio_DJ_B
+- parameter: Flight_Contraction_time_ratio_DVJ_B
   where:
     name: DJ_B*
   steps:
-    - divide: [FlightTime_DJ_B,EccentricTime_DJ_B]
+    - divide: [FlightTime_DVJ_B,EccentricTime_DVJ_B]
 
-- parameter: Flight_Contraction_time_ratio_DJ_L
+- parameter: Flight_Contraction_time_ratio_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - divide: [FlightTime_DJ_L,EccentricTime_DJ_L]
+    - divide: [FlightTime_DVJ_L,EccentricTime_DVJ_L]
 
-- parameter: Flight_Contraction_time_ratio_DJ_R
+- parameter: Flight_Contraction_time_ratio_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - divide: [FlightTime_DJ_R,EccentricTime_DJ_R]
+    - divide: [FlightTime_DVJ_R,EccentricTime_DVJ_R]
 
 # COM @TakeOff, max, min
 # We use Pelvis COM for now
-- parameter: COM_Z_TO_DJ_B
+- parameter: COM_Z_TO_DVJ_B
   where:
     name: DJ_B*
   steps:
@@ -537,7 +537,7 @@
       from: mm
       to: m
 
-- parameter: COM_Z_TO_DJ_L
+- parameter: COM_Z_TO_DVJ_L
   where:
     name: DJ_L*
   steps:
@@ -546,7 +546,7 @@
       from: mm
       to: m
 
-- parameter: COM_Z_TO_DJ_R
+- parameter: COM_Z_TO_DVJ_R
   where:
     name: DJ_R*
   steps:
@@ -555,7 +555,7 @@
       from: mm
       to: m
 
-- parameter: CenterOfMass_MAX_DJ_B
+- parameter: CenterOfMass_MAX_DVJ_B
   where:
     name: DJ_B*
   steps:
@@ -566,7 +566,7 @@
       from: mm
       to: m
 
-- parameter: CenterOfMass_MAX_DJ_L
+- parameter: CenterOfMass_MAX_DVJ_L
   where:
     name: DJ_L*
   steps:
@@ -577,7 +577,7 @@
       from: mm
       to: m
 
-- parameter: CenterOfMass_MAX_DJ_R
+- parameter: CenterOfMass_MAX_DVJ_R
   where:
     name: DJ_R*
   steps:
@@ -588,7 +588,7 @@
       from: mm
       to: m
 
-- parameter: CenterOfMass_MIN_DJ_B
+- parameter: CenterOfMass_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
@@ -597,7 +597,7 @@
       from: mm
       to: m
 
-- parameter: CenterOfMass_MIN_DJ_L
+- parameter: CenterOfMass_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
@@ -606,7 +606,7 @@
       from: mm
       to: m
 
-- parameter: CenterOfMass_MIN_DJ_R
+- parameter: CenterOfMass_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
@@ -633,7 +633,7 @@
 # Jump height calculated from pelvis height
 # other options ('takeoff_velocity', 'flight_time', 'static_trial') are not available, yet
 
-- parameter: COM_displacement_MEAN_max_DJ_B
+- parameter: COM_displacement_MEAN_max_DVJ_B
   where:
     name: DJ_B*
   steps:
@@ -645,7 +645,7 @@
       from: mm
       to: m
 
-- parameter: COM_displacement_MEAN_max_DJ_L
+- parameter: COM_displacement_MEAN_max_DVJ_L
   where:
     name: DJ_L*
   steps:
@@ -657,7 +657,7 @@
       from: mm
       to: m
 
-- parameter: COM_displacement_MEAN_max_DJ_R
+- parameter: COM_displacement_MEAN_max_DVJ_R
   where:
     name: DJ_R*
   steps:
@@ -669,40 +669,40 @@
       from: mm
       to: m
 
-- parameter: COM_displacement_MEAN_min_DJ_B
+- parameter: COM_displacement_MEAN_min_DVJ_B
   where:
     name: DJ_B*
   steps:
-    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DJ_B]
+    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DVJ_B]
 
-- parameter: COM_displacement_MEAN_min_DJ_L
+- parameter: COM_displacement_MEAN_min_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DJ_L]
+    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DVJ_L]
 
-- parameter: COM_displacement_MEAN_min_DJ_R
+- parameter: COM_displacement_MEAN_min_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DJ_R]
+    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DVJ_R]
 
 #COM peak eccentric velocity
-- parameter: PelvisCGPos_vel_min_eccentric_DJ_B
+- parameter: PelvisCGPos_vel_min_eccentric_DVJ_B
   where:
     name: DJ_B*
   steps:
     - min: RPV_CGVel
     - eventMask: [$prev,TouchDown,COM_MIN]
 
-- parameter: PelvisCGPos_vel_min_eccentric_DJ_L
+- parameter: PelvisCGPos_vel_min_eccentric_DVJ_L
   where:
     name: DJ_L*
   steps:
     - min: RPV_CGVel
     - eventMask: [$prev,TouchDown,COM_MIN]
 
-- parameter: PelvisCGPos_vel_min_eccentric_DJ_R
+- parameter: PelvisCGPos_vel_min_eccentric_DVJ_R
   where:
     name: DJ_R*
   steps:
@@ -710,99 +710,99 @@
     - eventMask: [$prev,TouchDown,COM_MIN]
 
 #Jump Height to Flight Time Ratio
-- parameter: Jump_height_flight_time_ratio_DJ_B
+- parameter: Jump_height_flight_time_ratio_DVJ_B
   where:
     name: DJ_B*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_B,FlightTime_DJ_B]
+    - divide: [COM_displacement_MEAN_max_DVJ_B,FlightTime_DVJ_B]
 
-- parameter: Jump_height_flight_time_ratio_DJ_L
+- parameter: Jump_height_flight_time_ratio_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_L,FlightTime_DJ_L]
+    - divide: [COM_displacement_MEAN_max_DVJ_L,FlightTime_DVJ_L]
 
-- parameter: Jump_height_flight_time_ratio_DJ_R
+- parameter: Jump_height_flight_time_ratio_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_R,FlightTime_DJ_R]
+    - divide: [COM_displacement_MEAN_max_DVJ_R,FlightTime_DVJ_R]
 
 # Jump height to Contact Time Ratio
-- parameter: Jump_height_contact_time_ratio_DJ_B
+- parameter: Jump_height_contact_time_ratio_DVJ_B
   where:
     name: DJ_B*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_B, ContactTime_DJ_B]
+    - divide: [COM_displacement_MEAN_max_DVJ_B, ContactTime_DVJ_B]
 
-- parameter: Jump_height_contact_time_ratio_DJ_L
+- parameter: Jump_height_contact_time_ratio_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_L, ContactTime_DJ_L]
+    - divide: [COM_displacement_MEAN_max_DVJ_L, ContactTime_DVJ_L]
 
-- parameter: Jump_height_contact_time_ratio_DJ_R
+- parameter: Jump_height_contact_time_ratio_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_R, ContactTime_DJ_R]
+    - divide: [COM_displacement_MEAN_max_DVJ_R, ContactTime_DVJ_R]
 
 # Flight time to Contraction time ratio
-- parameter: Flight_Contraction_time_ratio_DJ_B
+- parameter: Flight_Contraction_time_ratio_DVJ_B
   where:
     name: DJ_B*
   steps:
-    - divide: [FlightTime_DJ_B, EccentricTime_DJ_B]
+    - divide: [FlightTime_DVJ_B, EccentricTime_DVJ_B]
 
-- parameter: Flight_Contraction_time_ratio_DJ_L
+- parameter: Flight_Contraction_time_ratio_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - divide: [FlightTime_DJ_L, EccentricTime_DJ_L]
+    - divide: [FlightTime_DVJ_L, EccentricTime_DVJ_L]
 
-- parameter: Flight_Contraction_time_ratio_DJ_R
+- parameter: Flight_Contraction_time_ratio_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - divide: [FlightTime_DJ_R, EccentricTime_DJ_R]
+    - divide: [FlightTime_DVJ_R, EccentricTime_DVJ_R]
 
 # Reactive strength index
-- parameter: Reactive_strength_index_DJ_B
+- parameter: Reactive_strength_index_DVJ_B
   where:
     name: DJ_B*
   steps:
-    - divide: [FlightTime_DJ_B, ContactTime_DJ_B]
+    - divide: [FlightTime_DVJ_B, ContactTime_DVJ_B]
 
-- parameter: Reactive_strength_index_DJ_L
+- parameter: Reactive_strength_index_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - divide: [FlightTime_DJ_L, ContactTime_DJ_L]
+    - divide: [FlightTime_DVJ_L, ContactTime_DVJ_L]
 
-- parameter: Reactive_strength_index_DJ_R
+- parameter: Reactive_strength_index_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - divide: [FlightTime_DJ_R, ContactTime_DJ_R]
+    - divide: [FlightTime_DVJ_R, ContactTime_DVJ_R]
 
 # Modified reactive strength index
-- parameter: Reactive_strength_index_modified_DJ_B
+- parameter: Reactive_strength_index_modified_DVJ_B
   where:
     name: DJ_B*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_B, ContactTime_DJ_B]
+    - divide: [COM_displacement_MEAN_max_DVJ_B, ContactTime_DVJ_B]
 
-- parameter: Reactive_strength_index_modified_DJ_L
+- parameter: Reactive_strength_index_modified_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_L, ContactTime_DJ_L]
+    - divide: [COM_displacement_MEAN_max_DVJ_L, ContactTime_DVJ_L]
 
-- parameter: Reactive_strength_index_modified_DJ_R
+- parameter: Reactive_strength_index_modified_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - divide: [COM_displacement_MEAN_max_DJ_R, ContactTime_DJ_R]
+    - divide: [COM_displacement_MEAN_max_DVJ_R, ContactTime_DVJ_R]
 
 # COM-COP distance
 # to do
@@ -811,641 +811,641 @@
 
 # COM distance to knee and ankle
 # @TouchDown
-- parameter: Left_Knee_COM_distance@TouchDown_DJ_B
+- parameter: Left_Knee_COM_distance@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
-- parameter: Right_Knee_COM_distance@TouchDown_DJ_B
+- parameter: Right_Knee_COM_distance@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
-- parameter: Left_Ankle_COM_distance@TouchDown_DJ_B
+- parameter: Left_Ankle_COM_distance@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
-- parameter: Right_Ankle_COM_distance@TouchDown_DJ_B
+- parameter: Right_Ankle_COM_distance@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
-- parameter: Left_Knee_COM_distance@TouchDown_DJ_L
+- parameter: Left_Knee_COM_distance@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
-- parameter: Right_Knee_COM_distance@TouchDown_DJ_L
+- parameter: Right_Knee_COM_distance@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
-- parameter: Left_Ankle_COM_distance@TouchDown_DJ_L
+- parameter: Left_Ankle_COM_distance@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
-- parameter: Right_Ankle_COM_distance@TouchDown_DJ_L
+- parameter: Right_Ankle_COM_distance@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
-- parameter: Left_Knee_COM_distance@TouchDown_DJ_R
+- parameter: Left_Knee_COM_distance@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
-- parameter: Right_Knee_COM_distance@TouchDown_DJ_R
+- parameter: Right_Knee_COM_distance@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
-- parameter: Left_Ankle_COM_distance@TouchDown_DJ_R
+- parameter: Left_Ankle_COM_distance@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
-- parameter: Right_Ankle_COM_distance@TouchDown_DJ_R
+- parameter: Right_Ankle_COM_distance@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 # @TakeOff
-- parameter: Left_Knee_COM_distance@TakeOff_DJ_B
+- parameter: Left_Knee_COM_distance@TakeOff_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
-- parameter: Right_Knee_COM_distance@TakeOff_DJ_B
+- parameter: Right_Knee_COM_distance@TakeOff_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
-- parameter: Left_Ankle_COM_distance@TakeOff_DJ_B
+- parameter: Left_Ankle_COM_distance@TakeOff_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
-- parameter: Right_Ankle_COM_distance@TakeOff_DJ_B
+- parameter: Right_Ankle_COM_distance@TakeOff_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
-- parameter: Left_Knee_COM_distance@TakeOff_DJ_L
+- parameter: Left_Knee_COM_distance@TakeOff_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
-- parameter: Right_Knee_COM_distance@TakeOff_DJ_L
+- parameter: Right_Knee_COM_distance@TakeOff_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
-- parameter: Left_Ankle_COM_distance@TakeOff_DJ_L
+- parameter: Left_Ankle_COM_distance@TakeOff_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
-- parameter: Right_Ankle_COM_distance@TakeOff_DJ_L
+- parameter: Right_Ankle_COM_distance@TakeOff_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
-- parameter: Left_Knee_COM_distance@TakeOff_DJ_R
+- parameter: Left_Knee_COM_distance@TakeOff_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
-- parameter: Right_Knee_COM_distance@TakeOff_DJ_R
+- parameter: Right_Knee_COM_distance@TakeOff_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
-- parameter: Left_Ankle_COM_distance@TakeOff_DJ_R
+- parameter: Left_Ankle_COM_distance@TakeOff_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
-- parameter: Right_Ankle_COM_distance@TakeOff_DJ_R
+- parameter: Right_Ankle_COM_distance@TakeOff_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
 # @Pelvis_lowest
-- parameter: Left_Knee_COM_distance@Pelvis_lowest_DJ_B
+- parameter: Left_Knee_COM_distance@Pelvis_lowest_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
-- parameter: Right_Knee_COM_distance@Pelvis_lowest_DJ_B
+- parameter: Right_Knee_COM_distance@Pelvis_lowest_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
-- parameter: Left_Ankle_COM_distance@Pelvis_lowest_DJ_B
+- parameter: Left_Ankle_COM_distance@Pelvis_lowest_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
-- parameter: Right_Ankle_COM_distance@Pelvis_lowest_DJ_B
+- parameter: Right_Ankle_COM_distance@Pelvis_lowest_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
-- parameter: Left_Knee_COM_distance@Pelvis_lowest_DJ_L
+- parameter: Left_Knee_COM_distance@Pelvis_lowest_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
-- parameter: Right_Knee_COM_distance@Pelvis_lowest_DJ_L
+- parameter: Right_Knee_COM_distance@Pelvis_lowest_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
-- parameter: Left_Ankle_COM_distance@Pelvis_lowest_DJ_L
+- parameter: Left_Ankle_COM_distance@Pelvis_lowest_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
-- parameter: Right_Ankle_COM_distance@Pelvis_lowest_DJ_L
+- parameter: Right_Ankle_COM_distance@Pelvis_lowest_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
-- parameter: Left_Knee_COM_distance@Pelvis_lowest_DJ_R
+- parameter: Left_Knee_COM_distance@Pelvis_lowest_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
-- parameter: Right_Knee_COM_distance@Pelvis_lowest_DJ_R
+- parameter: Right_Knee_COM_distance@Pelvis_lowest_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
-- parameter: Left_Ankle_COM_distance@Pelvis_lowest_DJ_R
+- parameter: Left_Ankle_COM_distance@Pelvis_lowest_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
-- parameter: Right_Ankle_COM_distance@Pelvis_lowest_DJ_R
+- parameter: Right_Ankle_COM_distance@Pelvis_lowest_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
 # Other metrics @TouchDown
-- parameter: Left Knee Angles@TouchDown_DJ_B
+- parameter: Left Knee Angles@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left Knee Angles@TouchDown
 
-- parameter: Right Knee Angles@TouchDown_DJ_B
+- parameter: Right Knee Angles@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right Knee Angles@TouchDown
 
-- parameter: Left Hip Angles@TouchDown_DJ_B
+- parameter: Left Hip Angles@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left Hip Angles@TouchDown
 
-- parameter: Right Hip Angles@TouchDown_DJ_B
+- parameter: Right Hip Angles@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right Hip Angles@TouchDown
 
-- parameter: Left Thorax Angles@TouchDown_DJ_B
+- parameter: Left Thorax Angles@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left Thorax Angles@TouchDown
 
-- parameter: Right Thorax Angles@TouchDown_DJ_B
+- parameter: Right Thorax Angles@TouchDown_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right Thorax Angles@TouchDown
 
-- parameter: Left Knee Angles@TouchDown_DJ_L
+- parameter: Left Knee Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left Knee Angles@TouchDown
 
-- parameter: Right Knee Angles@TouchDown_DJ_L
+- parameter: Right Knee Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right Knee Angles@TouchDown
 
-- parameter: Left Hip Angles@TouchDown_DJ_L
+- parameter: Left Hip Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left Hip Angles@TouchDown
 
-- parameter: Right Hip Angles@TouchDown_DJ_L
+- parameter: Right Hip Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right Hip Angles@TouchDown
 
-- parameter: Left Thorax Angles@TouchDown_DJ_L
+- parameter: Left Thorax Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left Thorax Angles@TouchDown
 
-- parameter: Right Thorax Angles@TouchDown_DJ_L
+- parameter: Right Thorax Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right Thorax Angles@TouchDown
 
-- parameter: Left Knee Angles@TouchDown_DJ_R
+- parameter: Left Knee Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left Knee Angles@TouchDown
 
-- parameter: Right Knee Angles@TouchDown_DJ_R
+- parameter: Right Knee Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right Knee Angles@TouchDown
 
-- parameter: Left Hip Angles@TouchDown_DJ_R
+- parameter: Left Hip Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left Hip Angles@TouchDown
 
-- parameter: Right Hip Angles@TouchDown_DJ_R
+- parameter: Right Hip Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right Hip Angles@TouchDown
 
-- parameter: Left Thorax Angles@TouchDown_DJ_R
+- parameter: Left Thorax Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left Thorax Angles@TouchDown
 
-- parameter: Right Thorax Angles@TouchDown_DJ_R
+- parameter: Right Thorax Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right Thorax Angles@TouchDown
 
 # @COM_MIN
-- parameter: Left Ankle Angles@COM_MIN_DJ_B
+- parameter: Left Ankle Angles@COM_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left Ankle Angles@COM_MIN
 
-- parameter: Right Ankle Angles@COM_MIN_DJ_B
+- parameter: Right Ankle Angles@COM_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right Ankle Angles@COM_MIN
 
-- parameter: Left Knee Angles@COM_MIN_DJ_B
+- parameter: Left Knee Angles@COM_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left Knee Angles@COM_MIN
 
-- parameter: Right Knee Angles@COM_MIN_DJ_B
+- parameter: Right Knee Angles@COM_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right Knee Angles@COM_MIN
 
-- parameter: Left Hip Angles@COM_MIN_DJ_B
+- parameter: Left Hip Angles@COM_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left Hip Angles@COM_MIN
 
-- parameter: Right Hip Angles@COM_MIN_DJ_B
+- parameter: Right Hip Angles@COM_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right Hip Angles@COM_MIN
 
-- parameter: Left Thorax Angles@COM_MIN_DJ_B
+- parameter: Left Thorax Angles@COM_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Left Thorax Angles@COM_MIN
 
-- parameter: Right Thorax Angles@COM_MIN_DJ_B
+- parameter: Right Thorax Angles@COM_MIN_DVJ_B
   where:
     name: DJ_B*
   steps:
     - import: Right Thorax Angles@COM_MIN
 
-- parameter: Left Ankle Angles@COM_MIN_DJ_L
+- parameter: Left Ankle Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left Ankle Angles@COM_MIN
 
-- parameter: Right Ankle Angles@COM_MIN_DJ_L
+- parameter: Right Ankle Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right Ankle Angles@COM_MIN
 
-- parameter: Left Knee Angles@COM_MIN_DJ_L
+- parameter: Left Knee Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left Knee Angles@COM_MIN
 
-- parameter: Right Knee Angles@COM_MIN_DJ_L
+- parameter: Right Knee Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right Knee Angles@COM_MIN
 
-- parameter: Left Hip Angles@COM_MIN_DJ_L
+- parameter: Left Hip Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left Hip Angles@COM_MIN
 
-- parameter: Right Hip Angles@COM_MIN_DJ_L
+- parameter: Right Hip Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right Hip Angles@COM_MIN
 
-- parameter: Left Thorax Angles@COM_MIN_DJ_L
+- parameter: Left Thorax Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Left Thorax Angles@COM_MIN
 
-- parameter: Right Thorax Angles@COM_MIN_DJ_L
+- parameter: Right Thorax Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
   steps:
     - import: Right Thorax Angles@COM_MIN
 
-- parameter: Left Ankle Angles@COM_MIN_DJ_R
+- parameter: Left Ankle Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left Ankle Angles@COM_MIN
 
-- parameter: Right Ankle Angles@COM_MIN_DJ_R
+- parameter: Right Ankle Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right Ankle Angles@COM_MIN
 
-- parameter: Left Knee Angles@COM_MIN_DJ_R
+- parameter: Left Knee Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left Knee Angles@COM_MIN
 
-- parameter: Right Knee Angles@COM_MIN_DJ_R
+- parameter: Right Knee Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right Knee Angles@COM_MIN
 
-- parameter: Left Hip Angles@COM_MIN_DJ_R
+- parameter: Left Hip Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left Hip Angles@COM_MIN
 
-- parameter: Right Hip Angles@COM_MIN_DJ_R
+- parameter: Right Hip Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right Hip Angles@COM_MIN
 
-- parameter: Left Thorax Angles@COM_MIN_DJ_R
+- parameter: Left Thorax Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Left Thorax Angles@COM_MIN
 
-- parameter: Right Thorax Angles@COM_MIN_DJ_R
+- parameter: Right Thorax Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
   steps:
     - import: Right Thorax Angles@COM_MIN
 
 #Maximum during takeoff
-- parameter: Left Hip Angles_max_DJ_B
+- parameter: Left Hip Angles_max_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventMask: [Left Hip Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Hip Angles_max_DJ_B
+- parameter: Right Hip Angles_max_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventMask: [Right Hip Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Knee Angles_max_DJ_B
+- parameter: Left Knee Angles_max_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventMask: [Left Knee Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Knee Angles_max_DJ_B
+- parameter: Right Knee Angles_max_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventMask: [Right Knee Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Ankle Angles_max_DJ_B
+- parameter: Left Ankle Angles_max_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventMask: [Left Ankle Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Ankle Angles_max_DJ_B
+- parameter: Right Ankle Angles_max_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventMask: [Right Ankle Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Foot Progression_max_DJ_B
+- parameter: Left Foot Progression_max_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventMask: [Left Foot Progression, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Foot Progression_max_DJ_B
+- parameter: Right Foot Progression_max_DVJ_B
   where:
     name: DJ_B*
   steps:
     - eventMask: [Right Foot Progression, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Hip Angles_max_DJ_L
+- parameter: Left Hip Angles_max_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventMask: [Left Hip Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Hip Angles_max_DJ_L
+- parameter: Right Hip Angles_max_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventMask: [Right Hip Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Knee Angles_max_DJ_L
+- parameter: Left Knee Angles_max_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventMask: [Left Knee Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Knee Angles_max_DJ_L
+- parameter: Right Knee Angles_max_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventMask: [Right Knee Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Ankle Angles_max_DJ_L
+- parameter: Left Ankle Angles_max_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventMask: [Left Ankle Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Ankle Angles_max_DJ_L
+- parameter: Right Ankle Angles_max_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventMask: [Right Ankle Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Foot Progression_max_DJ_L
+- parameter: Left Foot Progression_max_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventMask: [Left Foot Progression, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Foot Progression_max_DJ_L
+- parameter: Right Foot Progression_max_DVJ_L
   where:
     name: DJ_L*
   steps:
     - eventMask: [Right Foot Progression, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Hip Angles_max_DJ_R
+- parameter: Left Hip Angles_max_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventMask: [Left Hip Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Hip Angles_max_DJ_R
+- parameter: Right Hip Angles_max_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventMask: [Right Hip Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Knee Angles_max_DJ_R
+- parameter: Left Knee Angles_max_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventMask: [Left Knee Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Knee Angles_max_DJ_R
+- parameter: Right Knee Angles_max_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventMask: [Right Knee Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Ankle Angles_max_DJ_R
+- parameter: Left Ankle Angles_max_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventMask: [Left Ankle Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Ankle Angles_max_DJ_R
+- parameter: Right Ankle Angles_max_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventMask: [Right Ankle Angles, TouchDown,TakeOff]
     - max:
 
-- parameter: Left Foot Progression_max_DJ_R
+- parameter: Left Foot Progression_max_DVJ_R
   where:
     name: DJ_R*
   steps:
     - eventMask: [Left Foot Progression, TouchDown,TakeOff]
     - max:
 
-- parameter: Right Foot Progression_max_DJ_R
+- parameter: Right Foot Progression_max_DVJ_R
   where:
     name: DJ_R*
   steps:
