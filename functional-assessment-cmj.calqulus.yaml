@@ -469,14 +469,14 @@
   set: left
   steps:
     - angle: [Spine2, LeftArm]
-      rotationOrder: ZYZ
+      # rotationOrder: ZYZ
     - multiply: [$prev, [-1, -1, 1]]
 
 - parameter: Right Shoulder Angles
   set: right
   steps:
     - angle: [Spine2, RightArm]
-      rotationOrder: ZYZ
+      # rotationOrder: ZYZ
     - multiply: [$prev, [1, 1, -1]]
 
 # --- Arms ---
