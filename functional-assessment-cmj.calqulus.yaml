@@ -470,7 +470,7 @@
   steps:
     - angle: [Spine2, LeftArm]
       # rotationOrder: ZYZ
-    - multiply: [$prev, [-1, -1, 1]]
+    - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Shoulder Angles
   set: right
