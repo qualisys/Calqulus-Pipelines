@@ -636,12 +636,52 @@
       from: mm
       to: m
 
+- parameter: COM_Z_TO_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Hips@TakeOff
+    - convert:
+      from: mm
+      to: m
+
+- parameter: COM_Z_TO_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Hips@TakeOff
+    - convert:
+      from: mm
+      to: m
+
 - parameter: CenterOfMass_MAX_CMJ_B
   where:
     name: CMJ_B*
   steps:
     - import: Hips
-    - eventMask: [$prev,TakeOff,TakeOff]
+    - eventMask: [$prev,TakeOff,TouchDown]
+    - max:
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass_MAX_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Hips
+    - eventMask: [$prev,TakeOff,TouchDown]
+    - max:
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass_MAX_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Hips
+    - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
       from: mm
@@ -656,9 +696,45 @@
       from: mm
       to: m
 
+- parameter: CenterOfMass_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - min: Hips.z
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - min: Hips.z
+    - convert:
+      from: mm
+      to: m
+
 - parameter: CenterOfMass@PlotStart_CMJ_B
   where:
     name: CMJ_B*
+  steps:
+    - import: Hips.z@PlotStart
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass@PlotStart_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Hips.z@PlotStart
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass@PlotStart_CMJ_R
+  where:
+    name: CMJ_R*
   steps:
     - import: Hips.z@PlotStart
     - convert:
@@ -681,7 +757,7 @@
     name: CMJ_B*
   steps:
     - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,TakeOff]
+    - eventMask: [Hips.z,TakeOff,TouchDown]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -693,7 +769,7 @@
     name: CMJ_L*
   steps:
     - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,TakeOff]
+    - eventMask: [Hips.z,TakeOff,TouchDown]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -705,18 +781,30 @@
     name: CMJ_R*
   steps:
     - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,TakeOff]
+    - eventMask: [Hips.z,TakeOff,TouchDown]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
       from: mm
       to: m
 
-- parameter: COM_displacement_MEAN_min_CMJ_B #!!!!! Not working
+- parameter: COM_displacement_MEAN_min_CMJ_B 
   where:
     name: CMJ_B*
   steps:
-    - subtract: [CenterOfMass@PlotStart_CMJ_B, CenterOfMass_MIN_CMJ_B]
+    - subtract: [CenterOfMass\@PlotStart_CMJ_B, CenterOfMass_MIN_CMJ_B]
+
+- parameter: COM_displacement_MEAN_min_CMJ_L 
+  where:
+    name: CMJ_L*
+  steps:
+    - subtract: [CenterOfMass\@PlotStart_CMJ_L, CenterOfMass_MIN_CMJ_L]
+
+- parameter: COM_displacement_MEAN_min_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - subtract: [CenterOfMass\@PlotStart_CMJ_R, CenterOfMass_MIN_CMJ_R]
 
 #COM peak eccentric velocity
 - parameter: PelvisCGPos_vel_min_eccentric_CMJ_B
