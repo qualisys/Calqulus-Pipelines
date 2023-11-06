@@ -54,13 +54,13 @@
   set: left
   steps:
     - jointAngle: [LeftLeg, LeftFoot]
-    - multiply: [$prev, [1, -1, 1]]
+    - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Ankle Angles
   set: right
   steps:
     - jointAngle: [RightLeg, RightFoot]
-    - multiply: [$prev, [1, 1, -1]]
+    - multiply: [$prev, [1, 1, 1]]
 
 - parameter: Left Foot Progression
   set: left
