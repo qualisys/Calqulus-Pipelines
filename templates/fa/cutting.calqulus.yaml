@@ -257,7 +257,7 @@
 - parameter: Right Knee Angles_max_penultimate
   where:
     name: Cutting_L*
-  set: left
+  set: right
   steps:
     - eventMask: [Right Knee Angles, Right Penultimate TouchDown, Right Penultimate TakeOff]
     - max:
@@ -265,7 +265,7 @@
 - parameter: Right Ankle Angles_max_penultimate
   where:
     name: Cutting_L*
-  set: left
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, Right Penultimate TouchDown, Right Penultimate TakeOff]
     - max:
