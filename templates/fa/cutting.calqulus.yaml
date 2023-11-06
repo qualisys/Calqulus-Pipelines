@@ -1,0 +1,497 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- template: cutting-events-kinematics.calqulus.yaml
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+# COM distance to knee and ankle
+# for now using pelvis COM instead of body COM
+- parameter: Left_Knee_COM_distance
+  set: left
+  steps:
+    - segment: LeftLeg => knee
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, knee]
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Right_Knee_COM_distance
+  set: right
+  steps:
+    - segment: RightLeg => knee
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, knee]
+    - convert: 
+      from: mm
+      to: m
+    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+- parameter: Left_Ankle_COM_distance
+  set: left
+  steps:
+    - segment: LeftFoot => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, foot]
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Right_Ankle_COM_distance
+  set: right
+  steps:
+    - segment: RightFoot => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, foot]
+    - convert: 
+      from: mm
+      to: m
+    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+#############
+## Metrics ##
+#############
+
+# Magnitude velocity of COM in horizontal plane
+- parameter: PelvisCGPos_vel_mag
+  steps:
+    - power: PelvisCGPos_vel.y => one
+    - power: PelvisCGPos_vel.x => two
+    - add: [one,two]
+    - sqrt:
+
+# Left -------------
+- parameter: Left_PelvisCGPos_vel_mag@TouchDown
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: PelvisCGPos_vel_mag@TouchDown
+
+- parameter: Left_PelvisCGPos_vel_mag@TakeOff
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: PelvisCGPos_vel_mag@TakeOff
+
+- parameter: Left_ContactTime
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventDuration: [TouchDown, TakeOff]
+
+- parameter: Left_Completion_time
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventDuration: [Virtual_gate_start, Virtual_gate_end]
+
+# Joint angle at event
+- parameter: Left Knee Angles@TouchDown
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Knee Angles@TouchDown
+
+- parameter: Left Hip Angles@TouchDown
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Hip Angles@TouchDown
+
+- parameter: Left Thorax Angles@TouchDown
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Thorax Angles@TouchDown
+
+- parameter: Left Knee Angles@TakeOff
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Knee Angles@TakeOff
+
+- parameter: Left Hip Angles@TakeOff
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Hip Angles@TakeOff
+
+- parameter: Left Thorax Angles@TakeOff
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Thorax Angles@TakeOff
+
+- parameter: Left Ankle Angles@Max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Ankle Angles@Max_knee_flex
+
+- parameter: Left Knee Angles@Max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Knee Angles@Max_knee_flex
+
+- parameter: Left Hip Angles@Max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Hip Angles@Max_knee_flex
+
+- parameter: Left Thorax Angles@Max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Thorax Angles@Max_knee_flex
+
+- parameter: COM_displacement_Left_MEAN_range
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Hips, TouchDown, TakeOff]
+    - convert: 
+      from: mm
+      to: m
+    - max:
+      export: CenterOfMass_MAX_Left
+    - min: $prev(2)
+      export: CenterOfMass_MIN_Left
+    - subtract: [CenterOfMass_MAX_Left, CenterOfMass_MIN_Left]
+
+- parameter: Left Hip Angles_min
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Angles, TouchDown, TakeOff]
+    - min:
+
+- parameter: Left Knee Angles_min
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown, TakeOff]
+    - min:
+
+- parameter: Left Ankle Angles_min
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Angles, TouchDown, TakeOff]
+    - min:
+
+- parameter: Left Hip Angles_max
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Angles, TouchDown, TakeOff]
+    - max:
+
+- parameter: Left Knee Angles_max
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown, TakeOff]
+    - max:
+
+- parameter: Left Ankle Angles_max
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Angles, TouchDown, TakeOff]
+    - max:
+
+# penultimate
+- parameter: Right Hip Angles_max_penultimate
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Right Hip Angles, Right Penultimate TouchDown, Right Penultimate TakeOff]
+    - max:
+
+- parameter: Right Knee Angles_max_penultimate
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Right Knee Angles, Right Penultimate TouchDown, Right Penultimate TakeOff]
+    - max:
+
+- parameter: Right Ankle Angles_max_penultimate
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Right Ankle Angles, Right Penultimate TouchDown, Right Penultimate TakeOff]
+    - max:
+
+- parameter: Left Knee Angles_max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
+    - max:
+
+- parameter: Left Thorax Angles_max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Thorax Angles, TouchDown, Max_knee_flex]
+    - max:
+
+# Right -----------
+- parameter: Right_PelvisCGPos_vel_mag@TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: PelvisCGPos_vel_mag@TouchDown
+
+- parameter: Right_PelvisCGPos_vel_mag@TakeOff
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: PelvisCGPos_vel_mag@TakeOff
+
+- parameter: Right_ContactTime
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventDuration: [TouchDown, TakeOff]
+
+- parameter: Right_Completion_time
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventDuration: [Virtual_gate_start, Virtual_gate_end]
+
+# Joint angle at event
+- parameter: Right Knee Angles@TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Knee Angles@TouchDown
+
+- parameter: Right Hip Angles@TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Hip Angles@TouchDown
+
+- parameter: Right Thorax Angles@TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Thorax Angles@TouchDown
+
+- parameter: Right Knee Angles@TakeOff
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Knee Angles@TakeOff
+
+- parameter: Right Hip Angles@TakeOff
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Hip Angles@TakeOff
+
+- parameter: Right Thorax Angles@TakeOff
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Thorax Angles@TakeOff
+
+- parameter: Right Ankle Angles@Max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Ankle Angles@Max_knee_flex
+
+- parameter: Right Knee Angles@Max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Knee Angles@Max_knee_flex
+
+- parameter: Right Hip Angles@Max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Hip Angles@Max_knee_flex
+
+- parameter: Right Thorax Angles@Max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Thorax Angles@Max_knee_flex
+
+- parameter: COM_displacement_Right_MEAN_range
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Hips, TouchDown, TakeOff]
+    - convert: 
+      from: mm
+      to: m
+    - max:
+      export: CenterOfMass_MAX_Right
+    - min: $prev(2)
+      export: CenterOfMass_MIN_Right
+    - subtract: [CenterOfMass_MAX_Right, CenterOfMass_MIN_Right]
+
+- parameter: Right Hip Angles_min
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Angles, TouchDown, TakeOff]
+    - min:
+
+- parameter: Right Knee Angles_min
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown, TakeOff]
+    - min:
+
+- parameter: Right Ankle Angles_min
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Angles, TouchDown, TakeOff]
+    - min:
+
+- parameter: Right Hip Angles_max
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Angles, TouchDown, TakeOff]
+    - max:
+
+- parameter: Right Knee Angles_max
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown, TakeOff]
+    - max:
+
+- parameter: Right Ankle Angles_max
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Angles, TouchDown, TakeOff]
+    - max:
+
+# penultimate
+- parameter: Left Hip Angles_max_penultimate
+  where:
+    name: Cutting_R*
+  set: left
+  steps:
+    - eventMask: [Left Hip Angles, Left Penultimate TouchDown, Left Penultimate TakeOff]
+    - max:
+
+- parameter: Left Knee Angles_max_penultimate
+  where:
+    name: Cutting_R*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, Left Penultimate TouchDown, Left Penultimate TakeOff]
+    - max:
+
+- parameter: Left Ankle Angles_max_penultimate
+  where:
+    name: Cutting_R*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Angles, Left Penultimate TouchDown, Left Penultimate TakeOff]
+    - max:
+
+- parameter: Right Knee Angles_max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
+    - max:
+
+- parameter: Right Thorax Angles_max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Thorax Angles, TouchDown, Max_knee_flex]
+    - max:
+
+
+
+
+
+

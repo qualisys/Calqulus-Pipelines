@@ -1,0 +1,21 @@
+- template: templates/fa/cmj.calqulus.yaml
+  where:
+    name: CMJ*
+
+- template: templates/fa/dj.calqulus.yaml
+  where:
+    name: DJ*
+
+- template: templates/fa/cutting.calqulus.yaml
+  where:
+    name: Cutting*
+
+- template: templates/fa/cod.calqulus.yaml
+  where:
+    name: COD*
+
+- template: templates/fa/sj.calqulus.yaml
+  where:
+    name: SJ*
+
+

@@ -1,0 +1,260 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [1]
+
+- event: EOF
+  steps:
+    - import: [$length]
+
+- parameter: PelvisCGPos_vel
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - velocity:
+    - convert: $prev
+      from: mm/s
+      to: m/s
+
+- parameter: LFT_DistEndAcc
+  set: left
+  steps:
+    - segment: LeftToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+      export: LFT_DistEndPos
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+      export: LFT_DistEndVel
+    - velocity:
+
+- parameter: RFT_DistEndAcc
+  set: right
+  steps:
+    - segment: RightToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+      export: RFT_DistEndPos
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+      export: RFT_DistEndVel
+    - velocity:
+
+# Left
+- event: TouchDown
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: LFT_DistEndAcc.y
+    - min: $prev
+      frames: true
+
+- event: TakeOff
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - threshold: LFT_DistEndPos.z
+      value: 0.06
+      direction: up
+    - eventMask: [$prev, TouchDown, EOF]
+      # keep: 1 #as of now we are indexing from zero
+    - import: $prev@1
+
+- event: temp_R1
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - min: RFT_DistEndVel.y
+      frames: true
+    - eventMask: [$prev, BOF, TouchDown]
+      keep: -1
+
+- event: Right Penultimate TouchDown
+  where:
+    name: Cutting_L*
+  set: right
+  steps:
+    - eventMask: [RFT_DistEndVel.z, BOF, temp_R1]
+      keep: -1
+    - min: 
+      frames: true
+
+- event: temp_R2
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [RFT_DistEndVel.z, BOF, TakeOff]
+    - max:
+      frames: true
+
+- event: Right Penultimate TakeOff
+  where:
+    name: Cutting_L*
+  set: right
+  steps:
+    - eventMask: [RFT_DistEndVel.z, temp_R1, temp_R2]
+    - threshold: RFT_DistEndVel.z
+      value: 0.2
+      direction: up
+
+- event: Max_knee_flex
+  where:
+    name: Cutting_L*
+  steps:
+    - eventMask: [Left Knee Angles.x, TouchDown, TakeOff]
+    - max:
+      frames: true
+    - import: $prev@1
+
+# Right
+- event: TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: RFT_DistEndAcc.y
+    - min: $prev
+      frames: true
+
+- event: TakeOff
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - threshold: RFT_DistEndPos.z
+      value: 0.06
+      direction: up
+    - eventMask: [$prev, TouchDown, EOF]
+      # keep: 1 #as of now we are indexing from zero
+    - import: $prev@1
+
+- event: temp_L1
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - min: LFT_DistEndVel.y
+      frames: true
+    - eventMask: [$prev, BOF, TouchDown]
+      keep: -1
+
+- event: Left Penultimate TouchDown
+  where:
+    name: Cutting_R*
+  set: left
+  steps:
+    - eventMask: [LFT_DistEndVel.z, BOF, temp_L1]
+      keep: -1
+    - min: 
+      frames: true
+
+- event: temp_L2
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [LFT_DistEndVel.z, BOF, TakeOff]
+    - max:
+      frames: true
+
+- event: Left Penultimate TakeOff
+  where:
+    name: Cutting_R*
+  set: left
+  steps:
+    - eventMask: [LFT_DistEndVel.z, temp_L1, temp_L2]
+    - threshold: LFT_DistEndVel.z
+      value: 0.2
+      direction: up
+
+- event: Max_knee_flex
+  where:
+    name: Cutting_R*
+  steps:
+    - eventMask: [Right Knee Angles.x, TouchDown, TakeOff]
+    - max:
+      frames: true
+    - import: $prev@1
+
+# Time to complete the task
+# calculated as time between event at x distance for pelvis COG before touchdown to event at y distance for pelvis COG after touchdown. 
+# (default is pelvis COG 3 m before and 2 m after touchdown)
+
+- parameter: Pelvis_Origin_Floor_mag_corr
+  steps:
+    - multiply: [Hips, [1,1,0]]
+    - convert:
+      from: mm
+      to: m
+    - magnitude:
+    - import: $prev@TouchDown => shift
+
+    - subtract: [$prev(2), shift]
+
+- event: Virtual_gate_start
+  steps:
+    - threshold: Pelvis_Origin_Floor_mag_corr
+      value: 3
+      direction: down
+    - eventMask: [$prev, BOF, TouchDown]
+    - import: $prev@1
+
+- event: Virtual_gate_end
+  steps:
+    - threshold: Pelvis_Origin_Floor_mag_corr
+      value: 2
+      direction: up
+    - eventMask: [$prev, TouchDown, EOF]
+    - import: $prev@1
+
+# TouchDown+40ms
+- event: TouchDown40ms
+  steps:
+    - multiply: [$framerate, 0.04]
+    - add: [TouchDown, $prev]
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: Cutting_L*
+  steps:
+    - import: TouchDown
+
+- event: LeftPlotEnd
+  where:
+    name: Cutting_L*
+  steps:
+    - import: TakeOff
+
+- event: RightPlotStart
+  where:
+    name: Cutting_R*
+  steps:
+    - import: TouchDown
+
+- event: RightPlotEnd
+  where:
+    name: Cutting_R*
+  steps:
+    - import: TakeOff

@@ -1,0 +1,262 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [1]
+
+- event: EOF
+  steps:
+    - import: [$length]
+
+- parameter: PelvisCGPos_vel
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - velocity:
+    - convert: $prev
+      from: mm/s
+      to: m/s
+
+- parameter: LFT_DistEndAcc
+  set: left
+  steps:
+    - segment: LeftToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+      export: LFT_DistEndPos
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+      export: LFT_DistEndVel
+    - velocity:
+
+- parameter: RFT_DistEndAcc
+  set: right
+  steps:
+    - segment: RightToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+      export: RFT_DistEndPos
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+      export: RFT_DistEndVel
+    - velocity:
+
+# Find when RPV vel x component is crossing zero > this is when foot strike in focus occures
+- event: temp_max
+  steps:
+    - max: PelvisCGPos_vel.x
+      frames: true
+
+- event: temp_min
+  steps:
+    - min: PelvisCGPos_vel.x
+      frames: true
+
+- event: temp
+  steps:
+    - concatenate: [temp_max, temp_min]
+
+# Decide which leg is a landing one and create corresponding tags
+- event: pelvis_stop
+  steps:
+    - threshold: PelvisCGPos_vel.x
+      value: 0
+      direction: down
+    - eventMask: [$prev, temp, temp]
+    - import: $prev@1
+      export: max #output does not work here
+
+    - threshold: PelvisCGPos_vel.x
+      value: 0
+      direction: up
+    - eventMask: [$prev, temp, temp]
+    - import: $prev@1
+      export: min #output does not work here
+
+    - if: temp_max < temp_min
+      then: max
+      else: min
+
+#Left 
+- event: temp_pre
+  where:
+    name: COD_L*
+  steps:
+    - eventMask: [LFT_DistEndVel.x, BOF, pelvis_stop]
+    - min: 
+      frames: true
+
+- event: temp_post
+  where:
+    name: COD_L*
+  steps:
+    - eventMask: [LFT_DistEndVel.x, pelvis_stop, EOF]
+    - max:
+      frames: true
+
+- event: LON
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - eventMask: [LFT_DistEndVel.z, temp_pre, pelvis_stop]
+    - min:
+      frames: true
+
+- event: LOFF
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - threshold: LFT_DistEndVel.x
+      value: 0.2
+      direction: up
+    - eventMask: [$prev, pelvis_stop, temp_post]
+
+# Right
+- event: temp_pre
+  where:
+    name: COD_R*
+  steps:
+    - eventMask: [RFT_DistEndVel.x, BOF, pelvis_stop]
+    - max: 
+      frames: true
+
+- event: temp_post
+  where:
+    name: COD_R*
+  steps:
+    - eventMask: [RFT_DistEndVel.x, pelvis_stop, EOF]
+    - min:
+      frames: true
+
+- event: RON
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - eventMask: [RFT_DistEndVel.z, temp_pre, pelvis_stop]
+    - min:
+      frames: true
+
+- event: ROFF
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - threshold: RFT_DistEndVel.x
+      value: -0.2
+      direction: down
+    - eventMask: [$prev, pelvis_stop, temp_post]
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: COD_L*
+  steps:
+    - import: LON
+
+- event: LeftPlotEnd
+  where:
+    name: COD_L*
+  steps:
+    - import: LOFF
+
+- event: RightPlotStart
+  where:
+    name: COD_R*
+  steps:
+    - import: RON
+
+- event: RightPlotEnd
+  where:
+    name: COD_R*
+  steps:
+    - import: ROFF
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+# COM distance to knee and ankle
+# for now using pelvis COM instead of body COM
+- parameter: Left_Knee_COM_distance
+  set: left
+  steps:
+    - segment: LeftLeg => knee
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, knee]
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Right_Knee_COM_distance
+  set: right
+  steps:
+    - segment: RightLeg => knee
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, knee]
+    - convert: 
+      from: mm
+      to: m
+    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+- parameter: Left_Ankle_COM_distance
+  set: left
+  steps:
+    - segment: LeftFoot => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, foot]
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Right_Ankle_COM_distance
+  set: right
+  steps:
+    - segment: RightFoot => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, foot]
+    - convert: 
+      from: mm
+      to: m
+    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+#############
+## Metrics ##
+#############
+

@@ -1,0 +1,147 @@
+############
+## SERIES ##
+############
+
+# Timeseries used in all FA tasks
+
+# --- Pelvis ---
+
+- parameter: Left Pelvic Angles
+  set: left
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, -1]]
+
+- parameter: Right Pelvic Angles
+  set: right
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+    - multiply: [$prev, [-1, -1, 1]]
+
+# --- Hips ---
+
+- parameter: Left Hip Angles
+  set: left
+  steps:
+    - jointAngle: [Hips, LeftUpLeg]
+    - multiply: [$prev, [1, -1, -1]]
+
+- parameter: Right Hip Angles
+  set: right
+  steps:
+    - jointAngle: [Hips, RightUpLeg]
+    - multiply: [$prev, [1, 1, -1]]
+
+# --- Knee ---
+
+- parameter: Left Knee Angles
+  set: left
+  steps:
+    - jointAngle: [LeftUpLeg, LeftLeg]
+    - multiply: [$prev, [-1, -1, -1]]
+
+- parameter: Right Knee Angles
+  set: right
+  steps:
+    - jointAngle: [RightUpLeg, RightLeg]
+    - multiply: [$prev, [-1, 1, 1]]
+
+# --- Ankle ---
+
+- parameter: Left Ankle Angles
+  set: left
+  steps:
+    - jointAngle: [LeftLeg, LeftFoot]
+    - multiply: [$prev, [1, -1, 1]]
+
+- parameter: Right Ankle Angles
+  set: right
+  steps:
+    - jointAngle: [RightLeg, RightFoot]
+    - multiply: [$prev, [1, 1, -1]]
+
+- parameter: Left Foot Progression
+  set: left
+  steps:
+    - jointAngle: LeftFoot
+      space: VirtualLab
+    - multiply: [$prev, [1, 1, -1]]
+
+- parameter: Right Foot Progression
+  set: right
+  steps:
+    - jointAngle: RightFoot
+      space: VirtualLab
+    - multiply: [$prev, [1, 1, 1]]
+
+- parameter: Left Foot Pitch Angles
+  set: left
+  steps:
+    - jointAngle: LeftFoot
+      space: VirtualLab
+    - multiply: [$prev, [1, 1, -1]]
+
+- parameter: Right Foot Pitch Angles
+  set: right
+  steps:
+    - jointAngle: RightFoot
+      space: VirtualLab
+    - multiply: [$prev, [1, 1, 1]]
+
+# --- Upper body ---
+
+- parameter: Left Thorax_Lab Angles
+  set: left
+  steps:
+    - jointAngle: Spine2
+      space: VirtualLab
+    - multiply: [$prev, [-1,1,-1]]
+
+- parameter: Right Thorax_Lab Angles
+  set: right
+  steps:
+    - jointAngle: Spine2
+      space: VirtualLab
+    - multiply: [$prev, [-1,-1,1]]
+
+- parameter: Left Thorax Angles
+  set: left
+  steps:
+    - jointAngle: [Hips, Spine2]
+    - multiply: [$prev, [-1, 1, -1]]
+
+- parameter: Right Thorax Angles
+  set: right
+  steps:
+    - jointAngle: [Hips, Spine2]
+    - multiply: [$prev, [-1, -1, 1]]
+
+- parameter: Left Shoulder Angles
+  set: left
+  steps:
+    - angle: [Spine2, LeftArm]
+      # rotationOrder: ZYZ
+    - multiply: [$prev, [1, -1, -1]]
+
+- parameter: Right Shoulder Angles
+  set: right
+  steps:
+    - angle: [Spine2, RightArm]
+      # rotationOrder: ZYZ
+    - multiply: [$prev, [1, 1, 1]]
+
+# --- Arms ---
+
+- parameter: Left Elbow Angles
+  set: left
+  steps:
+    - angle: [LeftArm, LeftForearm]
+    - multiply: [$prev, [1, 1, -1]]
+
+- parameter: Right Elbow Angles
+  set: right
+  steps:
+    - angle: [RightArm, RightForearm]
+    - multiply: [$prev, [1, 1, 1]]

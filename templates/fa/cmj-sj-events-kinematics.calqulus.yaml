@@ -1,0 +1,342 @@
+############
+## EVENTS ##
+############
+
+# used by CMJ and SJ
+
+- event: BOF
+  steps:
+    - import: [1]
+
+- event: EOF
+  steps:
+    - import: [$length]
+
+- parameter: RPV_CGVel
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - velocity:
+    - convert: $prev
+      from: mm/s
+      to: m/s
+
+# Bilateral and left
+- parameter: Left_MID_FOOT_vel
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - segment: LeftToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+      export: LFT_DistEnd
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+
+- event: temp_L_max
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - import: Left_MID_FOOT_vel.z
+    - max:
+      frames: true
+
+- event: LOFF
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - threshold: Left_MID_FOOT_vel.z
+      value: 0.5
+      direction: up
+    - eventMask: [$prev, BOF, temp_L_max]
+      keep: -1
+    - add: [$prev, 1]
+    
+- event: LON
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - min: RPV_CGVel.z
+      frames: true
+    - subtract: [$prev, 1]
+
+- event: TouchDown_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - import: LON
+
+- event: TakeOff_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - import: LOFF
+
+- event: PlotStart_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    # - divide: [$framerate, 10]
+    #   output: shift
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: down
+    - eventMask: [$prev, BOF, TakeOff_L]
+      keep: -1
+    # - add: [$prev, shift] #shift by -0.1 s
+
+- event: Pelvis_lowest
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+    - min:
+      frames: true
+
+- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+    - min:
+      frames: true
+
+- event: Eccentric_end
+  where:
+    name: CMJ_[LB]*
+  steps:
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+
+# Bilateral and right
+- parameter: Right_MID_FOOT_vel
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - segment: RightToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+      export: LFT_DistEnd
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+
+- event: temp_R_max
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - import: Right_MID_FOOT_vel.z
+    - max:
+      frames: true
+
+- event: ROFF
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - threshold: Right_MID_FOOT_vel.z
+      value: 0.5
+      direction: up
+    - eventMask: [$prev, BOF, temp_R_max]
+      keep: -1
+    - add: [$prev, 1]
+    
+- event: RON
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - min: RPV_CGVel.z
+      frames: true
+    - subtract: [$prev, 1]
+
+- event: TouchDown_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - import: RON
+
+- event: TakeOff_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - import: ROFF
+
+- event: PlotStart_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    # - divide: [$framerate, 10]
+    #   output: shift
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: down
+    - eventMask: [$prev, BOF, TakeOff_R]
+      keep: -1
+    # - subtract: [$prev, shift] #shift by -0.1 s
+
+- event: Pelvis_lowest
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - min:
+      frames: true
+
+- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - min:
+      frames: true
+
+- event: Eccentric_end
+  where:
+    name: CMJ_[RB]*
+  steps:
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+
+- event: TakeOff
+  where:
+    name: ^(CMJ_|SJ_)B*
+  steps:
+    - concatenate: [LOFF, ROFF]
+    - mean: 
+
+- event: PlotStart
+  where:
+    name: ^(CMJ_|SJ_)B*
+  steps:
+    - concatenate: [PlotStart_L, PlotStart_R]
+    - mean: 
+
+- event: TouchDown
+  where:
+    name: ^(CMJ_|SJ_)B*
+  steps:
+    - concatenate: [LON, RON]
+    - mean: 
+
+- event: TakeOff
+  where:
+    name: ^(CMJ_|SJ_)L*
+  steps:
+    - mean: LOFF
+
+- event: PlotStart
+  where:
+    name: ^(CMJ_|SJ_)L*
+  steps:
+    - mean: PlotStart_L
+
+- event: TouchDown
+  where:
+    name: ^(CMJ_|SJ_)L*
+  steps:
+    - mean: LON
+
+- event: TakeOff
+  where:
+    name: ^(CMJ_|SJ_)R*
+  steps:
+    - mean: ROFF
+
+- event: PlotStart
+  where:
+    name: ^(CMJ_|SJ_)R*
+  steps:
+    - mean: PlotStart_R
+  
+- event: TouchDown
+  where:
+    name: ^(CMJ_|SJ_)R*
+  steps:
+    - mean: RON
+  
+- event: PlotEnd_L # We might need to review this after dependency issue is resolved
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - subtract: [EOF, TouchDown_L]
+      output: diff
+    - multiply: [0.75, $framerate]
+      output: myShift
+    - multiply: [TouchDown_L, 1]
+    - add: [$prev, $prev(2)] #place PlotEnd 0.75 s after TouchDown
+    - if: diff <= myShift
+      then: EOF
+      else: $prev
+
+- event: PlotEnd_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - subtract: [EOF, TouchDown_R]
+      output: diff
+    - multiply: [0.75, $framerate]
+      output: myShift
+    - multiply: [TouchDown_R, 1]
+    - add: [$prev, $prev(2)] #place PlotEnd 0.75 s after TouchDown
+    - if: diff <= myShift
+      then: EOF
+      else: $prev
+
+# unified event names for web
+- event: LeftPlotStart
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - import: PlotStart_L
+
+- event: RightPlotStart
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: PlotStart_R
+
+- event: LeftPlotEnd
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - import: PlotEnd_L
+
+- event: RightPlotEnd
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: PlotEnd_R
