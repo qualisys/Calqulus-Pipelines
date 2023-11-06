@@ -195,7 +195,7 @@
       export: CenterOfMass_MAX_Left
     - min: $prev(2)
       export: CenterOfMass_MIN_Left
-    - subtract: [CenterOfMass_MAX_Left, CenterOfMass_MIN_Left]
+    - subtract: [CenterOfMass_MAX_Left.z, CenterOfMass_MIN_Left.z]
 
 - parameter: Left Hip Angles_min
   where:
@@ -399,7 +399,7 @@
       export: CenterOfMass_MAX_Right
     - min: $prev(2)
       export: CenterOfMass_MIN_Right
-    - subtract: [CenterOfMass_MAX_Right, CenterOfMass_MIN_Right]
+    - subtract: [CenterOfMass_MAX_Right.z, CenterOfMass_MIN_Right.z]
 
 - parameter: Right Hip Angles_min
   where:
