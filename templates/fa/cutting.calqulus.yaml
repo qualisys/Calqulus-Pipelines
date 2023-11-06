@@ -249,7 +249,7 @@
 - parameter: Right Hip Angles_max_penultimate
   where:
     name: Cutting_L*
-  set: left
+  set: right
   steps:
     - eventMask: [Right Hip Angles, Right Penultimate TouchDown, Right Penultimate TakeOff]
     - max:
