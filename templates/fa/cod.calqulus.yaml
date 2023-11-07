@@ -136,6 +136,7 @@
       value: 0.2
       direction: up
     - eventMask: [$prev, pelvis_stop, temp_post]
+    - add: [$prev, 3]
 
 # Right
 - event: temp_pre
@@ -172,6 +173,7 @@
       value: -0.2
       direction: down
     - eventMask: [$prev, pelvis_stop, temp_post]
+    - add: [$prev, 3]
 
 # Unified event names for web
 - event: LeftPlotStart
