@@ -18,4 +18,8 @@
   where:
     name: SJ*
 
+- template: templates/fa/acc.calqulus.yaml
+  where:
+    name: Acc*
+
 
