@@ -283,21 +283,21 @@
   where:
     name: DJ_B*
   steps:
-    - min: RPV_CGVel
+    - min: PelvisCGPos_vel
     - eventMask: [$prev,TouchDown,COM_MIN]
 
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - min: RPV_CGVel
+    - min: PelvisCGPos_vel
     - eventMask: [$prev,TouchDown,COM_MIN]
 
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - min: RPV_CGVel
+    - min: PelvisCGPos_vel
     - eventMask: [$prev,TouchDown,COM_MIN]
 
 #Jump Height to Flight Time Ratio

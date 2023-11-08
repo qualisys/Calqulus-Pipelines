@@ -16,7 +16,7 @@
     name: DJ_[LB]*
   set: left
   steps:
-    - max: RPV_CGVel.z
+    - max: PelvisCGPos_vel.z
       frames: true
     - add: [$prev, 3]
 
@@ -25,7 +25,7 @@
     name: DJ_[LB]*
   set: left
   steps:
-    - eventMask: [RPV_CGVel.z,BOF, TakeOff_L]
+    - eventMask: [PelvisCGPos_vel.z,BOF, TakeOff_L]
     - min:
       frames: true
     - subtract: [$prev, 4]
@@ -35,7 +35,7 @@
     name: DJ_[LB]*
   set: left
   steps:
-    - eventMask: [RPV_CGVel.z,TakeOff_L, EOF]
+    - eventMask: [PelvisCGPos_vel.z,TakeOff_L, EOF]
     - min:
       frames: true
     - subtract: [$prev, 4]
@@ -86,7 +86,7 @@
     name: DJ_[RB]*
   set: right
   steps:
-    - max: RPV_CGVel.z
+    - max: PelvisCGPos_vel.z
       frames: true
     - add: [$prev, 3]
 
@@ -95,7 +95,7 @@
     name: DJ_[RB]*
   set: right
   steps:
-    - eventMask: [RPV_CGVel.z,BOF, TakeOff_R]
+    - eventMask: [PelvisCGPos_vel.z,BOF, TakeOff_R]
     - min:
       frames: true
     - subtract: [$prev, 4]
@@ -105,7 +105,7 @@
     name: DJ_[RB]*
   set: right
   steps:
-    - eventMask: [RPV_CGVel.z,TakeOff_R, EOF]
+    - eventMask: [PelvisCGPos_vel.z,TakeOff_R, EOF]
     - min:
       frames: true
     - subtract: [$prev, 4]
@@ -168,7 +168,7 @@
 # Place Landing_end at EOF if Landing_end cannot be created because there is no descending zero crossing of PelvisCGPos_vel after landing.
 # - event: Landing_end_temp
 #   steps:
-#     - threshold: RPV_CGVel.z
+#     - threshold: PelvisCGPos_vel.z
 #       value: 0
 #       direction: down
 #     - eventMask: [$prev, Landing, EOF]
@@ -182,15 +182,15 @@
 
 - event: Landing_end
   steps:
-    - threshold: RPV_CGVel.z
+    - threshold: PelvisCGPos_vel.z
       value: 0
       direction: down
     - eventMask: [$prev, Landing, EOF]
       keep: 1
-      output: Landing_end_temp
+      export: Landing_end_temp
 
     - subtract: [$length,2]
-      output: EOF-1
+      export: EOF-1
 
     - if: Landing_end_temp
       then: Landing_end_temp

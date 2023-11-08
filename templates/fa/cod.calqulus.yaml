@@ -18,15 +18,6 @@
   steps:
     - import: [$length]
 
-- parameter: PelvisCGPos_vel
-  steps:
-    - segment: Hips
-      space: VirtualLab
-    - velocity:
-    - convert: $prev
-      from: mm/s
-      to: m/s
-
 # Find when RPV vel x component is crossing zero > this is when foot strike in focus occures
 - event: temp_max
   steps:
