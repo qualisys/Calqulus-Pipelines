@@ -22,4 +22,10 @@
   where:
     name: Acc*
 
+- template: templates/fa/sl.calqulus.yaml
+  where:
+    name: SLJ*
 
+- template: templates/fa/sl.calqulus.yaml
+  where:
+    name: SLL*
