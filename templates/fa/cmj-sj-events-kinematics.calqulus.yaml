@@ -22,25 +22,6 @@
       to: m/s
 
 # Bilateral and left
-- parameter: Left_MID_FOOT_vel
-  where:
-    name: ^(CMJ_|SJ_)[LB]*
-  set: left
-  steps:
-    - segment: LeftToeBase
-      space: VirtualLab
-    - convert:
-      from: mm
-      to: m
-    - lowpass:
-      extrapolate: 100
-      cutoff: 16
-      export: LFT_DistEnd
-    - velocity:
-    - lowpass:
-      extrapolate: 100
-      cutoff: 16
-
 - event: temp_L_max
   where:
     name: ^(CMJ_|SJ_)[LB]*
@@ -127,25 +108,6 @@
     - eventMask: [$prev, PlotStart_L, TakeOff_L]
 
 # Bilateral and right
-- parameter: Right_MID_FOOT_vel
-  where:
-    name: ^(CMJ_|SJ_)[RB]*
-  set: right
-  steps:
-    - segment: RightToeBase
-      space: VirtualLab
-    - convert:
-      from: mm
-      to: m
-    - lowpass:
-      extrapolate: 100
-      cutoff: 16
-      export: LFT_DistEnd
-    - velocity:
-    - lowpass:
-      extrapolate: 100
-      cutoff: 16
-
 - event: temp_R_max
   where:
     name: ^(CMJ_|SJ_)[RB]*

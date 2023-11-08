@@ -27,44 +27,6 @@
       from: mm/s
       to: m/s
 
-- parameter: LFT_DistEndAcc
-  set: left
-  steps:
-    - segment: LeftToeBase
-      space: VirtualLab
-    - convert:
-      from: mm
-      to: m
-    - lowpass:
-      extrapolate: 100
-      cutoff: 9
-      export: LFT_DistEndPos
-    - velocity:
-    # - lowpass:
-    #   extrapolate: 100
-    #   cutoff: 16
-      export: LFT_DistEndVel
-    - velocity:
-
-- parameter: RFT_DistEndAcc
-  set: right
-  steps:
-    - segment: RightToeBase
-      space: VirtualLab
-    - convert:
-      from: mm
-      to: m
-    - lowpass:
-      extrapolate: 100
-      cutoff: 9
-      export: RFT_DistEndPos
-    - velocity:
-    # - lowpass:
-    #   extrapolate: 100
-    #   cutoff: 16
-      export: RFT_DistEndVel
-    - velocity:
-
 # Find when RPV vel x component is crossing zero > this is when foot strike in focus occures
 - event: temp_max
   steps:

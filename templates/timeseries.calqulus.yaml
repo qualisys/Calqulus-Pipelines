@@ -2,6 +2,54 @@
 ## SERIES ##
 ############
 
+# Parameters needed for kinematics event detection
+- parameter: PelvisCGPos_vel
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - velocity:
+    - convert: $prev
+      from: mm/s
+      to: m/s
+
+- parameter: LFT_DistEndAcc
+  set: left
+  steps:
+    - segment: LeftToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 9
+      export: LFT_DistEndPos
+    - velocity:
+    # - lowpass:
+    #   extrapolate: 100
+    #   cutoff: 16
+      export: LFT_DistEndVel
+    - velocity:
+
+- parameter: RFT_DistEndAcc
+  set: right
+  steps:
+    - segment: RightToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 9
+      export: RFT_DistEndPos
+    - velocity:
+    # - lowpass:
+    #   extrapolate: 100
+    #   cutoff: 16
+      export: RFT_DistEndVel
+    - velocity:
+
 # Timeseries used in all FA tasks
 
 # --- Pelvis ---
