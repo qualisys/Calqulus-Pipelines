@@ -95,6 +95,31 @@
       from: mm
       to: m
 
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: ^(SLJ_|SLL_)L*
+  steps:
+    - import: TouchDown
+
+- event: LeftPlotEnd
+  where:
+    name: ^(SLJ_|SLL_)L*
+  steps:
+    - import: PlotEnd
+
+- event: RightPlotStart
+  where:
+    name: ^(SLJ_|SLL_)R*
+  steps:
+    - import: TouchDown
+
+- event: RightPlotEnd
+  where:
+    name: ^(SLJ_|SLL_)R*
+  steps:
+    - import: PlotEnd
+
 ############
 ## SERIES ##
 ############
