@@ -213,7 +213,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - eventMask: [Left Hip Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Left Hip Angles, TouchDown, Max_knee_flex]
     - min: 
 
 - parameter: Left Knee Angles_min
@@ -221,7 +221,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - eventMask: [Left Knee Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
     - min: 
 
 - parameter: Left Ankle Angles_min
@@ -229,7 +229,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - eventMask: [Left Ankle Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Left Ankle Angles, TouchDown, Max_knee_flex]
     - min: 
 
 # Max
@@ -238,7 +238,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - eventMask: [Left Hip Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Left Hip Angles, TouchDown, Max_knee_flex]
     - max: 
 
 - parameter: Left Knee Angles_max
@@ -246,7 +246,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - eventMask: [Left Knee Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
     - max: 
 
 - parameter: Left Ankle Angles_max
@@ -254,7 +254,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - eventMask: [Left Ankle Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Left Ankle Angles, TouchDown, Max_knee_flex]
     - max: 
 
 - parameter: Left Thorax Angles_max_knee_flex
@@ -262,7 +262,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - eventMask: [Left Ankle Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Left Ankle Angles, TouchDown, Max_knee_flex]
     - max: 
 
 - parameter: Left Knee Angles_max_knee_flex
@@ -270,7 +270,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - eventMask: [Left Ankle Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Left Ankle Angles, TouchDown, Max_knee_flex]
     - max: 
 
 # Calculate hop distance
@@ -375,7 +375,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - eventMask: [Right Hip Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Right Hip Angles, TouchDown, Max_knee_flex]
     - min: 
 
 - parameter: Right Knee Angles_min
@@ -383,7 +383,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - eventMask: [Right Knee Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
     - min: 
 
 - parameter: Right Ankle Angles_min
@@ -391,7 +391,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - eventMask: [Right Ankle Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Right Ankle Angles, TouchDown, Max_knee_flex]
     - min: 
 
 # Max
@@ -400,7 +400,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - eventMask: [Right Hip Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Right Hip Angles, TouchDown, Max_knee_flex]
     - max: 
 
 - parameter: Right Knee Angles_max
@@ -408,7 +408,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - eventMask: [Right Knee Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
     - max: 
 
 - parameter: Right Ankle Angles_max
@@ -416,7 +416,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - eventMask: [Right Ankle Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Right Ankle Angles, TouchDown, Max_knee_flex]
     - max: 
 
 - parameter: Right Thorax Angles_max_knee_flex
@@ -424,7 +424,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - eventMask: [Right Ankle Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Right Ankle Angles, TouchDown, Max_knee_flex]
     - max: 
 
 - parameter: Right Knee Angles_max_knee_flex
@@ -432,7 +432,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - eventMask: [Right Ankle Angle, TouchDown, Max_knee_flex]
+    - eventMask: [Right Ankle Angles, TouchDown, Max_knee_flex]
     - max: 
 
 # Calculate hop distance
