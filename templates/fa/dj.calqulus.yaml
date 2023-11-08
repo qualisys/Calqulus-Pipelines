@@ -18,58 +18,6 @@
 
 - template: /templates/timeseries.calqulus.yaml
 
-# COM distance to knee and ankle
-# for now using pelvis COM instead of body COM
-- parameter: Left_Knee_COM_distance
-  set: left
-  steps:
-    - segment: LeftLeg => knee
-      space: VirtualLab
-    - segment: Hips => pelvis
-      space: VirtualLab
-    - subtract: [pelvis, knee]
-    - convert: 
-      from: mm
-      to: m
-
-- parameter: Right_Knee_COM_distance
-  set: right
-  steps:
-    - segment: RightLeg => knee
-      space: VirtualLab
-    - segment: Hips => pelvis
-      space: VirtualLab
-    - subtract: [pelvis, knee]
-    - convert: 
-      from: mm
-      to: m
-    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
-
-- parameter: Left_Ankle_COM_distance
-  set: left
-  steps:
-    - segment: LeftFoot => foot
-      space: VirtualLab
-    - segment: Hips => pelvis
-      space: VirtualLab
-    - subtract: [pelvis, foot]
-    - convert: 
-      from: mm
-      to: m
-
-- parameter: Right_Ankle_COM_distance
-  set: right
-  steps:
-    - segment: RightFoot => foot
-      space: VirtualLab
-    - segment: Hips => pelvis
-      space: VirtualLab
-    - subtract: [pelvis, foot]
-    - convert: 
-      from: mm
-      to: m
-    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
-
 #############
 ## Metrics ##
 #############
