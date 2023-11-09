@@ -1,10 +1,18 @@
 ############
 ## SPACES ##
 ############
+- event: BOF_10fr
+  steps:
+    - import: [10]
+
+- parameter: HipsStart
+  steps:
+    - eventMask: [Hips, BOF, BOF_10fr]
+      truncate: true
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: HipsStart
 
 ############
 ## EVENTS ##
