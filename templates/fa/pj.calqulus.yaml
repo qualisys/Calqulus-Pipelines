@@ -104,7 +104,6 @@
     - max:
       frames: true
 
-# Unified event names for web
 - event: TakeOff
   where:
     name: PJ_L*
@@ -128,6 +127,31 @@
     name: PJ_[RB]*
   steps:
     - import: TouchDown_R
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: PJ_L*
+  steps:
+    - import: TouchDown_L
+
+- event: LeftPlotEnd
+  where:
+    name: PJ_L*
+  steps:
+    - import: TakeOff_L
+
+- event: RightPlotStart
+  where:
+    name: PJ_R*
+  steps:
+    - import: TouchDown_R
+
+- event: RightPlotEnd
+  where:
+    name: PJ_R*
+  steps:
+    - import: TakeOff_R
 
 ############
 ## SERIES ##
