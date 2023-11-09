@@ -143,13 +143,13 @@
 
 - event: RightPlotStart
   where:
-    name: PJ_R*
+    name: PJ_[RB]*
   steps:
     - import: TouchDown_R
 
 - event: RightPlotEnd
   where:
-    name: PJ_R*
+    name: PJ_[RB]*
   steps:
     - import: TakeOff_R
 
