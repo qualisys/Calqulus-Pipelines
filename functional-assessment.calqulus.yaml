@@ -29,3 +29,8 @@
 - template: templates/fa/sl.calqulus.yaml
   where:
     name: SLL*
+
+- template: templates/fa/pj.calqulus.yaml
+  where:
+    name: PJ*
+

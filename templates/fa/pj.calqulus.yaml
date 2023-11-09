@@ -1,0 +1,212 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [1]
+
+- event: EOF
+  steps:
+    - import: [$length]
+
+# Left
+- event: TakeOff_L
+  where:
+    name: PJ_[LB]*
+  steps:
+    - lowpass: PelvisCGPos_vel.z
+    - peakFinder:
+      height: 0.5
+      distance: 10
+
+- event: TouchDown_L
+  where:
+    name: PJ_[LB]*
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder: 
+      height: 0.5
+      distance: 20
+
+- event: Max_knee_flex
+  where:
+    name: PJ_[LB]*
+  steps:
+    - eventMask: [Left Knee Angles.x, TouchDown_L, TakeOff_L]
+    - max:
+      frames: true
+
+- event: TakeOff_full_cycle
+  where:
+    name: PJ_L*
+  steps:
+    - refineEvent: TakeOff_L
+      sequence: [TakeOff_L, TouchDown_L]
+
+- event: COM_MIN
+  where:
+    name: PJ_L*
+  steps:
+    - eventMask: [Hips.z, TouchDown_L, TakeOff_full_cycle]
+    - max:
+      frames: true
+
+# Right
+- event: TakeOff_R
+  where:
+    name: PJ_[RB]*
+  steps:
+    - lowpass: PelvisCGPos_vel.z
+    - peakFinder: 
+      height: 0.5
+      distance: 10
+
+- event: TouchDown_R
+  where:
+    name: PJ_[RB]*
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder: 
+      height: 0.5
+      distance: 20
+
+- event: Max_knee_flex
+  where:
+    name: PJ_[RB]*
+  steps:
+    - eventMask: [Right Knee Angles.x, TouchDown_R, TakeOff_R]
+    - max:
+      frames: true
+
+- event: TakeOff_full_cycle
+  where:
+    name: PJ_[RB]*
+  steps:
+    - refineEvent: TakeOff_R
+      sequence: [TakeOff_R, TouchDown_R]
+
+- event: COM_MIN
+  where:
+    name: PJ_[RB]*
+  steps:
+    - eventMask: [Hips.z, TouchDown_R, TakeOff_full_cycle]
+    - max:
+      frames: true
+
+# Unified event names for web
+- event: TakeOff
+  where:
+    name: PJ_L*
+  steps:
+    - import: TakeOff_L
+
+- event: TouchDown
+  where:
+    name: PJ_L*
+  steps:
+    - import: TouchDown_L
+
+- event: TakeOff
+  where:
+    name: PJ_[RB]*
+  steps:
+    - import: TakeOff_R
+
+- event: TouchDown
+  where:
+    name: PJ_[RB]*
+  steps:
+    - import: TouchDown_R
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## Metrics ##
+#############
+
+# Average and Max jump height
+- parameter: PelvisCGPos_max
+  steps:
+    - eventMask: [PelvisCGPos.z, TakeOff_full_cycle, TouchDown]
+    - max:
+
+- parameter: PelvisCGPos@TakeOff
+  steps:
+    - import: PelvisCGPos.z@TakeOff_full_cycle
+
+# Left ---------
+- parameter: Jump_height_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
+
+- parameter: Jump_height_PJ_L_max
+  where:
+    name: PJ_L*
+  steps:
+    - max: Jump_height_PJ_L
+
+# Number of repetitions
+- parameter: Left_TouchDown_count_PJ_L
+  where:
+    name: PJ_L*
+  set: left
+  steps:
+    - count: TouchDown
+
+# Right ---------
+- parameter: Jump_height_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
+
+- parameter: Jump_height_PJ_R_max
+  where:
+    name: PJ_R*
+  steps:
+    - max: Jump_height_PJ_R
+
+# Number of repetitions
+- parameter: Right_TouchDown_count_PJ_R
+  where:
+    name: PJ_R*
+  set: right
+  steps:
+    - count: TouchDown
+
+# Bilateral ---------
+- parameter: Jump_height_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
+
+- parameter: Jump_height_PJ_B_max
+  where:
+    name: PJ_B*
+  steps:
+    - max: Jump_height_PJ_B
+
+# Number of repetitions
+- parameter: Right_TouchDown_count_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - count: TouchDown

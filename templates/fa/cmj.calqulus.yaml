@@ -55,6 +55,7 @@
     - lowpass:
       extrapolate: 100
       cutoff: 16
+
 #############
 ## Metrics ##
 #############
