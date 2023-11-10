@@ -199,7 +199,9 @@
     name: SH_L*
   set: left
   steps:
-    - subtract: [LON@20, LON@1] # not working, yet
+    - eventTime: LON
+      output: on_time
+    - subtract: [on_time@20, on_time@1]
 
 # Right ------------
 # Contact time - both directions
@@ -255,6 +257,8 @@
     name: SH_R*
   set: right
   steps:
-    - subtract: [RON@20, RON@1] # not working, yet
+    - eventTime: RON
+      output: on_time
+    - subtract: [on_time@20, on_time@1]
 
 
