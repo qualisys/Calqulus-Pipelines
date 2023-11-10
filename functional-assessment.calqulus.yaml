@@ -38,4 +38,11 @@
   where:
     name: SH*
 
+- template: templates/fa/tapping.calqulus.yaml
+  where:
+    name: Tapping*
+
+
+
+
 
