@@ -1,0 +1,260 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [1]
+
+- event: EOF
+  steps:
+    - import: [$length]
+
+# Left
+- event: LON
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - negate: LFT_DistEndVel.z
+    - peakFinder: 
+      height: 0.3
+    - add: [$prev, 1]
+
+- event: LOFF
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [LFT_DistEndVel.z, LON, LON]
+    - max: 
+      frames: true
+    - subtract: [$prev, 2]
+
+- event: Left_On_Left_FP
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - lowpass: PelvisCGPos_vel.x
+    - threshold: 
+      value: 0
+      direction: up
+    - eventMask: [$prev, LON, LOFF]
+      keep: -1
+
+- event: Left_On_Right_FP
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - lowpass: PelvisCGPos_vel.x
+    - threshold: 
+      value: 0
+      direction: down
+    - eventMask: [$prev, LON, LOFF]
+      keep: -1
+
+# Right
+- event: RON
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - negate: RFT_DistEndVel.z
+    - peakFinder: 
+      height: 0.3
+    - add: [$prev, 1]
+
+- event: ROFF
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [RFT_DistEndVel.z, RON, RON]
+    - max: 
+      frames: true
+    - subtract: [$prev, 2]
+
+- event: Right_On_Left_FP
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - lowpass: PelvisCGPos_vel.x
+      cutoff: 3
+    - threshold: 
+      value: 0
+      direction: up
+    - eventMask: [$prev, RON, ROFF]
+      keep: -1
+
+- event: Right_On_Right_FP
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - lowpass: PelvisCGPos_vel.x
+      cutoff: 3
+    - threshold: 
+      value: 0
+      direction: down
+    - eventMask: [$prev, RON, ROFF]
+      keep: -1
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: SH_L*
+  steps:
+    - import: LON
+
+- event: LeftPlotEnd
+  where:
+    name: SH_L*
+  steps:
+    - import: LOFF
+
+- event: RightPlotStart
+  where:
+    name: SH_R*
+  steps:
+    - import: RON
+
+- event: RightPlotEnd
+  where:
+    name: SH_R*
+  steps:
+    - import: ROFF
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## Metrics ##
+#############
+
+# Left ------------
+# Contact time - both directions
+- parameter: Left_contact_time
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventDuration: [LON, LOFF]
+
+- parameter: Left_Contact_count
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - count: Left_contact_time
+
+# Contact time - jumping medially
+- parameter: Left_contact_time_medially
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - refineEvent: LON
+      sequence: [LON, LOFF]
+      exclude: [Left_On_Left_FP]
+      output: LON_filtered
+    - refineEvent: LOFF
+      sequence: [LON, LOFF]
+      exclude: [Left_On_Left_FP]
+      output: LOFF_filtered
+    - eventDuration: [LON_filtered, LOFF_filtered]
+
+# Contact time - jumping laterally
+- parameter: Left_contact_time_laterally
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - refineEvent: LON
+      sequence: [LON, LOFF]
+      exclude: [Left_On_Right_FP]
+      output: LON_filtered
+    - refineEvent: LOFF
+      sequence: [LON, LOFF]
+      exclude: [Left_On_Right_FP]
+      output: LOFF_filtered
+    - eventDuration: [LON_filtered, LOFF_filtered]
+
+# Time from first ON to 20th ON event
+- parameter: Left_20_contacts_time
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - subtract: [LON@20, LON@1] # not working, yet
+
+# Right ------------
+# Contact time - both directions
+- parameter: Right_contact_time
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventDuration: [RON, ROFF]
+
+- parameter: Right_Contact_count
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - count: Right_contact_time
+
+# Contact time - jumping medially
+- parameter: Right_contact_time_medially
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - refineEvent: RON
+      sequence: [RON, ROFF]
+      exclude: [Right_On_Right_FP]
+      output: RON_filtered
+    - refineEvent: ROFF
+      sequence: [RON, ROFF]
+      exclude: [Right_On_Right_FP]
+      output: ROFF_filtered
+    - eventDuration: [RON_filtered, ROFF_filtered]
+
+# Contact time - jumping laterally
+- parameter: Right_contact_time_laterally
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - refineEvent: RON
+      sequence: [RON, ROFF]
+      exclude: [Right_On_Left_FP]
+      output: RON_filtered
+    - refineEvent: ROFF
+      sequence: [RON, ROFF]
+      exclude: [Right_On_Left_FP]
+      output: ROFF_filtered
+    - eventDuration: [RON_filtered, ROFF_filtered]
+
+# Time from first ON to 20th ON event
+- parameter: Right_20_contacts_time
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - subtract: [RON@20, RON@1] # not working, yet
+
+

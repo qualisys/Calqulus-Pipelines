@@ -34,3 +34,8 @@
   where:
     name: PJ*
 
+- template: templates/fa/sh.calqulus.yaml
+  where:
+    name: SH*
+
+
