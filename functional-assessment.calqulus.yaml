@@ -42,6 +42,10 @@
   where:
     name: Tapping*
 
+- template: templates/fa/ll.calqulus.yaml
+  where:
+    name: ^LL*
+
 
 
 
