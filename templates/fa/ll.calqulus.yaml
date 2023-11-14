@@ -219,12 +219,14 @@
 - parameter: Left_Ankle_COM_distance@TouchDown_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
@@ -232,44 +234,36 @@
 - parameter: Left_Ankle_COM_distance@TakeOff_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Left_Knee_COM_distance@TakeOff_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@TakeOff
-
-# @Pelvis_lowest
-- parameter: Left_Ankle_COM_distance@Pelvis_lowest_LL_L
-  where:
-    name: LL_L*
-  steps:
-    - import: Left_Ankle_COM_distance@Pelvis_lowest
-
-- parameter: Left_Knee_COM_distance@Pelvis_lowest_LL_L
-  where:
-    name: LL_L*
-  steps:
-    - import: Left_Knee_COM_distance@Pelvis_lowest
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Thorax Angles@TouchDown
 
@@ -277,18 +271,21 @@
 - parameter: Left Ankle Angles@COM_MIN_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Hip Angles@COM_MIN
 
@@ -296,39 +293,44 @@
 - parameter: Left Hip Angles_max_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - max: Left Hip Angles
 
 - parameter: Left Knee Angles_max_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - max: Left Knee Angles
 
 - parameter: Left Ankle Angles_max_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - max: Left Ankle Angles
 
 - parameter: Left Foot Progression_max_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - max: Left Foot Progression
-
 
 # Right ------
 # @TouchDown
 - parameter: Right_Ankle_COM_distance@TouchDown_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
@@ -336,44 +338,36 @@
 - parameter: Right_Ankle_COM_distance@TakeOff_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@TakeOff
-
-# @Pelvis_lowest
-- parameter: Right_Ankle_COM_distance@Pelvis_lowest_LL_R
-  where:
-    name: LL_R*
-  steps:
-    - import: Right_Ankle_COM_distance@Pelvis_lowest
-
-- parameter: Right_Knee_COM_distance@Pelvis_lowest_LL_R
-  where:
-    name: LL_R*
-  steps:
-    - import: Right_Knee_COM_distance@Pelvis_lowest
 
 # Other metrics @TouchDown
 - parameter: Right Knee Angles@TouchDown_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Hip Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Thorax Angles@TouchDown
 
@@ -381,18 +375,21 @@
 - parameter: Right Ankle Angles@COM_MIN_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Hip Angles@COM_MIN
 
@@ -400,24 +397,28 @@
 - parameter: Right Hip Angles_max_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - max: Right Hip Angles
 
 - parameter: Right Knee Angles_max_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - max: Right Knee Angles
 
 - parameter: Right Ankle Angles_max_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - max: Right Ankle Angles
 
 - parameter: Right Foot Progression_max_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - max: Right Foot Progression
 
@@ -432,6 +433,8 @@
     - import: RFT_DistEndPos@Landing_R
 
 - parameter: Left_jump_distance
+  where:
+    name: LL_L*
   steps:
     - subtract: [LFT_DistEndPos@TakeOff, RFT_DistEndPos@Landing_R]
     - abs:
@@ -446,6 +449,8 @@
     - import: LFT_DistEndPos@Landing_L
 
 - parameter: Right_jump_distance
+  where:
+    name: LL_R*
   steps:
     - subtract: [RFT_DistEndPos@TakeOff, LFT_DistEndPos@Landing_L]
     - abs:
