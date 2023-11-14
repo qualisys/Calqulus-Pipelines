@@ -46,7 +46,8 @@
   where:
     name: ^LL*
 
-
-
+- template: templates/fa/sl.calqulus.yaml
+  where:
+    name: ^SLCDL*
 
 

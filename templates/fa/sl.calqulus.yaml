@@ -10,130 +10,7 @@
 ## EVENTS ##
 ############
 
-- event: BOF
-  steps:
-    - import: [1]
-
-- event: EOF
-  steps:
-    - import: [$length]
-
-- parameter: PelvisCGPos_vel
-  steps:
-    - segment: Hips
-      space: VirtualLab
-    - velocity:
-    - convert: $prev
-      from: mm/s
-      to: m/s
-
-# Left
-- event: TouchDown
-  where:
-    name: ^(SLJ_|SLL_)L*
-  set: left
-  steps:
-    - min: LFT_DistEndVel.z
-      frames: true
-    - add: [$prev, 1]
-
-- event: Max_knee_flex
-  where:
-    name: ^(SLJ_|SLL_)L*
-  set: left
-  steps:
-    - eventMask: [Left Knee Angles.x, TouchDown, EOF]
-    - max:
-      frames: true
-
-# Right
-- event: TouchDown
-  where:
-    name: ^(SLJ_|SLL_)R*
-  set: right
-  steps:
-    - min: RFT_DistEndVel.z
-      frames: true
-    - add: [$prev, 1]
-
-- event: Max_knee_flex
-  where:
-    name: ^(SLJ_|SLL_)R*
-  set: right
-  steps:
-    - eventMask: [Right Knee Angles.x, TouchDown, EOF]
-    - max:
-      frames: true
-
-# For SLJ PlotEnd is set to 1 sec after TouchDown. For SLL it is 3 sec
-- event: PlotEnd
-  where:
-    name: SLJ*
-  steps:
-    - multiply: [$framerate, 1] # 1 sec
-    - add: [$prev, TouchDown] # 1 s after TouchDown
-      export: end_fr
-
-    - if: EOF > end_fr
-      then: end_fr
-      else: EOF
-
-- event: PlotEnd
-  where:
-    name: SLL*
-  steps:
-    - multiply: [$framerate, 3] #3 sec
-    - add: [$prev, TouchDown] # 3 s after TouchDown
-      export: end_fr
-
-    - if: EOF > end_fr
-      then: end_fr
-      else: EOF
-
-- event: TakeOff
-  steps:
-    - eventMask: [PelvisCGPos_vel.z, BOF, TouchDown]
-    - max:
-      frames: true
-    - import: $prev@-1
-
-- event: COM_MIN # using Pelvis for now
-  steps:
-    - eventMask: [Hips.z, TouchDown, Max_knee_flex]
-    - min:
-      frames: true
-
-- parameter: Pelvis COG #for deggubing only
-  steps:
-    - import: Hips
-    - convert:
-      from: mm
-      to: m
-
-# Unified event names for web
-- event: LeftPlotStart
-  where:
-    name: ^(SLJ_|SLL_)L*
-  steps:
-    - import: TouchDown
-
-- event: LeftPlotEnd
-  where:
-    name: ^(SLJ_|SLL_)L*
-  steps:
-    - import: PlotEnd
-
-- event: RightPlotStart
-  where:
-    name: ^(SLJ_|SLL_)R*
-  steps:
-    - import: TouchDown
-
-- event: RightPlotEnd
-  where:
-    name: ^(SLJ_|SLL_)R*
-  steps:
-    - import: PlotEnd
+- template: sl-events-kinematics.calqulus.yaml
 
 ############
 ## SERIES ##
@@ -148,14 +25,14 @@
 # Left -------------
 - parameter: Left Knee Angles@TouchDown
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - import: Left Hip Angles@TouchDown
@@ -163,7 +40,7 @@
 # COM displacement
 - parameter: COM_displacement_Left_MEAN_range
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - eventMask: [Hips, TouchDown, Max_knee_flex]
@@ -180,14 +57,14 @@
 # @TouchDown
 - parameter: Left_Knee_COM_distance@TouchDown
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
@@ -210,14 +87,14 @@
 # Max Knee Flex
 - parameter: Left Knee Angles@Max_knee_flex
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - import: Left Knee Angles@Max_knee_flex
 
 - parameter: Left Thorax Angles@Max_knee_flex
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - import: Left Thorax Angles@Max_knee_flex
@@ -233,7 +110,7 @@
 
 - parameter: Left Knee Angles_min
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
@@ -241,7 +118,7 @@
 
 - parameter: Left Ankle Angles_min
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - eventMask: [Left Ankle Angles, TouchDown, Max_knee_flex]
@@ -250,7 +127,7 @@
 # Max
 - parameter: Left Hip Angles_max
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - eventMask: [Left Hip Angles, TouchDown, Max_knee_flex]
@@ -258,7 +135,7 @@
 
 - parameter: Left Knee Angles_max
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
@@ -266,7 +143,7 @@
 
 - parameter: Left Ankle Angles_max
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - eventMask: [Left Ankle Angles, TouchDown, Max_knee_flex]
@@ -274,7 +151,7 @@
 
 - parameter: Left Thorax Angles_max_knee_flex
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - eventMask: [Left Thorax Angles, TouchDown, Max_knee_flex]
@@ -282,7 +159,7 @@
 
 - parameter: Left Knee Angles_max_knee_flex
   where:
-    name: ^(SLJ_|SLL_)L*
+    name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
     - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
@@ -310,14 +187,14 @@
 # Right -------------
 - parameter: Right Knee Angles@TouchDown
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - import: Right Hip Angles@TouchDown
@@ -325,7 +202,7 @@
 # COM displacement
 - parameter: COM_displacement_Right_MEAN_range
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Hips, TouchDown, Max_knee_flex]
@@ -342,14 +219,14 @@
 # @TouchDown
 - parameter: Right_Knee_COM_distance@TouchDown
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
@@ -372,14 +249,14 @@
 # Max Knee Flex
 - parameter: Right Knee Angles@Max_knee_flex
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - import: Right Knee Angles@Max_knee_flex
 
 - parameter: Right Thorax Angles@Max_knee_flex
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - import: Right Thorax Angles@Max_knee_flex
@@ -387,7 +264,7 @@
 # Min
 - parameter: Right Hip Angles_min
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Right Hip Angles, TouchDown, Max_knee_flex]
@@ -395,7 +272,7 @@
 
 - parameter: Right Knee Angles_min
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
@@ -403,7 +280,7 @@
 
 - parameter: Right Ankle Angles_min
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Right Ankle Angles, TouchDown, Max_knee_flex]
@@ -412,7 +289,7 @@
 # Max
 - parameter: Right Hip Angles_max
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Right Hip Angles, TouchDown, Max_knee_flex]
@@ -420,7 +297,7 @@
 
 - parameter: Right Knee Angles_max
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
@@ -428,7 +305,7 @@
 
 - parameter: Right Ankle Angles_max
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Right Ankle Angles, TouchDown, Max_knee_flex]
@@ -436,7 +313,7 @@
 
 - parameter: Right Thorax Angles_max_knee_flex
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Right Thorax Angles, TouchDown, Max_knee_flex]
@@ -444,7 +321,7 @@
 
 - parameter: Right Knee Angles_max_knee_flex
   where:
-    name: ^(SLJ_|SLL_)R*
+    name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
     - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
