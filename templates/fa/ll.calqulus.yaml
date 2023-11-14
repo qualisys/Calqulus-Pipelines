@@ -145,18 +145,26 @@
 
 # Unified event names for web
 - event: LeftPlotStart
+  where:
+    name: LL_L*
   steps:
     - import: PlotStart
 
 - event: LeftPlotEnd
+  where:
+    name: LL_L*
   steps:
     - import: TakeOff
 
 - event: RightPlotStart
+  where:
+    name: LL_R*
   steps:
     - import: PlotStart
 
 - event: RightPlotEnd
+  where:
+    name: LL_R*
   steps:
     - import: TakeOff
 
