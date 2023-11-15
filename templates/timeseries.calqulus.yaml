@@ -195,6 +195,32 @@
     - angle: [RightArm, RightForearm]
     - multiply: [$prev, [1, 1, 1]]
 
+# --- Wrist ---
+
+- parameter: Left Wrist Angles
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - angle: [LeftForeArm, LeftHand]
+    - multiply: [$prev, [1, -1, 1]]
+
+- parameter: Right Wrist Angles
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - angle: [RightForeArm, RightHand]
+    - multiply: [$prev, [1, 1, -1]]
+
+# --- Head ---
+
+- parameter: Head Angles
+  where:
+    name: '!Static*'
+  steps:
+    - angle: [Head, Spine2]
+
 # COM distance to knee and ankle
 # for now using pelvis COM instead of body COM
 - parameter: Left_Knee_COM_distance
