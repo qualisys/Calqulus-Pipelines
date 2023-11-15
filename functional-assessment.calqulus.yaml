@@ -30,6 +30,10 @@
   where:
     name: SLL*
 
+- template: templates/fa/sl.calqulus.yaml
+  where:
+    name: ^SLCDL*
+
 - template: templates/fa/pj.calqulus.yaml
   where:
     name: PJ*
@@ -46,8 +50,12 @@
   where:
     name: ^LL*
 
-- template: templates/fa/sl.calqulus.yaml
+- template: templates/fa/squatting.calqulus.yaml
   where:
-    name: ^SLCDL*
+    name: Squatting*
+
+- template: templates/fa/generic.calqulus.yaml
+  where:
+    name: Generic*
 
 
