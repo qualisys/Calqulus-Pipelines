@@ -1,0 +1,504 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [1]
+
+- event: EOF
+  steps:
+    - import: [$length]
+
+# it is assumed that LON,LOFF,RON,ROFF were manually entered in QTM
+
+#TO DO
+#if event was not created in QTM, add one to BOF/EOF
+# - event: LON
+#   where:
+#     eval: !LON
+#   steps:
+#     - import: BOF
+    
+# - event: LOFF
+#   where:
+#     eval: !LOFF
+#   steps:
+#     - import: EOF
+    
+# - event: RON
+#   where:
+#     eval: !RON
+#   steps:
+#     - import: BOF
+    
+# - event: ROFF
+#   where:
+#     eval: !ROFF
+#   steps:
+#     - import: EOF
+    
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## Metrics ##
+#############
+
+# Find global maximum/minimum/range
+
+# Left ----
+# Pelvis
+- parameter: Left Pelvis Tilt max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Pelvic Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Left Pelvis Tilt min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Pelvic Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Left Pelvis Tilt range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Pelvis Tilt max, Left Pelvis Tilt min]
+
+# Hips
+- parameter: Left Hip Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Hip Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Left Hip Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Hip Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Left Hip Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Hip Flex max, Left Hip Flex min]
+
+# Knees
+- parameter: Left Knee Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Knee Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Left Knee Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Knee Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Left Knee Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Knee Flex max, Left Knee Flex min]
+
+# Ankles
+- parameter: Left Ankle Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Ankle Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Left Ankle Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Ankle Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Left Ankle Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Ankle Flex max, Left Ankle Flex min]
+
+# Shoulders
+- parameter: Left Shoulder Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Shoulder Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Left Shoulder Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Shoulder Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Left Shoulder Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Shoulder Flex max, Left Shoulder Flex min]
+
+# Elbows
+- parameter: Left Elbow Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Elbow Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Left Elbow Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Elbow Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Left Elbow Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Elbow Flex max, Left Elbow Flex min]
+
+# Wrists
+- parameter: Left Wrist Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Wrist Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Left Wrist Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Wrist Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Left Wrist Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Wrist Flex max, Left Wrist Flex min]
+
+# Thorax
+- parameter: Left Thorax Forward Tilt max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Thorax Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Left Thorax Forward Tilt min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Thorax Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Left Thorax Forward Tilt range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Thorax Forward Tilt max, Left Thorax Forward Tilt min]
+
+# Head
+- parameter: Head Forward Tilt max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Head Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Head Forward Tilt min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Head Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Head Forward Tilt range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Head Forward Tilt max, Head Forward Tilt min]
+
+# Right ---
+# Pelvis
+- parameter: Right Pelvis Tilt max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Pelvic Angles
+    - eventMask: [$prev, RON, ROFF]
+    - max: $prev.x
+
+- parameter: Right Pelvis Tilt min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Pelvic Angles
+    - eventMask: [$prev, RON, ROFF]
+    - min: $prev.x
+
+- parameter: Right Pelvis Tilt range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Pelvis Tilt max, Right Pelvis Tilt min]
+
+# Hips
+- parameter: Right Hip Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Hip Angles
+    - eventMask: [$prev, RON, ROFF]
+    - max: $prev.x
+
+- parameter: Right Hip Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Hip Angles
+    - eventMask: [$prev, RON, ROFF]
+    - min: $prev.x
+
+- parameter: Right Hip Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Hip Flex max, Right Hip Flex min]
+
+# Knee
+- parameter: Right Knee Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Knee Angles
+    - eventMask: [$prev, RON, ROFF]
+    - max: $prev.x
+
+- parameter: Right Knee Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Knee Angles
+    - eventMask: [$prev, RON, ROFF]
+    - min: $prev.x
+
+- parameter: Right Knee Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Knee Flex max, Right Knee Flex min]
+
+# Ankle
+- parameter: Right Ankle Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Ankle Angles
+    - eventMask: [$prev, RON, ROFF]
+    - max: $prev.x
+
+- parameter: Right Ankle Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Ankle Angles
+    - eventMask: [$prev, RON, ROFF]
+    - min: $prev.x
+
+- parameter: Right Ankle Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Ankle Flex max, Right Ankle Flex min]
+
+# Shoulders
+- parameter: Right Shoulder Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Shoulder Angles
+    - eventMask: [$prev, RON, ROFF]
+    - max: $prev.x
+
+- parameter: Right Shoulder Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Shoulder Angles
+    - eventMask: [$prev, RON, ROFF]
+    - min: $prev.x
+
+- parameter: Right Shoulder Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Shoulder Flex max, Right Shoulder Flex min]
+
+# Elbows
+- parameter: Right Elbow Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Elbow Angles
+    - eventMask: [$prev, RON, ROFF]
+    - max: $prev.x
+
+- parameter: Right Elbow Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Elbow Angles
+    - eventMask: [$prev, RON, ROFF]
+    - min: $prev.x
+
+- parameter: Right Elbow Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Elbow Flex max, Right Elbow Flex min]
+
+# Wrists
+- parameter: Right Wrist Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Wrist Angles
+    - eventMask: [$prev, RON, ROFF]
+    - max: $prev.x
+
+- parameter: Right Wrist Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Wrist Angles
+    - eventMask: [$prev, RON, ROFF]
+    - min: $prev.x
+
+- parameter: Right Wrist Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Wrist Flex max, Right Wrist Flex min]
+
+# Thorax
+- parameter: Right Thorax Forward Tilt max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Thorax Angles
+    - eventMask: [$prev, RON, ROFF]
+    - max: $prev.x
+
+- parameter: Right Thorax Forward Tilt min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Thorax Angles
+    - eventMask: [$prev, RON, ROFF]
+    - min: $prev.x
+
+- parameter: Right Thorax Forward Tilt range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Thorax Forward Tilt max, Right Thorax Forward Tilt min]
+
