@@ -45,7 +45,24 @@
 #     eval: !ROFF
 #   steps:
 #     - import: EOF
-    
+
+# Unified event names for web
+- event: LeftPlotStart
+  steps:
+    - import: LON
+
+- event: LeftPlotEnd
+  steps:
+    - import: LOFF
+
+- event: RightPlotStart
+  steps:
+    - import: RON
+
+- event: RightPlotEnd
+  steps:
+    - import: ROFF
+
 ############
 ## SERIES ##
 ############
