@@ -52,6 +52,26 @@
 
 - template: /templates/timeseries.calqulus.yaml
 
+# Following pelvis and thorax are required by layout
+# --- Pelvis ---
+
+- parameter: Pelvic Angles
+  where:
+    name: '!Static*'
+  steps:
+    - angle: Hips # angle is calculated relative to axes of global coordinate system, if only single input exists
+      space: VirtualLab # calculate angle relative to virtual lab
+    - multiply: [$prev, [-1, 1, 1]] # invert first component of output
+
+# --- Thorax ---
+
+- parameter: Thorax Angles
+  where:
+    name: '!Static*'
+  steps:
+    - angle: [Hips, Spine2]
+    - multiply: [$prev, [-1, -1, 1]]
+
 #############
 ## Metrics ##
 #############
