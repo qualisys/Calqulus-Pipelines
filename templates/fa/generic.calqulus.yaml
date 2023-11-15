@@ -57,6 +57,55 @@
 #############
 
 # Find global maximum/minimum/range
+- parameter: Pelvis Tilt max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Pelvic Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Pelvis Tilt min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Pelvic Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Pelvis Tilt range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Pelvis Tilt max, Pelvis Tilt min]
+
+- parameter: Thorax Forward Tilt max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Thorax Angles
+    - eventMask: [$prev, LON, LOFF]
+    - max: $prev.x
+
+- parameter: Thorax Forward Tilt min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Thorax Angles
+    - eventMask: [$prev, LON, LOFF]
+    - min: $prev.x
+
+- parameter: Thorax Forward Tilt range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Thorax Forward Tilt max, Left Thorax Forward Tilt min]
 
 # Left ----
 # Pelvis
