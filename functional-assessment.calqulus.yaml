@@ -54,8 +54,7 @@
   where:
     name: Squatting*
 
-- template: templates/fa/generic.calqulus.yaml
+- template: templates/generic/generic.calqulus.yaml
   where:
     name: Generic*
-
 
