@@ -141,6 +141,7 @@
 
 # --- Upper body ---
 
+# Thorax
 - parameter: Left Thorax_Lab Angles
   set: left
   steps:
@@ -167,6 +168,7 @@
     - jointAngle: [Hips, Spine2]
     - multiply: [$prev, [-1, -1, 1]]
 
+# Shoulders
 - parameter: Left Shoulder Angles
   set: left
   steps:
@@ -180,6 +182,16 @@
     - angle: [Spine2, RightArm]
       # rotationOrder: ZYZ
     - multiply: [$prev, [1, 1, 1]]
+
+- parameter: Left Shoulder Ang Vel
+  set: left
+  steps:
+    - angularVelocity: [LeftShoulder, LeftArm, LeftShoulder, LeftArm]
+
+- parameter: Right Shoulder Ang Vel
+  set: right
+  steps:
+    - angularVelocity: [RightShoulder, RightArm, RightShoulder, RightArm]
 
 # --- Arms ---
 

@@ -172,6 +172,41 @@
     - eventMask: [Left Ankle Angles, LON, LOFF]
     - mean: 
 
+# Feet
+- parameter: Left Foot Pitch Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Foot Pitch Angles, LON, LOFF]
+    - max: 
+
+- parameter: Left Foot Pitch Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Foot Pitch Angles, LON, LOFF]
+    - min: 
+
+- parameter: Left Foot Pitch Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Foot Pitch Angles, LON, LOFF]
+    - mean: 
+
+# Copy of previous signal for compatibility with report layout
+- parameter: Left Foot Progression_max
+  set: left
+  steps:
+    - import: Left Foot Pitch Angles_max
+
+- parameter: Left Foot Progression_min
+  set: left
+  steps:
+    - import: Left Foot Pitch Angles_min
+
+- parameter: Left Foot Progression_mean
+  set: left
+  steps:
+    - import: Left Foot Pitch Angles_mean
+
 # Shoulders
 - parameter: Left Shoulder Angles_max
   set: left
@@ -189,6 +224,24 @@
   set: left
   steps:
     - eventMask: [Left Shoulder Angles, LON, LOFF]
+    - mean: 
+
+- parameter: Left Shoulder Ang Vel_max
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Ang Vel, LON, LOFF]
+    - max: 
+
+- parameter: Left Shoulder Ang Vel_min
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Ang Vel, LON, LOFF]
+    - min: 
+
+- parameter: Left Shoulder Ang Vel_mean
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Ang Vel, LON, LOFF]
     - mean: 
 
 # Elbows
@@ -246,6 +299,24 @@
   set: left
   steps:
     - eventMask: [Left Thorax Angles, LON, LOFF]
+    - mean: 
+
+- parameter: Left Thorax_Lab Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Thorax_Lab Angles, LON, LOFF]
+    - max: 
+
+- parameter: Left Thorax_Lab Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Thorax_Lab Angles, LON, LOFF]
+    - min: 
+
+- parameter: Left Thorax_Lab Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Thorax_Lab Angles, LON, LOFF]
     - mean: 
 
 # Right ---
@@ -325,6 +396,41 @@
     - eventMask: [Right Ankle Angles, RON, ROFF]
     - mean: 
 
+# Feet
+- parameter: Right Foot Pitch Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Foot Pitch Angles, RON, ROFF]
+    - max: 
+
+- parameter: Right Foot Pitch Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Foot Pitch Angles, RON, ROFF]
+    - min: 
+
+- parameter: Right Foot Pitch Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Foot Pitch Angles, RON, ROFF]
+    - mean: 
+
+# Copy of previous signal for compatibility with report layout
+- parameter: Right Foot Progression_max
+  set: right
+  steps:
+    - import: Right Foot Pitch Angles_max
+
+- parameter: Right Foot Progression_min
+  set: right
+  steps:
+    - import: Right Foot Pitch Angles_min
+
+- parameter: Right Foot Progression_mean
+  set: right
+  steps:
+    - import: Right Foot Pitch Angles_mean
+
 # Shoulders
 - parameter: Right Shoulder Angles_max
   set: right
@@ -342,6 +448,24 @@
   set: right
   steps:
     - eventMask: [Right Shoulder Angles, RON, ROFF]
+    - mean: 
+
+- parameter: Right Shoulder Ang Vel_max
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Ang Vel, RON, ROFF]
+    - max: 
+
+- parameter: Right Shoulder Ang Vel_min
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Ang Vel, RON, ROFF]
+    - min: 
+
+- parameter: Right Shoulder Ang Vel_mean
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Ang Vel, RON, ROFF]
     - mean: 
 
 # Elbows
@@ -399,4 +523,23 @@
   set: right
   steps:
     - eventMask: [Right Thorax Angles, RON, ROFF]
-    - mean: 
+    - mean:
+
+- parameter: Right Thorax_Lab Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Thorax_Lab Angles, RON, ROFF]
+    - max: 
+
+- parameter: Right Thorax_Lab Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Thorax_Lab Angles, RON, ROFF]
+    - min: 
+
+- parameter: Right Thorax_Lab Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Thorax_Lab Angles, RON, ROFF]
+    - mean:
+
