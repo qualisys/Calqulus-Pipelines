@@ -58,3 +58,8 @@
   where:
     name: Generic*
 
+- template: templates/running/running.calqulus.yaml
+  where:
+    name: Running*
+
+

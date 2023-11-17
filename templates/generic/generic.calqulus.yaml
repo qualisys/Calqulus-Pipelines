@@ -20,48 +20,30 @@
 
 # it is assumed that LON,LOFF,RON,ROFF were manually entered in QTM
 
-#TO DO
-#if event was not created in QTM, add one to BOF/EOF
-# - event: LON
-#   where:
-#     eval: !LON
-#   steps:
-#     - import: BOF
-    
-# - event: LOFF
-#   where:
-#     eval: !LOFF
-#   steps:
-#     - import: EOF
-    
-# - event: RON
-#   where:
-#     eval: !RON
-#   steps:
-#     - import: BOF
-    
-# - event: ROFF
-#   where:
-#     eval: !ROFF
-#   steps:
-#     - import: EOF
-
 # Unified event names for web
 - event: LeftPlotStart
   steps:
-    - import: LON
+    - if: LON
+      then: LON
+      else: BOF
 
 - event: LeftPlotEnd
   steps:
-    - import: LOFF
+    - if: LOFF
+      then: LOFF
+      else: EOF
 
 - event: RightPlotStart
   steps:
-    - import: RON
+    - if: RON
+      then: RON
+      else: BOF
 
 - event: RightPlotEnd
   steps:
-    - import: ROFF
+    - if: ROFF
+      then: ROFF
+      else: EOF
 
 ############
 ## SERIES ##
