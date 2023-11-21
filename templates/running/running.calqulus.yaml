@@ -753,6 +753,7 @@
     - add: [$prev, treadmill_speed]
       output: pelvis_vel_adj
     - mean: pelvis_vel_adj.y
+      export: actual_running_speed_ms # for FA report
 
 # Seconds per meter, to be displayed as minutes per kilometer.
 - parameter: seconds_per_meter
@@ -793,17 +794,17 @@
     name: Running*
   steps:
   - eventDuration: [RFS, LFS]
-    output: Left_step_time
-    export: Left_step_time
+    output: Left_Step_Time
+    export: Left_Step_Time
   - eventDuration: [LFS, RFS]
-    output: Right_step_time
-    export: Right_step_time
-  - mean: Left_step_time => Left_step_time_mean
-  - divide: [60, Left_step_time_mean]
+    output: Right_Step_Time
+    export: Right_Step_Time
+  - mean: Left_Step_Time => Left_Step_Time_mean
+  - divide: [60, Left_Step_Time_mean]
     output: Left_Steps_Per_Minute_Mean
     export: Left_Steps_Per_Minute_Mean
-  - mean: Right_step_time => Right_step_time_mean
-  - divide: [60, Right_step_time_mean]
+  - mean: Right_Step_Time => Right_Step_Time_mean
+  - divide: [60, Right_Step_Time_mean]
     output: Right_Steps_Per_Minute_Mean
     export: Right_Steps_Per_Minute_Mean
   - concatenate: [Left_Steps_Per_Minute_Mean, Right_Steps_Per_Minute_Mean]
@@ -824,7 +825,7 @@
       from: mm
       to: m
       output: Step_Length
-    - multiply: [actual_running_speed_ms, Right_step_time]
+    - multiply: [actual_running_speed_ms, Right_Step_Time]
       output: belt_shift
     - add: [Step_Length, belt_shift]
       export: Right_Step_Length # for FA Running
@@ -843,7 +844,7 @@
       from: mm
       to: m
       output: Step_Length
-    - multiply: [actual_running_speed_ms, Left_step_time]
+    - multiply: [actual_running_speed_ms, Left_Step_Time]
       output: belt_shift
     - add: [Step_Length, belt_shift]
       export: Left_Step_Length # for FA Running
