@@ -753,7 +753,7 @@
     - add: [$prev, treadmill_speed]
       output: pelvis_vel_adj
     - mean: pelvis_vel_adj.y
-      export: actual_running_speed_ms # for FA report
+      export: walking_speed # for FA report
 
 # Seconds per meter, to be displayed as minutes per kilometer.
 - parameter: seconds_per_meter
