@@ -864,16 +864,15 @@
     - segment: RightFoot => foot
       space: VirtualLab
     - eventDuration: [RFS, RFS]
-      output: right_stride_time
       export: right_stride_time
     - diff: foot.y@RFS
     - convert: $prev
       from: mm
       to: m
-      output: Stride_Length
+      output: strideLength
     - multiply: [actual_running_speed_ms, right_stride_time]
       output: belt_shift
-    - add: [Stride_Length, belt_shift]
+    - add: [strideLength, belt_shift]
 
 - parameter: Left_Stride_Length_Mean
   where:
@@ -882,16 +881,15 @@
     - segment: LeftFoot => foot
       space: VirtualLab
     - eventDuration: [LFS, LFS]
-      output: left_stride_time
       export: left_stride_time
     - diff: foot.y@LFS
     - convert: $prev
       from: mm
       to: m
-      output: Stride_Length
+      output: strideLength
     - multiply: [actual_running_speed_ms, left_stride_time]
       output: belt_shift
-    - add: [Stride_Length, belt_shift]
+    - add: [strideLength, belt_shift]
 
 - parameter: Stride_Length_Mean
   where:
