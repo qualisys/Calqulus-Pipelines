@@ -1,3 +1,4 @@
+
 - template: templates/running/running.calqulus.yaml
 
 # ############
@@ -845,19 +846,19 @@
 # ## SERIES ##
 # ############
 
-# # --- Pelvis ---
+# --- Pelvis ---
 
-# - parameter: Pelvis_Height_Normalised
-#   where:
-#     name: Running*
-#   steps:
-#     - segment: Hips => hipsDynamic
-#     - segment: Hips?name=Static* => hipsStatic
-#     - mean: hipsStatic.z
-#     - subtract: [hipsDynamic.z, $prev]
-#     - convert: $prev
-#       from: mm
-#       to: m
+- parameter: Pelvis_Height_Normalised
+  where:
+    name: Running*
+  steps:
+    - segment: Hips => hipsDynamic
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic.z
+    - subtract: [hipsDynamic.z, $prev]
+    - convert: $prev
+      from: mm
+      to: m
 
 # - parameter: Left Pelvic Angles
 #   set: left
@@ -895,7 +896,7 @@
 #     - jointAngle: [Hips, RightUpLeg]
 
 
-# # --- Knee ---
+# --- Knee ---
 
 # - parameter: Left Knee Angles
 #   set: left
@@ -1012,7 +1013,7 @@
 #       from: mm
 #       to: m
 
-# # --- Ankle ---
+# --- Ankle ---
 
 # - parameter: Left Ankle Angles
 #   set: left
@@ -1029,7 +1030,7 @@
 #   steps:
 #     - jointAngle: [RightLeg, RightFoot]
 
-# # ---
+# ---
 
 # - parameter: Left Tibial Rotation
 #   set: left
@@ -1209,7 +1210,7 @@
 #   steps:
 #     - jointAngle: [Hips, Spine2]
 
-# # --- Arms ---
+# --- Arms ---
 
 # - parameter: Left Elbow Angle
 #   set: left
@@ -1231,7 +1232,7 @@
 #       from: radians
 #       to: degrees
 
-# # ---
+# ---
 
 # - parameter: L_ELBOW_RT_PELVIS_Y
 #   set: left

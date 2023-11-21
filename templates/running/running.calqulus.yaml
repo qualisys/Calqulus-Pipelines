@@ -36,7 +36,9 @@
 ## SERIES ##
 ############
 
-# event related parameters
+- template: /templates/timeseries.calqulus.yaml
+
+# --- event related parameters ---
 - parameter: Left_MID_FOOT_vel
   set: left
   where:
@@ -193,21 +195,21 @@
       from: mm
       to: m
     - range: $prev.y
-
+# -----------------
 
 # --- Pelvis ---
 
-- parameter: Pelvis_Height_Normalised
-  where:
-    name: Running*
-  steps:
-    - segment: Hips => hipsDynamic
-    - segment: Hips?name=Static* => hipsStatic
-    - mean: hipsStatic.z
-    - subtract: [hipsDynamic.z, $prev]
-    - convert: $prev
-      from: mm
-      to: m
+# - parameter: Pelvis_Height_Normalised
+#   where:
+#     name: Running*
+#   steps:
+#     - segment: Hips => hipsDynamic
+#     - segment: Hips?name=Static* => hipsStatic
+#     - mean: hipsStatic.z
+#     - subtract: [hipsDynamic.z, $prev]
+#     - convert: $prev
+#       from: mm
+#       to: m
 
 - parameter: Left Pelvic Angles
   set: left
@@ -279,7 +281,7 @@
   steps:
     - velocity: Right Knee Angles => kneeAngleVel
 
-# ---
+# # ---
 
 - parameter: Left_KNEE_Lin_Velocity
   set: left
@@ -791,17 +793,17 @@
     name: Running*
   steps:
   - eventDuration: [RFS, LFS]
-    output: left_step_time
-    export: left_step_time
+    output: Left_step_time
+    export: Left_step_time
   - eventDuration: [LFS, RFS]
-    output: right_step_time
-    export: right_step_time
-  - mean: left_step_time => left_step_time_mean
-  - divide: [60, left_step_time_mean]
+    output: Right_step_time
+    export: Right_step_time
+  - mean: Left_step_time => Left_step_time_mean
+  - divide: [60, Left_step_time_mean]
     output: Left_Steps_Per_Minute_Mean
     export: Left_Steps_Per_Minute_Mean
-  - mean: right_step_time => right_step_time_mean
-  - divide: [60, right_step_time_mean]
+  - mean: Right_step_time => Right_step_time_mean
+  - divide: [60, Right_step_time_mean]
     output: Right_Steps_Per_Minute_Mean
     export: Right_Steps_Per_Minute_Mean
   - concatenate: [Left_Steps_Per_Minute_Mean, Right_Steps_Per_Minute_Mean]
@@ -822,9 +824,10 @@
       from: mm
       to: m
       output: Step_Length
-    - multiply: [actual_running_speed_ms, right_step_time]
+    - multiply: [actual_running_speed_ms, Right_step_time]
       output: belt_shift
     - add: [Step_Length, belt_shift]
+      export: Right_Step_Length # for FA Running
 
 - parameter: Left_Step_Length_Mean
   where:
@@ -840,9 +843,10 @@
       from: mm
       to: m
       output: Step_Length
-    - multiply: [actual_running_speed_ms, left_step_time]
+    - multiply: [actual_running_speed_ms, Left_step_time]
       output: belt_shift
     - add: [Step_Length, belt_shift]
+      export: Left_Step_Length # for FA Running
 
 - parameter: Step_Length_Mean_MEAN
   where:
@@ -894,6 +898,7 @@
   steps:
     - concatenate: [Right_Stride_Length_Mean, Left_Stride_Length_Mean]
     - mean: $prev
+      export: Stride_Length # for FA Running
 
 # Stride width
 # note V3D script is calculating it using stride vector
@@ -930,6 +935,45 @@
     - convert: $prev
       from: mm
       to: m
+      export: Stride_Width # for FA Running
+
+# Cycle time # for FA Running
+- parameter: Cycle_Time
+  where:
+    name: Running*
+  steps:
+    - divide: [Left_Stride_Length_Mean, left_stride_time]
+      output: left
+    - divide: [Right_Stride_Length_Mean, right_stride_time]
+      output: right
+    - concatenate: [left, right]
+    - mean:
+
+# Stance time # for FA Running
+- parameter: Left_Stance_Time
+  where:
+    name: Running*
+  steps:
+    - eventDuration: [LFS, LTO]
+    
+- parameter: Right_Stance_Time
+  where:
+    name: Running*
+  steps:
+    - eventDuration: [RFS, RTO]
+
+# Swing time # for FA Running
+- parameter: Left_Swing_Time
+  where:
+    name: Running*
+  steps:
+    - eventDuration: [LTO, LFS]
+
+- parameter: Right_Swing_Time
+  where:
+    name: Running*
+  steps:
+    - eventDuration: [RTO, RFS]
 
 # Strides per minute
 - parameter: Left_Strides_Per_Minute_Mean
