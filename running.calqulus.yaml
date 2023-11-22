@@ -35,3 +35,8 @@
   steps:
     - import: Right Elbow Angles.x
     
+- parameter: Right Pelvic Angles_Calq
+  set: right
+  steps:
+    - import: Right Pelvic Angles
+
