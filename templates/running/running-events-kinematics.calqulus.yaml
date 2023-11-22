@@ -359,35 +359,6 @@
       then: RTO_overground
       else: RTO_treadmill
 
-# Unified event names for web
-- event: LeftPlotStart
-  set: left
-  where:
-    name: Running*
-  steps:
-    - import: LFS
-
-- event: LeftPlotEnd
-  set: left
-  where:
-    name: Running*
-  steps:
-    - import: LTO
-
-- event: RightPlotStart
-  set: right
-  where:
-    name: Running*
-  steps:
-    - import: RFS
-
-- event: RightPlotEnd
-  set: right
-  where:
-    name: Running*
-  steps:
-    - import: RTO
-
 # --- ZENI ---
 # Legacy event detection. Not used.
 
@@ -682,3 +653,33 @@
         ranges: L 20 H
         pattern: LH
         keep: [0]
+
+# Unified event names for web
+- event: LeftPlotStart
+  set: left
+  where:
+    name: Running*
+  steps:
+    - import: LFS
+
+- event: LeftPlotEnd
+  set: left
+  where:
+    name: Running*
+  steps:
+    - import: LTO
+
+- event: RightPlotStart
+  set: right
+  where:
+    name: Running*
+  steps:
+    - import: RFS
+
+- event: RightPlotEnd
+  set: right
+  where:
+    name: Running*
+  steps:
+    - import: RTO
+
