@@ -1,7 +1,6 @@
 
 - template: templates/running/running.calqulus.yaml
 
-
 # ############
 # ## SERIES ##
 # ############
@@ -20,23 +19,40 @@
       from: mm
       to: m
 
-# deal with naming imcompatibility between Running and FA
+# deal with naming incompatibility between Running and FA
+- parameter: Left Pelvic Angles_Calq
+  set: left
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, -1]]
+
+- parameter: Right Pelvic Angles_Calq
+  set: right
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+    - multiply: [$prev, [-1, -1, 1]]
+
+# --- Arms ---
+
 - parameter: Left Elbow Angle
   set: left
   where:
     name: Running*
   steps:
-    - import: Left Elbow Angles.x
-    
+    - angle: [LeftArm, LeftForeArm, LeftHand]
+    - convert: $prev
+      from: radians
+      to: degrees
+
 - parameter: Right Elbow Angle
   set: right
   where:
     name: Running*
   steps:
-    - import: Right Elbow Angles.x
-    
-- parameter: Right Pelvic Angles_Calq
-  set: right
-  steps:
-    - import: Right Pelvic Angles
+    - angle: [RightArm, RightForeArm, RightHand]
+    - convert: $prev
+      from: radians
+      to: degrees
 

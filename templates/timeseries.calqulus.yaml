@@ -2,7 +2,7 @@
 ## SERIES ##
 ############
 
-# Parameters needed for kinematics event detection
+# Parameters needed for kinematics event detection in FA
 - parameter: PelvisCGPos_vel
   steps:
     - segment: Hips
@@ -51,7 +51,7 @@
       export: RFT_DistEndVel
     - velocity:
 
-# Timeseries used in all FA tasks
+# Timeseries used in all FA tasks and in Running and Generic
 
 # --- Pelvis ---
 
