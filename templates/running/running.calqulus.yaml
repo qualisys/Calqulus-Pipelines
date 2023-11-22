@@ -550,21 +550,7 @@
     - jointAngle: [Hips, Spine2]
 
 # --- Arms ---
-# deal with naming imcompatibility between Running and FA
-- parameter: Left Elbow Angle
-  set: left
-  where:
-    name: Running*
-  steps:
-    - import: Left Elbow Angles
-    
-- parameter: Right Elbow Angle
-  set: right
-  where:
-    name: Running*
-  steps:
-    - import: Right Elbow Angles
-    
+
 # - parameter: Left Elbow Angle
 #   set: left
 #   where:
