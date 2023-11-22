@@ -26,12 +26,12 @@
   where:
     name: Running*
   steps:
-    - import: Left Elbow Angles
+    - import: Left Elbow Angles.x
     
 - parameter: Right Elbow Angle
   set: right
   where:
     name: Running*
   steps:
-    - import: Right Elbow Angles
+    - import: Right Elbow Angles.x
     
