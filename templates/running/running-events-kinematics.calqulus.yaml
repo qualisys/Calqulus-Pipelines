@@ -9,7 +9,7 @@
 - event: LTOE_RISE
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - threshold: Left_MID_FOOT_acc.z => sig
       value: 0
@@ -20,7 +20,7 @@
 # - event: LTO_treadmill_old
 #   set: left
 #   where:
-#     name: Running*
+#     name: ^(Running|Gait)*
 #   steps:
 #     - peakFinder: Left_MID_FOOT_acc.z => sig2
 #     - eventMask: [sig2, LTOE_RISE, LTOE_RISE]
@@ -29,7 +29,7 @@
 - event: LTO_treadmill
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: LHeelBack_vel.z => sig
     - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
@@ -39,7 +39,7 @@
 - event: RTOE_RISE
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - threshold: Right_MID_FOOT_acc.z => sig
       value: 0
@@ -50,7 +50,7 @@
 # - event: RTO_treadmill
 #   set: right
 #   where:
-#     name: Running*
+#     name: ^(Running|Gait)*
 #   steps:
 #     - peakFinder: Right_MID_FOOT_acc.z => sig
 #     - eventMask: [sig, RTOE_RISE, RTOE_RISE]
@@ -59,7 +59,7 @@
 - event: RTO_treadmill
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: RHeelBack_vel.z => sig
     - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
@@ -70,7 +70,7 @@
 - event: L_PEAK_MID_FOOT_VEL_z
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Left_MID_FOOT_vel.z => sig
       width: 10
@@ -81,7 +81,7 @@
 - event: L_MID_FOOT_vel_negative
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - threshold: Left_MID_FOOT_vel.z => sig
       value: 0
@@ -92,7 +92,7 @@
 - event: temp_event_1
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - threshold: Left_MID_FOOT_vel.y
       value: 0
@@ -101,7 +101,7 @@
 - event: temp_event_2
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Left_MID_FOOT_vel.y => sig
     - eventMask: [sig, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
@@ -110,7 +110,7 @@
 - event: LFS_treadmill
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     # - peakFinder: Left_MID_FOOT_vel.z => sig
     #   width: 10
@@ -145,7 +145,7 @@
 - event: RFS_treadmill
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Right_MID_FOOT_vel.z => sig
       width: 10
@@ -180,7 +180,7 @@
 - event: L_MID_STANCE
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [Left_MID_FOOT, Pelvis_CGPos]
     - threshold: $prev.y
@@ -190,7 +190,7 @@
 - event: R_MID_STANCE
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [Right_MID_FOOT, Pelvis_CGPos]
     - threshold: $prev.y
@@ -203,7 +203,7 @@
 - event: LFS_overground
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: [LForefoot2_wrt_Pelvis.y]
       height: 0
@@ -222,7 +222,7 @@
 - event: RFS_overground
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: [RForefoot2_wrt_Pelvis.y]
       height: 0
@@ -242,7 +242,7 @@
 - event: LTO_overground
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - divide: [$framerate, 40]
       output: shift
@@ -283,7 +283,7 @@
 - event: RTO_overground
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - divide: [$framerate, 40]
       output: shift
@@ -326,7 +326,7 @@
 - event: LFS      
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - if: Pelvis_COG_range > 1
       then: LFS_overground
@@ -335,7 +335,7 @@
 - event: RFS      
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - if: Pelvis_COG_range > 1
       then: RFS_overground
@@ -344,7 +344,7 @@
 - event: LTO      
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - if: Pelvis_COG_range > 1
       then: LTO_overground
@@ -353,7 +353,7 @@
 - event: RTO      
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - if: Pelvis_COG_range > 1
       then: RTO_overground
@@ -366,7 +366,7 @@
 - parameter: Left_ZENI
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => l_foot
       space: VirtualLab
@@ -411,7 +411,7 @@
 - event: LFS_ZENI
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Left_ZENI_heel_diff
       width: 3
@@ -421,7 +421,7 @@
 - event: LTO_temp
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Left_ZENI_toe_diff_inv
       width: 3
@@ -431,7 +431,7 @@
 - event: LTO_ZENI
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - refineEvent: LTO_temp
       sequence: [LFS, LTO_temp]
@@ -439,7 +439,7 @@
 - event: L_MID_STANCE_ZENI
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Left_ZENI_toe_diff_abs_inv => sign_change
       width: 10
@@ -450,7 +450,7 @@
 - parameter: Right_ZENI
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot => r_foot
       space: VirtualLab
@@ -495,7 +495,7 @@
 - event: RFS_ZENI
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Right_ZENI_heel_diff
       width: 3
@@ -505,7 +505,7 @@
 - event: RTO_temp
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Right_ZENI_toe_diff_inv
       width: 3
@@ -515,7 +515,7 @@
 - event: RTO_ZENI
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - refineEvent: RTO_temp
       sequence: [RFS, RTO_temp]
@@ -523,7 +523,7 @@
 - event: R_MID_STANCE_ZENI
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Right_ZENI_toe_diff_abs_inv => sign_change
       width: 10
@@ -535,7 +535,7 @@
 - event: L_peak_knee_flex
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Left Knee Angles.x => knee_flex_max
       width: 10
@@ -544,7 +544,7 @@
 - event: R_peak_knee_flex
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Right Knee Angles.x => knee_flex_max
       width: 10
@@ -553,7 +553,7 @@
 - event: L_stride_angle_max
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Left Stride Angle.x => stride_angle_max
       width: 10
@@ -563,7 +563,7 @@
 - event: R_stride_angle_max
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Right Stride Angle.x => stride_angle_max
       width: 10
@@ -573,7 +573,7 @@
 - event: L_peak_hip_flex
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Left Hip Angles.x => hip_flex_max
       width: 10
@@ -583,7 +583,7 @@
 - event: R_peak_hip_flex
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - peakFinder: Right Hip Angles.x => hip_flex_max
       width: 10
@@ -593,7 +593,7 @@
 - event: L_Ankle_cross
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - threshold: [L_ankle_crossing_pelvis]
       value: 0
@@ -602,7 +602,7 @@
 - event: R_Ankle_cross
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - threshold: [R_ankle_crossing_pelvis]
       value: 0
@@ -611,7 +611,7 @@
 - event: L_peak_hip_extension_stride
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - negate: Left Hip Angles.x => hip_neg
     - peakFinder: [hip_neg, LFS, LFS]
@@ -621,7 +621,7 @@
 - event: R_peak_hip_extension_stride
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - negate: Right Hip Angles.x => hip_neg
     - peakFinder: [hip_neg, RFS, RFS]
@@ -631,7 +631,7 @@
 - event: L_peak_knee_extension_stride
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - negate: Left Knee Angles.x => knee_neg
     - peakFinder: [knee_neg, LFS, LFS]
@@ -644,7 +644,7 @@
 - event: R_peak_knee_extension_stride
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - negate: Right Knee Angles.x => knee_neg
     - peakFinder: [knee_neg, RFS, RFS]
@@ -658,28 +658,28 @@
 - event: LeftPlotStart
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: LFS
 
 - event: LeftPlotEnd
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: LTO
 
 - event: RightPlotStart
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: RFS
 
 - event: RightPlotEnd
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: RTO
 

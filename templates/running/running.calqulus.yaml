@@ -42,7 +42,7 @@
 - parameter: Left_MID_FOOT_vel
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot
       space: VirtualLab
@@ -61,7 +61,7 @@
 - parameter: Left_MID_FOOT_acc
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot
       space: VirtualLab
@@ -79,7 +79,7 @@
 - parameter: LHeelBack_vel
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - marker: LHeelBack => sig
     - velocity:
@@ -87,7 +87,7 @@
 - parameter: Right_MID_FOOT_vel
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot
       space: VirtualLab
@@ -106,7 +106,7 @@
 - parameter: Right_MID_FOOT_acc
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot
       space: VirtualLab
@@ -124,7 +124,7 @@
 - parameter: RHeelBack_vel
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - marker: RHeelBack => sig
     - velocity:
@@ -132,7 +132,7 @@
 # Midstance event is based on pelvis position wrt foot position
 - parameter: Pelvis_CGPos
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: Hips
       space: VirtualLab
@@ -144,7 +144,7 @@
 - parameter: LForefoot2_wrt_Pelvis
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - marker: LForefoot2 => foot
       space: VirtualLab
@@ -155,7 +155,7 @@
 - parameter: LHeelBack_wrt_Pelvis
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - marker: LHeelBack => heel
       space: VirtualLab
@@ -166,7 +166,7 @@
 - parameter: RForefoot2_wrt_Pelvis
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - marker: RForefoot2 => foot
       space: VirtualLab
@@ -177,7 +177,7 @@
 - parameter: RHeelBack_wrt_Pelvis
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - marker: RHeelBack => heel
       space: VirtualLab
@@ -187,7 +187,7 @@
 
 - parameter: Pelvis_COG_range
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Hips
       space: VirtualLab
@@ -202,14 +202,14 @@
 - parameter: Left Knee Angles_Velocity
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - velocity: Left Knee Angles => kneeAngleVel
 
 - parameter: Right Knee Angles_Velocity
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - velocity: Right Knee Angles => kneeAngleVel
 
@@ -218,7 +218,7 @@
 - parameter: Left_KNEE_Lin_Velocity
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftLeg
     - velocity: $prev
@@ -230,7 +230,7 @@
 - parameter: Right_KNEE_Lin_Velocity
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightLeg
     - velocity: $prev
@@ -244,7 +244,7 @@
 - parameter: L_KNEE_X
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftLeg => shank
       space: VirtualLab
@@ -260,7 +260,7 @@
 - parameter: R_KNEE_X
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightLeg
     - segment: Hips
@@ -277,7 +277,7 @@
 - parameter: LEFT_KNEE
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftLeg => shank
       space: VirtualLab
@@ -288,7 +288,7 @@
 - parameter: RIGHT_KNEE
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightLeg => shank
       space: VirtualLab
@@ -301,7 +301,7 @@
 - parameter: Left Tibial Rotation
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - jointAngle: [LeftFoot, LeftLeg]
     - multiply: [$prev, [1, 1, -1]]
@@ -309,7 +309,7 @@
 - parameter: Right Tibial Rotation
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - jointAngle: [RightFoot, RightLeg]
       output: tibialRot
@@ -319,14 +319,14 @@
 - parameter: Left Tibial Rotation_Velocity
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - velocity: Left Tibial Rotation => tibialRotVel
 
 - parameter: Right Tibial Rotation_Velocity
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - velocity: Right Tibial Rotation => tibialRotVel
 
@@ -335,14 +335,14 @@
 - parameter: Left Ankle Angles_Velocity
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - velocity: Left Ankle Angles => ankleAngleVel
 
 - parameter: Right Ankle Angles_Velocity
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - velocity: Right Ankle Angles => ankleAngleVel
 
@@ -351,7 +351,7 @@
 - parameter: Left Foot Contact Angle_shifted
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - jointAngle: LeftFoot => footContactAngle
       space: VirtualLab
@@ -360,7 +360,7 @@
 - parameter: Right Foot Contact Angle_shifted
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - jointAngle: RightFoot => footContactAngle
       space: VirtualLab
@@ -371,7 +371,7 @@
 - parameter: L_ANKLE_Y
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => foot
       space: VirtualLab
@@ -393,7 +393,7 @@
 - parameter: R_ANKLE_Y
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [Hips, RightFoot]
       space: VirtualLab
@@ -414,7 +414,7 @@
 - parameter: LEFT_ANKLE
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => ankle
       space: VirtualLab
@@ -425,7 +425,7 @@
 - parameter: RIGHT_ANKLE
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot => ankle
       space: VirtualLab
@@ -438,7 +438,7 @@
 - parameter: Left_ANKLE_Lin_Velocity
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot
       space: VirtualLab
@@ -450,7 +450,7 @@
 - parameter: Right_ANKLE_Lin_Velocity
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot
       space: VirtualLab
@@ -463,7 +463,7 @@
 
 - parameter: Trunk Angles_wrt_LAB
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - jointAngle: Spine2
       space: VirtualLab
@@ -471,7 +471,7 @@
 
 - parameter: Shoulder_Pelvis Angle
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - jointAngle: [Hips, Spine2]
 
@@ -480,7 +480,7 @@
 - parameter: L_ELBOW_RT_PELVIS_Y
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [LeftForeArm, Hips]
       space: VirtualLab
@@ -503,7 +503,7 @@
 - parameter: R_ELBOW_RT_PELVIS_Y
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [RightForeArm, Hips]
       space: VirtualLab
@@ -528,7 +528,7 @@
 - parameter: L_WRIST_RT_PELVIS_Y
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [LeftHand, Hips]
       space: VirtualLab
@@ -551,7 +551,7 @@
 - parameter: R_WRIST_RT_PELVIS_Y
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [RightHand, Hips]
       space: VirtualLab
@@ -574,7 +574,7 @@
 # --- 
 - parameter: L_ankle_crossing_pelvis
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: Hips => pelvis
       space: VirtualLab
@@ -586,7 +586,7 @@
 
 - parameter: R_ankle_crossing_pelvis
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: Hips => pelvis
     - convert: pelvis
@@ -603,7 +603,7 @@
 # Treadmill speed (calculated from left foot and right foot at midstance)
 - parameter: left_treadmill_speed
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => l_foot
       space: VirtualLab
@@ -614,7 +614,7 @@
     
 - parameter: right_treadmill_speed
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot => r_foot
       space: VirtualLab
@@ -625,7 +625,7 @@
 
 - parameter: treadmill_speed
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - concatenate: [left_treadmill_speed, right_treadmill_speed]
     - mean: $prev
@@ -635,7 +635,7 @@
 
 - parameter: actual_running_speed_ms
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - velocity: Hips => pelvis_vel
       space: VirtualLab
@@ -650,14 +650,14 @@
 # Seconds per meter, to be displayed as minutes per kilometer.
 - parameter: seconds_per_meter
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - divide: [1, actual_running_speed_ms]
 
 # Stride angle
 - parameter: Left Stride Angle@max
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftUpLeg => l_thigh
     - segment: RightUpLeg => r_thigh
@@ -669,7 +669,7 @@
      
 - parameter: Right Stride Angle@max
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftUpLeg => l_thigh
     - segment: RightUpLeg => r_thigh
@@ -683,7 +683,7 @@
 # 60 / ((left mean step time + right mean step time) / 2)
 - parameter: Steps_Per_Minute_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
   - eventDuration: [RFS, LFS]
     output: Left_Step_Time
@@ -705,7 +705,7 @@
 # Step length
 - parameter: Right_Step_Length_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => l_foot
       space: VirtualLab
@@ -724,7 +724,7 @@
 
 - parameter: Left_Step_Length_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => l_foot
       space: VirtualLab
@@ -743,7 +743,7 @@
 
 - parameter: Step_Length_Mean_MEAN
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - concatenate: [Right_Step_Length_Mean,Left_Step_Length_Mean]
     - mean: $prev
@@ -751,7 +751,7 @@
 # Stride length
 - parameter: Right_Stride_Length_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot => foot
       space: VirtualLab
@@ -768,7 +768,7 @@
 
 - parameter: Left_Stride_Length_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => foot
       space: VirtualLab
@@ -785,7 +785,7 @@
 
 - parameter: Stride_Length_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - concatenate: [Right_Stride_Length_Mean, Left_Stride_Length_Mean]
     - mean: $prev
@@ -795,7 +795,7 @@
 # note V3D script is calculating it using stride vector
 - parameter: Right_Stride_Width_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => l_foot
       space: VirtualLab
@@ -807,7 +807,7 @@
 
 - parameter: Left_Stride_Width_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => l_foot
       space: VirtualLab
@@ -819,7 +819,7 @@
 
 - parameter: Stride_Width_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - concatenate: [Right_Stride_Width_Mean, Left_Stride_Width_Mean]
     - mean: $prev
@@ -831,7 +831,7 @@
 # Cycle time # for FA Running
 - parameter: Cycle_Time
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - divide: [Left_Stride_Length_Mean, left_stride_time]
       output: left
@@ -843,40 +843,40 @@
 # Stance time # for FA Running
 - parameter: Left_Stance_Time
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [LFS, LTO]
     
 - parameter: Right_Stance_Time
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [RFS, RTO]
 
 # Swing time # for FA Running
 - parameter: Left_Swing_Time
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [LTO, LFS]
 
 - parameter: Right_Swing_Time
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [RTO, RFS]
 
 # Strides per minute
 - parameter: Left_Strides_Per_Minute_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - divide: [60, left_stride_time]
     - mean: $prev
 
 - parameter: Right_Strides_Per_Minute_Mean
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - divide: [60, right_stride_time]
     - mean: $prev
@@ -884,7 +884,7 @@
 # Vertical pelvis movement
 - parameter: Pelvis_Height_RANGE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Hips, LFS, RFS]
       output: mask
@@ -898,7 +898,7 @@
 # Contact time
 - parameter: Stance_Time_Mean_MEAN
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
   - eventDuration: [LFS, LTO]
     export: Left_Stance_Time_Mean
@@ -946,7 +946,7 @@
 - parameter: Left_HEEL_PELVIS_MEAN_X
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => l_foot
       space: VirtualLab
@@ -964,7 +964,7 @@
 - parameter: Right_HEEL_PELVIS_MEAN_X
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot => r_foot
       space: VirtualLab
@@ -982,7 +982,7 @@
 # Number of steps
 - parameter: Cycle_Time_Count
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
   - eventDuration: [LFS, RFS]
   - count: $prev => l_to_r_count
@@ -995,21 +995,21 @@
 - parameter: Left Pelvic Angles@LFS
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Pelvic Angles@LFS
 
 - parameter: Right Pelvic Angles@RFS
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Pelvic Angles@RFS
 
 # max during stance
 - parameter: Left Pelvic Angles_MAX_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Pelvic Angles, LFS, LTO]
       truncate: true
@@ -1017,7 +1017,7 @@
 
 - parameter: Right Pelvic Angles_MAX_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Pelvic Angles, RFS, RTO]
       truncate: true
@@ -1026,7 +1026,7 @@
 # min during stance
 - parameter: Left Pelvic Angles_MIN_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Pelvic Angles, LFS, LTO]
       truncate: true
@@ -1034,7 +1034,7 @@
 
 - parameter: Right Pelvic Angles_MIN_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Pelvic Angles, RFS, RTO]
       truncate: true
@@ -1043,7 +1043,7 @@
 # max during stride
 - parameter: Left Pelvic Angles_MAX_stride
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Pelvic Angles, LFS, LFS]
       truncate: true
@@ -1051,7 +1051,7 @@
 
 - parameter: Right Pelvic Angles_MAX_stride
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Pelvic Angles, RFS, RFS]
       truncate: true
@@ -1062,21 +1062,21 @@
 - parameter: L_HIP_ANGLE@LFS
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Hip Angles@LFS
 
 - parameter: R_HIP_ANGLE@RFS
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Hip Angles@RFS
 
 # max during stance
 - parameter: Left Hip Angles_MAX_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Hip Angles, LFS, LTO]
       truncate: true
@@ -1084,7 +1084,7 @@
 
 - parameter: Right Hip Angles_MAX_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Hip Angles, RFS, RTO]
       truncate: true
@@ -1093,7 +1093,7 @@
 # min during stance
 - parameter: Left Hip Angles_MIN_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Hip Angles, LFS, LTO]
       truncate: true
@@ -1101,7 +1101,7 @@
 
 - parameter: Right Hip Angles_MIN_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Hip Angles, RFS, RTO]
       truncate: true
@@ -1110,7 +1110,7 @@
 # max during stride
 - parameter: Left Hip Angles_MAX_stride
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Hip Angles, LFS, LFS]
       truncate: true
@@ -1118,7 +1118,7 @@
 
 - parameter: Right Hip Angles_MAX_stride
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Hip Angles, RFS, RFS]
       truncate: true
@@ -1129,21 +1129,21 @@
 - parameter: L_KNEE_ANG@LFS
   set: left
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Knee Angles@LFS
 
 - parameter: R_KNEE_ANG@RFS
   set: right
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Knee Angles@RFS
 
 # max during stance
 - parameter: Left Knee Angles_MAX_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Knee Angles, LFS, LTO]
       truncate: true
@@ -1151,7 +1151,7 @@
 
 - parameter: Right Knee Angles_MAX_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Knee Angles, RFS, RTO]
       truncate: true
@@ -1160,7 +1160,7 @@
 # min during stance
 - parameter: Left Knee Angles_MIN_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Knee Angles, LFS, LTO]
       truncate: true
@@ -1168,7 +1168,7 @@
 
 - parameter: Right Knee Angles_MIN_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Knee Angles, RFS, RTO]
       truncate: true
@@ -1177,7 +1177,7 @@
 # max during stride
 - parameter: Left Knee Angles_MAX
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Knee Angles, LFS, LFS]
       truncate: true
@@ -1185,7 +1185,7 @@
 
 - parameter: Right Knee Angles_MAX
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Knee Angles, RFS, RFS]
       truncate: true
@@ -1195,7 +1195,7 @@
 # max during stance
 - parameter: Left Ankle Angles_MAX_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Ankle Angles, LFS, LTO]
       truncate: true
@@ -1203,7 +1203,7 @@
 
 - parameter: Right Ankle Angles_MAX_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Ankle Angles, RFS, RTO]
       truncate: true
@@ -1212,7 +1212,7 @@
 # min during stance
 - parameter: Left Ankle Angles_MIN_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Ankle Angles, LFS, LTO]
       truncate: true
@@ -1220,7 +1220,7 @@
 
 - parameter: Right Ankle Angles_MIN_stance
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Ankle Angles, RFS, RTO]
       truncate: true
@@ -1229,98 +1229,98 @@
 # Foot wrt lab at footstrike
 - parameter: L_FOOT_CONTACT_ANGLE@LFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Foot Contact Angle_shifted@LFS
 
 - parameter: R_FOOT_CONTACT_ANGLE@RFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Foot Contact Angle_shifted@RFS
 
 # Time between max stride angle and max knee flexion
 - parameter: L_PEAK_KNEE_ANGLE_to_Left Stride Angle_max
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [L_peak_knee_flex, L_stride_angle_max]
 
 - parameter: R_PEAK_KNEE_ANGLE_to_Right Stride Angle_max
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [R_peak_knee_flex, R_stride_angle_max]
 
 # Time from max hip flexion to footstrike
 - parameter: L_peak_hip_flexion_cycle_to_LFS_L_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [L_peak_hip_flex, LFS]
 
 - parameter: R_peak_hip_flexion_cycle_to_RFS_R_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [R_peak_hip_flex, RFS]
 
 # Time from max knee flexion to ankle cross
 - parameter: L_PEAK_KNEE_ANGLE_to_L_Ankle_cross_L_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [L_peak_knee_flex, L_Ankle_cross]
 
 - parameter: R_PEAK_KNEE_ANGLE_to_R_Ankle_cross_R_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [R_peak_knee_flex, R_Ankle_cross]
 
 # Time from toe off to max hip flexion
 - parameter: LTO_to_L_peak_hip_flexion_L_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [LTO, L_peak_hip_flex]
 
 - parameter: RTO_to_R_peak_hip_flexion_R_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [RTO, R_peak_hip_flex]
 
 # Time from toe off to hip flexion initiation
 - parameter: LTO_to_L_peak_hip_extension_stride_L_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [LTO, L_peak_hip_extension_stride]
 
 - parameter: RTO_to_R_peak_hip_extension_stride_R_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [RTO, R_peak_hip_extension_stride]
 
 # Time from toe off to knee flexion initiation
 - parameter: LTO_to_L_peak_knee_extension_stride_L_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [LTO, L_peak_knee_extension_stride]
 
 - parameter: RTO_to_R_peak_knee_extension_stride_R_CYCLE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventDuration: [RTO, R_peak_knee_extension_stride]
 
 # Hip max extension per stride
 - parameter: Left Hip Angles_MIN_stride
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Left Hip Angles, LFS, LFS]
       truncate: true
@@ -1328,7 +1328,7 @@
 
 - parameter: Right Hip Angles_MIN_stride
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - eventMask: [Right Hip Angles, RFS, RFS]
       truncate: true
@@ -1337,7 +1337,7 @@
 # Hip angular velocity at footstrike
 - parameter: Left Hip Angles_Velocity
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - lowpass: Left Hip Angles
       extrapolate: 100
@@ -1347,7 +1347,7 @@
 
 - parameter: Right Hip Angles_Velocity
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - lowpass: Right Hip Angles
       extrapolate: 100
@@ -1357,52 +1357,52 @@
 
 - parameter: Left Hip Angles_Velocity@LFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Hip Angles_Velocity@LFS
 
 - parameter: Right Hip Angles_Velocity@RFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Hip Angles_Velocity@RFS
 
 # Hip angular velocity at midstance
 - parameter: Left Hip Angles_Velocity@L_MID_STANCE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Hip Angles_Velocity@L_MID_STANCE
 
 - parameter: Right Hip Angles_Velocity@R_MID_STANCE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Hip Angles_Velocity@R_MID_STANCE
 
 # Hip angular velocity at toe off
 - parameter: Left Hip Angles_Velocity@LTO
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Hip Angles_Velocity@LTO
 
 - parameter: Right Hip Angles_Velocity@RTO
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Hip Angles_Velocity@RTO
 
 # Hip angular velocity at ankle cross
 - parameter: Left Hip Angles_Velocity@L_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Hip Angles_Velocity@L_Ankle_cross
 
 - parameter: Right Hip Angles_Velocity@R_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Hip Angles_Velocity@R_Ankle_cross
 
@@ -1411,14 +1411,14 @@
 #(Left Hip Angles_MAX_stance - Left Hip Angles@LTO) / LTO_to_L_peak_hip_flexion_L_CYCLE
 - parameter: Left_hip_ang_vel_slope
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [Left Hip Angles_MAX_stance.x, Left Hip Angles.x@LTO]
     - divide: [$prev, LTO_to_L_peak_hip_flexion_L_CYCLE]
 
 - parameter: Right_hip_ang_vel_slope
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - subtract: [Right Hip Angles_MAX_stance.x, Right Hip Angles.x@RTO]
     - divide: [$prev, RTO_to_R_peak_hip_flexion_R_CYCLE]
@@ -1426,7 +1426,7 @@
 # Thigh angle at max stride angle
 - parameter: Left Thigh Angles
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - jointAngle: [LeftUpLeg]
       space: VirtualLab
@@ -1434,40 +1434,40 @@
 
 - parameter: Right Thigh Angles
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - jointAngle: [RightUpLeg]
       space: VirtualLab
 
 - parameter: Left Thigh Angles@Left Stride Angle_max
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Thigh Angles@L_stride_angle_max
   
 - parameter: Right Thigh Angles@Right Stride Angle_max
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Thigh Angles@R_stride_angle_max
   
   # Thigh angle at max knee flexion
 - parameter: Left Thigh Angles@L_peak_knee_flexion
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Thigh Angles@L_peak_knee_flex
 
 - parameter: Right Thigh Angles@R_peak_knee_flexion
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Thigh Angles@R_peak_knee_flex
 
 # Knee to knee separation distance at mistance
 - parameter: Knees_distance_left_stride@L_MID_STANCE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftLeg => l_knee
       space: VirtualLab
@@ -1482,7 +1482,7 @@
 
 - parameter: Knees_distance_right_stride@R_MID_STANCE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftLeg => l_knee
       space: VirtualLab
@@ -1498,85 +1498,85 @@
 # Knee flexion at toe off
 - parameter: Left Knee Angles@LTO
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Knee Angles@LTO
 
 - parameter: Right Knee Angles@RTO
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Knee Angles@RTO
 
 # Knee flexion at ankle cross
 - parameter: Left Knee Angles@L_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Knee Angles@L_Ankle_cross
 
 - parameter: Right Knee Angles@R_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Knee Angles@R_Ankle_cross
 
 # Knee angular velocity at footstrike
 - parameter: Left Knee Angles_Velocity@LFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Knee Angles_Velocity@LFS
   
 - parameter: Right Knee Angles_Velocity@RFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Knee Angles_Velocity@RFS
   
 # Knee angular velocity at midstance
 - parameter: Left Knee Angles_Velocity@L_MID_STANCE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Knee Angles_Velocity@L_MID_STANCE
   
 - parameter: Right Knee Angles_Velocity@R_MID_STANCE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Knee Angles_Velocity@R_MID_STANCE
   
 # Knee angular velocity at toe off
 - parameter: Left Knee Angles_Velocity@LTO
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Knee Angles_Velocity@LTO
   
 - parameter: Right Knee Angles_Velocity@RTO
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Knee Angles_Velocity@RTO
   
 # Knee angular velocity at ankle cross
 - parameter: Left Knee Angles_Velocity@L_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Knee Angles_Velocity@L_Ankle_cross
   
 - parameter: Right Knee Angles_Velocity@R_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Knee Angles_Velocity@R_Ankle_cross
 
 # Shank angular velocity at footstrike
 - parameter: Left Shank wrt VLab Ang Vel@LFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - angularVelocity: [VirtualLabSegment, LeftLeg, VirtualLabSegment, LeftLeg]
     - lowpass:
@@ -1588,7 +1588,7 @@
 
 - parameter: Right Shank wrt VLab Ang Vel@RFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - angularVelocity: [VirtualLabSegment, RightLeg, VirtualLabSegment, RightLeg]
     - lowpass:
@@ -1600,7 +1600,7 @@
 # Shank angular velocity at ankle cross
 - parameter: Left Shank wrt VLab Ang Vel@L_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - angularVelocity: [VirtualLabSegment, LeftLeg, VirtualLabSegment, LeftLeg]
     - lowpass:
@@ -1612,7 +1612,7 @@
 
 - parameter: Right Shank wrt VLab Ang Vel@R_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - angularVelocity: [VirtualLabSegment, RightLeg, VirtualLabSegment, RightLeg]
     - lowpass:
@@ -1624,52 +1624,52 @@
 # Ankle angular velocity at footstrike
 - parameter: Left Ankle Angles_Velocity@LFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Ankle Angles_Velocity@LFS
 
 - parameter: Right Ankle Angles_Velocity@RFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Ankle Angles_Velocity@RFS
 
 # Ankle angular velocity at midstance
 - parameter: Left Ankle Angles_Velocity@L_MID_STANCE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Ankle Angles_Velocity@L_MID_STANCE
 
 - parameter: Right Ankle Angles_Velocity@R_MID_STANCE
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Ankle Angles_Velocity@R_MID_STANCE
 
 # Ankle angular velocity at toe off
 - parameter: Left Ankle Angles_Velocity@LTO
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Ankle Angles_Velocity@LTO
 
 - parameter: Right Ankle Angles_Velocity@RTO
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Ankle Angles_Velocity@RTO
 
 # Ankle angular velocity at ankle cross
 - parameter: Left Ankle Angles_Velocity@L_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Left Ankle Angles_Velocity@L_Ankle_cross
 
 - parameter: Right Ankle Angles_Velocity@R_Ankle_cross
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - import: Right Ankle Angles_Velocity@R_Ankle_cross
 
@@ -1677,7 +1677,7 @@
 # using pelvis origin instead of body COG
 - parameter: Left_Foot_Distance_to_body_COG@LFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: LeftFoot => foot
       space: VirtualLab
@@ -1692,7 +1692,7 @@
 
 - parameter: Right_Foot_Distance_to_body_COG@RFS
   where:
-    name: Running*
+    name: ^(Running|Gait)*
   steps:
     - segment: RightFoot => foot
       space: VirtualLab

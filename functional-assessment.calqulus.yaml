@@ -60,6 +60,5 @@
 
 - template: templates/running/running.calqulus.yaml
   where:
-    name: Running*
-
+    name: ^(Running|Gait)*
 
