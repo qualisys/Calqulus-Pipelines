@@ -24,15 +24,7 @@
 
 - template: templates/fa/sl.calqulus.yaml
   where:
-    name: SLJ*
-
-- template: templates/fa/sl.calqulus.yaml
-  where:
-    name: SLL*
-
-- template: templates/fa/sl.calqulus.yaml
-  where:
-    name: ^SLCDL*
+    name: ^(SLCDL|SLJ|SLL)*
 
 - template: templates/fa/pj.calqulus.yaml
   where:
