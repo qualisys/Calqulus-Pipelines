@@ -654,6 +654,14 @@
   steps:
     - divide: [1, actual_running_speed_ms]
 
+# Statures per second
+# calculated as average speed divided by the subject height 
+- parameter: Statures_Per_Second
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - divide: [actual_running_speed_ms, $field(Height)]
+
 # Stride angle
 - parameter: Left Stride Angle@max
   where:
