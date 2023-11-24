@@ -660,7 +660,7 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - divide: [actual_running_speed_ms, $field(Height)]
+    - divide: [actual_running_speed_ms, "$field(Height, measurement, numeric)"]
 
 # Stride angle
 - parameter: Left Stride Angle@max
