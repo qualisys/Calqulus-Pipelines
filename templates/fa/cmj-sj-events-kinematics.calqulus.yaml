@@ -27,7 +27,7 @@
     name: ^(CMJ_|SJ_)[LB]*
   set: left
   steps:
-    - import: Left_MID_FOOT_vel.z
+    - import: LFT_DistEndVel.z
     - max:
       frames: true
 
@@ -36,7 +36,7 @@
     name: ^(CMJ_|SJ_)[LB]*
   set: left
   steps:
-    - threshold: Left_MID_FOOT_vel.z
+    - threshold: LFT_DistEndVel.z
       value: 0.5
       direction: up
     - eventMask: [$prev, BOF, temp_L_max]
@@ -113,7 +113,7 @@
     name: ^(CMJ_|SJ_)[RB]*
   set: right
   steps:
-    - import: Right_MID_FOOT_vel.z
+    - import: RFT_DistEndVel.z
     - max:
       frames: true
 
@@ -122,7 +122,7 @@
     name: ^(CMJ_|SJ_)[RB]*
   set: right
   steps:
-    - threshold: Right_MID_FOOT_vel.z
+    - threshold: RFT_DistEndVel.z
       value: 0.5
       direction: up
     - eventMask: [$prev, BOF, temp_R_max]
