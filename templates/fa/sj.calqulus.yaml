@@ -18,44 +18,6 @@
 
 - template: /templates/timeseries.calqulus.yaml
 
-- parameter: Left_MID_FOOT_vel
-  where:
-    name: ^(CMJ_|SJ_)[LB]*
-  set: left
-  steps:
-    - segment: LeftToeBase
-      space: VirtualLab
-    - convert:
-      from: mm
-      to: m
-    - lowpass:
-      extrapolate: 100
-      cutoff: 16
-      export: LFT_DistEnd
-    - velocity:
-    - lowpass:
-      extrapolate: 100
-      cutoff: 16
-
-- parameter: Right_MID_FOOT_vel
-  where:
-    name: ^(CMJ_|SJ_)[RB]*
-  set: right
-  steps:
-    - segment: RightToeBase
-      space: VirtualLab
-    - convert:
-      from: mm
-      to: m
-    - lowpass:
-      extrapolate: 100
-      cutoff: 16
-      export: LFT_DistEnd
-    - velocity:
-    - lowpass:
-      extrapolate: 100
-      cutoff: 16
-
 #############
 ## Metrics ##
 #############
