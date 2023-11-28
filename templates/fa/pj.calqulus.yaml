@@ -131,13 +131,13 @@
 # Unified event names for web
 - event: LeftPlotStart
   where:
-    name: PJ_L*
+    name: PJ_[LB]*
   steps:
     - import: TouchDown_L
 
 - event: LeftPlotEnd
   where:
-    name: PJ_L*
+    name: PJ_[LB]*
   steps:
     - import: TakeOff_L
 
