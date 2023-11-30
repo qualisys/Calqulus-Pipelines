@@ -12,11 +12,11 @@
 
 - event: BOF
   steps:
-    - import: [1]
+    - import: [0]
 
 - event: EOF
   steps:
-    - import: [$length]
+    - subtract: [$length, 1]
 
 # it is assumed that LON,LOFF,RON,ROFF were manually entered in QTM
 
