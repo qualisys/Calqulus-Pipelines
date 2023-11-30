@@ -173,14 +173,16 @@
   set: left
   steps:
     - angle: [Spine2, LeftArm]
-      rotationOrder: ZYZ
+      # unwrap: true
+      rotationOrder: YXZ #based on Vandana,P. at al. Comparison of Glenohumeral Motion Using Different Rotation Sequences, J Biomech. 2011 Feb 24; 44(4): 700–705. 
     - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Shoulder Angles
   set: right
   steps:
     - angle: [Spine2, RightArm]
-      rotationOrder: ZYZ
+      # unwrap: true
+      rotationOrder: YXZ
     - multiply: [$prev, [1, 1, 1]]
 
 - parameter: Left Shoulder Ang Vel
