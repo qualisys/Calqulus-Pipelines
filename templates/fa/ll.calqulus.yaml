@@ -12,11 +12,11 @@
 
 - event: BOF
   steps:
-    - import: [1]
+    - import: [0]
 
 - event: EOF
   steps:
-    - import: [$length]
+    - subtract: [$length, 1]
 
 - event: COM_MIN
   steps:
@@ -25,14 +25,14 @@
 
 - event: PlotStart_stand
   steps:
-    # stand
     - negate: PelvisCGPos_vel
-    - eventMask: [$prev, BOF, COM_MIN]
+    - lowpass:
     - threshold: $prev.z
-      value: 0.02
-      direction: down
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF, COM_MIN]
     - import: $prev@1
-    - subtract: [$prev, 1]
+    # - subtract: [$prev, 1]
 
 # Left
 - event: LFT_DistEndVel_max
@@ -65,9 +65,9 @@
       output: mean
     - import: PelvisCGPos.x@BOF
       output: first
-    # - if: $prev < $prev(2)
-    # - if: PelvisCGPos.x@BOF < mean
-    - if: first < mean
+    - import: PelvisCGPos.x@EOF
+      output: last
+    - if: (first < mean && mean < last) || (first > mean && mean > last)
       then: PlotStart_stand
       else: TouchDown
 
@@ -106,8 +106,8 @@
   where:
     name: LL_R*
   steps:
-    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_min, RFT_DistEndVel_max]
-    - min:
+    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_max, RFT_DistEndVel_min]
+    - min: 
       frames: true
 
 - event: PlotStart
@@ -115,12 +115,12 @@
     name: LL_R*
   steps:
     - mean: PelvisCGPos.x
-      output: mean
+      export: mean
     - import: PelvisCGPos.x@BOF
-      output: first
-    # - if: $prev < $prev(2)
-    # - if: PelvisCGPos.x@BOF < mean
-    - if: first < mean
+      export: first
+    - import: PelvisCGPos.x@EOF
+      export: last
+    - if: (first < mean && mean < last) || (first > mean && mean > last)
       then: PlotStart_stand
       else: TouchDown
 
