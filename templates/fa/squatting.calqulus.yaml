@@ -10,14 +10,6 @@
 ## EVENTS ##
 ############
 
-- event: BOF
-  steps:
-    - import: [1]
-
-- event: EOF
-  steps:
-    - import: [$length]
-
 - event: PelvisCGPos_vel_min
   steps:
     - divide: [$framerate, 0.5] #0.5s
@@ -97,19 +89,19 @@
 # # For single squat -----
 # - event: TOP1
 #   # where:
-#   #   eval: Pelvis_lowest_count > 1
+#   #   eval: Pelvis_lowest_count = 1
 #   steps:
 #     - import: BOF
 
 # - event: TOP2
 #   # where:
-#   #   eval: Pelvis_lowest_count > 1
+#   #   eval: Pelvis_lowest_count = 1
 #   steps:
 #     - import: EOF
 
 # - event: TOP
 #   # where:
-#   #   eval: Pelvis_lowest_count > 1
+#   #   eval: Pelvis_lowest_count = 1
 #   steps:
 #     - concatenate: [TOP1, TOP2]
 

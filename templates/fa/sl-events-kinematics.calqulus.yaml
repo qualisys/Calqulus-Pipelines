@@ -1,10 +1,6 @@
-- event: BOF
-  steps:
-    - import: [1]
-
-- event: EOF
-  steps:
-    - import: [$length]
+############
+## EVENTS ##
+############
 
 # Left
 - event: TouchDown

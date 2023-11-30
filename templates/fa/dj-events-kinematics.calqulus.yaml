@@ -2,14 +2,6 @@
 ## EVENTS ##
 ############
 
-- event: BOF
-  steps:
-    - import: [1]
-
-- event: EOF
-  steps:
-    - import: [$length]
-
 # Bilateral and left
 - event: TakeOff_L
   where:

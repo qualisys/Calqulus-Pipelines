@@ -10,14 +10,6 @@
 ## EVENTS ##
 ############
 
-- event: BOF
-  steps:
-    - import: [1]
-
-- event: EOF
-  steps:
-    - import: [$length]
-
 # Find when RPV vel x component is crossing zero > this is when foot strike in focus occures
 - event: temp_max
   steps:

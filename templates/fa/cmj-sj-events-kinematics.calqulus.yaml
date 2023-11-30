@@ -4,14 +4,6 @@
 
 # used by CMJ and SJ
 
-- event: BOF
-  steps:
-    - import: [1]
-
-- event: EOF
-  steps:
-    - import: [$length]
-
 - parameter: RPV_CGVel
   steps:
     - segment: Hips
