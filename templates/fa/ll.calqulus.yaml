@@ -18,14 +18,6 @@
   steps:
     - import: [$length]
 
-- parameter: PelvisCGPos_VLab@BOF
-  steps:
-    - import: PelvisCGPos@BOF
-
-- parameter: PelvisCGPos_VLab_mean
-  steps:
-    - mean: PelvisCGPos
-
 - event: COM_MIN
   steps:
     - min: Hips.z
@@ -69,10 +61,15 @@
   where:
     name: LL_L*
   steps:
-    - import: TouchDown
-    # - if: PelvisCGPos_VLab@BOF.x < PelvisCGPos_VLab_mean.x
-    #   then: PlotStart_stand
-    #   else: TouchDown
+    - mean: PelvisCGPos.x
+      output: mean
+    - import: PelvisCGPos.x@BOF
+      output: first
+    # - if: $prev < $prev(2)
+    # - if: PelvisCGPos.x@BOF < mean
+    - if: first < mean
+      then: PlotStart_stand
+      else: TouchDown
 
 - event: TakeOff
   where:
@@ -85,8 +82,6 @@
     - import: $prev@-1
 
 - event: Landing_L
-  # where:
-  #   name: LL_L*
   steps:
     - eventMask: [LFT_DistEndPos.z, TakeOff, EOF]
     - max:
@@ -119,10 +114,15 @@
   where:
     name: LL_R*
   steps:
-    - import: TouchDown
-    # - if: PelvisCGPos_VLab@BOF.x < PelvisCGPos_VLab_mean.x
-    #   then: PlotStart_stand
-    #   else: TouchDown
+    - mean: PelvisCGPos.x
+      output: mean
+    - import: PelvisCGPos.x@BOF
+      output: first
+    # - if: $prev < $prev(2)
+    # - if: PelvisCGPos.x@BOF < mean
+    - if: first < mean
+      then: PlotStart_stand
+      else: TouchDown
 
 - event: TakeOff
   where:
@@ -136,8 +136,6 @@
     - import: $prev@-1
 
 - event: Landing_R
-  # where:
-  #   name: LL_R*
   steps:
     - eventMask: [RFT_DistEndAcc.z, TakeOff, EOF]
     - max:
