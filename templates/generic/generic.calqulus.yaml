@@ -23,25 +23,25 @@
 # Unified event names for web
 - event: LeftPlotStart
   steps:
-    - if: LON
+    - if: exists(LON)
       then: LON
       else: BOF
 
 - event: LeftPlotEnd
   steps:
-    - if: LOFF
+    - if: exists(LOFF)
       then: LOFF
       else: EOF
 
 - event: RightPlotStart
   steps:
-    - if: RON
+    - if: exists(RON)
       then: RON
       else: BOF
 
 - event: RightPlotEnd
   steps:
-    - if: ROFF
+    - if: exists(ROFF)
       then: ROFF
       else: EOF
 
@@ -82,95 +82,95 @@
 - parameter: Left Pelvic Angles_max
   set: left
   steps:
-    - eventMask: [Left Pelvic Angles, LON, LOFF]
+    - eventMask: [Left Pelvic Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Pelvic Angles_min
   set: left
   steps:
-    - eventMask: [Left Pelvic Angles, LON, LOFF]
+    - eventMask: [Left Pelvic Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Pelvic Angles_mean
   set: left
   steps:
-    - eventMask: [Left Pelvic Angles, LON, LOFF]
+    - eventMask: [Left Pelvic Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Hips
 - parameter: Left Hip Angles_max
   set: left
   steps:
-    - eventMask: [Left Hip Angles, LON, LOFF]
+    - eventMask: [Left Hip Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Hip Angles_min
   set: left
   steps:
-    - eventMask: [Left Hip Angles, LON, LOFF]
+    - eventMask: [Left Hip Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Hip Angles_mean
   set: left
   steps:
-    - eventMask: [Left Hip Angles, LON, LOFF]
+    - eventMask: [Left Hip Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Knees
 - parameter: Left Knee Angles_max
   set: left
   steps:
-    - eventMask: [Left Knee Angles, LON, LOFF]
+    - eventMask: [Left Knee Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Knee Angles_min
   set: left
   steps:
-    - eventMask: [Left Knee Angles, LON, LOFF]
+    - eventMask: [Left Knee Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Knee Angles_mean
   set: left
   steps:
-    - eventMask: [Left Knee Angles, LON, LOFF]
+    - eventMask: [Left Knee Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Ankles
 - parameter: Left Ankle Angles_max
   set: left
   steps:
-    - eventMask: [Left Ankle Angles, LON, LOFF]
+    - eventMask: [Left Ankle Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Ankle Angles_min
   set: left
   steps:
-    - eventMask: [Left Ankle Angles, LON, LOFF]
+    - eventMask: [Left Ankle Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Ankle Angles_mean
   set: left
   steps:
-    - eventMask: [Left Ankle Angles, LON, LOFF]
+    - eventMask: [Left Ankle Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Feet
 - parameter: Left Foot Pitch Angles_max
   set: left
   steps:
-    - eventMask: [Left Foot Pitch Angles, LON, LOFF]
+    - eventMask: [Left Foot Pitch Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Foot Pitch Angles_min
   set: left
   steps:
-    - eventMask: [Left Foot Pitch Angles, LON, LOFF]
+    - eventMask: [Left Foot Pitch Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Foot Pitch Angles_mean
   set: left
   steps:
-    - eventMask: [Left Foot Pitch Angles, LON, LOFF]
+    - eventMask: [Left Foot Pitch Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Copy of previous signal for compatibility with report layout
@@ -193,112 +193,112 @@
 - parameter: Left Shoulder Angles_max
   set: left
   steps:
-    - eventMask: [Left Shoulder Angles, LON, LOFF]
+    - eventMask: [Left Shoulder Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Shoulder Angles_min
   set: left
   steps:
-    - eventMask: [Left Shoulder Angles, LON, LOFF]
+    - eventMask: [Left Shoulder Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Shoulder Angles_mean
   set: left
   steps:
-    - eventMask: [Left Shoulder Angles, LON, LOFF]
+    - eventMask: [Left Shoulder Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 - parameter: Left Shoulder Ang Vel_max
   set: left
   steps:
-    - eventMask: [Left Shoulder Ang Vel, LON, LOFF]
+    - eventMask: [Left Shoulder Ang Vel, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Shoulder Ang Vel_min
   set: left
   steps:
-    - eventMask: [Left Shoulder Ang Vel, LON, LOFF]
+    - eventMask: [Left Shoulder Ang Vel, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Shoulder Ang Vel_mean
   set: left
   steps:
-    - eventMask: [Left Shoulder Ang Vel, LON, LOFF]
+    - eventMask: [Left Shoulder Ang Vel, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Elbows
 - parameter: Left Elbow Angles_max
   set: left
   steps:
-    - eventMask: [Left Elbow Angles, LON, LOFF]
+    - eventMask: [Left Elbow Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Elbow Angles_min
   set: left
   steps:
-    - eventMask: [Left Elbow Angles, LON, LOFF]
+    - eventMask: [Left Elbow Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Elbow Angles_mean
   set: left
   steps:
-    - eventMask: [Left Elbow Angles, LON, LOFF]
+    - eventMask: [Left Elbow Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Wrists
 - parameter: Left Wrist Angles_max
   set: left
   steps:
-    - eventMask: [Left Wrist Angles, LON, LOFF]
+    - eventMask: [Left Wrist Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Wrist Angles_min
   set: left
   steps:
-    - eventMask: [Left Wrist Angles, LON, LOFF]
+    - eventMask: [Left Wrist Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Wrist Angles_mean
   set: left
   steps:
-    - eventMask: [Left Wrist Angles, LON, LOFF]
+    - eventMask: [Left Wrist Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Thorax
 - parameter: Left Thorax Angles_max
   set: left
   steps:
-    - eventMask: [Left Thorax Angles, LON, LOFF]
+    - eventMask: [Left Thorax Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Thorax Angles_min
   set: left
   steps:
-    - eventMask: [Left Thorax Angles, LON, LOFF]
+    - eventMask: [Left Thorax Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Thorax Angles_mean
   set: left
   steps:
-    - eventMask: [Left Thorax Angles, LON, LOFF]
+    - eventMask: [Left Thorax Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 - parameter: Left Thorax_Lab Angles_max
   set: left
   steps:
-    - eventMask: [Left Thorax_Lab Angles, LON, LOFF]
+    - eventMask: [Left Thorax_Lab Angles, LeftPlotStart, LeftPlotEnd]
     - max: 
 
 - parameter: Left Thorax_Lab Angles_min
   set: left
   steps:
-    - eventMask: [Left Thorax_Lab Angles, LON, LOFF]
+    - eventMask: [Left Thorax_Lab Angles, LeftPlotStart, LeftPlotEnd]
     - min: 
 
 - parameter: Left Thorax_Lab Angles_mean
   set: left
   steps:
-    - eventMask: [Left Thorax_Lab Angles, LON, LOFF]
+    - eventMask: [Left Thorax_Lab Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
 # Right ---
@@ -306,95 +306,95 @@
 - parameter: Right Pelvic Angles_max
   set: right
   steps:
-    - eventMask: [Right Pelvic Angles, RON, ROFF]
+    - eventMask: [Right Pelvic Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Pelvic Angles_min
   set: right
   steps:
-    - eventMask: [Right Pelvic Angles, RON, ROFF]
+    - eventMask: [Right Pelvic Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Pelvic Angles_mean
   set: right
   steps:
-    - eventMask: [Right Pelvic Angles, RON, ROFF]
+    - eventMask: [Right Pelvic Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
 # Hips
 - parameter: Right Hip Angles_max
   set: right
   steps:
-    - eventMask: [Right Hip Angles, RON, ROFF]
+    - eventMask: [Right Hip Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Hip Angles_min
   set: right
   steps:
-    - eventMask: [Right Hip Angles, RON, ROFF]
+    - eventMask: [Right Hip Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Hip Angles_mean
   set: right
   steps:
-    - eventMask: [Right Hip Angles, RON, ROFF]
+    - eventMask: [Right Hip Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
 # Knees
 - parameter: Right Knee Angles_max
   set: right
   steps:
-    - eventMask: [Right Knee Angles, RON, ROFF]
+    - eventMask: [Right Knee Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Knee Angles_min
   set: right
   steps:
-    - eventMask: [Right Knee Angles, RON, ROFF]
+    - eventMask: [Right Knee Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Knee Angles_mean
   set: right
   steps:
-    - eventMask: [Right Knee Angles, RON, ROFF]
+    - eventMask: [Right Knee Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
 # Ankles
 - parameter: Right Ankle Angles_max
   set: right
   steps:
-    - eventMask: [Right Ankle Angles, RON, ROFF]
+    - eventMask: [Right Ankle Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Ankle Angles_min
   set: right
   steps:
-    - eventMask: [Right Ankle Angles, RON, ROFF]
+    - eventMask: [Right Ankle Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Ankle Angles_mean
   set: right
   steps:
-    - eventMask: [Right Ankle Angles, RON, ROFF]
+    - eventMask: [Right Ankle Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
 # Feet
 - parameter: Right Foot Pitch Angles_max
   set: right
   steps:
-    - eventMask: [Right Foot Pitch Angles, RON, ROFF]
+    - eventMask: [Right Foot Pitch Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Foot Pitch Angles_min
   set: right
   steps:
-    - eventMask: [Right Foot Pitch Angles, RON, ROFF]
+    - eventMask: [Right Foot Pitch Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Foot Pitch Angles_mean
   set: right
   steps:
-    - eventMask: [Right Foot Pitch Angles, RON, ROFF]
+    - eventMask: [Right Foot Pitch Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
 # Copy of previous signal for compatibility with report layout
@@ -417,111 +417,111 @@
 - parameter: Right Shoulder Angles_max
   set: right
   steps:
-    - eventMask: [Right Shoulder Angles, RON, ROFF]
+    - eventMask: [Right Shoulder Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Shoulder Angles_min
   set: right
   steps:
-    - eventMask: [Right Shoulder Angles, RON, ROFF]
+    - eventMask: [Right Shoulder Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Shoulder Angles_mean
   set: right
   steps:
-    - eventMask: [Right Shoulder Angles, RON, ROFF]
+    - eventMask: [Right Shoulder Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
 - parameter: Right Shoulder Ang Vel_max
   set: right
   steps:
-    - eventMask: [Right Shoulder Ang Vel, RON, ROFF]
+    - eventMask: [Right Shoulder Ang Vel, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Shoulder Ang Vel_min
   set: right
   steps:
-    - eventMask: [Right Shoulder Ang Vel, RON, ROFF]
+    - eventMask: [Right Shoulder Ang Vel, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Shoulder Ang Vel_mean
   set: right
   steps:
-    - eventMask: [Right Shoulder Ang Vel, RON, ROFF]
+    - eventMask: [Right Shoulder Ang Vel, RightPlotStart, RightPlotEnd]
     - mean: 
 
 # Elbows
 - parameter: Right Elbow Angles_max
   set: right
   steps:
-    - eventMask: [Right Elbow Angles, RON, ROFF]
+    - eventMask: [Right Elbow Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Elbow Angles_min
   set: right
   steps:
-    - eventMask: [Right Elbow Angles, RON, ROFF]
+    - eventMask: [Right Elbow Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Elbow Angles_mean
   set: right
   steps:
-    - eventMask: [Right Elbow Angles, RON, ROFF]
+    - eventMask: [Right Elbow Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
 # Wrists
 - parameter: Right Wrist Angles_max
   set: right
   steps:
-    - eventMask: [Right Wrist Angles, RON, ROFF]
+    - eventMask: [Right Wrist Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Wrist Angles_min
   set: right
   steps:
-    - eventMask: [Right Wrist Angles, RON, ROFF]
+    - eventMask: [Right Wrist Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Wrist Angles_mean
   set: right
   steps:
-    - eventMask: [Right Wrist Angles, RON, ROFF]
+    - eventMask: [Right Wrist Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
 # Thorax
 - parameter: Right Thorax Angles_max
   set: right
   steps:
-    - eventMask: [Right Thorax Angles, RON, ROFF]
+    - eventMask: [Right Thorax Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Thorax Angles_min
   set: right
   steps:
-    - eventMask: [Right Thorax Angles, RON, ROFF]
+    - eventMask: [Right Thorax Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Thorax Angles_mean
   set: right
   steps:
-    - eventMask: [Right Thorax Angles, RON, ROFF]
+    - eventMask: [Right Thorax Angles, RightPlotStart, RightPlotEnd]
     - mean:
 
 - parameter: Right Thorax_Lab Angles_max
   set: right
   steps:
-    - eventMask: [Right Thorax_Lab Angles, RON, ROFF]
+    - eventMask: [Right Thorax_Lab Angles, RightPlotStart, RightPlotEnd]
     - max: 
 
 - parameter: Right Thorax_Lab Angles_min
   set: right
   steps:
-    - eventMask: [Right Thorax_Lab Angles, RON, ROFF]
+    - eventMask: [Right Thorax_Lab Angles, RightPlotStart, RightPlotEnd]
     - min: 
 
 - parameter: Right Thorax_Lab Angles_mean
   set: right
   steps:
-    - eventMask: [Right Thorax_Lab Angles, RON, ROFF]
+    - eventMask: [Right Thorax_Lab Angles, RightPlotStart, RightPlotEnd]
     - mean:
 
