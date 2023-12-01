@@ -10,6 +10,16 @@
 ## EVENTS ##
 ############
 
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+### measured events ###
+
 - event: PelvisCGPos_vel_min
   steps:
     - divide: [$framerate, 0.5] #0.5s
@@ -39,8 +49,6 @@
 
 # For repeating squats -----
 - event: TOP_temp
-  # where:
-  #   eval: Pelvis_lowest_count > 1
   steps:
     - threshold: PelvisCGPos_vel_filt
       value: 0
@@ -49,20 +57,14 @@
       keep: -1
 
 - event: pelvis_lowest_first
-  # where:
-  #   eval: Pelvis_lowest_count > 1
   steps:
     - import: Pelvis_lowest@1
 
 - event: pelvis_lowest_last
-  # where:
-  #   eval: Pelvis_lowest_count > 1
   steps:
     - import: Pelvis_lowest@-1
 
-- event: TOP1
-  # where:
-  #   eval: Pelvis_lowest_count > 1
+- event: TOP1_repeated
   steps:
     - threshold: PelvisCGPos_vel_filt
       value: 0
@@ -70,9 +72,7 @@
     - eventMask: [$prev, BOF, pelvis_lowest_first]
       keep: -1
     
-- event: TOP2
-  # where:
-  #   eval: Pelvis_lowest_count > 1
+- event: TOP2_repeated
   steps:
     - threshold: PelvisCGPos_vel_filt
       value: 0
@@ -80,49 +80,59 @@
     - eventMask: [$prev, pelvis_lowest_last, EOF]
       keep: -1
     
-- event: TOP
-  # where:
-  #   eval: Pelvis_lowest_count > 1
+- event: TOP_repeated
   steps:
-    - concatenate: [TOP1, TOP_temp, TOP2]
+    - concatenate: [TOP1_repeated, TOP_temp, TOP2_repeated]
 
-# # For single squat -----
-# - event: TOP1
-#   # where:
-#   #   eval: Pelvis_lowest_count = 1
-#   steps:
-#     - import: BOF
+# For single squat -----
+- event: TOP_single
+  steps:
+    - concatenate: [BOF, EOF]
 
-# - event: TOP2
-#   # where:
-#   #   eval: Pelvis_lowest_count = 1
-#   steps:
-#     - import: EOF
+- event: TOP_measured
+  steps:
+    - if: Pelvis_lowest_count == 1
+      then: TOP_single
+      else: TOP_repeated
 
-# - event: TOP
-#   # where:
-#   #   eval: Pelvis_lowest_count = 1
-#   steps:
-#     - concatenate: [TOP1, TOP2]
-
+### entered events ###
 
 # If user enters manual events LON/LOFF/RON/ROFF rename them to TOP
-- event: TOP
+- event: TOP_entered_1
   steps:
-    - import: LON
+    - if: exists(LON)
+      then: LON
+      else: [[]]
     
-- event: TOP
+- event: TOP_entered_2
   steps:
-    - import: RON
+    - if: exists(RON)
+      then: RON
+      else: [[]]
 
-- event: TOP
+- event: TOP_entered_3
   steps:
-    - import: LOFF
+    - if: exists(LOFF)
+      then: LOFF
+      else: [[]]
 
+- event: TOP_entered_4
+  steps:
+    - if: exists(ROFF)
+      then: ROFF
+      else: [[]]
+
+- event: TOP_entered
+  steps:
+    - concatenate: [TOP_entered_1, TOP_entered_2, TOP_entered_3, TOP_entered_4]
+
+# entered events prioritise over calculated ones
 - event: TOP
   steps:
-    - import: ROFF
-    
+  - if: "!empty(TOP_entered)"
+    then: TOP_entered
+    else: TOP_measured
+
 - event: TOP_L
   where:
     name: (Squatting_L|Squatting_B)*
