@@ -12,7 +12,7 @@
 
 - event: BOF
   steps:
-    - import: [0]
+    - import: [[0]]
 
 - event: EOF
   steps:
