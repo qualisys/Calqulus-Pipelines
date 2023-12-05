@@ -200,9 +200,6 @@
     - import: PelvisCGPos@TOP_refined
     - import: PelvisCGPos@Pelvis_lowest_refined
     - subtract: [$prev(2), $prev]
-    - convert:
-      from: mm
-      to: m
 
 - parameter: Squatting_depth_Squat_L
   where:
@@ -219,9 +216,6 @@
     - import: PelvisCGPos@TOP_refined
     - import: PelvisCGPos@Pelvis_lowest_refined
     - subtract: [$prev(2), $prev]
-    - convert:
-      from: mm
-      to: m
 
 - parameter: Squatting_depth_Squat_R
   where:
@@ -238,9 +232,6 @@
     - import: PelvisCGPos@TOP_refined
     - import: PelvisCGPos@Pelvis_lowest_refined
     - subtract: [$prev(2), $prev]
-    - convert:
-      from: mm
-      to: m
 
 # Left ---
 - parameter: Left Hip Angles_max_Squat_B
