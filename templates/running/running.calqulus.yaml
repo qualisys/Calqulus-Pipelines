@@ -711,7 +711,7 @@
   - mean: $prev
 
 # Step length
-- parameter: Right_Step_Length_Mean
+- parameter: Right_Step_Length_Mean_treadmill
   where:
     name: ^(Running|Gait)*
   steps:
@@ -728,9 +728,22 @@
     - multiply: [actual_running_speed_ms, Right_Step_Time]
       output: belt_shift
     - add: [Step_Length, belt_shift]
-      export: Right_Step_Length # for FA Running
 
-- parameter: Left_Step_Length_Mean
+- parameter: Right_Step_Length_Mean_overground
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - segment: LeftFoot => l_foot
+      space: VirtualLab
+    - segment: RightFoot => r_foot
+      space: VirtualLab
+    - subtract: [r_foot.y@RFS, l_foot.y@LFS]
+      frameSequenceOrder: reverse
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: Left_Step_Length_Mean_treadmill
   where:
     name: ^(Running|Gait)*
   steps:
@@ -747,17 +760,48 @@
     - multiply: [actual_running_speed_ms, Left_Step_Time]
       output: belt_shift
     - add: [Step_Length, belt_shift]
+
+- parameter: Left_Step_Length_Mean_overground
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - segment: LeftFoot => l_foot
+      space: VirtualLab
+    - segment: RightFoot => r_foot
+      space: VirtualLab
+    - subtract: [l_foot.y@LFS, r_foot.y@RFS]
+      frameSequenceOrder: reverse
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: Right_Step_Length_Mean
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: Right_Step_Length_Mean_overground
+      else: Right_Step_Length_Mean_treadmill
+      export: Right_Step_Length # for FA Running
+
+- parameter: Left_Step_Length_Mean
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: Left_Step_Length_Mean_overground
+      else: Left_Step_Length_Mean_treadmill
       export: Left_Step_Length # for FA Running
 
 - parameter: Step_Length_Mean_MEAN
   where:
     name: ^(Running|Gait)*
   steps:
-    - concatenate: [Right_Step_Length_Mean,Left_Step_Length_Mean]
+    - concatenate: [Right_Step_Length_Mean, Left_Step_Length_Mean]
     - mean: $prev
 
 # Stride length
-- parameter: Right_Stride_Length_Mean
+- parameter: Right_Stride_Length_Mean_treadmill
   where:
     name: ^(Running|Gait)*
   steps:
@@ -774,7 +818,20 @@
       output: belt_shift
     - add: [strideLength, belt_shift]
 
-- parameter: Left_Stride_Length_Mean
+- parameter: Right_Stride_Length_Mean_overground
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - segment: RightFoot => foot
+      space: VirtualLab
+    - eventDuration: [RFS, RFS]
+      export: right_stride_time
+    - diff: foot.y@RFS
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: Left_Stride_Length_Mean_treadmill
   where:
     name: ^(Running|Gait)*
   steps:
@@ -790,6 +847,37 @@
     - multiply: [actual_running_speed_ms, left_stride_time]
       output: belt_shift
     - add: [strideLength, belt_shift]
+
+- parameter: Left_Stride_Length_Mean_overground
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - segment: LeftFoot => foot
+      space: VirtualLab
+    - eventDuration: [LFS, LFS]
+      export: left_stride_time
+    - diff: foot.y@LFS
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: Right_Stride_Length_Mean
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: Right_Stride_Length_Mean_overground
+      else: Right_Stride_Length_Mean_treadmill
+      export: Right_Stride_Length # for FA Running
+
+- parameter: Left_Stride_Length_Mean
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: Left_Stride_Length_Mean_overground
+      else: Left_Stride_Length_Mean_treadmill
+      export: Left_Stride_Length # for FA Running
 
 - parameter: Stride_Length_Mean
   where:
