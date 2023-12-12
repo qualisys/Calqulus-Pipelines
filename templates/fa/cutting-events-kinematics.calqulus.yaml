@@ -50,10 +50,10 @@
     name: Cutting_L*
   set: right
   steps:
-    - eventMask: [RFT_DistEndVel.z, BOF, temp_R1]
+    - negate: RFT_DistEndVel.z
+    - peakFinder: [$prev]
+    - eventMask: [$prev, BOF, temp_R1]
       keep: -1
-    - min: 
-      frames: true
 
 - event: temp_R2
   where:
@@ -73,6 +73,7 @@
     - threshold: RFT_DistEndVel.z
       value: 0.2
       direction: up
+    - import: $prev@1
 
 - event: Max_knee_flex
   where:
@@ -120,10 +121,10 @@
     name: Cutting_R*
   set: left
   steps:
-    - eventMask: [LFT_DistEndVel.z, BOF, temp_L1]
+    - negate: LFT_DistEndVel.z
+    - peakFinder: [$prev]
+    - eventMask: [$prev, BOF, temp_L1]
       keep: -1
-    - min: 
-      frames: true
 
 - event: temp_L2
   where:
@@ -143,6 +144,7 @@
     - threshold: LFT_DistEndVel.z
       value: 0.2
       direction: up
+    - import: $prev@1
 
 - event: Max_knee_flex
   where:
