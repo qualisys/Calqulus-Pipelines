@@ -2,6 +2,14 @@
 ## EVENTS ##
 ############
 
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
 # Left
 - event: TouchDown
   where:
