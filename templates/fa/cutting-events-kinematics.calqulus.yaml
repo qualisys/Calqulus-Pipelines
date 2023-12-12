@@ -171,7 +171,7 @@
 - event: Virtual_gate_start
   steps:
     - threshold: Pelvis_Origin_Floor_mag_corr
-      value: 3
+      value: 1
       direction: down
     - eventMask: [$prev, BOF, TouchDown]
     - import: $prev@1
@@ -179,7 +179,7 @@
 - event: Virtual_gate_end
   steps:
     - threshold: Pelvis_Origin_Floor_mag_corr
-      value: 2
+      value: 1
       direction: up
     - eventMask: [$prev, TouchDown, EOF]
     - import: $prev@1
