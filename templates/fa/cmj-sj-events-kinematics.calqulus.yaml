@@ -2,8 +2,15 @@
 ## EVENTS ##
 ############
 
-# used by CMJ and SJ
+- event: BOF
+  steps:
+    - import: [0]
 
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# used by CMJ and SJ
 - parameter: RPV_CGVel
   steps:
     - segment: Hips
