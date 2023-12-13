@@ -40,10 +40,10 @@
     name: Cutting_L*
   set: left
   steps:
-    - min: RFT_DistEndVel.y
+    - eventMask: [RFT_DistEndVel.y, BOF, TouchDown]
+      # keep: -1
+    - min: 
       frames: true
-    - eventMask: [$prev, BOF, TouchDown]
-      keep: -1
 
 - event: Right Penultimate TouchDown
   where:
@@ -103,7 +103,6 @@
       value: 0.06
       direction: up
     - eventMask: [$prev, TouchDown, EOF]
-      # keep: 1 #as of now we are indexing from zero
     - import: $prev@1
 
 - event: temp_L1
@@ -111,10 +110,10 @@
     name: Cutting_R*
   set: right
   steps:
-    - min: LFT_DistEndVel.y
+    - eventMask: [LFT_DistEndVel.y, BOF, TouchDown]
+      # keep: -1
+    - min: 
       frames: true
-    - eventMask: [$prev, BOF, TouchDown]
-      keep: -1
 
 - event: Left Penultimate TouchDown
   where:
