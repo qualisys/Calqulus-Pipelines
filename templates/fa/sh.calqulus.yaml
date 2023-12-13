@@ -37,6 +37,7 @@
   set: left
   steps:
     - lowpass: PelvisCGPos_vel.x
+      cutoff: 3
     - threshold: 
       value: 0
       direction: up
@@ -49,6 +50,7 @@
   set: left
   steps:
     - lowpass: PelvisCGPos_vel.x
+      cutoff: 3
     - threshold: 
       value: 0
       direction: down
