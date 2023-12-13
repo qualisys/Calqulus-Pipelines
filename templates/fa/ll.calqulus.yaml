@@ -54,6 +54,10 @@
     name: LL_L*
   steps:
     - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_min, LFT_DistEndVel_max]
+    - max:
+      frames: true
+      output: temp_max
+    - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_min, temp_max]
     - min:
       frames: true
 
@@ -61,13 +65,13 @@
   where:
     name: LL_L*
   steps:
-    - mean: PelvisCGPos.x
-      output: mean
+    - median: PelvisCGPos.x
+      export: median
     - import: PelvisCGPos.x@BOF
-      output: first
+      export: first
     - import: PelvisCGPos.x@EOF
-      output: last
-    - if: (first < mean && mean < last) || (first > mean && mean > last)
+      export: last
+    - if: (first < median && median < last) || (first > median && median > last)
       then: PlotStart_stand
       else: TouchDown
 
@@ -107,6 +111,10 @@
     name: LL_R*
   steps:
     - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_max, RFT_DistEndVel_min]
+    - max:
+      frames: true
+      output: temp_max
+    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_max, temp_max]
     - min: 
       frames: true
 
@@ -114,13 +122,13 @@
   where:
     name: LL_R*
   steps:
-    - mean: PelvisCGPos.x
-      export: mean
+    - median: PelvisCGPos.x
+      export: median
     - import: PelvisCGPos.x@BOF
       export: first
     - import: PelvisCGPos.x@EOF
       export: last
-    - if: (first < mean && mean < last) || (first > mean && mean > last)
+    - if: (first < median && median < last) || (first > median && median > last)
       then: PlotStart_stand
       else: TouchDown
 
