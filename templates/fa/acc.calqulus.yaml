@@ -81,11 +81,11 @@
     name: Acc_L*
   set: left
   steps:
-    - eventMask: [LFT_DistEndVel.y, L_temp1, L_temp2]
-    - min:
-      frames: true
+    - threshold: LFT_DistEndAcc.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, L_temp1, L_temp2]
     - import: $prev@1
-    - subtract: [$prev, 4]
 
 - event: LOFF
   where:
@@ -120,11 +120,11 @@
     name: Acc_R*
   set: right
   steps:
-    - eventMask: [RFT_DistEndVel.y, R_temp1, R_temp2]
-    - min:
-      frames: true
+    - threshold: RFT_DistEndAcc.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, R_temp1, R_temp2]
     - import: $prev@1
-    - subtract: [$prev, 4]
 
 - event: ROFF
   where:
