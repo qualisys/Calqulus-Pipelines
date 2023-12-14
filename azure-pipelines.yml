@@ -12,6 +12,11 @@ resources:
   - repository: calqulus-ci
     type: git
     name: app-calqulus-ci-templates
+    ref: refs/heads/feature/custom-toolbelt-version
+  - repository: toolbelt
+    type: git
+    name: Dev/app-calqulus-toolbelt
+    ref: refs/heads/main
 
 parameters:
 - name: skipLastSuccessfulBuild
