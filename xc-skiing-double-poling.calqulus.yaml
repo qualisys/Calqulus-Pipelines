@@ -92,7 +92,6 @@
     - peakFinder: $prev 
       height: 25
   
-
 ############
 ## ANGLES ##
 ############
