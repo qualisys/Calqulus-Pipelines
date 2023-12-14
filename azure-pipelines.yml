@@ -9,6 +9,10 @@ pool:
 
 resources:
   repositories:
+  - repository: calqulus
+    type: git
+    name: app-calqulus
+    ref: refs/heads/main
   - repository: calqulus-ci
     type: git
     name: app-calqulus-ci-templates
