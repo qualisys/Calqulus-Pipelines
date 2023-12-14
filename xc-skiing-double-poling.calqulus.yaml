@@ -85,7 +85,6 @@
 
 # Pole plant event (PP): Get the frame number where peak height is above threshold
 - event: PP
-  set: left
   where:
     name: Cross-country skiing*
   steps:
