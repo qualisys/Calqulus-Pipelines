@@ -127,23 +127,46 @@
     - concatenate: [TOP_entered_1, TOP_entered_2, TOP_entered_3, TOP_entered_4]
 
 # entered events prioritise over calculated ones
-- event: TOP
+- event: TOP_calqulus
   steps:
   - if: "!empty(TOP_entered)"
     then: TOP_entered
     else: TOP_measured
 
-- event: TOP_L
+- event: TOP_L_calqulus
   where:
     name: (Squatting_L|Squatting_B)*
   steps:
     - import: TOP
 
-- event: TOP_R
+- event: TOP_R_calqulus
   where:
     name: (Squatting_R|Squatting_B)*
   steps:
     - import: TOP
+
+# ML events prioritise over calqulus based events
+- event: TOP
+  steps:
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count
+    then: EccentricStart_ML
+    else: TOP_calqulus
+
+- event: TOP_L
+  where:
+    name: (Squatting_L|Squatting_B)*
+  steps:
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count
+    then: EccentricStart_ML
+    else: TOP_L_calqulus
+
+- event: TOP_R
+  where:
+    name: (Squatting_R|Squatting_B)*
+  steps:
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count
+    then: EccentricStart_ML
+    else: TOP_R_calqulus
 
 # Unified event names for web
 - event: LeftPlotStart
@@ -180,9 +203,14 @@
 ## Metrics ##
 #############
 
+# count ML cycles and calqulus cycles
 - parameter: Pelvis_lowest_count
   steps:
     - count: Pelvis_lowest
+
+- parameter: ML_cycles_count
+  steps:
+    - count: EccentricEnd_ML
 
 # Squatting depth
 - parameter: Squatting_depth_Squat_B
