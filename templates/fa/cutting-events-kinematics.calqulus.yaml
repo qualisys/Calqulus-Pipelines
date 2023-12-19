@@ -14,7 +14,7 @@
     - subtract: [$length, 1]
 
 # Left
-- event: TouchDown
+- event: TouchDown_calqulus
   where:
     name: Cutting_L*
   set: left
@@ -23,7 +23,16 @@
     - min: $prev
       frames: true
 
-- event: TakeOff
+- event: TouchDown
+  where:
+    name: Cutting_L*
+  set: right
+  steps:
+    - if: exists(UltimateTouchDown_L_ML)
+      then: UltimateTouchDown_L_ML
+      else: TouchDown_calqulus
+
+- event: TakeOff_calqulus
   where:
     name: Cutting_L*
   set: left
@@ -34,6 +43,15 @@
     - eventMask: [$prev, TouchDown, EOF]
       # keep: 1 #as of now we are indexing from zero
     - import: $prev@1
+
+- event: TakeOff
+  where:
+    name: Cutting_L*
+  set: right
+  steps:
+    - if: exists(UltimateTakeOff_L_ML)
+      then: UltimateTakeOff_L_ML
+      else: TakeOff_calqulus
 
 - event: temp_R1
   where:
@@ -85,7 +103,7 @@
     - import: $prev@1
 
 # Right
-- event: TouchDown
+- event: TouchDown_calqulus
   where:
     name: Cutting_R*
   set: right
@@ -94,7 +112,16 @@
     - min: $prev
       frames: true
 
-- event: TakeOff
+- event: TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - if: exists(UltimateTouchDown_R_ML)
+      then: UltimateTouchDown_R_ML
+      else: TouchDown_calqulus
+
+- event: TakeOff_calqulus
   where:
     name: Cutting_R*
   set: right
@@ -104,6 +131,15 @@
       direction: up
     - eventMask: [$prev, TouchDown, EOF]
     - import: $prev@1
+
+- event: TakeOff
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - if: exists(UltimateTakeOff_R_ML)
+      then: UltimateTakeOff_R_ML
+      else: TakeOff_calqulus
 
 - event: temp_L1
   where:
