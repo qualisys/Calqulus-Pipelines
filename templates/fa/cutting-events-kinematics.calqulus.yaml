@@ -26,7 +26,7 @@
 - event: TouchDown
   where:
     name: Cutting_L*
-  set: right
+  set: left
   steps:
     - if: exists(UltimateTouchDown_L_ML)
       then: UltimateTouchDown_L_ML
@@ -47,7 +47,7 @@
 - event: TakeOff
   where:
     name: Cutting_L*
-  set: right
+  set: left
   steps:
     - if: exists(UltimateTakeOff_L_ML)
       then: UltimateTakeOff_L_ML
