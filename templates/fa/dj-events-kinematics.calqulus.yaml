@@ -11,7 +11,7 @@
     - subtract: [$length, 1]
 
 # Bilateral and left
-- event: TakeOff_L
+- event: TakeOff_L_calqulus
   where:
     name: DJ_[LB]*
   set: left
@@ -20,7 +20,16 @@
       frames: true
     - add: [$prev, 3]
 
-- event: TouchDown_L
+- event: TakeOff_L
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(TakeOff_L_ML)
+      then: TakeOff_L_ML
+      else: TakeOff_L_calqulus
+
+- event: TouchDown_L_calqulus
   where:
     name: DJ_[LB]*
   set: left
@@ -30,7 +39,16 @@
       frames: true
     - subtract: [$prev, 4]
 
-- event: Landing_L
+- event: TouchDown_L
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(TouchDown_L_ML)
+      then: TouchDown_L_ML
+      else: TouchDown_L_calqulus
+
+- event: Landing_L_calqulus
   where:
     name: DJ_[LB]*
   set: left
@@ -39,6 +57,15 @@
     - min:
       frames: true
     - subtract: [$prev, 4]
+
+- event: Landing_L
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(Landing_L_ML)
+      then: Landing_L_ML
+      else: Landing_L_calqulus
 
 - event: TakeOff
   where:
@@ -81,7 +108,7 @@
     - import: Landing_L
 
 # Bilateral and right
-- event: TakeOff_R
+- event: TakeOff_R_calqulus
   where:
     name: DJ_[RB]*
   set: right
@@ -90,7 +117,16 @@
       frames: true
     - add: [$prev, 3]
 
-- event: TouchDown_R
+- event: TakeOff_R
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(TakeOff_R_ML)
+      then: TakeOff_R_ML
+      else: TakeOff_R_calqulus
+
+- event: TouchDown_R_calqulus
   where:
     name: DJ_[RB]*
   set: right
@@ -100,7 +136,16 @@
       frames: true
     - subtract: [$prev, 4]
 
-- event: Landing_R
+- event: TouchDown_R
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(TouchDown_R_ML)
+      then: TouchDown_R_ML
+      else: TouchDown_R_calqulus
+
+- event: Landing_R_calqulus
   where:
     name: DJ_[RB]*
   set: right
@@ -109,6 +154,15 @@
     - min:
       frames: true
     - subtract: [$prev, 4]
+
+- event: Landing_R
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(Landing_R_ML)
+      then: Landing_R_ML
+      else: Landing_R_calqulus
 
 - event: TakeOff
   where:
