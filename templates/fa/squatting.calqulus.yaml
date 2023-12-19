@@ -148,7 +148,7 @@
 # ML events prioritise over calqulus based events
 - event: TOP
   steps:
-  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
     then: EccentricStart_ML
     else: TOP_calqulus
 
@@ -156,7 +156,7 @@
   where:
     name: (Squatting_L|Squatting_B)*
   steps:
-  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
     then: EccentricStart_ML
     else: TOP_L_calqulus
 
@@ -164,7 +164,7 @@
   where:
     name: (Squatting_R|Squatting_B)*
   steps:
-  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
     then: EccentricStart_ML
     else: TOP_R_calqulus
 
