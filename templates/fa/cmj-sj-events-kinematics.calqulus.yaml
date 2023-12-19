@@ -51,21 +51,39 @@
       frames: true
     - subtract: [$prev, 1]
 
-- event: TouchDown_L
+- event: TouchDown_L_calqulus
   where:
     name: ^(CMJ_|SJ_)[LB]*
   set: left
   steps:
     - import: LON
 
-- event: TakeOff_L
+- event: TouchDown_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(TouchDown_L_ML)
+      then: TouchDown_L_ML
+      else: TouchDown_L_calqulus
+
+- event: TakeOff_L_calqulus
   where:
     name: ^(CMJ_|SJ_)[LB]*
   set: left
   steps:
     - import: LOFF
 
-- event: PlotStart_L
+- event: TakeOff_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(TakeOff_L_ML)
+      then: TakeOff_L_ML
+      else: TakeOff_L_calqulus
+
+- event: PlotStart_L_calqulus
   where:
     name: ^(CMJ_|SJ_)[LB]*
   set: left
@@ -78,6 +96,15 @@
     - eventMask: [$prev, BOF, TakeOff_L]
       keep: -1
     # - add: [$prev, shift] #shift by -0.1 s
+
+- event: PlotStart_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(EccentricStart_ML)
+      then: EccentricStart_ML
+      else: PlotStart_L_calqulus
 
 - event: Pelvis_lowest
   where:
@@ -97,7 +124,7 @@
     - min:
       frames: true
 
-- event: Eccentric_end
+- event: Eccentric_end_calqulus
   where:
     name: CMJ_[LB]*
   steps:
@@ -105,6 +132,14 @@
       value: 0
       direction: up
     - eventMask: [$prev, PlotStart_L, TakeOff_L]
+
+- event: Eccentric_end
+  where:
+    name: CMJ_[LB]*
+  steps:
+    - if: exists(EccentricEnd_ML)
+      then: EccentricEnd_ML
+      else: Eccentric_end_calqulus
 
 # Bilateral and right
 - event: temp_R_max
@@ -137,21 +172,39 @@
       frames: true
     - subtract: [$prev, 1]
 
-- event: TouchDown_R
+- event: TouchDown_R_calqulus
   where:
     name: ^(CMJ_|SJ_)[RB]*
   set: right
   steps:
     - import: RON
 
-- event: TakeOff_R
+- event: TouchDown_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(TouchDown_R_ML)
+      then: TouchDown_R_ML
+      else: TouchDown_R_calqulus
+
+- event: TakeOff_R_calqulus
   where:
     name: ^(CMJ_|SJ_)[RB]*
   set: right
   steps:
     - import: ROFF
 
-- event: PlotStart_R
+- event: TakeOff_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(TakeOff_R_ML)
+      then: TakeOff_R_ML
+      else: TakeOff_R_calqulus
+
+- event: PlotStart_R_calqulus
   where:
     name: ^(CMJ_|SJ_)[RB]*
   set: right
@@ -164,6 +217,15 @@
     - eventMask: [$prev, BOF, TakeOff_R]
       keep: -1
     # - subtract: [$prev, shift] #shift by -0.1 s
+
+- event: PlotStart_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(EccentricStart_ML)
+      then: EccentricStart_ML
+      else: PlotStart_R_calqulus
 
 - event: Pelvis_lowest
   where:
@@ -183,7 +245,7 @@
     - min:
       frames: true
 
-- event: Eccentric_end
+- event: Eccentric_end_calqulus
   where:
     name: CMJ_[RB]*
   steps:
@@ -192,11 +254,19 @@
       direction: up
     - eventMask: [$prev, PlotStart_R, TakeOff_R]
 
+- event: Eccentric_end
+  where:
+    name: CMJ_[RB]*
+  steps:
+    - if: exists(EccentricEnd_ML)
+      then: EccentricEnd_ML
+      else: Eccentric_end_calqulus
+
 - event: TakeOff
   where:
     name: ^(CMJ_|SJ_)B*
   steps:
-    - concatenate: [LOFF, ROFF]
+    - concatenate: [TakeOff_L, TakeOff_R]
     - mean: 
 
 - event: PlotStart
@@ -210,7 +280,7 @@
   where:
     name: ^(CMJ_|SJ_)B*
   steps:
-    - concatenate: [LON, RON]
+    - concatenate: [TouchDown_L, TouchDown_R]
     - mean: 
 
 - event: TakeOff
