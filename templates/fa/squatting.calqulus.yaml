@@ -208,9 +208,15 @@
   steps:
     - count: Pelvis_lowest
 
+- parameter: EccentricEnd_ML_temp
+  steps:
+    - if: exists(EccentricEnd_ML)
+      then: EccentricEnd_ML
+      else: 0
+
 - parameter: ML_cycles_count
   steps:
-    - count: EccentricEnd_ML
+    - count: EccentricEnd_ML_temp
 
 # Squatting depth
 - parameter: Squatting_depth_Squat_B
