@@ -261,7 +261,8 @@
     - import: PelvisCGPos@Pelvis_lowest_refined
     - subtract: [$prev(2), $prev]
 
-# Left ---
+# Bilateral ---
+
 - parameter: Left Hip Angles_max_Squat_B
   where:
     name: Squatting_B*
@@ -283,49 +284,6 @@
     - eventMask: [Left Ankle Angles, TOP, TOP]
     - max:
 
-- parameter: Left Hip Angles_max_Squat_L
-  where:
-    name: Squatting_L*
-  steps:
-    - eventMask: [Left Hip Angles, TOP, TOP]
-    - max:
-
-- parameter: Left Knee Angles_max_Squat_L
-  where:
-    name: Squatting_L*
-  steps:
-    - eventMask: [Left Knee Angles, TOP, TOP]
-    - max:
-
-- parameter: Left Ankle Angles_max_Squat_L
-  where:
-    name: Squatting_L*
-  steps:
-    - eventMask: [Left Ankle Angles, TOP, TOP]
-    - max:
-
-- parameter: Left Hip Angles_max_Squat_R
-  where:
-    name: Squatting_R*
-  steps:
-    - eventMask: [Left Hip Angles, TOP, TOP]
-    - max:
-
-- parameter: Left Knee Angles_max_Squat_R
-  where:
-    name: Squatting_R*
-  steps:
-    - eventMask: [Left Knee Angles, TOP, TOP]
-    - max:
-
-- parameter: Left Ankle Angles_max_Squat_R
-  where:
-    name: Squatting_R*
-  steps:
-    - eventMask: [Left Ankle Angles, TOP, TOP]
-    - max:
-
-# Right ---
 - parameter: Right Hip Angles_max_Squat_B
   where:
     name: Squatting_B*
@@ -347,27 +305,29 @@
     - eventMask: [Right Ankle Angles, TOP, TOP]
     - max:
 
-- parameter: Right Hip Angles_max_Squat_L
+# Left ---
+- parameter: Left Hip Angles_max_Squat_L
   where:
     name: Squatting_L*
   steps:
-    - eventMask: [Right Hip Angles, TOP, TOP]
+    - eventMask: [Left Hip Angles, TOP, TOP]
     - max:
 
-- parameter: Right Knee Angles_max_Squat_L
+- parameter: Left Knee Angles_max_Squat_L
   where:
     name: Squatting_L*
   steps:
-    - eventMask: [Right Knee Angles, TOP, TOP]
+    - eventMask: [Left Knee Angles, TOP, TOP]
     - max:
 
-- parameter: Right Ankle Angles_max_Squat_L
+- parameter: Left Ankle Angles_max_Squat_L
   where:
     name: Squatting_L*
   steps:
-    - eventMask: [Right Ankle Angles, TOP, TOP]
+    - eventMask: [Left Ankle Angles, TOP, TOP]
     - max:
 
+# Right ---
 - parameter: Right Hip Angles_max_Squat_R
   where:
     name: Squatting_R*
