@@ -137,13 +137,13 @@
   where:
     name: (Squatting_L|Squatting_B)*
   steps:
-    - import: TOP
+    - import: TOP_calqulus
 
 - event: TOP_R_calqulus
   where:
     name: (Squatting_R|Squatting_B)*
   steps:
-    - import: TOP
+    - import: TOP_calqulus
 
 # ML events prioritise over calqulus based events
 - event: TOP
