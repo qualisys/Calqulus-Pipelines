@@ -91,9 +91,9 @@
     # - divide: [$framerate, 10]
     #   output: shift
     - threshold: RPV_CGVel.z
-      value: 0
+      value: -0.05
       direction: down
-    - eventMask: [$prev, BOF, TakeOff_L]
+    - eventMask: [$prev, BOF, TakeOff_L_calqulus]
       keep: -1
     # - add: [$prev, shift] #shift by -0.1 s
 
@@ -131,7 +131,7 @@
     - threshold: RPV_CGVel.z
       value: 0
       direction: up
-    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+    - eventMask: [$prev, PlotStart_L_calqulus, TakeOff_L_calqulus]
 
 - event: Eccentric_end
   where:
@@ -212,9 +212,9 @@
     # - divide: [$framerate, 10]
     #   output: shift
     - threshold: RPV_CGVel.z
-      value: 0
+      value: -0.05
       direction: down
-    - eventMask: [$prev, BOF, TakeOff_R]
+    - eventMask: [$prev, BOF, TakeOff_R_calqulus]
       keep: -1
     # - subtract: [$prev, shift] #shift by -0.1 s
 
@@ -252,7 +252,7 @@
     - threshold: RPV_CGVel.z
       value: 0
       direction: up
-    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - eventMask: [$prev, PlotStart_R_calqulus, TakeOff_R_calqulus]
 
 - event: Eccentric_end
   where:
