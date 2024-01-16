@@ -481,13 +481,13 @@
   where:
     name: Bowling*
   steps:
-    - import: $field(Ball velocity in mps, measurement)
+    - import: $field(Ball velocity in mps; measurement)
 
 - parameter: HEIGHT
   where:
     name: Bowling*
   steps:
-    - import: $field(Height, measurement, numeric)
+    - import: $field(Height; measurement; numeric)
 
 ############
 ## METRICS ##
