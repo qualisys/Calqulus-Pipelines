@@ -1,0 +1,25 @@
+{
+	"current": {
+		"engine": "main",
+		"steps": "fix/azure-pipeline-test:fdab70835a4650fcbe088bb53d707b162d8a0dc8",
+		"toolbelt": "main"
+	},
+	"reference": {
+		"engine": "a348dda6e2d87de93faeda5f2111dcee8cb90e92",
+		"pipelines": {
+			"baseballPitching": null,
+			"cricketBatting": "215589ab410f75c7534fac124d7b5d71a1644ed1",
+			"cricketBowling": null,
+			"cycling": null,
+			"default": "9f39f27cc3ae6c95b05fdcf210d7381cdcd434f4",
+			"functionalAssessment": null,
+			"generic": null,
+			"running": null
+		},
+		"toolbelt": "main"
+	},
+	"lastSuccessful": {
+		"engine": "main",
+		"toolbelt": "main"
+	}
+}
