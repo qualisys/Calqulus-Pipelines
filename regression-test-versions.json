@@ -1,7 +1,7 @@
 {
 	"current": {
 		"engine": "main",
-		"steps": "fix/azure-pipeline-test:fdab70835a4650fcbe088bb53d707b162d8a0dc8",
+		"steps": "fix/event-mask-issue",
 		"toolbelt": "main"
 	},
 	"reference": {
