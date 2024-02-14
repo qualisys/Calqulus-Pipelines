@@ -14,7 +14,7 @@ resources:
     - repository: calqulus-ci
       type: git
       name: app-calqulus-ci-templates
-      ref: refs/heads/feature/azure-pipeline-unification
+      ref: main
 
 extends:
   template: base-pipelines.yml@calqulus-ci
