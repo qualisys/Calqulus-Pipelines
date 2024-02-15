@@ -167,7 +167,7 @@
   where:
     name: Cycling*
   steps:
-    - import: $field(Load, measurement, numeric)
+    - import: $field(Load; measurement; numeric)
 
 - parameter: head_tube_spacers_above
   where:

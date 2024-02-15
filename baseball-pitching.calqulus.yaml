@@ -956,19 +956,19 @@
   where:
     name: Pitching*
   steps:
-    - import: $field(Ball speed, measurement, numeric)
+    - import: $field(Ball speed; measurement; numeric)
 
 - parameter: SPIN_RATE
   where:
     name: Pitching*
   steps:
-    - import: $field(Spin rate, measurement, numeric)
+    - import: $field(Spin rate; measurement; numeric)
 
 - parameter: SPIN_AXIS
   where:
     name: Pitching*
   steps:
-    - import: $field(Spin axis, measurement, numeric)
+    - import: $field(Spin axis; measurement; numeric)
 
 
 #############
