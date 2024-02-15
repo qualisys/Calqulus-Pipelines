@@ -1,4 +1,5 @@
 {
+	"ci": "main",
 	"current": {
 		"engine": "main",
 		"steps": "fix/event-mask-issue",
