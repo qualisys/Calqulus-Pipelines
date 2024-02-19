@@ -2,7 +2,7 @@
 	"ci": "main",
 	"current": {
 		"engine": "main",
-		"steps": "fix/event-mask-issue",
+		"steps": "main",
 		"toolbelt": "main"
 	},
 	"reference": {
