@@ -49,7 +49,6 @@
       order: 2
       cutoff: 6
       extrapolate: 100
-      export: LPoleDown_filtered
 
 - marker: RPoleDown_filtered
   steps:
@@ -258,7 +257,6 @@
   steps:
     - add: [LPole_Plant, RPole_Plant]
     - divide: [$prev, 2]
-      export: pole_plant
 
 # Calculate the average pole plant event
 - event: Pole_Off
