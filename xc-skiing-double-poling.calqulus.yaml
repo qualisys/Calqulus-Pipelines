@@ -1,6 +1,8 @@
 ############
 ## SPACES ##
 ############
+# Create a Virtual Lab segment with X, Y and Z pointing to the right, forward and upward respectively
+# Used to calculate Pelvis angles with biomechanical meaning (ie XYZ of Pelvis and VirtualLab aligned in neutral pose)
 
 - space: VirtualLab
   alignWithSegment:
@@ -27,16 +29,19 @@
       order: yz 
 
 ############
-## EVENTS ##
+## FIELDS ##
 ############
-
-## Pole plant event detection is based on LPoleDown marker velocity and acceleration
-# Todo: Use the RPoleDown marker as well to create an Pole Plant event and take average event between Right and Left
-# First gapfill marker
-- marker: LPoleDown_filtered
-  set: left
+- parameter: Treadmill_speed
   where:
     name: Cross-country skiing*
+  steps:
+    - import: $field(Treadmill speed, measurement, numeric)
+
+##############
+## GAP FILL ##
+##############
+# Gap fill as it is important to get clean data for further processing ###
+- marker: LPoleDown_filtered
   steps:
     - marker: LPoleDown
     - gapFill:
@@ -44,8 +49,91 @@
       order: 2
       cutoff: 6
       extrapolate: 100
+      export: LPoleDown_filtered
 
-# Calculate LPoleDown velocity
+- marker: RPoleDown_filtered
+  steps:
+    - marker: RPoleDown
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+- marker: LPoleUp_filtered
+  steps:
+    - marker: LPoleUp
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+- marker: RPoleUp_filtered
+  steps:
+    - marker: LPoleUp
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+- marker: LSkiFront_filtered
+  steps:
+    - marker: LSkiFront
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+- marker: RSkiFront_filtered
+  steps:
+    - marker: RSkiFront
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+- marker: LForefoot2_filtered
+  steps:
+    - marker: LForefoot2
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+- marker: RForefoot2_filtered
+  steps:
+    - marker: RForefoot2
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+- marker: LHeelBack_filtered
+  steps:
+    - marker: LHeelBack
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+- marker: RHeelBack_filtered
+  steps:
+    - marker: LHeelBack
+    - gapFill:
+    - lowpass: $prev
+      order: 2
+      cutoff: 6
+      extrapolate: 100
+
+### Pole Parameters ###
+# LPoleDown velocity
 - parameter: LPoleDown_vel
   set: left
   where:
@@ -64,7 +152,7 @@
       extrapolate: 100
       cutoff: 16
 
-# Calculate LPoleDown acceleration
+# LPoleDown acceleration
 - parameter: LPoleDown_acc
   set: left
   where:
@@ -83,39 +171,484 @@
       extrapolate: 100
       cutoff: 20
 
-# Pole plant event (PP): Get the frame number where peak height is above threshold
-- event: PP
+# RPoleDown velocity
+- parameter: RPoleDown_vel
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - marker: RPoleDown_filtered
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+
+# RPoleDown acceleration
+- parameter: RPoleDown_acc
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - marker: RPoleDown_filtered
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 12
+    - acceleration:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 20
+
+############
+## EVENTS ##
+############
+### Calculate events of left and right Pole_Plant and take average to get Double_Pole_Plant
+# Get the frame number of LPoleDown at left Pole Plant
+- event: LPole_Plant
+  set: left
   where:
     name: Cross-country skiing*
   steps:
     - negate: LPoleDown_acc.y
     - peakFinder: $prev 
       height: 25
-  
-############
-## ANGLES ##
-############
-## Hip angles
-# Left
-- parameter: Left Hip Angles
+    
+# Get the frame number of RPoleDown at right Pole Plant
+- event: RPole_Plant
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - negate: RPoleDown_acc.y
+    - peakFinder: $prev 
+      height: 25
+
+# Get the frame number of marker LPoleDown at left Pole Off
+- event: LPole_Off
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - jointAngle: [Hips, LeftUpLeg]
-    - multiply: [$prev, [1, -1, 1]]
+    - peakFinder: LPoleDown_acc.z
+      height: 15
 
-# Right
-- parameter: Right Hip Angles
+# Get the frame number of marker RPoleDown at right Pole Off
+- event: RPole_Off
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - peakFinder: RPoleDown_acc.z
+      height: 15
+
+# Calculate the average pole plant event
+- event: Pole_Plant
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [LPole_Plant, RPole_Plant]
+    - divide: [$prev, 2]
+      export: pole_plant
+
+# Calculate the average pole plant event
+- event: Pole_Off
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [LPole_Off, RPole_Off]
+    - divide: [$prev, 2]
+
+# Calculate end of backswing: frame number when left/right pole are pulled forward again.
+- event: LEnd_Backswing
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - negate: LPoleDown_filtered
+      space: VirtualLab
+    - peakFinder: $prev.y
+    - eventMask: [$prev, LPole_Off, LPole_Plant]
+
+- event: REnd_Backswing
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - negate: RPoleDown_filtered
+      space: VirtualLab
+    - peakFinder: $prev.y
+    - eventMask: [$prev, RPole_Off, RPole_Plant]
+
+# Calculate average between left and right end of swing.
+- event: End_Backswing
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [LEnd_Backswing, REnd_Backswing]
+    - divide: [$prev, 2]
+
+#############
+## METRICS ##
+#############
+## POLES ##
+# XYZ coordinates of LPoleDown at PolePlant
+- parameter: LPoleDown_Pole_Plant 
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: LPoleDown_filtered@Pole_Plant
+      space: VirtualLab
+
+# XYZ coordinates of RPolePlant at PolePlant
+- parameter: RPoleDown_Pole_Plant 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: RPoleDown@Pole_Plant
+      space: VirtualLab
+
+# XYZ coordinates of LPoleOff at PoleOff
+- parameter: LPoleDown_Pole_Off 
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: LPoleDown@Pole_Off
+      space: VirtualLab
+
+# XYZ coordinates of RPoleOff at RPoleOff
+- parameter: RPoleDown_Pole_Off 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: RPoleDown@Pole_Off
+      space: VirtualLab
+
+## CYCLE/TIME METRICS ##
+- parameter: Number_poling_cycles
+  where:
+    name: Cross-country skiing*
+  steps:
+    - count: [Pole_Plant]
+    - subtract: [$prev, 1]
+
+# Cycle time, the time it takes to complete 1 poling cycle.
+- parameter: Cycle_time
+  where:
+    name: Cross-country skiing*
+  steps:
+    - eventDuration: [Pole_Plant, Pole_Plant]
+
+# Calculate the contact time, when the poles are in contact with the ground. 
+- parameter: Poling_time
+  where:
+    name: Cross-country skiing*
+  steps:
+    - eventDuration: [Pole_Plant, Pole_Off]
+
+# Calculate time when the poles are off the ground. 
+- parameter: Swing_time
+  where:
+    name: Cross-country skiing*
+  steps:
+    - eventDuration: [Pole_Off, Pole_Plant]
+
+# Cycle length: the distance during 1 poling cycle based on treadmill speed field
+# Add AP difference of the ski markers between two consecutive Pole_Plant 
+- parameter: SkiFront_Pole_Plant
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [LSkiFront@Pole_Plant, RSkiFront@Pole_Plant]
+    - divide: [$prev, 2]
+      space: VirtualLab
+
+- parameter: Cycle_length
+  where:
+    name: Cross-country skiing*
+  steps:
+    - divide: [Treadmill_speed, 3.6]
+    - multiply: [$prev, Cycle_time]
+      output: treadmill_length
+    - diff: [SkiFront_Pole_Plant]
+    - convert:
+      from: mm
+      to: m
+    - add: [treadmill_length, $prev.y]
+
+# Time from Pole Off to end Backswing, where the poles are pulled forwad again.
+- parameter: Time_Pole_Off_End_Backswing
+  where:
+    name: Cross-country skiing*
+  steps:
+    - eventDuration: [Pole_Off, End_Backswing]
+    
+## ARMS AND POLES METRICS ##
+# Distance between PoleDown and Forefoot2 at PolePlant
+- parameter: Distance_LPoleDown_LForefoot2_Pole_Plant
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [LPoleDown_filtered.y@Pole_Plant, LForefoot2_filtered.y@Pole_Plant] 
+    - convert:
+      from: mm
+      to: m
+
+- parameter: Distance_RPoleDown_RForefoot2_Pole_Plant
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [RPoleDown_filtered@Pole_Plant, RForefoot2_filtered@Pole_Plant] 
+    - convert:
+      from: mm
+      to: m
+
+# Distance between PoleDown and Forefoot2 at PoleOff
+- parameter: Distance_LPoleDown_LForefoot2_Pole_Off
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [LPoleDown_filtered.y@Pole_Off, LForefoot2_filtered.y@Pole_Off] 
+    - convert:
+      from: mm
+      to: m
+
+- parameter: Distance_RPoleDown_RForefoot2_Pole_Off
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [RPoleDown_filtered.y@Pole_Off, RForefoot2_filtered.y@Pole_Off] 
+    - convert:
+      from: mm
+      to: m
+
+# Distance hand to pelvis at end of backswing.
+- parameter: Dist_LHand_Pelvis_End_Backswing
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Hips => Pelvis
+      space: VirtualLab
+    - vector: [$prev.x, $prev.y, $prev.z]
+      output: pelvis_virtuallab
+    - import: LeftHand 
+      space: VirtualLab
+    - vector: [$prev.x, $prev.y, $prev.z]
+      output: lefthand_virtuallab
+    - subtract: [pelvis_virtuallab.y@End_Backswing, lefthand_virtuallab.y@End_Backswing]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: Dist_RHand_Pelvis_End_Backswing
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Hips => Pelvis
+      space: VirtualLab
+    - vector: [$prev.x, $prev.y, $prev.z]
+      output: pelvis_virtuallab
+    - import: RightHand 
+      space: VirtualLab
+    - vector: [$prev.x, $prev.y, $prev.z]
+      output: righthand_virtuallab
+    - subtract: [pelvis_virtuallab.y@End_Backswing, righthand_virtuallab.y@End_Backswing]
+    - convert:
+      from: mm
+      to: m
+
+####################################
+## CURVES with ASSOCIATED METRICS ##
+####################################
+## POLES ##
+# Forward Pole Angle at Left/Right Pole Plant. Angle between horizontal axis and pole.
+- parameter: Left_Forward_Pole_Angle
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - angle: [VirtualLabOrigin, VirtualLabForward, LPoleDown_filtered, LPoleUp_filtered]
+    - convert:
+      from: radians
+      to: degrees
+
+- parameter: Right_Forward_Pole_Angle
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - angle: [VirtualLabOrigin, VirtualLabForward, RPoleDown_filtered, RPoleUp_filtered]
+    - convert:
+      from: radians
+      to: degrees
+
+## ELBOWS ##
+# Elbow angles 
+- parameter: Left_Elbow_Angles
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - jointAngle: [LeftArm, LeftForeArm]
+
+- parameter: Right_Elbow_Angles
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - jointAngle: [RightArm, RightForeArm]
+    
+# Elbow flexion at Pole Plant
+- parameter: Left_Elbow_Angles_Pole_Plant 
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Elbow_Angles@Pole_Plant
+
+- parameter: Right_Elbow_Angles_Pole_Plant 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Elbow_Angles@Pole_Plant
+
+## SHOULDERS ## 
+# Shoulder angles
+- parameter: Left_Shoulder_Angles
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - jointAngle: [Spine2, LeftArm]
+    - multiply: [$prev, [1, -1, -1]]
+
+- parameter: Right_Shoulder_Angles
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - jointAngle: [Spine2, RightArm]
+
+# Shoulder flexion and abduction at Pole Plant
+- parameter: Left_Shoulder_Angles_Pole_Plant 
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Shoulder_Angles@Pole_Plant
+  
+- parameter: Right_Shoulder_Angles_Pole_Plant 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Shoulder_Angles@Pole_Plant
+
+## HIPS ##
+# Angles
+- parameter: Left_Hip_Angles
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - jointAngle: [Hips, LeftUpLeg] 
+    - multiply: [$prev, [1, -1, -1]]
+   
+- parameter: Right_Hip_Angles
   set: right
   where:
     name: Cross-country skiing*
   steps:
     - jointAngle: [Hips, RightUpLeg]
 
-## Knee angles
-# Left
-- parameter: Left Knee Angles
+# Left and right hip angle at Pole Plant
+- parameter: Left_Hip_Angles_Pole_Plant 
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Hip_Angles@Pole_Plant
+
+- parameter: Right_Hip_Angles_Pole_Plant 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Hip_Angles@Pole_Plant
+
+# Left and right hip angle at Pole Off
+- parameter: Left_Hip_Angles_Pole_Off
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Hip_Angles@Pole_Off
+
+- parameter: Right_Hip_Angles_Pole_Off 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Hip_Angles@Pole_Off
+
+# Hip flexion max event
+- event: LHip_Angle_Max
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - peakFinder: Left_Hip_Angles.x
+      width: 10
+      height: 20
+    - eventMask: [$prev, LPole_Plant, LPole_Plant]
+  
+- event: RHip_Angle_Max
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - peakFinder: Right_Hip_Angles.x
+      width: 10
+      height: 20
+    - eventMask: [$prev, RPole_Plant, RPole_Plant]
+
+# Hip flexion max
+- parameter: LHip_Flexion_Max
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Hip_Angles@LHip_Angle_Max
+
+- parameter: RHip_Flexion_Max
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Hip_Angles@RHip_Angle_Max
+
+## KNEES ##
+# Angles
+- parameter: Left_Knee_Angles
   set: left
   where:
     name: Cross-country skiing*
@@ -123,8 +656,7 @@
     - jointAngle: [LeftUpLeg, LeftLeg]
     - multiply: [$prev, [-1, -1, -1]]
 
-# Right
-- parameter: Right Knee Angles
+- parameter: Right_Knee_Angles
   set: right
   where:
     name: Cross-country skiing*
@@ -132,82 +664,420 @@
     - jointAngle: [RightUpLeg, RightLeg]
     - multiply: [$prev, [-1, 1, 1]]
 
-## Elbow angles
-# Left 
-- parameter: Left Elbow Angles
+# Left and right knee angles at Pole Plant.
+- parameter: Left_Knee_Angles_Pole_Plant 
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - jointAngle: [LeftArm, LeftForeArm]
+    - import: Left_Knee_Angles@Pole_Plant
 
-# Right
-- parameter: Right Elbow Angles
+- parameter: Right_Knee_Angles_Pole_Plant 
   set: right
   where:
     name: Cross-country skiing*
   steps:
-    - jointAngle: [RightArm, RightForeArm]
+    - import: Right_Knee_Angles@Pole_Plant
+      space: VirtualLab
 
-#############
-## METRICS ##
-#############
-## Distance binding to pole at PP
-# Get coordinates of LPoleDown at PP expressed in VirtualLab
-# Gap-fill LForeFoot2 marker (LPoleDown marker is filtered above)
-- marker: LForefoot2_filtered
+# Knee Angles maximum
+- event: LKnee_Angle_Max
+  set: left
+  where:
+    name: Cross-country*
+  steps:
+    - peakFinder: Left_Knee_Angles.x
+      width: 10
+      height: 20
+    - eventMask: [$prev, LPole_Plant, LPole_Plant]
+
+- event: RKnee_Angle_Max
+  set: right
+  where:
+    name: Cross-country*
+  steps:
+    - peakFinder: Right_Knee_Angles.x
+      width: 10
+      height: 20
+    - eventMask: [$prev, RPole_Plant, RPole_Plant]
+
+# Knee flexion max
+- parameter: LKnee_Flexion_Max
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - marker: LForefoot2
-    - gapFill:
-    - lowpass: $prev
-      order: 2
-      cutoff: 6
-      extrapolate: 100
+    - import: Left_Knee_Angles@LKnee_Angle_Max
 
-# Calculate distance between LPoleDown and LForefoot2 at PP
-- parameter: Distance_LPoleDown_LForefoot2_PP
+- parameter: RKnee_Flexion_Max
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Knee_Angles@RKnee_Angle_Max
+
+## ANKLES AND FEET ##
+# LHeelBack velocity
+- parameter: LHeelBack_vel
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - subtract: [LPoleDown_filtered@PP, LForefoot2_filtered@PP] 
+    - marker: LHeelBack_filtered
+      space: VirtualLab
     - convert:
       from: mm
       to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
 
-## Calculate hip angles at PP
-# Left
-- parameter: Left_Hip_Angle_PP 
+# LHeelBack acceleration
+- parameter: LHeelBack_acc
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - import: Left Hip Angles@PP
+    - marker: LHeelBack_filtered
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 12
+    - acceleration:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 20
 
-# Right
-- parameter: Right_Hip_Angle_PP 
+# RHeelBack velocity
+- parameter: RHeelBack_vel
   set: right
   where:
     name: Cross-country skiing*
   steps:
-    - import: Right Hip Angles@PP
+    - marker: RHeelBack_filtered
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
+    - velocity:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 16
 
-## Calculate elbow angles at PP
-# Left
-- parameter: Left_Elbow_Angles_PP 
+# RHeelBack acceleration
+- parameter: RHeelBack_acc
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - marker: RHeelBack_filtered
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 12
+    - acceleration:
+    - lowpass:
+      extrapolate: 100
+      cutoff: 20
+
+# Left and right Forefoot2 at Pole Plant
+- parameter: LForefoot2_Pole_Plant 
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - import: Left Elbow Angles@PP
+    - import: LForefoot2_filtered@Pole_Plant
+      space: VirtualLab
 
-# Right
-- parameter: Right_Elbow_Angles_PP 
+
+- parameter: RForefoot2_Pole_Plant 
   set: right
   where:
     name: Cross-country skiing*
   steps:
-    - import: Right Elbow Angles@PP
+    - import: RForefoot2_filtered@Pole_Plant
+      space: VirtualLab
+
+
+# Maximum heel raise during cycle
+# Left Max
+- event: LHeel_Max
+  set: left
+  where:
+    name: Cross-country*
+  steps:
+    - eventMask: [LHeelBack_filtered.z, Pole_Plant, Pole_Plant]
+    - max: $prev
+      frames: true
+
+# Left Min
+- event: LHeel_Min
+  set: left
+  where:
+    name: Cross-country*
+  steps:
+    - eventMask: [LHeelBack_filtered.z, Pole_Plant, Pole_Plant]
+    - min: $prev
+      frames: true
+
+# Left Range
+- parameter: LHeel_Range
+  set: left
+  where:
+    name: Cross-country*
+  steps: 
+    - subtract: [LHeelBack@LHeel_Max, LHeelBack@LHeel_Min]
+    
+# Right Max
+- event: RHeel_Max
+  set: left
+  where:
+    name: Cross-country*
+  steps:
+    - eventMask: [RHeelBack_filtered.z, Pole_Plant, Pole_Plant]
+    - max: $prev
+      frames: true
+
+# Right Min
+- event: RHeel_Min
+  set: left
+  where:
+    name: Cross-country*
+  steps:
+    - eventMask: [RHeelBack_filtered.z, Pole_Plant, Pole_Plant]
+    - min: $prev
+      frames: true
+
+# Right Range
+- parameter: RHeel_Range
+  set: left
+  where:
+    name: Cross-country*
+  steps: 
+    - subtract: [RHeelBack@RHeel_Max, RHeelBack@RHeel_Min]
+
+# Heel raise at Pole Plant
+# Left
+- parameter: LHeel_RISE_Pole_Plant 
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [LHeelBack_filtered.z@Pole_Plant, LHeelBack_filtered.z@LHeel_Min]
+      space: VirtualLab
+
+# Right
+- parameter: RHeel_RISE@Pole_Plant 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [RHeelBack_filtered.z@Pole_Plant, RHeelBack_filtered.z@RHeel_Min]
+      space: VirtualLab
+
+# Ankle Angles
+- parameter: Left_Ankle_Angles
+  set: left
+  where:
+   name: Cross-country skiing*
+  steps:
+    - jointAngle: [LeftLeg, LeftFoot]
+    - multiply: [$prev, [1, -1, 1]]
+
+- parameter: Right_Ankle_Angles
+  set: right
+  where:
+   name: Cross-country skiing*
+  steps:
+     - jointAngle: [RightLeg, RightFoot]
+
+# Ankle Angle at Pole off
+- parameter: Left_Ankle_Angles_Pole_Off 
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Ankle_Angles@Pole_Off
+
+- parameter: Right_Ankle_Angles_Pole_Off 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Ankle_Angles@Pole_Off
+
+# Ankle angle maximum
+- event: LAnkle_Angle_Max
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - eventMask: [Left_Ankle_Angles.x, Pole_Plant, Pole_Plant]
+    - min: $prev
+      frames: true
+
+- parameter: LAnkle_Dorsiflexion_Max
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Ankle_Angles@LAnkle_Angle_Max
+
+- event: RAnkle_Angle_Max
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - eventMask: [Right_Ankle_Angles.x, Pole_Plant, Pole_Plant]
+    - min: $prev
+      frames: true
+
+- parameter: RAnkle_Dorsiflexion_Max
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Ankle_Angles@RAnkle_Angle_Max
+
+## UPPER BODY ##
+# Thorax Angles
+- parameter: Thorax_Angles_wrt_LAB
+  where:
+    name: Cross-country skiing*
+  steps:
+    - jointAngle: Spine2
+      space: VirtualLab
+    - multiply: [$prev, [-1,1,1]]
+
+# Thorax Angle at Pole Plant
+- parameter: Thorax_Angles_Pole_Plant
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Thorax_Angles_wrt_LAB@Pole_Plant
+    
+# Thorax Angle at Pole Off
+- parameter: Thorax_Angles_Pole_Off
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Thorax_Angles_wrt_LAB@Pole_Off
+
+# Thorax Angle at Pole Plant
+- event: Thorax_Angle_wrt_LAB_Max
+  where:
+    name: Cross-country skiing*
+  steps:
+    - eventMask: [Thorax_Angles_wrt_LAB.x, Pole_Plant, Pole_Plant]
+    - max: $prev
+      frames: true
+
+- parameter: Thorax_Flexion_Max
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Thorax_Angles_wrt_LAB@Thorax_Angle_wrt_LAB_Max
+
+## COM: Use Pelvis position for now. ##
+- parameter: COM_Position
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Hips
+
+# Instant from pole plant to max COM
+# Max can happen just after pole plant or just before, so look at max around pole plant +\- 300ms
+- event: COM_Max
+  where:
+    name: Cross-country skiing*
+  steps:
+    - divide: [$framerate, 30]
+      output: buffer 
+    - subtract: [Pole_plant, buffer] # use '0.3s' before available
+      output: pole_plant_300ms_before 
+    - add: [Pole_plant, buffer] # use '0.3s' after available
+      output: pole_plant_300ms_after 
+    - eventMask: [COM_Position.z, pole_plant_300ms_before, pole_plant_300ms_after]
+    - max: $prev
+      frames: true
+
+- parameter: Instant_Pole_Plant_COM_MAX
+  where:
+      name: Cross-country skiing*
+  steps:
+    - subtract: [COM_Max, Pole_Plant]
+    - divide: [$prev, $framerate]
+
+# Vertical range of COM within a cycle
+- parameter: Vertical_COM_Cycle
+  where:
+    name: Cross-country skiing*
+  steps:
+    - eventMask: [COM_Position.z, Pole_Plant, Pole_Plant]
+    - max:
+      output: com_position_z_max
+    - eventMask: [COM_Position.z, Pole_Plant, Pole_Plant]
+    - min:
+      output: com_position_z_min
+    - subtract: [com_position_z_max, com_position_z_min]
+
+# Distance between COM and PoleDown at pole plant.
+- parameter: Dist_LPoleDown_COM_Position_Pole_Plant
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [LPoleDown_filtered, COM_Position]
+    - import: $prev@Pole_Plant
+      space: VirtualLab
+
+- parameter: Dist_RPoleDown_COM_Position_Pole_Plant
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [RPoleDown_filtered, COM_Position]
+    - import: $prev@Pole_Plant
+      space: VirtualLab
+
+- parameter: Dist_PoleDown_COM_Position_Pole_Plant
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [Dist_LPoleDown_COM_Position_Pole_Plant, Dist_RPoleDown_COM_Position_Pole_Plant]
+    - divide: [$prev, 2]
+
+# Distance between COM and PoleDown at pole plant.
+- parameter: Dist_LPoleDown_COM_Position_Pole_Off
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [COM_Position, LPoleDown_filtered]
+    - import: $prev@Pole_Off
+      space: VirtualLab
+
+- parameter: Dist_RPoleDown_COM_Position_Pole_Off
+  where:
+    name: Cross-country skiing*
+  steps:
+    - subtract: [COM_Position, RPoleDown_filtered]
+    - import: $prev@Pole_Off
+      space: VirtualLab
+
+- parameter: Dist_PoleDown_COM_Position_Pole_Off
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [Dist_LPoleDown_COM_Position_Pole_Off, Dist_RPoleDown_COM_Position_Pole_Off]
+    - divide: [$prev, 2]
