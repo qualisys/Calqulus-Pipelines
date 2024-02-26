@@ -51,7 +51,13 @@
       export: RFT_DistEndVel
     - velocity:
 
+# ####
 # Timeseries used in all FA tasks and in Running and Generic
+# ####
+
+# ----
+# Kinematics ---
+# ----
 
 # --- Pelvis ---
 
@@ -280,4 +286,78 @@
       from: mm
       to: m
     - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+# ----
+# Kinetics
+# ----
+
+- parameter: Left GRF
+  set: left
+  steps:
+    - vector: [LeftAnkle.fx,LeftAnkle.fy,LeftAnkle.fz]
+
+- parameter: Left Hip Moment
+  set: left
+  steps:
+    - vector: [LeftHip.mx,LeftHip.my,LeftHip.mz]
+
+- parameter: Left Hip Power
+  set: left
+  steps:
+    - import: LeftHip.p
+
+- parameter: Left Knee Moment
+  set: left
+  steps:
+    - vector: [LeftKnee.mx,LeftKnee.my,LeftKnee.mz]
+
+- parameter: Left Knee Power
+  set: left
+  steps:
+    - import: LeftKnee.p
+
+- parameter: Left Ankle Moment
+  set: left
+  steps:
+    - vector: [LeftAnkle.mx,LeftAnkle.my,LeftAnkle.mz]
+
+- parameter: Left Ankle Power
+  set: left
+  steps:
+    - import: LeftAnkle.p
+
+- parameter: Right GRF
+  set: right
+  steps:
+    - vector: [RightAnkle.fx,RightAnkle.fy,RightAnkle.fz]
+
+- parameter: Right Hip Moment
+  set: right
+  steps:
+    - vector: [RightHip.mx,RightHip.my,RightHip.mz]
+
+- parameter: Right Hip Power
+  set: right
+  steps:
+    - import: RightHip.p
+
+- parameter: Right Knee Moment
+  set: right
+  steps:
+    - vector: [RightKnee.mx,RightKnee.my,RightKnee.mz]
+
+- parameter: Right Knee Power
+  set: right
+  steps:
+    - import: RightKnee.p
+
+- parameter: Right Ankle Moment
+  set: right
+  steps:
+    - vector: [RightAnkle.mx,RightAnkle.my,RightAnkle.mz]
+
+- parameter: Right Ankle Power
+  set: right
+  steps:
+    - import: RightAnkle.p
 
