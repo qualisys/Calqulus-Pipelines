@@ -304,7 +304,7 @@
 - parameter: Left Hip Power
   set: left
   steps:
-    - import: LeftHip.p
+    - vector: [LeftHip.p,LeftHip.p,LeftHip.p] #for compatibility with V3D power requires components
 
 - parameter: Left Knee Moment
   set: left
@@ -314,7 +314,7 @@
 - parameter: Left Knee Power
   set: left
   steps:
-    - import: LeftKnee.p
+    - vector: [LeftKnee.p,LeftKnee.p,LeftKnee.p] #for compatibility with V3D power requires components
 
 - parameter: Left Ankle Moment
   set: left
@@ -324,7 +324,7 @@
 - parameter: Left Ankle Power
   set: left
   steps:
-    - import: LeftAnkle.p
+    - vector: [LeftAnkle.p,LeftAnkle.p,LeftAnkle.p] #for compatibility with V3D power requires components
 
 - parameter: Right GRF
   set: right
@@ -339,7 +339,7 @@
 - parameter: Right Hip Power
   set: right
   steps:
-    - import: RightHip.p
+    - vector: [RightHip.p,RightHip.p,RightHip.p] #for compatibility with V3D power requires components
 
 - parameter: Right Knee Moment
   set: right
@@ -349,7 +349,7 @@
 - parameter: Right Knee Power
   set: right
   steps:
-    - import: RightKnee.p
+    - vector: [RightKnee.p,RightKnee.p,RightKnee.p] #for compatibility with V3D power requires components
 
 - parameter: Right Ankle Moment
   set: right
@@ -359,5 +359,5 @@
 - parameter: Right Ankle Power
   set: right
   steps:
-    - import: RightAnkle.p
+    - vector: [RightAnkle.p,RightAnkle.p,RightAnkle.p] #for compatibility with V3D power requires components
 
