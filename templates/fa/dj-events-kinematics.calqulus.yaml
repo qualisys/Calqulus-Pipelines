@@ -38,6 +38,9 @@
     - min:
       frames: true
     - subtract: [$prev, 4]
+    # Ensure that the frame is not negative
+    - concatenate: [$prev, 0]
+    - max: $prev
 
 - event: TouchDown_L
   where:
