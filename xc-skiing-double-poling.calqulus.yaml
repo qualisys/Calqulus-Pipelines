@@ -415,7 +415,7 @@
       space: VirtualLab
     - convert:
       from: mm
-      to: cm
+      to: m
 
 - parameter: Distance_RPoleDown_RForefoot2_Pole_Plant
   set: right
@@ -426,7 +426,7 @@
       space: VirtualLab
     - convert:
       from: mm
-      to: cm
+      to: m
 
 # Distance between PoleDown and Forefoot2 at PoleOff
 - parameter: Distance_LPoleDown_LForefoot2_Pole_Off
@@ -438,7 +438,7 @@
       space: VirtualLab
     - convert:
       from: mm
-      to: cm
+      to: m
 
 - parameter: Distance_RPoleDown_RForefoot2_Pole_Off
   set: right
@@ -449,7 +449,7 @@
       space: VirtualLab
     - convert:
       from: mm
-      to: cm
+      to: m
 
 # Distance hand to pelvis at end of backswing.
 - parameter: Dist_LHand_Pelvis_End_Backswing
