@@ -504,7 +504,7 @@
       to: degrees
 
 - parameter: Right_Forward_Pole_Angle
-  set: left
+  set: right
   where:
     name: Cross-country skiing*
   steps:
@@ -514,7 +514,7 @@
       to: degrees
 
 # Calculate average between left and right at pole plant.
-- event: Forward_Pole_Angle_Pole_Plant
+- parameter: Forward_Pole_Angle_Pole_Plant
   where:
     name: Cross-country skiing*
   steps:
@@ -522,7 +522,7 @@
     - divide: [$prev, 2]
 
 # Calculate average between left and right at pole off.
-- event: Forward_Pole_Angle_Pole_Off
+- parameter: Forward_Pole_Angle_Pole_Off
   where:
     name: Cross-country skiing*
   steps:
