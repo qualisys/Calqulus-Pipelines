@@ -1037,6 +1037,9 @@
     - subtract: [LPoleDown_filtered, COM_Position]
     - import: $prev@Pole_Plant
       space: VirtualLab
+    - convert:
+      from: mm
+      to: m
 
 - parameter: Dist_RPoleDown_COM_Position_Pole_Plant
   set: right
@@ -1046,6 +1049,9 @@
     - subtract: [RPoleDown_filtered, COM_Position]
     - import: $prev@Pole_Plant
       space: VirtualLab
+    - convert:
+      from: mm
+      to: m
 
 - parameter: Dist_PoleDown_COM_Position_Pole_Plant
   where:
@@ -1063,6 +1069,9 @@
     - subtract: [COM_Position, LPoleDown_filtered]
     - import: $prev@Pole_Off
       space: VirtualLab
+    - convert:
+      from: mm
+      to: m
 
 - parameter: Dist_RPoleDown_COM_Position_Pole_Off
   set: right
@@ -1072,6 +1081,9 @@
     - subtract: [COM_Position, RPoleDown_filtered]
     - import: $prev@Pole_Off
       space: VirtualLab
+    - convert:
+      from: mm
+      to: m
 
 - parameter: Dist_PoleDown_COM_Position_Pole_Off
   where:
