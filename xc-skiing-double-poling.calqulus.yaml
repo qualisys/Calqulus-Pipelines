@@ -833,6 +833,9 @@
     name: Cross-country*
   steps: 
     - subtract: [LHeelBack@LHeel_Max, LHeelBack@LHeel_Min]
+    - convert:
+      from : mm
+      to: m
     
 # Right Max
 - event: RHeel_Max
@@ -861,7 +864,10 @@
     name: Cross-country*
   steps: 
     - subtract: [RHeelBack@RHeel_Max, RHeelBack@RHeel_Min]
-
+    - convert:
+      from: mm
+      to: m
+      
 # Heel raise at Pole Plant
 # Left
 - parameter: LHeel_RISE_Pole_Plant 
