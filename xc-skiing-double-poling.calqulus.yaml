@@ -35,7 +35,7 @@
   where:
     name: Cross-country skiing*
   steps:
-    - import: $field(Treadmill speed, measurement, numeric)
+    - import: $field(Treadmill speed; measurement; numeric)
 
 ##############
 ## GAP FILL ##
