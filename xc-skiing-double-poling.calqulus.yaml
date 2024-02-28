@@ -467,7 +467,7 @@
     - subtract: [pelvis_virtuallab@End_Backswing, lefthand_virtuallab@End_Backswing]
     - convert:
       from: mm
-      to: cm
+      to: m
 
 - parameter: Dist_RHand_Pelvis_End_Backswing
   where:
@@ -484,7 +484,7 @@
     - subtract: [pelvis_virtuallab@End_Backswing, righthand_virtuallab@End_Backswing]
     - convert:
       from: mm
-      to: cm
+      to: m
 
 ####################################
 ## CURVES with ASSOCIATED METRICS ##
