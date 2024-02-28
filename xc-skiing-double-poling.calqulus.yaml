@@ -451,7 +451,7 @@
       from: mm
       to: m
 
-# Distance hand to pelvis at end of backswing.
+# Distance pelvis to hand at end of backswing.
 - parameter: Dist_LHand_Pelvis_End_Backswing
   set: left
   where:
@@ -1030,6 +1030,7 @@
 
 # Distance between COM and PoleDown at pole plant.
 - parameter: Dist_LPoleDown_COM_Position_Pole_Plant
+  set: left
   where:
     name: Cross-country skiing*
   steps:
@@ -1038,6 +1039,7 @@
       space: VirtualLab
 
 - parameter: Dist_RPoleDown_COM_Position_Pole_Plant
+  set: right
   where:
     name: Cross-country skiing*
   steps:
@@ -1052,8 +1054,9 @@
     - add: [Dist_LPoleDown_COM_Position_Pole_Plant, Dist_RPoleDown_COM_Position_Pole_Plant]
     - divide: [$prev, 2]
 
-# Distance between COM and PoleDown at pole plant.
+# Distance between COM and PoleDown at pole off.
 - parameter: Dist_LPoleDown_COM_Position_Pole_Off
+  set: left
   where:
     name: Cross-country skiing*
   steps:
@@ -1062,6 +1065,7 @@
       space: VirtualLab
 
 - parameter: Dist_RPoleDown_COM_Position_Pole_Off
+  set: right
   where:
     name: Cross-country skiing*
   steps:
