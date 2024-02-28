@@ -343,6 +343,15 @@
     - count: [Pole_Plant]
     - subtract: [$prev, 1]
 
+# Cadence
+- parameter: Cycles_Per_Minute_Mean
+  where:
+    name: Cross-country skiing*
+  steps:
+  - eventDuration: [Pole_Plant, Pole_Plant]
+  - divide: [60, $prev]
+  - mean: $prev
+
 # Cycle time, the time it takes to complete 1 poling cycle.
 - parameter: Cycle_time
   where:
@@ -800,7 +809,6 @@
     - import: LForefoot2_filtered@Pole_Plant
       space: VirtualLab
 
-
 - parameter: RForefoot2_Pole_Plant 
   set: right
   where:
@@ -808,7 +816,6 @@
   steps:
     - import: RForefoot2_filtered@Pole_Plant
       space: VirtualLab
-
 
 # Maximum heel raise during cycle
 # Left Max
