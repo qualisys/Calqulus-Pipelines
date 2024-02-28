@@ -421,7 +421,7 @@
   where:
     name: Cross-country skiing*
   steps:
-    - subtract: [RPoleDown_filtered@Pole_Plant, RForefoot2_filtered@Pole_Plant] 
+    - subtract: [RPoleDown_filtered.y@Pole_Plant, RForefoot2_filtered.y@Pole_Plant] 
     - convert:
       from: mm
       to: m
