@@ -691,7 +691,6 @@
     name: Cross-country skiing*
   steps:
     - import: Right_Knee_Angles@Pole_Plant
-      space: VirtualLab
 
 # Knee Angles maximum
 - event: LKnee_Angle_Max
