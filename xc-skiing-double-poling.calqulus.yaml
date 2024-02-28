@@ -411,20 +411,22 @@
   where:
     name: Cross-country skiing*
   steps:
-    - subtract: [LPoleDown_filtered.y@Pole_Plant, LForefoot2_filtered.y@Pole_Plant] 
+    - subtract: [LPoleDown_filtered@Pole_Plant, LForefoot2_filtered@Pole_Plant]
+      space: VirtualLab
     - convert:
       from: mm
-      to: m
+      to: cm
 
 - parameter: Distance_RPoleDown_RForefoot2_Pole_Plant
   set: right
   where:
     name: Cross-country skiing*
   steps:
-    - subtract: [RPoleDown_filtered.y@Pole_Plant, RForefoot2_filtered.y@Pole_Plant] 
+    - subtract: [RPoleDown_filtered@Pole_Plant, RForefoot2_filtered@Pole_Plant] 
+      space: VirtualLab
     - convert:
       from: mm
-      to: m
+      to: cm
 
 # Distance between PoleDown and Forefoot2 at PoleOff
 - parameter: Distance_LPoleDown_LForefoot2_Pole_Off
@@ -432,20 +434,22 @@
   where:
     name: Cross-country skiing*
   steps:
-    - subtract: [LPoleDown_filtered.y@Pole_Off, LForefoot2_filtered.y@Pole_Off] 
+    - subtract: [LPoleDown_filtered@Pole_Off, LForefoot2_filtered@Pole_Off] 
+      space: VirtualLab
     - convert:
       from: mm
-      to: m
+      to: cm
 
 - parameter: Distance_RPoleDown_RForefoot2_Pole_Off
   set: right
   where:
     name: Cross-country skiing*
   steps:
-    - subtract: [RPoleDown_filtered.y@Pole_Off, RForefoot2_filtered.y@Pole_Off] 
+    - subtract: [RPoleDown_filtered@Pole_Off, RForefoot2_filtered@Pole_Off] 
+      space: VirtualLab
     - convert:
       from: mm
-      to: m
+      to: cm
 
 # Distance hand to pelvis at end of backswing.
 - parameter: Dist_LHand_Pelvis_End_Backswing
@@ -460,10 +464,10 @@
       space: VirtualLab
     - vector: [$prev.x, $prev.y, $prev.z]
       output: lefthand_virtuallab
-    - subtract: [pelvis_virtuallab.y@End_Backswing, lefthand_virtuallab.y@End_Backswing]
+    - subtract: [pelvis_virtuallab@End_Backswing, lefthand_virtuallab@End_Backswing]
     - convert:
       from: mm
-      to: m
+      to: cm
 
 - parameter: Dist_RHand_Pelvis_End_Backswing
   where:
@@ -477,10 +481,10 @@
       space: VirtualLab
     - vector: [$prev.x, $prev.y, $prev.z]
       output: righthand_virtuallab
-    - subtract: [pelvis_virtuallab.y@End_Backswing, righthand_virtuallab.y@End_Backswing]
+    - subtract: [pelvis_virtuallab@End_Backswing, righthand_virtuallab@End_Backswing]
     - convert:
       from: mm
-      to: m
+      to: cm
 
 ####################################
 ## CURVES with ASSOCIATED METRICS ##
@@ -799,23 +803,6 @@
     - lowpass:
       extrapolate: 100
       cutoff: 20
-
-# Left and right Forefoot2 at Pole Plant
-- parameter: LForefoot2_Pole_Plant 
-  set: left
-  where:
-    name: Cross-country skiing*
-  steps:
-    - import: LForefoot2_filtered@Pole_Plant
-      space: VirtualLab
-
-- parameter: RForefoot2_Pole_Plant 
-  set: right
-  where:
-    name: Cross-country skiing*
-  steps:
-    - import: RForefoot2_filtered@Pole_Plant
-      space: VirtualLab
 
 # Maximum heel raise during cycle
 # Left Max
