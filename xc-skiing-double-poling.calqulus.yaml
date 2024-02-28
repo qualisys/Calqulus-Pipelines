@@ -453,6 +453,7 @@
 
 # Distance hand to pelvis at end of backswing.
 - parameter: Dist_LHand_Pelvis_End_Backswing
+  set: left
   where:
     name: Cross-country skiing*
   steps:
@@ -470,6 +471,7 @@
       to: m
 
 - parameter: Dist_RHand_Pelvis_End_Backswing
+  set: right
   where:
     name: Cross-country skiing*
   steps:
