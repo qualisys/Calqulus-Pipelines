@@ -492,7 +492,7 @@
 ## CURVES with ASSOCIATED METRICS ##
 ####################################
 ## POLES ##
-# Forward Pole Angle at Left/Right Pole Plant. Angle between horizontal axis and pole.
+# Forward Pole Angle: Angle between forward virtual lab axis and pole.
 - parameter: Left_Forward_Pole_Angle
   set: left
   where:
@@ -512,6 +512,22 @@
     - convert:
       from: radians
       to: degrees
+
+# Calculate average between left and right at pole plant.
+- event: Forward_Pole_Angle_Pole_Plant
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [Left_Forward_Pole_Angle@LPole_Plant, Right_Forward_Pole_Angle@RPole_Plant]
+    - divide: [$prev, 2]
+
+# Calculate average between left and right at pole off.
+- event: Forward_Pole_Angle_Pole_Off
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [Left_Forward_Pole_Angle@LPole_Off, Right_Forward_Pole_Angle@RPole_Off]
+    - divide: [$prev, 2]
 
 ## ELBOWS ##
 # Elbow angles 
@@ -867,7 +883,7 @@
     - convert:
       from: mm
       to: m
-      
+
 # Heel raise at Pole Plant
 # Left
 - parameter: LHeel_RISE_Pole_Plant 
