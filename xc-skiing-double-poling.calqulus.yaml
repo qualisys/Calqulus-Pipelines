@@ -607,6 +607,19 @@
     - import: Right_Shoulder_Angles@Pole_Plant
 
 ## HIPS ##
+# Vertical position wrt static
+- parameter: Pelvis_Height_Normalised
+  where:
+    name: Cross-country skiing*
+  steps:
+    - segment: Hips => hipsDynamic
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic.z
+    - subtract: [hipsDynamic.z, $prev]
+    - convert: $prev
+      from: mm
+      to: m
+
 # Angles
 - parameter: Left_Hip_Angles
   set: left
