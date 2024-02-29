@@ -428,6 +428,13 @@
       from: mm
       to: m
 
+- parameter: Distance_PoleDown_Forefoot2_Pole_Plant
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [Distance_LPoleDown_LForefoot2_Pole_Plant, Distance_RPoleDown_RForefoot2_Pole_Plant]
+    - divide: [$prev, 2]
+
 # Distance between PoleDown and Forefoot2 at PoleOff
 - parameter: Distance_LPoleDown_LForefoot2_Pole_Off
   set: left
@@ -450,6 +457,13 @@
     - convert:
       from: mm
       to: m
+
+- parameter: Distance_PoleDown_Forefoot2_Pole_Off
+  where:
+    name: Cross-country skiing*
+  steps:
+    - add: [Distance_LPoleDown_LForefoot2_Pole_Off, Distance_RPoleDown_RForefoot2_Pole_Off]
+    - divide: [$prev, 2]
 
 # Distance pelvis to hand at end of backswing.
 - parameter: Dist_LHand_Pelvis_End_Backswing
