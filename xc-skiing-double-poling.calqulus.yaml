@@ -479,7 +479,7 @@
       space: VirtualLab
     - vector: [$prev.x, $prev.y, $prev.z]
       output: lefthand_virtuallab
-    - subtract: [pelvis_virtuallab@End_Backswing, lefthand_virtuallab@End_Backswing]
+    - subtract: [lefthand_virtuallab@End_Backswing,pelvis_virtuallab@End_Backswing]
     - convert:
       from: mm
       to: m
@@ -497,7 +497,7 @@
       space: VirtualLab
     - vector: [$prev.x, $prev.y, $prev.z]
       output: righthand_virtuallab
-    - subtract: [pelvis_virtuallab@End_Backswing, righthand_virtuallab@End_Backswing]
+    - subtract: [righthand_virtuallab@End_Backswing, pelvis_virtuallab@End_Backswing]
     - convert:
       from: mm
       to: m
