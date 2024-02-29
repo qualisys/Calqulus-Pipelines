@@ -1075,6 +1075,9 @@
     - min:
       output: com_position_z_min
     - subtract: [com_position_z_max, com_position_z_min]
+    - convert:
+      from: mm
+      to: m
 
 # Distance between COM and PoleDown at pole plant.
 - parameter: Dist_LPoleDown_COM_Position_Pole_Plant
