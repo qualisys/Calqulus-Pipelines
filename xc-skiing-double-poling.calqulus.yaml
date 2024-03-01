@@ -574,6 +574,21 @@
   steps:
     - import: Right_Elbow_Angles@Pole_Plant
 
+# Elbow flexion at Pole Off
+- parameter: Left_Elbow_Angles_Pole_Off
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Elbow_Angles@Pole_Off
+
+- parameter: Right_Elbow_Angles_Pole_Off
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Elbow_Angles@Pole_Off
+
 ## SHOULDERS ## 
 # Shoulder angles
 - parameter: Left_Shoulder_Angles
