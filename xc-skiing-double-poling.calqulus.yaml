@@ -674,7 +674,7 @@
   steps:
     - peakFinder: Left_Hip_Angles.x
       width: 10
-      height: 20
+      height: 15
     - eventMask: [$prev, LPole_Plant, LPole_Plant]
   
 - event: RHip_Angle_Max
@@ -684,7 +684,7 @@
   steps:
     - peakFinder: Right_Hip_Angles.x
       width: 10
-      height: 20
+      height: 15
     - eventMask: [$prev, RPole_Plant, RPole_Plant]
 
 # Hip flexion max
@@ -743,7 +743,7 @@
   steps:
     - peakFinder: Left_Knee_Angles.x
       width: 10
-      height: 20
+      height: 15
     - eventMask: [$prev, LPole_Plant, LPole_Plant]
 
 - event: RKnee_Angle_Max
@@ -753,7 +753,7 @@
   steps:
     - peakFinder: Right_Knee_Angles.x
       width: 10
-      height: 20
+      height: 15
     - eventMask: [$prev, RPole_Plant, RPole_Plant]
 
 # Knee flexion max
@@ -1049,7 +1049,10 @@
     - divide: [$framerate, 30]
       output: buffer 
     - subtract: [Pole_plant, buffer] # use '0.3s' before available
-      output: pole_plant_300ms_before 
+      output: pole_plant_300ms_before
+    - if: pole_plant_300ms_before@1 < 0
+      then: 1
+      else: pole_plant_300ms_before@1
     - add: [Pole_plant, buffer] # use '0.3s' after available
       output: pole_plant_300ms_after 
     - eventMask: [COM_Position.z, pole_plant_300ms_before, pole_plant_300ms_after]
