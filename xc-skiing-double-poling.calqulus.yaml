@@ -819,86 +819,40 @@
       cutoff: 20
 
 # Maximum heel raise during cycle
-# Left Max
-- event: LHeel_Max
-  set: left
-  where:
-    name: Cross-country*
-  steps:
-    - eventMask: [LHeelBack_filtered.z, Pole_Plant, Pole_Plant]
-    - max: $prev
-      frames: true
-
-# Left Min
-- event: LHeel_Min
-  set: left
-  where:
-    name: Cross-country*
-  steps:
-    - eventMask: [LHeelBack_filtered.z, Pole_Plant, Pole_Plant]
-    - min: $prev
-      frames: true
-
-# Left Range
+# Left   
 - parameter: LHeel_Range
   set: left
   where:
     name: Cross-country*
   steps: 
-    - subtract: [LHeelBack@LHeel_Max, LHeelBack@LHeel_Min]
+    - import: LHeelBack_filtered => lheel_back
+    - eventMask: [lheel_back, LPole_Plant, LPole_Plant]
+      output: point
+    - min: point.x
+      output: LHeelBack_filtered_Min
+    - max: point.x
+      output: LHeelBack_filtered_Max
+    - subtract: [LHeelBack_filtered_Max, LHeelBack_filtered_Min]
     - convert:
       from : mm
       to: m
-    
-# Right Max
-- event: RHeel_Max
-  set: left
-  where:
-    name: Cross-country*
-  steps:
-    - eventMask: [RHeelBack_filtered.z, Pole_Plant, Pole_Plant]
-    - max: $prev
-      frames: true
 
-# Right Min
-- event: RHeel_Min
-  set: left
-  where:
-    name: Cross-country*
-  steps:
-    - eventMask: [RHeelBack_filtered.z, Pole_Plant, Pole_Plant]
-    - min: $prev
-      frames: true
-
-# Right Range
 - parameter: RHeel_Range
   set: left
   where:
     name: Cross-country*
   steps: 
-    - subtract: [RHeelBack@RHeel_Max, RHeelBack@RHeel_Min]
+    - import: RHeelBack_filtered => rheel_back
+    - eventMask: [rheel_back, RPole_Plant, RPole_Plant]
+      output: point
+    - min: point.x
+      output: RHeelBack_filtered_Min
+    - max: point.x
+      output: RHeelBack_filtered_Max
+    - subtract: [RHeelBack_filtered_Max, RHeelBack_filtered_Min]
     - convert:
-      from: mm
+      from : mm
       to: m
-
-# Heel raise at Pole Plant
-# Left
-- parameter: LHeel_RISE_Pole_Plant 
-  set: left
-  where:
-    name: Cross-country skiing*
-  steps:
-    - subtract: [LHeelBack_filtered.z@Pole_Plant, LHeelBack_filtered.z@LHeel_Min]
-      space: VirtualLab
-
-# Right
-- parameter: RHeel_RISE@Pole_Plant 
-  set: right
-  where:
-    name: Cross-country skiing*
-  steps:
-    - subtract: [RHeelBack_filtered.z@Pole_Plant, RHeelBack_filtered.z@RHeel_Min]
-      space: VirtualLab
 
 # Ankle Angles
 - parameter: Left_Ankle_Angles
