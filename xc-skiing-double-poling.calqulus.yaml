@@ -843,9 +843,9 @@
     - import: LHeelBack_filtered => lheel_back
     - eventMask: [lheel_back, LPole_Plant, LPole_Plant]
       output: point
-    - min: point.x
+    - min: point.z
       output: LHeelBack_filtered_Min
-    - max: point.x
+    - max: point.z
       output: LHeelBack_filtered_Max
     - subtract: [LHeelBack_filtered_Max, LHeelBack_filtered_Min]
     - convert:
@@ -860,9 +860,9 @@
     - import: RHeelBack_filtered => rheel_back
     - eventMask: [rheel_back, RPole_Plant, RPole_Plant]
       output: point
-    - min: point.x
+    - min: point.z
       output: RHeelBack_filtered_Min
-    - max: point.x
+    - max: point.z
       output: RHeelBack_filtered_Max
     - subtract: [RHeelBack_filtered_Max, RHeelBack_filtered_Min]
     - convert:
