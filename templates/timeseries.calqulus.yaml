@@ -304,37 +304,37 @@
   set: left
   steps:
     - vector: [LeftHip.mx,LeftHip.my,LeftHip.mz]
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left Hip Power
   set: left
   steps:
     - vector: [LeftHip.p,LeftHip.p,LeftHip.p] #for compatibility with V3D power requires components
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left Knee Moment
   set: left
   steps:
     - vector: [LeftKnee.mx,LeftKnee.my,LeftKnee.mz]
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left Knee Power
   set: left
   steps:
     - vector: [LeftKnee.p,LeftKnee.p,LeftKnee.p] #for compatibility with V3D power requires components
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left Ankle Moment
   set: left
   steps:
     - vector: [LeftAnkle.mx,LeftAnkle.my,LeftAnkle.mz]
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left Ankle Power
   set: left
   steps:
     - vector: [LeftAnkle.p,LeftAnkle.p,LeftAnkle.p] #for compatibility with V3D power requires components
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right GRF
   set: right
@@ -346,35 +346,35 @@
   set: right
   steps:
     - vector: [RightHip.mx,RightHip.my,RightHip.mz]
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right Hip Power
   set: right
   steps:
     - vector: [RightHip.p,RightHip.p,RightHip.p] #for compatibility with V3D power requires components
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right Knee Moment
   set: right
   steps:
     - vector: [RightKnee.mx,RightKnee.my,RightKnee.mz]
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right Knee Power
   set: right
   steps:
     - vector: [RightKnee.p,RightKnee.p,RightKnee.p] #for compatibility with V3D power requires components
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right Ankle Moment
   set: right
   steps:
     - vector: [RightAnkle.mx,RightAnkle.my,RightAnkle.mz]
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right Ankle Power
   set: right
   steps:
     - vector: [RightAnkle.p,RightAnkle.p,RightAnkle.p] #for compatibility with V3D power requires components
-    - divide: [$prev, bodyweightnewton]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
 
