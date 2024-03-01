@@ -853,7 +853,7 @@
       to: m
 
 - parameter: RHeel_Range
-  set: left
+  set: right
   where:
     name: Cross-country*
   steps: 
