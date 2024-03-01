@@ -930,7 +930,7 @@
   steps:
     - import: Thorax_Angles_wrt_LAB@Pole_Off
 
-# Thorax Angle at Pole Plant
+# Thorax Angle Max
 - event: Thorax_Angle_wrt_LAB_Max
   where:
     name: Cross-country skiing*
