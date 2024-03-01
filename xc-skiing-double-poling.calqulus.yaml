@@ -932,37 +932,25 @@
     - import: Right_Ankle_Angles@Pole_Off
 
 # Ankle angle maximum
-- event: LAnkle_Angle_Max
-  set: left
-  where:
-    name: Cross-country skiing*
-  steps:
-    - eventMask: [Left_Ankle_Angles.x, Pole_Plant, Pole_Plant]
-    - min: $prev
-      frames: true
-
 - parameter: LAnkle_Dorsiflexion_Max
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - import: Left_Ankle_Angles@LAnkle_Angle_Max
-
-- event: RAnkle_Angle_Max
-  set: left
-  where:
-    name: Cross-country skiing*
-  steps:
-    - eventMask: [Right_Ankle_Angles.x, Pole_Plant, Pole_Plant]
-    - min: $prev
-      frames: true
+    - import: Left_Ankle_Angles
+    - eventMask: [$prev, LPole_Plant, LPole_Plant]
+      output: angle
+    - min: angle.x
 
 - parameter: RAnkle_Dorsiflexion_Max
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - import: Right_Ankle_Angles@RAnkle_Angle_Max
+    - import: Right_Knee_Angles
+    - eventMask: [$prev, RPole_Plant, RPole_Plant]
+      output: angle
+    - max: angle.x
 
 ## UPPER BODY ##
 # Thorax Angles
