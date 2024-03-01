@@ -297,7 +297,9 @@
 - parameter: Left GRF
   set: left
   steps:
-    - vector: [LeftAnkle.fx,LeftAnkle.fy,LeftAnkle.fz]
+    - import: LeftAnkle => ankle
+      space: VirtualLab
+    - vector: [ankle.fx, ankle.fy, ankle.fz]
     - divide: [$prev, bodyweightnewton]
 
 - parameter: Left Hip Moment
@@ -305,6 +307,7 @@
   steps:
     - vector: [LeftHip.mx,LeftHip.my,LeftHip.mz]
     - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[-1,1,1]]
 
 - parameter: Left Hip Power
   set: left
@@ -329,6 +332,7 @@
   steps:
     - vector: [LeftAnkle.mx,LeftAnkle.my,LeftAnkle.mz]
     - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[-1,1,1]]
 
 - parameter: Left Ankle Power
   set: left
@@ -339,7 +343,9 @@
 - parameter: Right GRF
   set: right
   steps:
-    - vector: [RightAnkle.fx,RightAnkle.fy,RightAnkle.fz]
+    - import: RightAnkle => ankle
+      space: VirtualLab
+    - vector: [ankle.fx, ankle.fy, ankle.fz]
     - divide: [$prev, bodyweightnewton]
 
 - parameter: Right Hip Moment
