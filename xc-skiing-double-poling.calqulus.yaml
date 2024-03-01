@@ -666,41 +666,26 @@
   steps:
     - import: Right_Hip_Angles@Pole_Off
 
-# Hip flexion max event
-- event: LHip_Angle_Max
-  set: left
-  where:
-    name: Cross-country skiing*
-  steps:
-    - peakFinder: Left_Hip_Angles.x
-      width: 10
-      height: 15
-    - eventMask: [$prev, LPole_Plant, LPole_Plant]
-  
-- event: RHip_Angle_Max
-  set: right
-  where:
-    name: Cross-country skiing*
-  steps:
-    - peakFinder: Right_Hip_Angles.x
-      width: 10
-      height: 15
-    - eventMask: [$prev, RPole_Plant, RPole_Plant]
-
 # Hip flexion max
 - parameter: LHip_Flexion_Max
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - import: Left_Hip_Angles@LHip_Angle_Max
+    - import: Left_Hip_Angles
+    - eventMask: [$prev, LPole_Plant, LPole_Plant]
+      output: angle
+    - max: angle.x
 
 - parameter: RHip_Flexion_Max
   set: right
   where:
     name: Cross-country skiing*
   steps:
-    - import: Right_Hip_Angles@RHip_Angle_Max
+    - import: Right_Hip_Angles
+    - eventMask: [$prev, RPole_Plant, RPole_Plant]
+      output: angle
+    - max: angle.x
 
 ## KNEES ##
 # Angles
@@ -735,41 +720,26 @@
   steps:
     - import: Right_Knee_Angles@Pole_Plant
 
-# Knee Angles maximum
-- event: LKnee_Angle_Max
-  set: left
-  where:
-    name: Cross-country*
-  steps:
-    - peakFinder: Left_Knee_Angles.x
-      width: 10
-      height: 15
-    - eventMask: [$prev, LPole_Plant, LPole_Plant]
-
-- event: RKnee_Angle_Max
-  set: right
-  where:
-    name: Cross-country*
-  steps:
-    - peakFinder: Right_Knee_Angles.x
-      width: 10
-      height: 15
-    - eventMask: [$prev, RPole_Plant, RPole_Plant]
-
 # Knee flexion max
 - parameter: LKnee_Flexion_Max
   set: left
   where:
     name: Cross-country skiing*
   steps:
-    - import: Left_Knee_Angles@LKnee_Angle_Max
+    - import: Left_Knee_Angles
+    - eventMask: [$prev, LPole_Plant, LPole_Plant]
+      output: angle
+    - max: angle.x
 
 - parameter: RKnee_Flexion_Max
   set: right
   where:
     name: Cross-country skiing*
   steps:
-    - import: Right_Knee_Angles@RKnee_Angle_Max
+    - import: Right_Knee_Angles
+    - eventMask: [$prev, RPole_Plant, RPole_Plant]
+      output: angle
+    - max: angle.x
 
 ## ANKLES AND FEET ##
 # LHeelBack velocity
