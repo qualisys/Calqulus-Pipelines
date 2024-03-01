@@ -124,7 +124,7 @@
 
 - marker: RHeelBack_filtered
   steps:
-    - marker: LHeelBack
+    - marker: RHeelBack
     - gapFill:
     - lowpass: $prev
       order: 2
