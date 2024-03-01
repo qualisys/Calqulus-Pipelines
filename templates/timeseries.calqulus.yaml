@@ -298,7 +298,6 @@
   set: left
   steps:
     - import: LeftAnkle => ankle
-      space: VirtualLab
     - vector: [ankle.fx, ankle.fy, ankle.fz]
     - divide: [$prev, bodyweightnewton]
 
@@ -344,7 +343,6 @@
   set: right
   steps:
     - import: RightAnkle => ankle
-      space: VirtualLab
     - vector: [ankle.fx, ankle.fy, ankle.fz]
     - divide: [$prev, bodyweightnewton]
 
@@ -353,6 +351,7 @@
   steps:
     - vector: [RightHip.mx,RightHip.my,RightHip.mz]
     - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[-1,-1,-1]]
 
 - parameter: Right Hip Power
   set: right
@@ -365,6 +364,7 @@
   steps:
     - vector: [RightKnee.mx,RightKnee.my,RightKnee.mz]
     - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[1,-1,-1]]
 
 - parameter: Right Knee Power
   set: right
@@ -377,6 +377,7 @@
   steps:
     - vector: [RightAnkle.mx,RightAnkle.my,RightAnkle.mz]
     - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[-1,-1,-1]]
 
 - parameter: Right Ankle Power
   set: right
