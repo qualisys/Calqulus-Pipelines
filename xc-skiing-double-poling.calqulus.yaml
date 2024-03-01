@@ -901,7 +901,7 @@
   where:
     name: Cross-country skiing*
   steps:
-    - import: Right_Knee_Angles
+    - import: Right_Ankle_Angles
     - eventMask: [$prev, RPole_Plant, RPole_Plant]
       output: angle
     - min: angle.x
