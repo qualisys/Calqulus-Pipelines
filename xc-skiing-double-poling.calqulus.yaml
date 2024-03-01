@@ -886,7 +886,7 @@
     - import: Right_Ankle_Angles@Pole_Off
 
 # Ankle angle maximum
-- parameter: LAnkle_Dorsiflexion_Max
+- parameter: LAnkle_Plantarflexion_Max
   set: left
   where:
     name: Cross-country skiing*
@@ -896,7 +896,7 @@
       output: angle
     - min: angle.x
 
-- parameter: RAnkle_Dorsiflexion_Max
+- parameter: RAnkle_Plantarflexion_Max
   set: left
   where:
     name: Cross-country skiing*
