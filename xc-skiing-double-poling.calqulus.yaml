@@ -950,7 +950,7 @@
     - import: Right_Knee_Angles
     - eventMask: [$prev, RPole_Plant, RPole_Plant]
       output: angle
-    - max: angle.x
+    - min: angle.x
 
 ## UPPER BODY ##
 # Thorax Angles
