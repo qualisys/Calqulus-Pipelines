@@ -735,6 +735,21 @@
   steps:
     - import: Right_Knee_Angles@Pole_Plant
 
+  # Left and right knee angles at Pole Off.
+- parameter: Left_Knee_Angles_Pole_Off 
+  set: left
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Left_Knee_Angles@Pole_Off
+
+- parameter: Right_Knee_Angles_Pole_Off 
+  set: right
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: Right_Knee_Angles@Pole_Off
+
 # Knee flexion max
 - parameter: LKnee_Flexion_Max
   set: left
