@@ -37,6 +37,13 @@
   steps:
     - import: $field(Treadmill speed; measurement; numeric)
 
+- parameter: Treadmill_incline
+  where:
+    name: Cross-country skiing*
+  steps:
+    - import: $field(Treadmill incline; measurement; numeric)
+
+
 ##############
 ## GAP FILL ##
 ##############
