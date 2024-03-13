@@ -43,7 +43,6 @@
   steps:
     - import: $field(Treadmill incline; measurement; numeric)
 
-
 ##############
 ## GAP FILL ##
 ##############
