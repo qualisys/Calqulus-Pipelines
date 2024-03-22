@@ -299,6 +299,7 @@
   steps:
     - import: LeftFootDistalEnd => foot
     - vector: [foot.fx, foot.fy, foot.fz]
+      space: VirtualLab
     - divide: [$prev, bodyweightnewton]
 
 - parameter: Left Hip Moment
@@ -344,7 +345,9 @@
   steps:
     - import: RightFootDistalEnd => foot
     - vector: [foot.fx, foot.fy, foot.fz]
+      space: VirtualLab
     - divide: [$prev, bodyweightnewton]
+    - multiply: [$prev, [-1,1,1]]
 
 - parameter: Right Hip Moment
   set: right
