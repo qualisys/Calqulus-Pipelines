@@ -42,6 +42,9 @@
     name: Cross-country skiing*
   steps:
     - import: $field(Treadmill incline; measurement; numeric)
+    - convert:
+      from: rad
+      to: deg
 
 ##############
 ## GAP FILL ##
