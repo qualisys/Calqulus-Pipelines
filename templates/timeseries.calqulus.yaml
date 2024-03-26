@@ -297,7 +297,7 @@
 - parameter: Left GRF
   set: left
   steps:
-    - import: LeftFootDistalEnd => foot
+    - import: LeftFootContact => foot
     - vector: [foot.fx, foot.fy, foot.fz]
       space: VirtualLab
     - divide: [$prev, bodyweightnewton]
@@ -343,7 +343,7 @@
 - parameter: Right GRF
   set: right
   steps:
-    - import: RightFootDistalEnd => foot
+    - import: RightFootContact => foot
     - vector: [foot.fx, foot.fy, foot.fz]
       space: VirtualLab
     - divide: [$prev, bodyweightnewton]
