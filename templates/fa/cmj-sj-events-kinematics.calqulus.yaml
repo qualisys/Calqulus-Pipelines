@@ -318,7 +318,13 @@
     name: ^(CMJ_|SJ_)R*
   steps:
     - mean: RON
-  
+
+- event: TouchDown_100ms
+  steps:
+    - multiply: [0.1, $framerate]
+      output: myShift
+    - add: [TouchDown, myShift]
+
 - event: PlotEnd_L # We might need to review this after dependency issue is resolved
   where:
     name: ^(CMJ_|SJ_)[LB]*
