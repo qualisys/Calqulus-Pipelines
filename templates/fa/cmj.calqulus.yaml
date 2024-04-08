@@ -1158,6 +1158,125 @@
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
 
+- parameter: Total GRF
+  where:
+    name: CMJ_B*
+  steps:
+    - add: [Left GRF, Right GRF]
+
+- parameter: Total_RFD
+  where:
+    name: CMJ_B*
+  steps:
+    - derivative: Total GRF
+
+- parameter: Total Power
+  where:
+    name: CMJ_B*
+  steps:
+    - multiply: [Total GRF, PelvisCGPos_vel]
+
+- parameter: Total GRF_impulse_concentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, Eccentric_end, TakeOff]
+    - integral:
+      scalar: true
+
+- parameter: Total_RFD@TouchDown_100ms_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Total_RFD@TouchDown_100ms
+
+- parameter: Total Power_max_concentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total Power, Eccentric_end, TakeOff]
+    - max:
+
+- parameter: Total Power_mean_concentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total Power, Eccentric_end, TakeOff]
+    - mean:
+  
+- parameter: Total Power_min_eccentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total Power, PlotStart, Eccentric_end]
+    - min:
+
+- parameter: Total Power_mean_eccentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total Power, PlotStart, Eccentric_end]
+    - mean:
+
+- parameter: Total GRF_impulse_concentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, Eccentric_end, TakeOff]
+    - integral:
+      scalar: true
+
+- parameter: Total GRF_impulse_eccentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, PlotStart, Eccentric_end]
+    - integral:
+      scalar: true
+
+- parameter: Total GRF_max_concentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, Eccentric_end, TakeOff]
+    - max:
+
+- parameter: Total GRF_max_eccentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, PlotStart, Eccentric_end]
+    - max:
+
+- parameter: Total GRF_mean_concentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, Eccentric_end, TakeOff]
+    - mean:
+
+- parameter: Total GRF_mean_eccentric_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, PlotStart, Eccentric_end]
+    - mean:
+
+- parameter: Total GRF_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, TouchDown, EOF]
+    - max:
+
+- parameter: Total GRF_mean_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Total GRF, TouchDown, EOF]
+    - mean:
+
+
 # Bilateral - Left
 - parameter: Left_RFD@TouchDown_100ms_CMJ_B
   where:
