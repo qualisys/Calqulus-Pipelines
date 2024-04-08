@@ -1276,6 +1276,13 @@
     - eventMask: [Left Knee Moment, PlotStart, TakeOff]
     - max: 
 
+- parameter: Left Knee Moment_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Knee Moment, TakeOff, EOF]
+    - max: 
+
 # Single leg - Left
 - parameter: Left_RFD@TouchDown_100ms_CMJ_L
   where:
@@ -1392,6 +1399,13 @@
     name: CMJ_L*
   steps:
     - eventMask: [Left Knee Moment, PlotStart, TakeOff]
+    - max: 
+
+- parameter: Left Knee Moment_max_landing_CMJ_B
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Knee Moment, TakeOff, EOF]
     - max: 
 
 # Bilateral - Right
@@ -1512,6 +1526,13 @@
     - eventMask: [Right Knee Moment, PlotStart, TakeOff]
     - max: 
 
+- parameter: Right Knee Moment_max_landing_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Knee Moment, TakeOff, EOF]
+    - max: 
+
 # Single leg - Right
 - parameter: Right_RFD@TouchDown_100ms_CMJ_R
   where:
@@ -1629,3 +1650,11 @@
   steps:
     - eventMask: [Right Knee Moment, PlotStart, TakeOff]
     - max: 
+
+- parameter: Right Knee Moment_max_landing_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Knee Moment, TakeOff, EOF]
+    - max: 
+
