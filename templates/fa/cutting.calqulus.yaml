@@ -442,8 +442,265 @@
     - eventMask: [Right Thorax Angles, TouchDown, Max_knee_flex]
     - max:
 
+# Kinetics -----
+# Left
+- parameter: Left GRF_min
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left GRF, TouchDown, TakeOff]
+    - min:
 
+- parameter: Left Hip Moment@TouchDown
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Hip Moment@TouchDown
 
+- parameter: Left Knee Moment@TouchDown
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Knee Moment@TouchDown
 
+- parameter: Left Ankle Moment@TouchDown
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Ankle Moment@TouchDown
 
+- parameter: Left Hip Moment@Max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Hip Moment@Max_knee_flex
 
+- parameter: Left Knee Moment@Max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Knee Moment@Max_knee_flex
+
+- parameter: Left Ankle Moment@Max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - import: Left Ankle Moment@Max_knee_flex
+
+- parameter: Left Hip Moment_max_concentric
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, Max_knee_flex, TakeOff]
+    - max:
+
+- parameter: Left Knee Moment_max_concentric
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, Max_knee_flex, TakeOff]
+    - max:
+
+- parameter: Left Ankle Moment_max_concentric
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Moment, Max_knee_flex, TakeOff]
+    - max:
+
+- parameter: Left Hip Moment_mean
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, TakeOff]
+    - mean:
+
+- parameter: Left Knee Moment_mean
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, TakeOff]
+    - mean:
+
+- parameter: Left Hip Moment_max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
+    - max:
+
+- parameter: Left Knee Moment_max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, Max_knee_flex]
+    - max:
+
+- parameter: Left Ankle Moment_max_knee_flex
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Moment, TouchDown, Max_knee_flex]
+    - max:
+
+- parameter: Left Knee Moment_max
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, TakeOff]
+    - max:
+
+- parameter: Left GRF_max
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - eventMask: [Left GRF, TouchDown, TakeOff]
+    - max:
+
+# Right
+- parameter: Right GRF_min
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right GRF, TouchDown, TakeOff]
+    - min:
+
+- parameter: Right Hip Moment@TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Hip Moment@TouchDown
+
+- parameter: Right Knee Moment@TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Knee Moment@TouchDown
+
+- parameter: Right Ankle Moment@TouchDown
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Ankle Moment@TouchDown
+
+- parameter: Right Hip Moment@Max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Hip Moment@Max_knee_flex
+
+- parameter: Right Knee Moment@Max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Knee Moment@Max_knee_flex
+
+- parameter: Right Ankle Moment@Max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - import: Right Ankle Moment@Max_knee_flex
+
+- parameter: Right Hip Moment_max_concentric
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, Max_knee_flex, TakeOff]
+    - max:
+
+- parameter: Right Knee Moment_max_concentric
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, Max_knee_flex, TakeOff]
+    - max:
+
+- parameter: Right Ankle Moment_max_concentric
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Moment, Max_knee_flex, TakeOff]
+    - max:
+
+- parameter: Right Hip Moment_mean
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, TakeOff]
+    - mean:
+
+- parameter: Right Knee Moment_mean
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, TakeOff]
+    - mean:
+
+- parameter: Right Hip Moment_max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
+    - max:
+
+- parameter: Right Knee Moment_max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, Max_knee_flex]
+    - max:
+
+- parameter: Right Ankle Moment_max_knee_flex
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Moment, TouchDown, Max_knee_flex]
+    - max:
+
+- parameter: Right Knee Moment_max
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, TakeOff]
+    - max:
+
+- parameter: Right GRF_max
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - eventMask: [Right GRF, TouchDown, TakeOff]
+    - max:
