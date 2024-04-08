@@ -1042,3 +1042,165 @@
   steps:
     - eventMask: [Right Foot Progression, TouchDown,TakeOff]
     - max:
+
+# Kinetics ----------
+# Bilateral - left
+- parameter: Left Hip Moment@COM_MIN_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - import: Left Hip Moment@COM_MIN
+
+- parameter: Left Knee Moment@COM_MIN_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - import: Left Knee Moment@COM_MIN
+
+- parameter: Left Ankle Moment@COM_MIN_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - import: Left Ankle Moment@COM_MIN
+
+- parameter: Left GRF_max_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - eventMask: [Left GRF, TouchDown, TakeOff]
+    - max:
+
+- parameter: Left GRF_max_landing_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - eventMask: [Left GRF, Landing, EOF]
+    - max:
+
+- parameter: Left GRF_mean_landing_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - eventMask: [Left GRF, Landing, EOF]
+    - mean:
+
+# Bilateral - right
+- parameter: Right Hip Moment@COM_MIN_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - import: Right Hip Moment@COM_MIN
+
+- parameter: Right Knee Moment@COM_MIN_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - import: Right Knee Moment@COM_MIN
+
+- parameter: Right Ankle Moment@COM_MIN_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - import: Right Ankle Moment@COM_MIN
+
+- parameter: Right GRF_max_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - eventMask: [Right GRF, TouchDown, TakeOff]
+    - max:
+
+- parameter: Right GRF_max_landing_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - eventMask: [Right GRF, Landing, EOF]
+    - max:
+
+- parameter: Right GRF_mean_landing_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - eventMask: [Right GRF, Landing, EOF]
+    - mean:
+
+# Single leg - left
+- parameter: Left Hip Moment@COM_MIN_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - import: Left Hip Moment@COM_MIN
+
+- parameter: Left Knee Moment@COM_MIN_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - import: Left Knee Moment@COM_MIN
+
+- parameter: Left Ankle Moment@COM_MIN_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - import: Left Ankle Moment@COM_MIN
+
+- parameter: Left GRF_max_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - eventMask: [Left GRF, TouchDown, TakeOff]
+    - max:
+
+- parameter: Left GRF_max_landing_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - eventMask: [Left GRF, Landing, EOF]
+    - max:
+
+- parameter: Left GRF_mean_landing_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - eventMask: [Left GRF, Landing, EOF]
+    - mean:
+
+# Single leg - right
+- parameter: Right Hip Moment@COM_MIN_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - import: Right Hip Moment@COM_MIN
+
+- parameter: Right Knee Moment@COM_MIN_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - import: Right Knee Moment@COM_MIN
+
+- parameter: Right Ankle Moment@COM_MIN_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - import: Right Ankle Moment@COM_MIN
+
+- parameter: Right GRF_max_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - eventMask: [Right GRF, TouchDown, TakeOff]
+    - max:
+
+- parameter: Right GRF_max_landing_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - eventMask: [Right GRF, Landing, EOF]
+    - max:
+
+- parameter: Right GRF_mean_landing_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - eventMask: [Right GRF, Landing, EOF]
+    - mean:
+
