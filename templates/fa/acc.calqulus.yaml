@@ -10,6 +10,10 @@
 ## EVENTS ##
 ############
 
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
 - parameter: PelvisCGPos_vel
   steps:
     - segment: Hips
@@ -67,15 +71,6 @@
       height: 0.5
     - import: $prev@1
 
-- event: L_temp2
-  where:
-    name: Acc_L*
-  set: left
-  steps:
-    - peakFinder: LFT_DistEndVel.y
-      height: 0.5
-    - import: $prev@2
-
 - event: LON
   where:
     name: Acc_L*
@@ -84,7 +79,7 @@
     - threshold: LFT_DistEndAcc.z
       value: 0
       direction: up
-    - eventMask: [$prev, L_temp1, L_temp2]
+    - eventMask: [$prev, L_temp1, EOF]
     - import: $prev@1
 
 - event: LOFF
@@ -92,7 +87,7 @@
     name: Acc_L*
   set: left
   steps:
-    - eventMask: [LFT_DistEndVel.z, LON, L_temp2]
+    - eventMask: [LFT_DistEndVel.z, LON, EOF]
     - max:
       frames: true
 
@@ -106,15 +101,6 @@
       height: 0.5
     - import: $prev@1
 
-- event: R_temp2
-  where:
-    name: Acc_R*
-  set: right
-  steps:
-    - peakFinder: RFT_DistEndVel.y
-      height: 0.5
-    - import: $prev@2
-
 - event: RON
   where:
     name: Acc_R*
@@ -123,7 +109,7 @@
     - threshold: RFT_DistEndAcc.z
       value: 0
       direction: up
-    - eventMask: [$prev, R_temp1, R_temp2]
+    - eventMask: [$prev, R_temp1, EOF]
     - import: $prev@1
 
 - event: ROFF
@@ -131,7 +117,7 @@
     name: Acc_R*
   set: right
   steps:
-    - eventMask: [RFT_DistEndVel.z, RON, R_temp2]
+    - eventMask: [RFT_DistEndVel.z, RON, EOF]
     - max:
       frames: true
 
