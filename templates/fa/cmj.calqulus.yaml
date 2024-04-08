@@ -1251,6 +1251,31 @@
     - eventMask: [Left GRF, TouchDown, EOF]
     - mean:
 
+- parameter: Left Hip Moment@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Hip Moment@COM_MIN
+
+- parameter: Left Knee Moment@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Knee Moment@COM_MIN
+
+- parameter: Left Ankle Moment@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Left Ankle Moment@COM_MIN
+
+- parameter: Left Knee Moment_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Left Knee Moment, PlotStart, TakeOff]
+    - max: 
+
 # Single leg - Left
 - parameter: Left_RFD@TouchDown_100ms_CMJ_L
   where:
@@ -1343,6 +1368,31 @@
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - mean:
+
+- parameter: Left Hip Moment@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Hip Moment@COM_MIN
+
+- parameter: Left Knee Moment@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Knee Moment@COM_MIN
+
+- parameter: Left Ankle Moment@COM_MIN_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Left Ankle Moment@COM_MIN
+
+- parameter: Left Knee Moment_max_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventMask: [Left Knee Moment, PlotStart, TakeOff]
+    - max: 
 
 # Bilateral - Right
 - parameter: Right_RFD@TouchDown_100ms_CMJ_B
@@ -1437,6 +1487,31 @@
     - eventMask: [Right GRF, TouchDown, EOF]
     - mean:
 
+- parameter: Right Hip Moment@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Hip Moment@COM_MIN
+
+- parameter: Right Knee Moment@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Knee Moment@COM_MIN
+
+- parameter: Right Ankle Moment@COM_MIN_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Right Ankle Moment@COM_MIN
+
+- parameter: Right Knee Moment_max_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventMask: [Right Knee Moment, PlotStart, TakeOff]
+    - max: 
+
 # Single leg - Right
 - parameter: Right_RFD@TouchDown_100ms_CMJ_R
   where:
@@ -1529,3 +1604,28 @@
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - mean:
+
+- parameter: Right Hip Moment@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right Hip Moment@COM_MIN
+
+- parameter: Right Knee Moment@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right Knee Moment@COM_MIN
+
+- parameter: Right Ankle Moment@COM_MIN_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Right Ankle Moment@COM_MIN
+
+- parameter: Right Knee Moment_max_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventMask: [Right Knee Moment, PlotStart, TakeOff]
+    - max: 
