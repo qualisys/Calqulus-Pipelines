@@ -345,3 +345,134 @@
     - subtract: [$prev(2).y, $prev.y]
     # - subtract: [RFT_DistEndPos\@TakeOff.y,RFT_DistEndPos\@TouchDown.y]
     - abs:
+
+# Kinetics --------
+# Left
+- parameter: Left Hip Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Knee Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Ankle Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Hip Moment_mean
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Knee Moment_mean
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Knee Moment_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left GRF_max_landing
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left GRF, TouchDown, PlotEnd]
+    - max:
+
+- parameter: Left GRF_mean_landing
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left GRF, TouchDown, PlotEnd]
+    - mean:
+
+# Right
+- parameter: Right Hip Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Knee Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Ankle Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Hip Moment_mean
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Knee Moment_mean
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Knee Moment_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right GRF_max_landing
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right GRF, TouchDown, PlotEnd]
+    - max:
+
+- parameter: Right GRF_mean_landing
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right GRF, TouchDown, PlotEnd]
+    - mean:
