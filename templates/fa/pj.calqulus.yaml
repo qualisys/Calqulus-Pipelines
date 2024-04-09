@@ -228,7 +228,151 @@
     - count: TouchDown
 
 # Kinetics ------------
-# Left
+# Bilateral - left
+- parameter: Left Power
+  where:
+    name: PJ_B*
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Left Power_min_ecc_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Left Power, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Left Power_max_conc_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Left Power, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Left GRF_min_ecc_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Left GRF, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Left GRF_max_conc_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Left GRF, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Left GRF_max_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Left GRF, TouchDown, TakeOff]
+    - max: $prev.z
+
+- parameter: Left Power_max_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Left Power, TouchDown, TakeOff]
+    - max: $prev.z
+
+# Power decrement and force decrement (% decrease from first rep to last rep)
+- parameter: Left GRF_decrement_pct_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - import: Left GRF_max_PJ_B@1
+      output: first
+    - import: Left GRF_max_PJ_B@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+- parameter: Left Power_decrement_pct_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - import: Left Power_max_PJ_B@1
+      output: first
+    - import: Left Power_max_PJ_B@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+# Bilateral - right
+- parameter: Right Power
+  where:
+    name: PJ_B*
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right Power_min_ecc_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Right Power, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Right Power_max_conc_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Right Power, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Right GRF_min_ecc_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Right GRF, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Right GRF_max_conc_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Right GRF, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Right GRF_max_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Right GRF, TouchDown, TakeOff]
+    - max: $prev.z
+
+- parameter: Right Power_max_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - eventMask: [Right Power, TouchDown, TakeOff]
+    - max: $prev.z
+
+# Power decrement and force decrement (% decrease from first rep to last rep)
+- parameter: Right GRF_decrement_pct_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - import: Right GRF_max_PJ_B@1
+      output: first
+    - import: Right GRF_max_PJ_B@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+- parameter: Right Power_decrement_pct_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - import: Right Power_max_PJ_B@1
+      output: first
+    - import: Right Power_max_PJ_B@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+# Single leg - Left
 - parameter: Left Power
   where:
     name: PJ_L*
@@ -240,51 +384,51 @@
     name: PJ_L*
   steps:
     - eventMask: [Left Power, TouchDown, COM_MIN]
-    - min:
+    - min: $prev.z
 
 - parameter: Left Power_max_conc_PJ_L
   where:
     name: PJ_L*
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
-    - max:
+    - max: $prev.z
 
 - parameter: Left GRF_min_ecc_PJ_L
   where:
     name: PJ_L*
   steps:
     - eventMask: [Left GRF, TouchDown, COM_MIN]
-    - min:
+    - min: $prev.z
 
 - parameter: Left GRF_max_conc_PJ_L
   where:
     name: PJ_L*
   steps:
     - eventMask: [Left GRF, COM_MIN, TakeOff]
-    - max:
+    - max: $prev.z
 
 - parameter: Left GRF_max_PJ_L
   where:
     name: PJ_L*
   steps:
     - eventMask: [Left GRF, TouchDown, TakeOff]
-    - max:
+    - max: $prev.z
 
 - parameter: Left Power_max_PJ_L
   where:
     name: PJ_L*
   steps:
     - eventMask: [Left Power, TouchDown, TakeOff]
-    - max:
+    - max: $prev.z
 
 # Power decrement and force decrement (% decrease from first rep to last rep)
 - parameter: Left GRF_decrement_pct_PJ_L
   where:
     name: PJ_L*
   steps:
-    - import: Left GRF_max_PJ_L.z@1
+    - import: Left GRF_max_PJ_L@1
       output: first
-    - import: Left GRF_max_PJ_L.z@-1
+    - import: Left GRF_max_PJ_L@-1
       output: last
     - divide: [last, first]
     - multiply: [$prev, 100]
@@ -293,9 +437,81 @@
   where:
     name: PJ_L*
   steps:
-    - import: Left Power_max_PJ_L.z@1
+    - import: Left Power_max_PJ_L@1
       output: first
-    - import: Left Power_max_PJ_L.z@-1
+    - import: Left Power_max_PJ_L@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+# Single leg - Right
+- parameter: Right Power
+  where:
+    name: PJ_R*
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right Power_min_ecc_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - eventMask: [Right Power, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Right Power_max_conc_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - eventMask: [Right Power, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Right GRF_min_ecc_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - eventMask: [Right GRF, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Right GRF_max_conc_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - eventMask: [Right GRF, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Right GRF_max_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - eventMask: [Right GRF, TouchDown, TakeOff]
+    - max: $prev.z
+
+- parameter: Right Power_max_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - eventMask: [Right Power, TouchDown, TakeOff]
+    - max: $prev.z
+
+# Power decrement and force decrement (% decrease from first rep to last rep)
+- parameter: Right GRF_decrement_pct_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - import: Right GRF_max_PJ_R@1
+      output: first
+    - import: Right GRF_max_PJ_R@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+- parameter: Right Power_decrement_pct_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - import: Right Power_max_PJ_R@1
+      output: first
+    - import: Right Power_max_PJ_R@-1
       output: last
     - divide: [last, first]
     - multiply: [$prev, 100]
