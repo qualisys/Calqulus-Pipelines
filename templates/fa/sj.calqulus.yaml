@@ -1120,21 +1120,21 @@
   where:
     name: SJ_B*
   steps:
-    - eventMask: [Total Power, PlotStart, TakeOff]
+    - eventMask: [Total Power, COM_MIN, TakeOff]
     - max:
 
 - parameter: Total Power_mean_concentric_SJ_B
   where:
     name: SJ_B*
   steps:
-    - eventMask: [Total Power, PlotStart, TakeOff]
+    - eventMask: [Total Power, COM_MIN, TakeOff]
     - mean:
 
 - parameter: Total GRF_impulse_concentric_SJ_B
   where:
     name: SJ_B*
   steps:
-    - eventMask: [Total Power, PlotStart, TakeOff]
+    - eventMask: [Total Power, COM_MIN, TakeOff]
     - integral:
       scalar: true
 
@@ -1142,7 +1142,7 @@
   where:
     name: SJ_B*
   steps:
-    - eventMask: [Total GRF, PlotStart, TakeOff]
+    - eventMask: [Total GRF, COM_MIN, TakeOff]
     - max:
 
 - parameter: Total GRF_max_landing_SJ_B
@@ -1163,21 +1163,21 @@
   where:
     name: ^SJ_[BL]*
   steps:
-    - eventMask: [Left Power, PlotStart, TakeOff]
+    - eventMask: [Left Power, COM_MIN, TakeOff]
     - max:
 
 - parameter: Left Power_mean_concentric_SJ_B
   where:
     name: ^SJ_[BL]*
   steps:
-    - eventMask: [Left Power, PlotStart, TakeOff]
+    - eventMask: [Left Power, COM_MIN, TakeOff]
     - mean:
 
 - parameter: Left GRF_impulse_concentric_SJ_B
   where:
     name: ^SJ_[BL]*
   steps:
-    - eventMask: [Left Power, PlotStart, TakeOff]
+    - eventMask: [Left Power, COM_MIN, TakeOff]
     - integral:
       scalar: true
 
@@ -1185,7 +1185,7 @@
   where:
     name: ^SJ_[BL]*
   steps:
-    - eventMask: [Left GRF, PlotStart, TakeOff]
+    - eventMask: [Left GRF, COM_MIN, TakeOff]
     - max:
 
 - parameter: Left GRF_max_landing_SJ_B
@@ -1206,21 +1206,21 @@
   where:
     name: ^SJ_[BR]*
   steps:
-    - eventMask: [Right Power, PlotStart, TakeOff]
+    - eventMask: [Right Power, COM_MIN, TakeOff]
     - max:
 
 - parameter: Right Power_mean_concentric_SJ_B
   where:
     name: ^SJ_[BR]*
   steps:
-    - eventMask: [Right Power, PlotStart, TakeOff]
+    - eventMask: [Right Power, COM_MIN, TakeOff]
     - mean:
 
 - parameter: Right GRF_impulse_concentric_SJ_B
   where:
     name: ^SJ_[BR]*
   steps:
-    - eventMask: [Right Power, PlotStart, TakeOff]
+    - eventMask: [Right Power, COM_MIN, TakeOff]
     - integral:
       scalar: true
 
@@ -1228,7 +1228,7 @@
   where:
     name: ^SJ_[BR]*
   steps:
-    - eventMask: [Right GRF, PlotStart, TakeOff]
+    - eventMask: [Right GRF, COM_MIN, TakeOff]
     - max:
 
 - parameter: Right GRF_max_landing_SJ_B
