@@ -46,19 +46,19 @@
   where:
     name: SJ_B*
   steps:
-    - eventDuration: [PlotStart,TakeOff]
+    - eventDuration: [COM_MIN,TakeOff]
 
 - parameter: ConcentricTime_SJ_L
   where:
     name: SJ_L*
   steps:
-    - eventDuration: [PlotStart,TakeOff]
+    - eventDuration: [COM_MIN,TakeOff]
 
 - parameter: ConcentricTime_SJ_R
   where:
     name: SJ_R*
   steps:
-    - eventDuration: [PlotStart,TakeOff]
+    - eventDuration: [COM_MIN,TakeOff]
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_SJ_B
