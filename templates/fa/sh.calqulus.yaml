@@ -57,6 +57,42 @@
     - eventMask: [$prev, LON, LOFF]
       keep: -1
 
+- event: LON_filtered_med
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - refineEvent: LON
+      sequence: [LON, LOFF]
+      exclude: [Left_On_Left_FP]
+
+- event: LOFF_filtered_med
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - refineEvent: LOFF
+      sequence: [LON, LOFF]
+      exclude: [Left_On_Left_FP]
+
+- event: LON_filtered_lat
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - refineEvent: LON
+      sequence: [LON, LOFF]
+      exclude: [Left_On_Right_FP]
+
+- event: LOFF_filtered_lat
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - refineEvent: LOFF
+      sequence: [LON, LOFF]
+      exclude: [Left_On_Right_FP]
+
 # Right
 - event: RON
   where:
@@ -103,6 +139,42 @@
       direction: down
     - eventMask: [$prev, RON, ROFF]
       keep: -1
+
+- event: RON_filtered_med
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - refineEvent: RON
+      sequence: [RON, ROFF]
+      exclude: [Right_On_Right_FP]
+
+- event: ROFF_filtered_med
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - refineEvent: ROFF
+      sequence: [RON, ROFF]
+      exclude: [Right_On_Right_FP]
+
+- event: RON_filtered_lat
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - refineEvent: RON
+      sequence: [RON, ROFF]
+      exclude: [Right_On_Left_FP]
+
+- event: ROFF_filtered_lat
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - refineEvent: ROFF
+      sequence: [RON, ROFF]
+      exclude: [Right_On_Left_FP]
 
 # Unified event names for web
 - event: LeftPlotStart
@@ -161,15 +233,7 @@
     name: SH_L*
   set: left
   steps:
-    - refineEvent: LON
-      sequence: [LON, LOFF]
-      exclude: [Left_On_Left_FP]
-      output: LON_filtered
-    - refineEvent: LOFF
-      sequence: [LON, LOFF]
-      exclude: [Left_On_Left_FP]
-      output: LOFF_filtered
-    - eventDuration: [LON_filtered, LOFF_filtered]
+    - eventDuration: [LON_filtered_med, LOFF_filtered_med]
 
 # Contact time - jumping laterally
 - parameter: Left_contact_time_laterally
@@ -177,15 +241,7 @@
     name: SH_L*
   set: left
   steps:
-    - refineEvent: LON
-      sequence: [LON, LOFF]
-      exclude: [Left_On_Right_FP]
-      output: LON_filtered
-    - refineEvent: LOFF
-      sequence: [LON, LOFF]
-      exclude: [Left_On_Right_FP]
-      output: LOFF_filtered
-    - eventDuration: [LON_filtered, LOFF_filtered]
+    - eventDuration: [LON_filtered_lat, LOFF_filtered_lat]
 
 # Time from first ON to 20th ON event
 - parameter: Left_20_contacts_time
@@ -219,15 +275,7 @@
     name: SH_R*
   set: right
   steps:
-    - refineEvent: RON
-      sequence: [RON, ROFF]
-      exclude: [Right_On_Right_FP]
-      output: RON_filtered
-    - refineEvent: ROFF
-      sequence: [RON, ROFF]
-      exclude: [Right_On_Right_FP]
-      output: ROFF_filtered
-    - eventDuration: [RON_filtered, ROFF_filtered]
+    - eventDuration: [RON_filtered_med, ROFF_filtered_med]
 
 # Contact time - jumping laterally
 - parameter: Right_contact_time_laterally
@@ -235,15 +283,7 @@
     name: SH_R*
   set: right
   steps:
-    - refineEvent: RON
-      sequence: [RON, ROFF]
-      exclude: [Right_On_Left_FP]
-      output: RON_filtered
-    - refineEvent: ROFF
-      sequence: [RON, ROFF]
-      exclude: [Right_On_Left_FP]
-      output: ROFF_filtered
-    - eventDuration: [RON_filtered, ROFF_filtered]
+    - eventDuration: [RON_filtered_lat, ROFF_filtered_lat]
 
 # Time from first ON to 20th ON event
 - parameter: Right_20_contacts_time
@@ -254,5 +294,147 @@
     - eventTime: RON
       output: on_time
     - subtract: [on_time@20, on_time@1]
+
+# Kinetics ----------------
+# Left
+- parameter: Left GRF_max_Left_FP
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [Left GRF, LON_filtered_med, LOFF_filtered_med]
+    - mean:
+      export: Left GRF_mean_Left_FP
+    - max: $prev(2)
+
+- parameter: Left GRF_max_Right_FP
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [Left GRF, LON_filtered_lat, LOFF_filtered_lat]
+    - mean:
+      export: Left GRF_mean_Right_FP
+    - max: $prev(2)
+
+- parameter: Left Hip Moment_max_medially
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, LON_filtered_med, LOFF_filtered_med]
+    - max:
+
+- parameter: Left Hip Moment_max_laterally
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, LON_filtered_lat, LOFF_filtered_lat]
+    - max:
+
+- parameter: Left Knee Moment_max_medially
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, LON_filtered_med, LOFF_filtered_med]
+    - max:
+
+- parameter: Left Knee Moment_max_laterally
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, LON_filtered_lat, LOFF_filtered_lat]
+    - max:
+
+- parameter: Left Ankle Moment_max_medially
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Moment, LON_filtered_med, LOFF_filtered_med]
+    - max:
+
+- parameter: Left Ankle Moment_max_laterally
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Moment, LON_filtered_lat, LOFF_filtered_lat]
+    - max:
+
+# Right
+- parameter: Right GRF_max_Right_FP
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [Right GRF, RON_filtered_med, ROFF_filtered_med]
+    - mean:
+      export: Right GRF_mean_Right_FP
+    - max: $prev(2)
+
+- parameter: Right GRF_max_Left_FP
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [Right GRF, RON_filtered_lat, ROFF_filtered_lat]
+    - mean:
+      export: Right GRF_mean_Left_FP
+    - max: $prev(2)
+
+- parameter: Right Hip Moment_max_medially
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, RON_filtered_med, ROFF_filtered_med]
+    - max:
+
+- parameter: Right Hip Moment_max_laterally
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, RON_filtered_lat, ROFF_filtered_lat]
+    - max:
+
+- parameter: Right Knee Moment_max_medially
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, RON_filtered_med, ROFF_filtered_med]
+    - max:
+
+- parameter: Right Knee Moment_max_laterally
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, RON_filtered_lat, ROFF_filtered_lat]
+    - max:
+
+- parameter: Right Ankle Moment_max_medially
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Moment, RON_filtered_med, ROFF_filtered_med]
+    - max:
+
+- parameter: Right Ankle Moment_max_laterally
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Moment, RON_filtered_lat, ROFF_filtered_lat]
+    - max:
+
+
+
 
 
