@@ -1090,3 +1090,159 @@
   steps:
     - eventMask: [Right Foot Progression, TouchDown,EOF]
     - max:
+
+# Kinetics -------------
+- parameter: Left Power
+  where:
+    name: ^SJ_[BL]*
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Right Power
+  where:
+    name: ^SJ_[BR]*
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+
+# Bilateral - Total
+- parameter: Total GRF
+  where:
+    name: SJ_B*
+  steps:
+    - add: [Left GRF, Right GRF]
+
+- parameter: Total Power
+  where:
+    name: SJ_B*
+  steps:
+    - multiply: [Total GRF, PelvisCGPos_vel]
+- parameter: Total Power_max_concentric_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - eventMask: [Total Power, PlotStart, TakeOff]
+    - max:
+
+- parameter: Total Power_mean_concentric_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - eventMask: [Total Power, PlotStart, TakeOff]
+    - mean:
+
+- parameter: Total GRF_impulse_concentric_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - eventMask: [Total Power, PlotStart, TakeOff]
+    - integral:
+      scalar: true
+
+- parameter: Total GRF_max_concentric_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - eventMask: [Total GRF, PlotStart, TakeOff]
+    - max:
+
+- parameter: Total GRF_max_landing_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - eventMask: [Total GRF, TouchDown, EOF]
+    - max:
+
+- parameter: Total GRF_mean_landing_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - eventMask: [Total GRF, TouchDown, EOF]
+    - mean:
+# Bilateral or Left
+- parameter: Left Power_max_concentric_SJ_B
+  where:
+    name: ^SJ_[BL]*
+  steps:
+    - eventMask: [Left Power, PlotStart, TakeOff]
+    - max:
+
+- parameter: Left Power_mean_concentric_SJ_B
+  where:
+    name: ^SJ_[BL]*
+  steps:
+    - eventMask: [Left Power, PlotStart, TakeOff]
+    - mean:
+
+- parameter: Left GRF_impulse_concentric_SJ_B
+  where:
+    name: ^SJ_[BL]*
+  steps:
+    - eventMask: [Left Power, PlotStart, TakeOff]
+    - integral:
+      scalar: true
+
+- parameter: Left GRF_max_concentric_SJ_B
+  where:
+    name: ^SJ_[BL]*
+  steps:
+    - eventMask: [Left GRF, PlotStart, TakeOff]
+    - max:
+
+- parameter: Left GRF_max_landing_SJ_B
+  where:
+    name: ^SJ_[BL]*
+  steps:
+    - eventMask: [Left GRF, TouchDown, EOF]
+    - max:
+
+- parameter: Left GRF_mean_landing_SJ_B
+  where:
+    name: ^SJ_[BL]*
+  steps:
+    - eventMask: [Left GRF, TouchDown, EOF]
+    - mean:
+# Bilateral or Right
+- parameter: Right Power_max_concentric_SJ_B
+  where:
+    name: ^SJ_[BR]*
+  steps:
+    - eventMask: [Right Power, PlotStart, TakeOff]
+    - max:
+
+- parameter: Right Power_mean_concentric_SJ_B
+  where:
+    name: ^SJ_[BR]*
+  steps:
+    - eventMask: [Right Power, PlotStart, TakeOff]
+    - mean:
+
+- parameter: Right GRF_impulse_concentric_SJ_B
+  where:
+    name: ^SJ_[BR]*
+  steps:
+    - eventMask: [Right Power, PlotStart, TakeOff]
+    - integral:
+      scalar: true
+
+- parameter: Right GRF_max_concentric_SJ_B
+  where:
+    name: ^SJ_[BR]*
+  steps:
+    - eventMask: [Right GRF, PlotStart, TakeOff]
+    - max:
+
+- parameter: Right GRF_max_landing_SJ_B
+  where:
+    name: ^SJ_[BR]*
+  steps:
+    - eventMask: [Right GRF, TouchDown, EOF]
+    - max:
+
+- parameter: Right GRF_mean_landing_SJ_B
+  where:
+    name: ^SJ_[BR]*
+  steps:
+    - eventMask: [Right GRF, TouchDown, EOF]
+    - mean:
+
+
