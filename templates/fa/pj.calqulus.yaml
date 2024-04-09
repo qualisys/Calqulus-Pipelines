@@ -249,12 +249,12 @@
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - max: $prev.z
 
-- parameter: Left GRF_min_ecc_PJ_B
+- parameter: Left GRF_max_ecc_PJ_B
   where:
     name: PJ_B*
   steps:
     - eventMask: [Left GRF, TouchDown, COM_MIN]
-    - min: $prev.z
+    - max: $prev.z
 
 - parameter: Left GRF_max_conc_PJ_B
   where:
@@ -321,12 +321,12 @@
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - max: $prev.z
 
-- parameter: Right GRF_min_ecc_PJ_B
+- parameter: Right GRF_max_ecc_PJ_B
   where:
     name: PJ_B*
   steps:
     - eventMask: [Right GRF, TouchDown, COM_MIN]
-    - min: $prev.z
+    - max: $prev.z
 
 - parameter: Right GRF_max_conc_PJ_B
   where:
@@ -393,12 +393,12 @@
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - max: $prev.z
 
-- parameter: Left GRF_min_ecc_PJ_L
+- parameter: Left GRF_max_ecc_PJ_L
   where:
     name: PJ_L*
   steps:
     - eventMask: [Left GRF, TouchDown, COM_MIN]
-    - min: $prev.z
+    - max: $prev.z
 
 - parameter: Left GRF_max_conc_PJ_L
   where:
@@ -465,12 +465,12 @@
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - max: $prev.z
 
-- parameter: Right GRF_min_ecc_PJ_R
+- parameter: Right GRF_max_ecc_PJ_R
   where:
     name: PJ_R*
   steps:
     - eventMask: [Right GRF, TouchDown, COM_MIN]
-    - min: $prev.z
+    - max: $prev.z
 
 - parameter: Right GRF_max_conc_PJ_R
   where:
