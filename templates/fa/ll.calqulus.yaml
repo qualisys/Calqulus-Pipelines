@@ -195,18 +195,14 @@
       from: mm
       to: m
 
-- parameter: CenterOfMass_MIN_LL_L
-  where:
-    name: LL_L*
+- parameter: CenterOfMass_MIN
   steps:
     - min: Hips.z
     - convert:
       from: mm
       to: m
 
-- parameter: CenterOfMass@PlotStart_LL_L
-  where:
-    name: LL_L*
+- parameter: CenterOfMass@PlotStart
   steps:
     - import: Hips@PlotStart
     - convert:
@@ -217,7 +213,15 @@
   where:
     name: LL_L*
   steps:
-    - subtract: [CenterOfMass\@PlotStart_LL_L, CenterOfMass_MIN_LL_L]
+    - subtract: [CenterOfMass\@PlotStart, CenterOfMass_MIN]
+    - import: $prev.z
+
+- parameter: COM_displacement_MEAN_min_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - subtract: [CenterOfMass\@PlotStart, CenterOfMass_MIN]
+    - import: $prev.z
 
 # COM distance to knee and ankle #####
 # Left ------
@@ -461,7 +465,84 @@
     - subtract: [RFT_DistEndPos@TakeOff, LFT_DistEndPos@Landing_L]
     - abs:
 
+# Kinetics -----
+# Left
+- parameter: Left Hip Moment@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - import: Left Hip Moment@COM_MIN
 
+- parameter: Left Knee Moment@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - import: Left Knee Moment@COM_MIN
+
+- parameter: Left Ankle Moment@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - import: Left Ankle Moment@COM_MIN
+
+- parameter: Left GRF_max_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, PlotStart, TakeOff]
+    - max:
+
+- parameter: Left GRF_max_landing_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, PlotStart, EOF]
+    - max:
+
+- parameter: Left Knee Moment_max_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left Knee Moment, PlotStart, TakeOff]
+
+# Right
+- parameter: Right Hip Moment@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - import: Right Hip Moment@COM_MIN
+
+- parameter: Right Knee Moment@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - import: Right Knee Moment@COM_MIN
+
+- parameter: Right Ankle Moment@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - import: Right Ankle Moment@COM_MIN
+
+- parameter: Right GRF_max_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, PlotStart, TakeOff]
+    - max:
+
+- parameter: Right GRF_max_landing_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, PlotStart, EOF]
+    - max:
+
+- parameter: Right Knee Moment_max_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right Knee Moment, PlotStart, TakeOff]
 
 
 
