@@ -226,3 +226,76 @@
     name: PJ_B*
   steps:
     - count: TouchDown
+
+# Kinetics ------------
+# Left
+- parameter: Left Power
+  where:
+    name: PJ_L*
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Left Power_min_ecc_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - eventMask: [Left Power, TouchDown, COM_MIN]
+    - min:
+
+- parameter: Left Power_max_conc_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - eventMask: [Left Power, COM_MIN, TakeOff]
+    - max:
+
+- parameter: Left GRF_min_ecc_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - eventMask: [Left GRF, TouchDown, COM_MIN]
+    - min:
+
+- parameter: Left GRF_max_conc_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - eventMask: [Left GRF, COM_MIN, TakeOff]
+    - max:
+
+- parameter: Left GRF_max_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - eventMask: [Left GRF, TouchDown, TakeOff]
+    - max:
+
+- parameter: Left Power_max_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - eventMask: [Left Power, TouchDown, TakeOff]
+    - max:
+
+# Power decrement and force decrement (% decrease from first rep to last rep)
+- parameter: Left GRF_decrement_pct_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - import: Left GRF_max_PJ_L.z@1
+      output: first
+    - import: Left GRF_max_PJ_L.z@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+- parameter: Left Power_decrement_pct_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - import: Left Power_max_PJ_L.z@1
+      output: first
+    - import: Left Power_max_PJ_L.z@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
