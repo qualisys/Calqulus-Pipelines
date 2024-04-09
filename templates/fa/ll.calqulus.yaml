@@ -504,6 +504,7 @@
     name: LL_L*
   steps:
     - eventMask: [Left Knee Moment, PlotStart, TakeOff]
+    - max:
 
 # Right
 - parameter: Right Hip Moment@COM_MIN_LL_R
@@ -543,6 +544,7 @@
     name: LL_R*
   steps:
     - eventMask: [Right Knee Moment, PlotStart, TakeOff]
+    - max:
 
 
 
