@@ -359,34 +359,34 @@
 # Bilateral - Total
 - parameter: Total GRF
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - add: [Left GRF, Right GRF]
 
 - parameter: Total GRF_max_concentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Total GRF, Pelvis_lowest, TOP]
     - max:
 
 - parameter: Total GRF_mean_concentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Total GRF, Pelvis_lowest, TOP]
     - mean:
 
 - parameter: Total GRF_max_eccentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Total GRF, TOP, Pelvis_lowest]
     - max:
 
 - parameter: Total GRF_mean_eccentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Total GRF, TOP, Pelvis_lowest]
     - mean:
@@ -394,28 +394,28 @@
 # Bilateral - Left
 - parameter: Left GRF_max_concentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - max:
 
 - parameter: Left GRF_mean_concentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - mean:
 
 - parameter: Left GRF_max_eccentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - max:
 
 - parameter: Left GRF_mean_eccentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - mean:
@@ -423,28 +423,28 @@
 # Bilateral - Right
 - parameter: Right GRF_max_concentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - max:
 
 - parameter: Right GRF_mean_concentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - mean:
 
 - parameter: Right GRF_max_eccentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - max:
 
 - parameter: Right GRF_mean_eccentric_Squat_B
   where:
-    name: Squat_B*
+    name: Squatting_B*
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - mean:
@@ -452,35 +452,35 @@
 # Single leg - Left
 - parameter: Left GRF_max_concentric_Squat_L
   where:
-    name: Squat_L*
+    name: Squatting_L*
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - max:
 
 - parameter: Left GRF_mean_concentric_Squat_L
   where:
-    name: Squat_L*
+    name: Squatting_L*
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - mean:
 
 - parameter: Left GRF_max_eccentric_Squat_L
   where:
-    name: Squat_L*
+    name: Squatting_L*
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - max:
 
 - parameter: Left GRF_mean_eccentric_Squat_L
   where:
-    name: Squat_L*
+    name: Squatting_L*
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - mean:
 
 - parameter: Left GRF_max_Squat_L
   where:
-    name: Squat_L*
+    name: Squatting_L*
   steps:
     - eventMask: [Left GRF, TOP, TOP]
     - max:
@@ -488,35 +488,35 @@
 # Single leg - Right
 - parameter: Right GRF_max_concentric_Squat_R
   where:
-    name: Squat_R*
+    name: Squatting_R*
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - max:
 
 - parameter: Right GRF_mean_concentric_Squat_R
   where:
-    name: Squat_R*
+    name: Squatting_R*
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - mean:
 
 - parameter: Right GRF_max_eccentric_Squat_R
   where:
-    name: Squat_R*
+    name: Squatting_R*
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - max:
 
 - parameter: Right GRF_mean_eccentric_Squat_R
   where:
-    name: Squat_R*
+    name: Squatting_R*
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - mean:
 
 - parameter: Right GRF_max_Squat_R
   where:
-    name: Squat_R*
+    name: Squatting_R*
   steps:
     - eventMask: [Right GRF, TOP, TOP]
     - max:
