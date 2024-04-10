@@ -1201,6 +1201,39 @@
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - mean:
+
+- parameter: Left Hip Moment@COM_MIN_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - import: Left Hip Moment@COM_MIN
+
+- parameter: Left Knee Moment@COM_MIN_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - import: Left Knee Moment@COM_MIN
+
+- parameter: Left Ankle Moment@COM_MIN_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - import: Left Ankle Moment@COM_MIN
+
+- parameter: Left Knee Moment_max_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - eventMask: [Left Knee Moment, COM_MIN, TakeOff]
+    - max:
+
+- parameter: Left Knee Moment_max_landing_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - eventMask: [Left Knee Moment, TakeOff, EOF]
+    - max:
+
 # Bilateral - Right
 - parameter: Right Power_max_concentric_SJ_B
   where:
@@ -1244,6 +1277,38 @@
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - mean:
+
+- parameter: Right Hip Moment@COM_MIN_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - import: Right Hip Moment@COM_MIN
+
+- parameter: Right Knee Moment@COM_MIN_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - import: Right Knee Moment@COM_MIN
+
+- parameter: Right Ankle Moment@COM_MIN_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - import: Right Ankle Moment@COM_MIN
+
+- parameter: Right Knee Moment_max_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - eventMask: [Right Knee Moment, COM_MIN, TakeOff]
+    - max:
+
+- parameter: Right Knee Moment_max_landing_SJ_B
+  where:
+    name: ^SJ_B*
+  steps:
+    - eventMask: [Right Knee Moment, TakeOff, EOF]
+    - max:
 
 # Single leg - Left
 - parameter: Left Power_max_concentric_SJ_L
