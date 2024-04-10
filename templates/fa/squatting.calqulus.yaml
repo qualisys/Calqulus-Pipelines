@@ -420,6 +420,13 @@
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - mean:
 
+- parameter: Left GRF_max_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - eventMask: [Left GRF, TOP, TOP]
+    - max:
+
 # Bilateral - Right
 - parameter: Right GRF_max_concentric_Squat_B
   where:
@@ -448,6 +455,13 @@
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - mean:
+
+- parameter: Right GRF_max_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - eventMask: [Right GRF, TOP, TOP]
+    - max:
 
 # Single leg - Left
 - parameter: Left GRF_max_concentric_Squat_L
