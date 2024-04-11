@@ -341,7 +341,7 @@
     - vector: [LeftAnkle.p, LeftAnkle.p, LeftAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
-- parameter: Left_COM_COP_distance
+- parameter: Left_COP_COM_distance
   set: left
   steps:
     - import: LeftFootContact => foot
@@ -400,7 +400,7 @@
     - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
-- parameter: Right_COM_COP_distance
+- parameter: Right_COP_COM_distance
   set: right
   steps:
     - import: RightFootContact => foot
