@@ -1520,7 +1520,7 @@
     - eventMask: [Left Knee Moment, PlotStart, TakeOff]
     - max: 
 
-- parameter: Left Knee Moment_max_landing_CMJ_B
+- parameter: Left Knee Moment_max_landing_CMJ_L
   where:
     name: CMJ_L*
   steps:
