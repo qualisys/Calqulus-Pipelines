@@ -294,6 +294,7 @@
   steps:
     - multiply: [$field(Weight; measurement; numeric), 9.81]
 
+# Left
 - parameter: Left GRF
   set: left
   steps:
@@ -340,6 +341,17 @@
     - vector: [LeftAnkle.p, LeftAnkle.p, LeftAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
+- parameter: Left_COM_COP_distance
+  set: left
+  steps:
+    - import: LeftFootContact => foot
+    - vector: [foot.x, foot.y, foot.z]
+    - convert:
+      from: mm
+      to: m
+    - subtract: [PelvisCGPos, $prev]
+
+# Right
 - parameter: Right GRF
   set: right
   steps:
@@ -387,4 +399,14 @@
   steps:
     - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
+
+- parameter: Right_COM_COP_distance
+  set: right
+  steps:
+    - import: RightFootContact => foot
+    - vector: [foot.x, foot.y, foot.z]
+    - convert:
+      from: mm
+      to: m
+    - subtract: [PelvisCGPos, $prev]
 
