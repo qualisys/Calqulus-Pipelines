@@ -54,3 +54,7 @@
   where:
     name: ^(Running|Gait)*
 
+- template: templates/fa/balance.calqulus.yaml
+  where:
+    name: Balance*
+

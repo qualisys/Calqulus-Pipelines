@@ -1,0 +1,171 @@
+# It is assumed that only one FP is loaded
+
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: Balance_L*
+  steps:
+    - import: BOF
+
+- event: LeftPlotEnd
+  where:
+    name: Balance_L*
+  steps:
+    - import: EOF
+
+- event: RightPlotStart
+  where:
+    name: Balance_R*
+  steps:
+    - import: BOF
+
+- event: RightPlotEnd
+  where:
+    name: Balance_R*
+  steps:
+    - import: EOF
+
+############
+## SERIES ##
+############
+
+#############
+## METRICS ##
+#############
+
+- parameter: Measurement_length
+  steps:
+    - divide: [$length, $framerate]
+
+- parameter: COP_zeroed
+  where:
+    name: Balance_L*
+  steps:
+    - import: LeftFootContact => foot
+    - vector: [foot.x, foot.y,foot.z]
+    - convert:
+      from: mm
+      to: m
+    - multiply: [$prev, [1,1,0]]
+    - mean:
+    - subtract: [$prev(2), $prev]
+
+- parameter: COP_zeroed
+  where:
+    name: Balance_R*
+  steps:
+    - import: RightFootContact => foot
+    - vector: [foot.x, foot.y,foot.z]
+    - convert:
+      from: mm
+      to: m
+    - multiply: [$prev, [1,1,0]]
+    - mean:
+    - subtract: [$prev(2), $prev]
+
+- parameter: COP_zeroed_vel_filt_mag_max
+  steps:
+    - velocity: COP_zeroed
+    - lowpass:
+    - max:
+      export: COP_zeroed_vel_filt_max
+    - mean: $prev(2)
+      export: COP_zeroed_vel_filt_mean
+    - magnitude: $prev(3)
+    - mean:
+      export: COP_zeroed_vel_filt_mag_mean
+    - max:
+
+- parameter: COP_zeroed_acc_filt_mag_max
+  steps:
+    - acceleration: COP_zeroed
+    - lowpass:
+    - max:
+      export: COP_zeroed_acc_filt_max
+    - mean: $prev(2)
+      export: COP_zeroed_acc_filt_mean
+    - magnitude: $prev(3)
+    - mean:
+      export: COP_zeroed_acc_filt_mag_mean
+    - max: $prev(2)
+
+- parameter: COP_range
+  steps:
+    - min: COP_zeroed
+    - max: COP_zeroed
+    - subtract: [$prev, $prev(2)]
+
+# Dynamic Postural Stability Index -----------
+# Based on Wikstrom EA, Tillman MD, Kline KJ, Borsa PA (2006) Gender and Limb Differences in Dynamic Postural Stability During Landing. Clin J Sport Med 16:311-315
+# Based on example from https://c-motion.com/v3dwiki/index.php/Statistics_Example_3
+
+# find out which plate is loaded
+- parameter: loaded_FP
+  steps:
+    - if: exists(LeftFootContact)
+      then: LeftFootContact
+      else: RightFootContact
+
+- parameter: DPSI
+  steps:
+    - multiply: [$field(Weight; measurement; numeric), 9.81]
+      output: bw
+    - vector: [0, 0, bw]
+      output: bw_vector
+    - vector: [loaded_FP.fx, loaded_FP.fy, loaded_FP.fz]
+      output: my_force
+    - subtract: [my_force, bw_vector]
+      output: FP_O
+    - power: FP_O
+      output: FP_S
+    - sum:
+      output: FP_SUM
+    - concatenate: [FP_SUM.x, FP_SUM.y, FP_SUM.z]
+    - sum:
+      output: FP_SUM_ALL
+
+    # get number of force frames at the analog rate
+    - divide: [$length, $framerate]
+      output: measurement_duration
+    # - multiply: [measurement_duration, $analogFramerate] #number of force frames at the analog rate
+    - multiply: [measurement_duration, $framerate]
+      output: nframe
+
+    # MLSI metric
+    - divide: [FP_SUM.x, nframe]
+    - sqrt:
+      export: MLSI
+    
+    # APSI metric
+    - divide: [FP_SUM.y, nframe]
+    - sqrt:
+      export: APSI
+    
+    # VSI metric
+    - divide: [FP_SUM.z, nframe]
+    - sqrt:
+      export: VSI
+    
+    # DPSI metric
+    - divide: [FP_SUM_ALL, nframe]
+    - sqrt:
