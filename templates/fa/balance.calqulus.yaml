@@ -88,25 +88,27 @@
     - velocity: COP_zeroed
     - lowpass:
       cutoff: 6
+      output: COP_zeroed_vel_filt
     - max:
       export: COP_zeroed_vel_filt_max
-    - mean: $prev(2)
+    - mean: COP_zeroed_vel_filt
       export: COP_zeroed_vel_filt_mean
-    - magnitude: $prev(3)
+    - magnitude: COP_zeroed_vel_filt
     - mean:
       export: COP_zeroed_vel_filt_mag_mean
-    - max:
+    - max: $prev(2)
 
 - parameter: COP_zeroed_acc_filt_mag_max
   steps:
     - acceleration: COP_zeroed
     - lowpass:
       cutoff: 6
+      output: COP_zeroed_acc_filt
     - max:
       export: COP_zeroed_acc_filt_max
-    - mean: $prev(2)
+    - mean: COP_zeroed_acc_filt
       export: COP_zeroed_acc_filt_mean
-    - magnitude: $prev(3)
+    - magnitude: COP_zeroed_acc_filt
     - mean:
       export: COP_zeroed_acc_filt_mag_mean
     - max: $prev(2)
