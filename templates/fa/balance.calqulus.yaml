@@ -49,20 +49,12 @@
 ## SERIES ##
 ############
 
-#############
-## METRICS ##
-#############
-
-- parameter: Measurement_length
-  steps:
-    - divide: [$length, $framerate]
-
 - parameter: COP_zeroed
   where:
     name: Balance_L*
   steps:
     - import: LeftFootContact => foot
-    - vector: [foot.x, foot.y,foot.z]
+    - vector: [foot.x, foot.y, foot.z]
     - convert:
       from: mm
       to: m
@@ -75,7 +67,7 @@
     name: Balance_R*
   steps:
     - import: RightFootContact => foot
-    - vector: [foot.x, foot.y,foot.z]
+    - vector: [foot.x, foot.y, foot.z]
     - convert:
       from: mm
       to: m
@@ -83,10 +75,19 @@
     - mean:
     - subtract: [$prev(2), $prev]
 
+#############
+## METRICS ##
+#############
+
+- parameter: Measurement_length
+  steps:
+    - divide: [$length, $framerate]
+
 - parameter: COP_zeroed_vel_filt_mag_max
   steps:
     - velocity: COP_zeroed
     - lowpass:
+      cutoff: 6
     - max:
       export: COP_zeroed_vel_filt_max
     - mean: $prev(2)
@@ -100,6 +101,7 @@
   steps:
     - acceleration: COP_zeroed
     - lowpass:
+      cutoff: 6
     - max:
       export: COP_zeroed_acc_filt_max
     - mean: $prev(2)
@@ -145,10 +147,8 @@
       output: FP_SUM_ALL
 
     # get number of force frames at the analog rate
-    - divide: [$length, $framerate]
-      output: measurement_duration
-    # - multiply: [measurement_duration, $analogFramerate] #number of force frames at the analog rate
-    - multiply: [measurement_duration, $framerate]
+    # - multiply: [Measurement_length, $analogFramerate] #number of force frames at the analog rate
+    - multiply: [Measurement_length, $framerate]
       output: nframe
 
     # MLSI metric
