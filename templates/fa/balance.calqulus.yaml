@@ -120,8 +120,7 @@
     - subtract: [$prev, $prev(2)]
 
 # Dynamic Postural Stability Index -----------
-# Based on Wikstrom EA, Tillman MD, Kline KJ, Borsa PA (2006) Gender and Limb Differences in Dynamic Postural Stability During Landing. Clin J Sport Med 16:311-315
-# Based on example from https://c-motion.com/v3dwiki/index.php/Statistics_Example_3
+# Based on Erik A Wikstrom, Mark A Arrigenna,Mark D Tillman, and Paul A Borsa: Dynamic Postural Stability in Subjects With Braced, Functionally Unstable Ankles. J Athl Train. 2006; 41(3): 245–250. 
 
 # find out which plate is loaded
 - parameter: loaded_FP
@@ -134,40 +133,26 @@
   steps:
     - multiply: [$field(Weight; measurement; numeric), 9.81]
       output: bw
-    - vector: [0, 0, bw]
-      output: bw_vector
+
     - vector: [loaded_FP.fx, loaded_FP.fy, loaded_FP.fz]
       output: my_force
-    - subtract: [my_force, bw_vector]
-      output: FP_O
-    - power: FP_O
-      output: FP_S
+
+    - subtract: [0, my_force]
+    - power:
     - sum:
-      output: FP_SUM
-    - concatenate: [FP_SUM.x, FP_SUM.y, FP_SUM.z]
+      output: FS
+
+    - subtract: [bw, my_force.z]
+    - power:
+    - sum:
+      output: FSZ
+    - concatenate: [FS.x, FS.y, FSZ]
     - sum:
       output: FP_SUM_ALL
 
-    # get number of force frames at the analog rate
-    # - multiply: [Measurement_length, $analogFramerate] #number of force frames at the analog rate
+    # get number of force frames
     - multiply: [Measurement_length, $framerate]
       output: nframe
 
-    # MLSI metric
-    - divide: [FP_SUM.x, nframe]
-    - sqrt:
-      export: MLSI
-    
-    # APSI metric
-    - divide: [FP_SUM.y, nframe]
-    - sqrt:
-      export: APSI
-    
-    # VSI metric
-    - divide: [FP_SUM.z, nframe]
-    - sqrt:
-      export: VSI
-    
-    # DPSI metric
-    - divide: [FP_SUM_ALL, nframe]
-    - sqrt:
+    - sqrt: FP_SUM_ALL
+    - divide: [$prev, nframe]
