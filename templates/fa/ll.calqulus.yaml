@@ -10,6 +10,10 @@
 ## EVENTS ##
 ############
 
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
 - event: BOF
   steps:
     - import: [0]
@@ -49,7 +53,7 @@
     - min: LFT_DistEndVel.x
       frames: true
 
-- event: TouchDown
+- event: TouchDown_kinematics
   where:
     name: LL_L*
   steps:
@@ -60,6 +64,14 @@
     - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_min, temp_max]
     - min:
       frames: true
+
+- event: TouchDown
+  where:
+    name: LL_L*
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: TouchDown_kinematics
 
 - event: PlotStart
   where:
@@ -75,7 +87,7 @@
       then: PlotStart_stand
       else: TouchDown
 
-- event: TakeOff
+- event: TakeOff_kinematics
   where:
     name: LL_L*
   steps:
@@ -84,6 +96,14 @@
       value: 1
       direction: up
     - import: $prev@-1
+
+- event: TakeOff
+  where:
+    name: LL_L*
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: TakeOff_kinematics
 
 - event: Landing_L
   steps:
@@ -106,7 +126,7 @@
     - min: RFT_DistEndVel.x
       frames: true
 
-- event: TouchDown
+- event: TouchDown_kinematics
   where:
     name: LL_R*
   steps:
@@ -117,6 +137,14 @@
     - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_max, temp_max]
     - min: 
       frames: true
+
+- event: TouchDown
+  where:
+    name: LL_R*
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: TouchDown_kinematics
 
 - event: PlotStart
   where:
@@ -132,7 +160,7 @@
       then: PlotStart_stand
       else: TouchDown
 
-- event: TakeOff
+- event: TakeOff_kinematics
   where:
     name: LL_R*
   steps:
@@ -142,6 +170,14 @@
       value: 1
       direction: up
     - import: $prev@-1
+
+- event: TakeOff
+  where:
+    name: LL_R*
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: TakeOff_kinematics
 
 - event: Landing_R
   steps:
