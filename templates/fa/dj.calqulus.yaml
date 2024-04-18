@@ -10,6 +10,10 @@
 ## EVENTS ##
 ############
 
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
 - template: dj-events-kinematics.calqulus.yaml
 
 ############
