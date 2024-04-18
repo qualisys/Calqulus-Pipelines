@@ -1,6 +1,7 @@
 ############
 ## EVENTS ##
 ############
+
 - event: BOF
   steps:
     - import: [0]
@@ -14,7 +15,7 @@
     - subtract: [$length, 1]
 
 # Left
-- event: TouchDown_calqulus
+- event: TouchDown_kinematics
   where:
     name: Cutting_L*
   set: left
@@ -23,16 +24,25 @@
     - min: $prev
       frames: true
 
+- event: TouchDown_prio
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: UltimateTouchDown_L_ML
+
 - event: TouchDown
   where:
     name: Cutting_L*
   set: left
   steps:
-    - if: exists(UltimateTouchDown_L_ML)
-      then: UltimateTouchDown_L_ML
-      else: TouchDown_calqulus
+    - if: exists(TouchDown_prio)
+      then: TouchDown_prio
+      else: TouchDown_kinematics
 
-- event: TakeOff_calqulus
+- event: TakeOff_kinematics
   where:
     name: Cutting_L*
   set: left
@@ -44,14 +54,23 @@
       # keep: 1 #as of now we are indexing from zero
     - import: $prev@1
 
+- event: TakeOff_prio
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: UltimateTakeOff_L_ML
+
 - event: TakeOff
   where:
     name: Cutting_L*
   set: left
   steps:
-    - if: exists(UltimateTakeOff_L_ML)
-      then: UltimateTakeOff_L_ML
-      else: TakeOff_calqulus
+    - if: exists(TakeOff_prio)
+      then: TakeOff_prio
+      else: TakeOff_kinematics
 
 - event: temp_R1
   where:
@@ -103,7 +122,7 @@
     - import: $prev@1
 
 # Right
-- event: TouchDown_calqulus
+- event: TouchDown_kinematics
   where:
     name: Cutting_R*
   set: right
@@ -112,16 +131,25 @@
     - min: $prev
       frames: true
 
+- event: TouchDown_prio
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: UltimateTouchDown_R_ML
+
 - event: TouchDown
   where:
     name: Cutting_R*
   set: right
   steps:
-    - if: exists(UltimateTouchDown_R_ML)
-      then: UltimateTouchDown_R_ML
-      else: TouchDown_calqulus
+    - if: exists(TouchDown_prio)
+      then: TouchDown_prio
+      else: TouchDown_kinematics
 
-- event: TakeOff_calqulus
+- event: TakeOff_kinematics
   where:
     name: Cutting_R*
   set: right
@@ -132,14 +160,23 @@
     - eventMask: [$prev, TouchDown, EOF]
     - import: $prev@1
 
+- event: TakeOff_prio
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: UltimateTakeOff_R_ML
+
 - event: TakeOff
   where:
     name: Cutting_R*
   set: right
   steps:
-    - if: exists(UltimateTakeOff_R_ML)
-      then: UltimateTakeOff_R_ML
-      else: TakeOff_calqulus
+    - if: exists(TakeOff_prio)
+      then: TakeOff_prio
+      else: TakeOff_kinematics
 
 - event: temp_L1
   where:
