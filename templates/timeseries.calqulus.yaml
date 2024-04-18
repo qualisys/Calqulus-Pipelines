@@ -296,6 +296,8 @@
 
 # Left
 - parameter: Left GRF
+  where:
+    force: left
   set: left
   steps:
     - import: LeftFootContact => foot
@@ -304,6 +306,8 @@
     - divide: [$prev, BodyWeightNewton]
 
 - parameter: Left Hip Moment
+  where:
+    force: left
   set: left
   steps:
     - vector: [LeftHip.mx, LeftHip.my, LeftHip.mz]
@@ -311,24 +315,32 @@
     - multiply: [$prev,[-1,1,1]]
 
 - parameter: Left Hip Power
+  where:
+    force: left
   set: left
   steps:
     - vector: [LeftHip.p, LeftHip.p, LeftHip.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left Knee Moment
+  where:
+    force: left
   set: left
   steps:
     - vector: [LeftKnee.mx, LeftKnee.my, LeftKnee.mz]
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left Knee Power
+  where:
+    force: left
   set: left
   steps:
     - vector: [LeftKnee.p, LeftKnee.p, LeftKnee.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left Ankle Moment
+  where:
+    force: left
   set: left
   steps:
     - vector: [LeftAnkle.mx, LeftAnkle.my, LeftAnkle.mz]
@@ -336,12 +348,16 @@
     - multiply: [$prev,[-1,1,1]]
 
 - parameter: Left Ankle Power
+  where:
+    force: left
   set: left
   steps:
     - vector: [LeftAnkle.p, LeftAnkle.p, LeftAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Left_COP
+  where:
+    force: left
   set: left
   steps:
     - import: LeftFootContact => foot
@@ -351,6 +367,8 @@
       to: m
 
 - parameter: Left_COP_COM_distance
+  where:
+    force: left
   set: left
   steps:
     - multiply: [Left_COP, [-1,-1,-1]]
@@ -358,6 +376,8 @@
 
 # Right
 - parameter: Right GRF
+  where:
+    force: right
   set: right
   steps:
     - import: RightFootContact => foot
@@ -367,6 +387,8 @@
     - multiply: [$prev, [-1,1,1]]
 
 - parameter: Right Hip Moment
+  where:
+    force: right
   set: right
   steps:
     - vector: [RightHip.mx, RightHip.my, RightHip.mz]
@@ -374,12 +396,16 @@
     - multiply: [$prev,[-1,-1,-1]]
 
 - parameter: Right Hip Power
+  where:
+    force: right
   set: right
   steps:
     - vector: [RightHip.p, RightHip.p, RightHip.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right Knee Moment
+  where:
+    force: right
   set: right
   steps:
     - vector: [RightKnee.mx, RightKnee.my, RightKnee.mz]
@@ -387,12 +413,16 @@
     - multiply: [$prev,[1,-1,-1]]
 
 - parameter: Right Knee Power
+  where:
+    force: right
   set: right
   steps:
     - vector: [RightKnee.p, RightKnee.p, RightKnee.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right Ankle Moment
+  where:
+    force: right
   set: right
   steps:
     - vector: [RightAnkle.mx, RightAnkle.my, RightAnkle.mz]
@@ -400,12 +430,16 @@
     - multiply: [$prev,[-1,-1,-1]]
 
 - parameter: Right Ankle Power
+  where:
+    force: right
   set: right
   steps:
     - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
 - parameter: Right_COP
+  where:
+    force: right
   set: right
   steps:
     - import: RightFootContact => foot
@@ -415,6 +449,8 @@
       to: m
 
 - parameter: Right_COP_COM_distance
+  where:
+    force: right
   set: right
   steps:
     - multiply: [Right_COP, [-1,-1,-1]]
