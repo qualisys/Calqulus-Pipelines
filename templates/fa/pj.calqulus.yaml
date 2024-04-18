@@ -10,8 +10,12 @@
 ## EVENTS ##
 ############
 
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
 # Left
-- event: TakeOff_L
+- event: TakeOff_L_kinematics
   where:
     name: PJ_[LB]*
   steps:
@@ -20,7 +24,16 @@
       height: 0.5
       distance: 10
 
-- event: TouchDown_L
+- event: TakeOff_L
+  where:
+    name: PJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: TakeOff_L_kinematics
+
+- event: TouchDown_L_kinematics
   where:
     name: PJ_[LB]*
   steps:
@@ -29,6 +42,15 @@
     - peakFinder: 
       height: 0.5
       distance: 20
+
+- event: TouchDown_L
+  where:
+    name: PJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: TouchDown_L_kinematics
 
 - event: Max_knee_flex
   where:
@@ -54,7 +76,7 @@
       frames: true
 
 # Right
-- event: TakeOff_R
+- event: TakeOff_R_kinematics
   where:
     name: PJ_[RB]*
   steps:
@@ -63,7 +85,16 @@
       height: 0.5
       distance: 10
 
-- event: TouchDown_R
+- event: TakeOff_R
+  where:
+    name: PJ_[RB]*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: TakeOff_R_kinematics
+
+- event: TouchDown_R_kinematics
   where:
     name: PJ_[RB]*
   steps:
@@ -72,6 +103,15 @@
     - peakFinder: 
       height: 0.5
       distance: 20
+
+- event: TouchDown_R
+  where:
+    name: PJ_[RB]*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: TouchDown_R_kinematics
 
 - event: Max_knee_flex
   where:
