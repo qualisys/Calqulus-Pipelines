@@ -10,6 +10,10 @@
 ## EVENTS ##
 ############
 
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
 - event: EOF
   steps:
     - subtract: [$length, 1]
@@ -71,7 +75,7 @@
       height: 0.5
     - import: $prev@1
 
-- event: LON
+- event: LON_kinematics
   where:
     name: Acc_L*
   set: left
@@ -82,15 +86,33 @@
     - eventMask: [$prev, L_temp1, EOF]
     - import: $prev@1
 
+- event: LON
+  where:
+    name: Acc_L*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: LON_kinematics
+      
+- event: LOFF_kinematics
+  where:
+    name: Acc_L*
+  set: left
+  steps:
+    - eventMask: [LFT_DistEndVel.z, LON_kinematics, EOF]
+    - max:
+      frames: true
+
 - event: LOFF
   where:
     name: Acc_L*
   set: left
   steps:
-    - eventMask: [LFT_DistEndVel.z, LON, EOF]
-    - max:
-      frames: true
-
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: LOFF_kinematics
+      
 # Right
 - event: R_temp1
   where:
@@ -101,7 +123,7 @@
       height: 0.5
     - import: $prev@1
 
-- event: RON
+- event: RON_kinematics
   where:
     name: Acc_R*
   set: right
@@ -112,15 +134,33 @@
     - eventMask: [$prev, R_temp1, EOF]
     - import: $prev@1
 
+- event: RON
+  where:
+    name: Acc_R*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: RON_kinematics
+      
+- event: ROFF_kinematics
+  where:
+    name: Acc_R*
+  set: right
+  steps:
+    - eventMask: [RFT_DistEndVel.z, RON_kinematics, EOF]
+    - max:
+      frames: true
+
 - event: ROFF
   where:
     name: Acc_R*
   set: right
   steps:
-    - eventMask: [RFT_DistEndVel.z, RON, EOF]
-    - max:
-      frames: true
-
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: ROFF_kinematics
+      
 # Unified event names for web
 - event: LeftPlotStart
   where:

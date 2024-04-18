@@ -12,7 +12,7 @@
 
 - event: LOFF_force
   where:
-    name: ^(CMJ_|SJ_)[LB]*
+    force: left
   set: left
   steps:
     - threshold: Left GRF.z
@@ -24,7 +24,7 @@
     
 - event: LON_force
   where:
-    name: ^(CMJ_|SJ_)[LB]*
+    force: left
   set: left
   steps:
     - threshold: Left GRF.z
@@ -36,7 +36,7 @@
     
 - event: ROFF_force
   where:
-    name: ^(CMJ_|SJ_)[RB]*
+    force: right
   set: right
   steps:
     - threshold: Right GRF.z
@@ -48,7 +48,7 @@
     
 - event: RON_force
   where:
-    name: ^(CMJ_|SJ_)[RB]*
+    force: right
   set: right
   steps:
     - threshold: Right GRF.z
