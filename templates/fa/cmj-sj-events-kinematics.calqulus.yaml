@@ -30,7 +30,8 @@
     - max:
       frames: true
 
-- event: LOFF
+# LOFF - priority order is Kinetics > ML >  kinematics
+- event: LOFF_kinematics
   where:
     name: ^(CMJ_|SJ_)[LB]*
   set: left
@@ -42,7 +43,33 @@
       keep: -1
     - add: [$prev, 1]
     
-- event: LON
+- event: LOFF_prio1
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: TakeOff_L_ML
+
+- event: LOFF_prio2
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(LOFF_prio1)
+      then: LOFF_prio1
+      else: LOFF_kinematics
+
+- event: TakeOff_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - import: LOFF_prio2
+
+# LON - priority order is Kinetics > ML >  kinematics
+- event: LON_kinematics
   where:
     name: ^(CMJ_|SJ_)[LB]*
   set: left
@@ -51,38 +78,32 @@
       frames: true
     - subtract: [$prev, 1]
 
-- event: TouchDown_L_calqulus
+- event: LON_prio1
   where:
     name: ^(CMJ_|SJ_)[LB]*
   set: left
   steps:
-    - import: LON
+    - if: exists(LON_force)
+      then: LON_force
+      else: TouchDown_L_ML
+
+- event: LON_prio2
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(LON_prio1)
+      then: LON_prio1
+      else: LON_kinematics
 
 - event: TouchDown_L
   where:
     name: ^(CMJ_|SJ_)[LB]*
   set: left
   steps:
-    - if: exists(TouchDown_L_ML)
-      then: TouchDown_L_ML
-      else: TouchDown_L_calqulus
+    - import: LON_prio2
 
-- event: TakeOff_L_calqulus
-  where:
-    name: ^(CMJ_|SJ_)[LB]*
-  set: left
-  steps:
-    - import: LOFF
-
-- event: TakeOff_L
-  where:
-    name: ^(CMJ_|SJ_)[LB]*
-  set: left
-  steps:
-    - if: exists(TakeOff_L_ML)
-      then: TakeOff_L_ML
-      else: TakeOff_L_calqulus
-
+# Plotstart
 - event: PlotStart_L_calqulus
   where:
     name: ^(CMJ_|SJ_)[LB]*
@@ -93,7 +114,7 @@
     - threshold: RPV_CGVel.z
       value: -0.05
       direction: down
-    - eventMask: [$prev, BOF, TakeOff_L_calqulus]
+    - eventMask: [$prev, BOF, TakeOff_L]
       keep: -1
     # - add: [$prev, shift] #shift by -0.1 s
 
@@ -131,7 +152,7 @@
     - threshold: RPV_CGVel.z
       value: 0
       direction: up
-    - eventMask: [$prev, PlotStart_L_calqulus, TakeOff_L_calqulus]
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
 
 - event: Eccentric_end
   where:
@@ -151,7 +172,8 @@
     - max:
       frames: true
 
-- event: ROFF
+# ROFF
+- event: ROFF_kinematics
   where:
     name: ^(CMJ_|SJ_)[RB]*
   set: right
@@ -163,7 +185,33 @@
       keep: -1
     - add: [$prev, 1]
     
-- event: RON
+- event: ROFF_prio1
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: TakeOff_R_ML
+
+- event: ROFF_prio2
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(ROFF_prio1)
+      then: ROFF_prio1
+      else: ROFF_kinematics
+
+- event: TakeOff_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - import: ROFF_prio2
+
+# RON
+- event: RON_kinematics
   where:
     name: ^(CMJ_|SJ_)[RB]*
   set: right
@@ -172,38 +220,32 @@
       frames: true
     - subtract: [$prev, 1]
 
-- event: TouchDown_R_calqulus
+- event: RON_prio1
   where:
     name: ^(CMJ_|SJ_)[RB]*
   set: right
   steps:
-    - import: RON
+    - if: exists(RON_force)
+      then: RON_force
+      else: TouchDown_R_ML
+
+- event: RON_prio2
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(RON_prio1)
+      then: RON_prio1
+      else: RON_kinematics
 
 - event: TouchDown_R
   where:
     name: ^(CMJ_|SJ_)[RB]*
   set: right
   steps:
-    - if: exists(TouchDown_R_ML)
-      then: TouchDown_R_ML
-      else: TouchDown_R_calqulus
+    - import: RON_prio2
 
-- event: TakeOff_R_calqulus
-  where:
-    name: ^(CMJ_|SJ_)[RB]*
-  set: right
-  steps:
-    - import: ROFF
-
-- event: TakeOff_R
-  where:
-    name: ^(CMJ_|SJ_)[RB]*
-  set: right
-  steps:
-    - if: exists(TakeOff_R_ML)
-      then: TakeOff_R_ML
-      else: TakeOff_R_calqulus
-
+# Plotstart
 - event: PlotStart_R_calqulus
   where:
     name: ^(CMJ_|SJ_)[RB]*
@@ -214,7 +256,7 @@
     - threshold: RPV_CGVel.z
       value: -0.05
       direction: down
-    - eventMask: [$prev, BOF, TakeOff_R_calqulus]
+    - eventMask: [$prev, BOF, TakeOff_R]
       keep: -1
     # - subtract: [$prev, shift] #shift by -0.1 s
 
@@ -252,7 +294,7 @@
     - threshold: RPV_CGVel.z
       value: 0
       direction: up
-    - eventMask: [$prev, PlotStart_R_calqulus, TakeOff_R_calqulus]
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
 
 - event: Eccentric_end
   where:
@@ -269,12 +311,17 @@
     - concatenate: [TakeOff_L, TakeOff_R]
     - mean: 
 
-- event: PlotStart
+- event: TakeOff
   where:
-    name: ^(CMJ_|SJ_)B*
+    name: ^(CMJ_|SJ_)L*
   steps:
-    - concatenate: [PlotStart_L, PlotStart_R]
-    - mean: 
+    - mean: TakeOff_L
+
+- event: TakeOff
+  where:
+    name: ^(CMJ_|SJ_)R*
+  steps:
+    - mean: TakeOff_R
 
 - event: TouchDown
   where:
@@ -283,11 +330,24 @@
     - concatenate: [TouchDown_L, TouchDown_R]
     - mean: 
 
-- event: TakeOff
+- event: TouchDown
   where:
     name: ^(CMJ_|SJ_)L*
   steps:
-    - mean: LOFF
+    - mean: TouchDown_L
+
+- event: TouchDown
+  where:
+    name: ^(CMJ_|SJ_)R*
+  steps:
+    - mean: TouchDown_R
+
+- event: PlotStart
+  where:
+    name: ^(CMJ_|SJ_)B*
+  steps:
+    - concatenate: [PlotStart_L, PlotStart_R]
+    - mean: 
 
 - event: PlotStart
   where:
@@ -295,30 +355,12 @@
   steps:
     - mean: PlotStart_L
 
-- event: TouchDown
-  where:
-    name: ^(CMJ_|SJ_)L*
-  steps:
-    - mean: LON
-
-- event: TakeOff
-  where:
-    name: ^(CMJ_|SJ_)R*
-  steps:
-    - mean: ROFF
-
 - event: PlotStart
   where:
     name: ^(CMJ_|SJ_)R*
   steps:
     - mean: PlotStart_R
   
-- event: TouchDown
-  where:
-    name: ^(CMJ_|SJ_)R*
-  steps:
-    - mean: RON
-
 - event: TouchDown_100ms
   steps:
     - multiply: [0.1, $framerate]

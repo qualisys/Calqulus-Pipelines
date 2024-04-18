@@ -1,0 +1,60 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+- event: LOFF_force
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - threshold: Left GRF.z
+      value: 0.05
+      direction: down
+    - eventMask: [$prev, BOF, EOF]
+      # keep: -1
+    # - add: [$prev, 1]
+    
+- event: LON_force
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - threshold: Left GRF.z
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF, EOF]
+      # keep: -1
+    - subtract: [$prev, 1] #do we want first nonzero value or last zero value?
+    
+- event: ROFF_force
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - threshold: Right GRF.z
+      value: 0.05
+      direction: down
+    - eventMask: [$prev, BOF, EOF]
+      # keep: -1
+    # - add: [$prev, 1]
+    
+- event: RON_force
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - threshold: Right GRF.z
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF, EOF]
+      # keep: -1
+    - subtract: [$prev, 1] #do we want first nonzero value or last zero value?
+    
