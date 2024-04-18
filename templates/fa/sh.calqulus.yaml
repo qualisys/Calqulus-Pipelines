@@ -10,8 +10,12 @@
 ## EVENTS ##
 ############
 
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
 # Left
-- event: LON
+- event: LON_kinematics
   where:
     name: SH_L*
   set: left
@@ -21,7 +25,16 @@
       height: 0.3
     - add: [$prev, 1]
 
-- event: LOFF
+- event: LON
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: LON_kinematics
+
+- event: LOFF_kinematics
   where:
     name: SH_L*
   set: left
@@ -30,6 +43,15 @@
     - max: 
       frames: true
     - subtract: [$prev, 2]
+
+- event: LOFF
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: LOFF_kinematics
 
 - event: Left_On_Left_FP
   where:
@@ -94,7 +116,7 @@
       exclude: [Left_On_Right_FP]
 
 # Right
-- event: RON
+- event: RON_kinematics
   where:
     name: SH_R*
   set: right
@@ -104,7 +126,16 @@
       height: 0.3
     - add: [$prev, 1]
 
-- event: ROFF
+- event: RON
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: RON_kinematics
+
+- event: ROFF_kinematics
   where:
     name: SH_R*
   set: right
@@ -113,6 +144,15 @@
     - max: 
       frames: true
     - subtract: [$prev, 2]
+
+- event: ROFF
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: ROFF_kinematics
 
 - event: Right_On_Left_FP
   where:
