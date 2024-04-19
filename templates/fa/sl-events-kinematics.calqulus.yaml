@@ -11,7 +11,7 @@
     - subtract: [$length, 1]
 
 # Left
-- event: TouchDown
+- event: TouchDown_kinematics
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -19,6 +19,15 @@
     - min: LFT_DistEndVel.z
       frames: true
     - add: [$prev, 1]
+
+- event: TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: TouchDown_kinematics
 
 - event: Max_knee_flex
   where:
@@ -30,7 +39,7 @@
       frames: true
 
 # Right
-- event: TouchDown
+- event: TouchDown_kinematics
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -38,6 +47,15 @@
     - min: RFT_DistEndVel.z
       frames: true
     - add: [$prev, 1]
+
+- event: TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: TouchDown_kinematics
 
 - event: Max_knee_flex
   where:

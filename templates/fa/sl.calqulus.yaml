@@ -10,6 +10,10 @@
 ## EVENTS ##
 ############
 
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
 - template: sl-events-kinematics.calqulus.yaml
 
 ############
@@ -333,7 +337,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - marker: LHeelBack => heel
+    - marker: RHeelBack => heel
       space: VirtualLab
     - convert:
       from: mm
