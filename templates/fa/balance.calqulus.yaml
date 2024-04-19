@@ -22,26 +22,30 @@
 
 # Unified event names for web
 - event: LeftPlotStart
+  set: left
   where:
     name: Balance_L*
   steps:
     - import: BOF
 
 - event: LeftPlotEnd
+  set: left
   where:
     name: Balance_L*
   steps:
     - import: EOF
 
 - event: RightPlotStart
+  set: right
   where:
-    name: Balance_[R|L]*
+    name: Balance_R*
   steps:
     - import: BOF
 
 - event: RightPlotEnd
+  set: right
   where:
-    name: Balance_[R|L]*
+    name: Balance_R*
   steps:
     - import: EOF
 
