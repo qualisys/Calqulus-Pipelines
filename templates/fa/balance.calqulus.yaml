@@ -35,13 +35,13 @@
 
 - event: RightPlotStart
   where:
-    name: Balance_R*
+    name: Balance_[R|L]*
   steps:
     - import: BOF
 
 - event: RightPlotEnd
   where:
-    name: Balance_R*
+    name: Balance_[R|L]*
   steps:
     - import: EOF
 
