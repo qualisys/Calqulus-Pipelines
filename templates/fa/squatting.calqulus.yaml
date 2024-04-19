@@ -97,7 +97,7 @@
 
 ### entered events ###
 
-# If user enters manual events LON/LOFF/RON/ROFF rename them to TOP
+# If user enters manual events LON/LOFF/RON/ROFF in QTM rename them to TOP
 - event: TOP_entered_1
   steps:
     - if: exists(LON)
