@@ -25,8 +25,8 @@
     name: DJ_[LB]*
   set: left
   steps:
-    - if: exists(LON_force)
-      then: LON_force
+    - if: exists(LOFF_force)
+      then: LOFF_force
       else: TakeOff_L_ML
 
 - event: TakeOff_L
@@ -166,8 +166,8 @@
     name: DJ_[RB]*
   set: right
   steps:
-    - if: exists(RON_force)
-      then: RON_force
+    - if: exists(ROFF_force)
+      then: ROFF_force
       else: TakeOff_R_ML
 
 - event: TakeOff_R
