@@ -92,7 +92,7 @@
 # Plotstart
 - event: PlotStart_L_calqulus
   where:
-    name: ^(CMJ_|SJ_)[LB]*
+    name: ^CMJ_[LB]*
   set: left
   steps:
     # - divide: [$framerate, 10]
@@ -100,6 +100,20 @@
     - threshold: RPV_CGVel.z
       value: -0.05
       direction: down
+    - eventMask: [$prev, BOF, TakeOff_L]
+      keep: -1
+    # - add: [$prev, shift] #shift by -0.1 s
+
+- event: PlotStart_L_calqulus
+  where:
+    name: ^SJ_[LB]*
+  set: left
+  steps:
+    # - divide: [$framerate, 10]
+    #   output: shift
+    - threshold: RPV_CGVel.z
+      value: 0.05
+      direction: up
     - eventMask: [$prev, BOF, TakeOff_L]
       keep: -1
     # - add: [$prev, shift] #shift by -0.1 s
@@ -220,7 +234,7 @@
 # Plotstart
 - event: PlotStart_R_calqulus
   where:
-    name: ^(CMJ_|SJ_)[RB]*
+    name: ^CMJ_[RB]*
   set: right
   steps:
     # - divide: [$framerate, 10]
@@ -228,6 +242,20 @@
     - threshold: RPV_CGVel.z
       value: -0.05
       direction: down
+    - eventMask: [$prev, BOF, TakeOff_R]
+      keep: -1
+    # - subtract: [$prev, shift] #shift by -0.1 s
+
+- event: PlotStart_R_calqulus
+  where:
+    name: ^SJ_[RB]*
+  set: right
+  steps:
+    # - divide: [$framerate, 10]
+    #   output: shift
+    - threshold: RPV_CGVel.z
+      value: 0.05
+      direction: up
     - eventMask: [$prev, BOF, TakeOff_R]
       keep: -1
     # - subtract: [$prev, shift] #shift by -0.1 s
