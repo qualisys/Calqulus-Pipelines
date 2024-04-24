@@ -688,26 +688,26 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: LFS@1
+    - import: LON_force
 
 - event: LeftPlotEndForce
   set: left
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: LTO@-1
+    - import: LOFF_force
 
 - event: RightPlotStartForce
   set: right
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: RFS@1
+    - import: RON_force
 
 - event: RightPlotEndForce
   set: right
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: RTO@-1
+    - import: ROFF_force
 
