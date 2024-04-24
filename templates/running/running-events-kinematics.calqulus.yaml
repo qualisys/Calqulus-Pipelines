@@ -660,26 +660,26 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: LFS
+    - import: LFS@1
 
 - event: LeftPlotEnd
   set: left
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: LTO
+    - import: LTO@-1
 
 - event: RightPlotStart
   set: right
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: RFS
+    - import: RFS@1
 
 - event: RightPlotEnd
   set: right
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: RTO
+    - import: RTO@-1
 
