@@ -10,6 +10,10 @@
 ## EVENTS ##
 ############
 
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
 - event: BOF
   steps:
     - import: [0]
@@ -44,6 +48,26 @@
     - if: exists(ROFF)
       then: ROFF
       else: EOF
+
+- event: LeftPlotStartForce
+  set: left
+  steps:
+    - import: LON_force
+
+- event: LeftPlotEndForce
+  set: left
+  steps:
+    - import: LOFF_force
+
+- event: RightPlotStartForce
+  set: right
+  steps:
+    - import: RON_force
+
+- event: RightPlotEndForce
+  set: right
+  steps:
+    - import: ROFF_force
 
 ############
 ## SERIES ##
