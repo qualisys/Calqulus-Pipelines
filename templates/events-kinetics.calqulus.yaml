@@ -15,7 +15,9 @@
     force: left
   set: left
   steps:
-    - threshold: Left GRF.z
+    - import: Left GRF.z
+    - lowpass:
+    - threshold: $prev
       value: 0.05
       direction: down
     - eventMask: [$prev, BOF, EOF]
@@ -27,19 +29,23 @@
     force: left
   set: left
   steps:
-    - threshold: Left GRF.z
+    - import: Left GRF.z
+    - lowpass:
+    - threshold: $prev
       value: 0.05
       direction: up
     - eventMask: [$prev, BOF, EOF]
       # keep: -1
-    - subtract: [$prev, 1] #do we want first nonzero value or last zero value?
+    # - subtract: [$prev, 1] #do we want first nonzero value or last zero value?
     
 - event: ROFF_force
   where:
     force: right
   set: right
   steps:
-    - threshold: Right GRF.z
+    - import: Right GRF.z
+    - lowpass:
+    - threshold: $prev
       value: 0.05
       direction: down
     - eventMask: [$prev, BOF, EOF]
@@ -51,10 +57,12 @@
     force: right
   set: right
   steps:
-    - threshold: Right GRF.z
+    - import: Right GRF.z
+    - lowpass:
+    - threshold: $prev
       value: 0.05
       direction: up
     - eventMask: [$prev, BOF, EOF]
       # keep: -1
-    - subtract: [$prev, 1] #do we want first nonzero value or last zero value?
+    # - subtract: [$prev, 1] #do we want first nonzero value or last zero value?
     
