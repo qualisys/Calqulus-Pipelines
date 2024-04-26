@@ -52,22 +52,30 @@
 - event: LeftPlotStartForce
   set: left
   steps:
-    - import: LON_force
+    - if: exists(LON_force)
+      then: LON_force
+      else: BOF
 
 - event: LeftPlotEndForce
   set: left
   steps:
-    - import: LOFF_force
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: EOF
 
 - event: RightPlotStartForce
   set: right
   steps:
-    - import: RON_force
+    - if: exists(RON_force)
+      then: RON_force
+      else: BOF
 
 - event: RightPlotEndForce
   set: right
   steps:
-    - import: ROFF_force
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: EOF
 
 ############
 ## SERIES ##
