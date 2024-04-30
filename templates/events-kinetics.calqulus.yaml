@@ -36,7 +36,7 @@
       direction: up
     - eventMask: [$prev, BOF, EOF]
       # keep: -1
-    - subtract: [$prev, 1] #do we want first nonzero value or last zero value?
+    - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     
 - event: ROFF_force
   where:
@@ -64,5 +64,5 @@
       direction: up
     - eventMask: [$prev, BOF, EOF]
       # keep: -1
-    - subtract: [$prev, 1] #do we want first nonzero value or last zero value?
+    - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     
