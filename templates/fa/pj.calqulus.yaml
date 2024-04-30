@@ -18,6 +18,7 @@
 - event: TakeOff_L_kinematics
   where:
     name: PJ_[LB]*
+  set: left
   steps:
     - lowpass: PelvisCGPos_vel.z
     - peakFinder:
@@ -36,6 +37,7 @@
 - event: TouchDown_L_kinematics
   where:
     name: PJ_[LB]*
+  set: left
   steps:
     - negate: PelvisCGPos_vel.z
     - lowpass:
@@ -79,6 +81,7 @@
 - event: TakeOff_R_kinematics
   where:
     name: PJ_[RB]*
+  set: right
   steps:
     - lowpass: PelvisCGPos_vel.z
     - peakFinder: 
@@ -97,6 +100,7 @@
 - event: TouchDown_R_kinematics
   where:
     name: PJ_[RB]*
+  set: right
   steps:
     - negate: PelvisCGPos_vel.z
     - lowpass:
@@ -164,24 +168,28 @@
 - event: LeftPlotStart
   where:
     name: PJ_[LB]*
+  set: left
   steps:
     - import: TouchDown_L
 
 - event: LeftPlotEnd
   where:
     name: PJ_[LB]*
+  set: left
   steps:
     - import: TakeOff_L
 
 - event: RightPlotStart
   where:
     name: PJ_[RB]*
+  set: right
   steps:
     - import: TouchDown_R
 
 - event: RightPlotEnd
   where:
     name: PJ_[RB]*
+  set: right
   steps:
     - import: TakeOff_R
 

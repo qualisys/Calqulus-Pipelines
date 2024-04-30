@@ -220,24 +220,28 @@
 - event: LeftPlotStart
   where:
     name: SH_L*
+  set: left
   steps:
     - import: LON
 
 - event: LeftPlotEnd
   where:
     name: SH_L*
+  set: left
   steps:
     - import: LOFF
 
 - event: RightPlotStart
   where:
     name: SH_R*
+  set: right
   steps:
     - import: RON
 
 - event: RightPlotEnd
   where:
     name: SH_R*
+  set: right
   steps:
     - import: ROFF
 

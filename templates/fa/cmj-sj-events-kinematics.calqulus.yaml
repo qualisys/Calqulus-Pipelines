@@ -370,6 +370,7 @@
 - event: PlotEnd_L # We might need to review this after dependency issue is resolved
   where:
     name: ^(CMJ_|SJ_)[LB]*
+  set: left
   steps:
     - subtract: [EOF, TouchDown_L]
       output: diff
@@ -384,6 +385,7 @@
 - event: PlotEnd_R
   where:
     name: ^(CMJ_|SJ_)[RB]*
+  set: right
   steps:
     - subtract: [EOF, TouchDown_R]
       output: diff
@@ -399,23 +401,27 @@
 - event: LeftPlotStart
   where:
     name: ^(CMJ_|SJ_)[LB]*
+  set: left
   steps:
     - import: PlotStart_L
 
 - event: RightPlotStart
   where:
     name: ^(CMJ_|SJ_)[RB]*
+  set: right
   steps:
     - import: PlotStart_R
 
 - event: LeftPlotEnd
   where:
     name: ^(CMJ_|SJ_)[LB]*
+  set: left
   steps:
     - import: PlotEnd_L
 
 - event: RightPlotEnd
   where:
     name: ^(CMJ_|SJ_)[RB]*
+  set: right
   steps:
     - import: PlotEnd_R

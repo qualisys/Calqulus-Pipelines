@@ -172,24 +172,28 @@
 - event: LeftPlotStart
   where:
     name: COD_L*
+  set: left
   steps:
     - import: LON
 
 - event: LeftPlotEnd
   where:
     name: COD_L*
+  set: left
   steps:
     - import: LOFF
 
 - event: RightPlotStart
   where:
     name: COD_R*
+  set: right
   steps:
     - import: RON
 
 - event: RightPlotEnd
   where:
     name: COD_R*
+  set: right
   steps:
     - import: ROFF
 

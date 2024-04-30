@@ -110,23 +110,27 @@
 - event: LeftPlotStart
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
   steps:
     - import: TouchDown
 
 - event: LeftPlotEnd
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
   steps:
     - import: PlotEnd
 
 - event: RightPlotStart
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
   steps:
     - import: TouchDown
 
 - event: RightPlotEnd
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
   steps:
     - import: PlotEnd

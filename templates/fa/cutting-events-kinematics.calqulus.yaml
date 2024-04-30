@@ -268,23 +268,27 @@
 - event: LeftPlotStart
   where:
     name: Cutting_L*
+  set: left
   steps:
     - import: TouchDown
 
 - event: LeftPlotEnd
   where:
     name: Cutting_L*
+  set: left
   steps:
     - import: TakeOff
 
 - event: RightPlotStart
   where:
     name: Cutting_R*
+  set: right
   steps:
     - import: TouchDown
 
 - event: RightPlotEnd
   where:
     name: Cutting_R*
+  set: right
   steps:
     - import: TakeOff

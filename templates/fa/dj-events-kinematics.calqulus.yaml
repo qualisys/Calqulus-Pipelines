@@ -342,23 +342,27 @@
 - event: LeftPlotStart
   where:
     name: DJ_[LB]*
+  set: left
   steps:
     - import: TouchDown_L
 
 - event: RightPlotStart
   where:
     name: DJ_[RB]*
+  set: right
   steps:
     - import: TouchDown_R
 
 - event: LeftPlotEnd
   where:
     name: DJ_[LB]*
+  set: left
   steps:
     - import: TakeOff_L
 
 - event: RightPlotEnd
   where:
     name: DJ_[RB]*
+  set: right
   steps:
     - import: TakeOff_R

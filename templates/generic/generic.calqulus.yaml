@@ -26,24 +26,28 @@
 
 # Unified event names for web
 - event: LeftPlotStart
+  set: left
   steps:
     - if: exists(LON)
       then: LON
       else: BOF
 
 - event: LeftPlotEnd
+  set: left
   steps:
     - if: exists(LOFF)
       then: LOFF
       else: EOF
 
 - event: RightPlotStart
+  set: right
   steps:
     - if: exists(RON)
       then: RON
       else: BOF
 
 - event: RightPlotEnd
+  set: right
   steps:
     - if: exists(ROFF)
       then: ROFF

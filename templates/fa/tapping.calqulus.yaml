@@ -96,18 +96,22 @@
 
 # Unified event names for web
 - event: LeftPlotStart
+  set: left
   steps:
     - import: LON
 
 - event: LeftPlotEnd
+  set: left
   steps:
     - import: LOFF
 
 - event: RightPlotStart
+  set: right
   steps:
     - import: RON
 
 - event: RightPlotEnd
+  set: right
   steps:
     - import: ROFF
 

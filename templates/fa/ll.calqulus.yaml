@@ -189,24 +189,28 @@
 - event: LeftPlotStart
   where:
     name: LL_L*
+  set: left
   steps:
     - import: PlotStart
 
 - event: LeftPlotEnd
   where:
     name: LL_L*
+  set: left
   steps:
     - import: TakeOff
 
 - event: RightPlotStart
   where:
     name: LL_R*
+  set: right
   steps:
     - import: PlotStart
 
 - event: RightPlotEnd
   where:
     name: LL_R*
+  set: right
   steps:
     - import: TakeOff
 
