@@ -213,9 +213,9 @@
     name: DJ_[RB]*
   set: right
   steps:
-    - if: exists(TouchDown_R_ML)
-      then: TouchDown_R_ML
-      else: TouchDown_R_calqulus
+    - if: exists(TouchDown_prio)
+      then: TouchDown_prio
+      else: TouchDown_R_kinematics
 
 - event: Landing_R_kinematics
   where:
