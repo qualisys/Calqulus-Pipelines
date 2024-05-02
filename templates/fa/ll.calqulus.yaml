@@ -73,7 +73,7 @@
       then: LON_force
       else: TouchDown_kinematics
 
-- event: PlotStart
+- event: TouchDown_prio
   where:
     name: LL_L*
   steps:
@@ -86,6 +86,14 @@
     - if: (first < median && median < last) || (first > median && median > last)
       then: PlotStart_stand
       else: TouchDown
+
+- event: PlotStart
+  where:
+    name: LL_L*
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: TouchDown_prio
 
 - event: TakeOff_kinematics
   where:
@@ -146,7 +154,7 @@
       then: RON_force
       else: TouchDown_kinematics
 
-- event: PlotStart
+- event: TouchDown_prio
   where:
     name: LL_R*
   steps:
@@ -159,6 +167,14 @@
     - if: (first < median && median < last) || (first > median && median > last)
       then: PlotStart_stand
       else: TouchDown
+
+- event: PlotStart
+  where:
+    name: LL_R*
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: TouchDown_prio
 
 - event: TakeOff_kinematics
   where:
