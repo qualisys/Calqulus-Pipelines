@@ -57,4 +57,5 @@
 - template: templates/fa/balance.calqulus.yaml
   where:
     name: Balance*
+    force: any # Balance session requires force plates presence
 

@@ -56,6 +56,7 @@
 - parameter: COP_zeroed
   where:
     name: Balance_L*
+    force: left
   steps:
     - import: LeftFootContact => foot
     - vector: [foot.x, foot.y, foot.z]
@@ -69,6 +70,7 @@
 - parameter: COP_zeroed
   where:
     name: Balance_R*
+    force: right
   steps:
     - import: RightFootContact => foot
     - vector: [foot.x, foot.y, foot.z]

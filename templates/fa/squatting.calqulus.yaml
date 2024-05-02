@@ -364,12 +364,14 @@
 - parameter: Total GRF
   where:
     name: Squatting_B*
+    force: both
   steps:
     - add: [Left GRF, Right GRF]
 
 - parameter: Total GRF_max_concentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Total GRF, Pelvis_lowest, TOP]
     - max:
@@ -377,6 +379,7 @@
 - parameter: Total GRF_mean_concentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Total GRF, Pelvis_lowest, TOP]
     - mean:
@@ -384,6 +387,7 @@
 - parameter: Total GRF_max_eccentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Total GRF, TOP, Pelvis_lowest]
     - max:
@@ -391,6 +395,7 @@
 - parameter: Total GRF_mean_eccentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Total GRF, TOP, Pelvis_lowest]
     - mean:
@@ -399,6 +404,7 @@
 - parameter: Left GRF_max_concentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - max:
@@ -406,6 +412,7 @@
 - parameter: Left GRF_mean_concentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - mean:
@@ -413,6 +420,7 @@
 - parameter: Left GRF_max_eccentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - max:
@@ -420,6 +428,7 @@
 - parameter: Left GRF_mean_eccentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - mean:
@@ -427,6 +436,7 @@
 - parameter: Left GRF_max_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Left GRF, TOP, TOP]
     - max:
@@ -435,6 +445,7 @@
 - parameter: Right GRF_max_concentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - max:
@@ -442,6 +453,7 @@
 - parameter: Right GRF_mean_concentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - mean:
@@ -449,6 +461,7 @@
 - parameter: Right GRF_max_eccentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - max:
@@ -456,6 +469,7 @@
 - parameter: Right GRF_mean_eccentric_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - mean:
@@ -463,6 +477,7 @@
 - parameter: Right GRF_max_Squat_B
   where:
     name: Squatting_B*
+    force: both
   steps:
     - eventMask: [Right GRF, TOP, TOP]
     - max:
@@ -471,6 +486,7 @@
 - parameter: Left GRF_max_concentric_Squat_L
   where:
     name: Squatting_L*
+    force: left
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - max:
@@ -478,6 +494,7 @@
 - parameter: Left GRF_mean_concentric_Squat_L
   where:
     name: Squatting_L*
+    force: left
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - mean:
@@ -485,6 +502,7 @@
 - parameter: Left GRF_max_eccentric_Squat_L
   where:
     name: Squatting_L*
+    force: left
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - max:
@@ -492,6 +510,7 @@
 - parameter: Left GRF_mean_eccentric_Squat_L
   where:
     name: Squatting_L*
+    force: left
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - mean:
@@ -499,6 +518,7 @@
 - parameter: Left GRF_max_Squat_L
   where:
     name: Squatting_L*
+    force: left
   steps:
     - eventMask: [Left GRF, TOP, TOP]
     - max:
@@ -507,6 +527,7 @@
 - parameter: Right GRF_max_concentric_Squat_R
   where:
     name: Squatting_R*
+    force: right
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - max:
@@ -514,6 +535,7 @@
 - parameter: Right GRF_mean_concentric_Squat_R
   where:
     name: Squatting_R*
+    force: right
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - mean:
@@ -521,6 +543,7 @@
 - parameter: Right GRF_max_eccentric_Squat_R
   where:
     name: Squatting_R*
+    force: right
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - max:
@@ -528,6 +551,7 @@
 - parameter: Right GRF_mean_eccentric_Squat_R
   where:
     name: Squatting_R*
+    force: right
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - mean:
@@ -535,6 +559,7 @@
 - parameter: Right GRF_max_Squat_R
   where:
     name: Squatting_R*
+    force: right
   steps:
     - eventMask: [Right GRF, TOP, TOP]
     - max:

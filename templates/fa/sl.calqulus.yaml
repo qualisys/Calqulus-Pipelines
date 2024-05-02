@@ -355,6 +355,7 @@
 - parameter: Left Hip Moment_max_knee_flex
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
   set: left
   steps:
     - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
@@ -363,6 +364,7 @@
 - parameter: Left Knee Moment_max_knee_flex
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
   set: left
   steps:
     - eventMask: [Left Knee Moment, TouchDown, Max_knee_flex]
@@ -371,6 +373,7 @@
 - parameter: Left Ankle Moment_max_knee_flex
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
   set: left
   steps:
     - eventMask: [Left Ankle Moment, TouchDown, Max_knee_flex]
@@ -379,6 +382,7 @@
 - parameter: Left Hip Moment_mean
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
   set: left
   steps:
     - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
@@ -387,6 +391,7 @@
 - parameter: Left Knee Moment_mean
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
   set: left
   steps:
     - eventMask: [Left Knee Moment, TouchDown, Max_knee_flex]
@@ -395,6 +400,7 @@
 - parameter: Left Knee Moment_max
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
   set: left
   steps:
     - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
@@ -403,6 +409,7 @@
 - parameter: Left GRF_max_landing
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
   set: left
   steps:
     - eventMask: [Left GRF, TouchDown, PlotEnd]
@@ -411,6 +418,7 @@
 - parameter: Left GRF_mean_landing
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
   set: left
   steps:
     - eventMask: [Left GRF, TouchDown, PlotEnd]
@@ -420,6 +428,7 @@
 - parameter: Right Hip Moment_max_knee_flex
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
   set: right
   steps:
     - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
@@ -428,6 +437,7 @@
 - parameter: Right Knee Moment_max_knee_flex
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
   set: right
   steps:
     - eventMask: [Right Knee Moment, TouchDown, Max_knee_flex]
@@ -436,6 +446,7 @@
 - parameter: Right Ankle Moment_max_knee_flex
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
   set: right
   steps:
     - eventMask: [Right Ankle Moment, TouchDown, Max_knee_flex]
@@ -444,6 +455,7 @@
 - parameter: Right Hip Moment_mean
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
   set: right
   steps:
     - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
@@ -452,6 +464,7 @@
 - parameter: Right Knee Moment_mean
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
   set: right
   steps:
     - eventMask: [Right Knee Moment, TouchDown, Max_knee_flex]
@@ -460,6 +473,7 @@
 - parameter: Right Knee Moment_max
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
   set: right
   steps:
     - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
@@ -468,6 +482,7 @@
 - parameter: Right GRF_max_landing
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
   set: right
   steps:
     - eventMask: [Right GRF, TouchDown, PlotEnd]
@@ -476,6 +491,7 @@
 - parameter: Right GRF_mean_landing
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
   set: right
   steps:
     - eventMask: [Right GRF, TouchDown, PlotEnd]

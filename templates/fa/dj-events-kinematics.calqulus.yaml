@@ -20,6 +20,15 @@
       frames: true
     - add: [$prev, 3]
 
+- event: TakeOff_prio2
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(TakeOff_L_ML)
+      then: TakeOff_L_ML
+      else: TakeOff_L_kinematics
+
 - event: TakeOff_prio
   where:
     name: DJ_[LB]*
@@ -27,7 +36,7 @@
   steps:
     - if: exists(LOFF_force)
       then: LOFF_force
-      else: TakeOff_L_ML
+      else: TakeOff_prio2
 
 - event: TakeOff_L
   where:
@@ -56,7 +65,18 @@
     name: DJ_[LB]*
   set: left
   steps:
-    - import: LON_force@1
+    - if: exists(LON_force)
+      then: LON_force@1
+      else: TouchDown_L_kinematics
+
+- event: TouchDown_prio2
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(UltimateTakeOff_L_ML)
+      then: UltimateTakeOff_L_ML
+      else: TouchDown_L_kinematics
 
 - event: TouchDown_prio
   where:
@@ -65,7 +85,7 @@
   steps:
     - if: exists(LOFF_force)
       then: TouchDown_L_kinetics
-      else: UltimateTakeOff_L_ML
+      else: TouchDown_prio2
 
 - event: TouchDown_L
   where:
@@ -91,7 +111,18 @@
     name: DJ_[LB]*
   set: left
   steps:
-    - import: LON_force@2
+    - if: exists(LON_force)
+      then: LON_force@2
+      else: Landing_L_kinematics
+
+- event: Landing_prio2
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(Landing_L_ML)
+      then: Landing_L_ML
+      else: Landing_L_kinematics
 
 - event: Landing_prio
   where:
@@ -100,7 +131,7 @@
   steps:
     - if: exists(Landing_L_kinetics)
       then: Landing_L_kinetics
-      else: Landing_L_ML
+      else: Landing_prio2
 
 - event: Landing_L
   where:
@@ -161,6 +192,15 @@
       frames: true
     - add: [$prev, 3]
 
+- event: TakeOff_prio2
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(TakeOff_R_ML)
+      then: TakeOff_R_ML
+      else: TakeOff_R_kinematics
+
 - event: TakeOff_prio
   where:
     name: DJ_[RB]*
@@ -168,7 +208,7 @@
   steps:
     - if: exists(ROFF_force)
       then: ROFF_force
-      else: TakeOff_R_ML
+      else: TakeOff_prio2
 
 - event: TakeOff_R
   where:
@@ -197,7 +237,18 @@
     name: DJ_[RB]*
   set: right
   steps:
-    - import: RON_force@1
+    - if: exists(RON_force)
+      then: RON_force@1
+      else: TouchDown_R_kinematics
+
+- event: TouchDown_prio2
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(UltimateTakeOff_R_ML)
+      then: UltimateTakeOff_R_ML
+      else: TouchDown_R_kinematics
 
 - event: TouchDown_prio
   where:
@@ -206,7 +257,7 @@
   steps:
     - if: exists(ROFF_force)
       then: TouchDown_R_kinetics
-      else: UltimateTakeOff_R_ML
+      else: TouchDown_prio2
 
 - event: TouchDown_R
   where:
@@ -232,7 +283,18 @@
     name: DJ_[RB]*
   set: right
   steps:
-    - import: RON_force@2
+    - if: exists(RON_force)
+      then: RON_force@2
+      else: Landing_R_kinematics
+
+- event: Landing_prio2
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(Landing_R_ML)
+      then: Landing_R_ML
+      else: Landing_R_kinematics
 
 - event: Landing_prio
   where:
