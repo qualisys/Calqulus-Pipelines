@@ -42,7 +42,16 @@
     - eventMask: [$prev, BOF, temp_L_max]
       keep: -1
     - add: [$prev, 1]
-    
+
+- event: LOFF_prio2
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(TakeOff_L_ML)
+      then: TakeOff_L_ML
+      else: LOFF_kinematics
+
 - event: LOFF_prio
   where:
     name: ^(CMJ_|SJ_)[LB]*
@@ -50,7 +59,7 @@
   steps:
     - if: exists(LOFF_force)
       then: LOFF_force
-      else: TakeOff_L_ML
+      else: LOFF_prio2
 
 - event: TakeOff_L
   where:
@@ -71,6 +80,15 @@
       frames: true
     - subtract: [$prev, 1]
 
+- event: LON_prio2
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(TouchDown_L_ML)
+      then: TouchDown_L_ML
+      else: LON_kinematics
+
 - event: LON_prio
   where:
     name: ^(CMJ_|SJ_)[LB]*
@@ -78,7 +96,7 @@
   steps:
     - if: exists(LON_force)
       then: LON_force
-      else: TouchDown_L_ML
+      else: LON_prio2
 
 - event: TouchDown_L
   where:
@@ -185,6 +203,15 @@
       keep: -1
     - add: [$prev, 1]
     
+- event: ROFF_prio2
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(TakeOff_R_ML)
+      then: TakeOff_R_ML
+      else: ROFF_kinematics
+
 - event: ROFF_prio
   where:
     name: ^(CMJ_|SJ_)[RB]*
@@ -192,7 +219,7 @@
   steps:
     - if: exists(ROFF_force)
       then: ROFF_force
-      else: TakeOff_R_ML
+      else: ROFF_prio2
 
 - event: TakeOff_R
   where:
@@ -213,6 +240,15 @@
       frames: true
     - subtract: [$prev, 1]
 
+- event: RON_prio2
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(TouchDown_R_ML)
+      then: TouchDown_R_ML
+      else: RON_kinematics
+
 - event: RON_prio
   where:
     name: ^(CMJ_|SJ_)[RB]*
@@ -220,7 +256,7 @@
   steps:
     - if: exists(RON_force)
       then: RON_force
-      else: TouchDown_R_ML
+      else: RON_prio2
 
 - event: TouchDown_R
   where:
