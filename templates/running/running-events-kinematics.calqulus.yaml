@@ -687,6 +687,7 @@
   set: left
   where:
     name: ^(Running|Gait)*
+    force: left
   steps:
     - import: LON_force
 
@@ -694,6 +695,7 @@
   set: left
   where:
     name: ^(Running|Gait)*
+    force: left
   steps:
     - import: LOFF_force
 
@@ -701,6 +703,7 @@
   set: right
   where:
     name: ^(Running|Gait)*
+    force: right
   steps:
     - import: RON_force
 
@@ -708,6 +711,7 @@
   set: right
   where:
     name: ^(Running|Gait)*
+    force: right
   steps:
     - import: ROFF_force
 

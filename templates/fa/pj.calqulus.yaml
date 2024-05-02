@@ -280,12 +280,14 @@
 - parameter: Left Power
   where:
     name: PJ_B*
+    force: both
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Left Power_min_ecc_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Left Power, TouchDown, COM_MIN]
     - min: $prev.z
@@ -293,6 +295,7 @@
 - parameter: Left Power_max_conc_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - max: $prev.z
@@ -300,6 +303,7 @@
 - parameter: Left GRF_max_ecc_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Left GRF, TouchDown, COM_MIN]
     - max: $prev.z
@@ -307,6 +311,7 @@
 - parameter: Left GRF_max_conc_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Left GRF, COM_MIN, TakeOff]
     - max: $prev.z
@@ -314,6 +319,7 @@
 - parameter: Left GRF_max_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Left GRF, TouchDown, TakeOff]
     - max: $prev.z
@@ -321,6 +327,7 @@
 - parameter: Left Power_max_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Left Power, TouchDown, TakeOff]
     - max: $prev.z
@@ -329,6 +336,7 @@
 - parameter: Left GRF_decrement_pct_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - import: Left GRF_max_PJ_B@1
       output: first
@@ -340,6 +348,7 @@
 - parameter: Left Power_decrement_pct_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - import: Left Power_max_PJ_B@1
       output: first
@@ -352,12 +361,14 @@
 - parameter: Right Power
   where:
     name: PJ_B*
+    force: both
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
 
 - parameter: Right Power_min_ecc_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Right Power, TouchDown, COM_MIN]
     - min: $prev.z
@@ -365,6 +376,7 @@
 - parameter: Right Power_max_conc_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - max: $prev.z
@@ -372,6 +384,7 @@
 - parameter: Right GRF_max_ecc_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Right GRF, TouchDown, COM_MIN]
     - max: $prev.z
@@ -379,6 +392,7 @@
 - parameter: Right GRF_max_conc_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Right GRF, COM_MIN, TakeOff]
     - max: $prev.z
@@ -386,6 +400,7 @@
 - parameter: Right GRF_max_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Right GRF, TouchDown, TakeOff]
     - max: $prev.z
@@ -393,6 +408,7 @@
 - parameter: Right Power_max_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - eventMask: [Right Power, TouchDown, TakeOff]
     - max: $prev.z
@@ -401,6 +417,7 @@
 - parameter: Right GRF_decrement_pct_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - import: Right GRF_max_PJ_B@1
       output: first
@@ -412,6 +429,7 @@
 - parameter: Right Power_decrement_pct_PJ_B
   where:
     name: PJ_B*
+    force: both
   steps:
     - import: Right Power_max_PJ_B@1
       output: first
@@ -424,12 +442,14 @@
 - parameter: Left Power
   where:
     name: PJ_L*
+    force: left
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Left Power_min_ecc_PJ_L
   where:
     name: PJ_L*
+    force: left
   steps:
     - eventMask: [Left Power, TouchDown, COM_MIN]
     - min: $prev.z
@@ -437,6 +457,7 @@
 - parameter: Left Power_max_conc_PJ_L
   where:
     name: PJ_L*
+    force: left
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - max: $prev.z
@@ -444,6 +465,7 @@
 - parameter: Left GRF_max_ecc_PJ_L
   where:
     name: PJ_L*
+    force: left
   steps:
     - eventMask: [Left GRF, TouchDown, COM_MIN]
     - max: $prev.z
@@ -451,6 +473,7 @@
 - parameter: Left GRF_max_conc_PJ_L
   where:
     name: PJ_L*
+    force: left
   steps:
     - eventMask: [Left GRF, COM_MIN, TakeOff]
     - max: $prev.z
@@ -458,6 +481,7 @@
 - parameter: Left GRF_max_PJ_L
   where:
     name: PJ_L*
+    force: left
   steps:
     - eventMask: [Left GRF, TouchDown, TakeOff]
     - max: $prev.z
@@ -465,6 +489,7 @@
 - parameter: Left Power_max_PJ_L
   where:
     name: PJ_L*
+    force: left
   steps:
     - eventMask: [Left Power, TouchDown, TakeOff]
     - max: $prev.z
@@ -473,6 +498,7 @@
 - parameter: Left GRF_decrement_pct_PJ_L
   where:
     name: PJ_L*
+    force: left
   steps:
     - import: Left GRF_max_PJ_L@1
       output: first
@@ -484,6 +510,7 @@
 - parameter: Left Power_decrement_pct_PJ_L
   where:
     name: PJ_L*
+    force: left
   steps:
     - import: Left Power_max_PJ_L@1
       output: first
@@ -496,12 +523,14 @@
 - parameter: Right Power
   where:
     name: PJ_R*
+    force: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
 
 - parameter: Right Power_min_ecc_PJ_R
   where:
     name: PJ_R*
+    force: right
   steps:
     - eventMask: [Right Power, TouchDown, COM_MIN]
     - min: $prev.z
@@ -509,6 +538,7 @@
 - parameter: Right Power_max_conc_PJ_R
   where:
     name: PJ_R*
+    force: right
   steps:
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - max: $prev.z
@@ -516,6 +546,7 @@
 - parameter: Right GRF_max_ecc_PJ_R
   where:
     name: PJ_R*
+    force: right
   steps:
     - eventMask: [Right GRF, TouchDown, COM_MIN]
     - max: $prev.z
@@ -523,6 +554,7 @@
 - parameter: Right GRF_max_conc_PJ_R
   where:
     name: PJ_R*
+    force: right
   steps:
     - eventMask: [Right GRF, COM_MIN, TakeOff]
     - max: $prev.z
@@ -530,6 +562,7 @@
 - parameter: Right GRF_max_PJ_R
   where:
     name: PJ_R*
+    force: right
   steps:
     - eventMask: [Right GRF, TouchDown, TakeOff]
     - max: $prev.z
@@ -537,6 +570,7 @@
 - parameter: Right Power_max_PJ_R
   where:
     name: PJ_R*
+    force: right
   steps:
     - eventMask: [Right Power, TouchDown, TakeOff]
     - max: $prev.z
@@ -545,6 +579,7 @@
 - parameter: Right GRF_decrement_pct_PJ_R
   where:
     name: PJ_R*
+    force: right
   steps:
     - import: Right GRF_max_PJ_R@1
       output: first
@@ -556,6 +591,7 @@
 - parameter: Right Power_decrement_pct_PJ_R
   where:
     name: PJ_R*
+    force: right
   steps:
     - import: Right Power_max_PJ_R@1
       output: first
