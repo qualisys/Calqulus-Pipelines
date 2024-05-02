@@ -78,7 +78,7 @@
       value: 0
       direction: down
     - eventMask: [$prev, pelvis_lowest_last, EOF]
-      keep: -1
+      keep: 0
     
 - event: TOP_repeated
   steps:
