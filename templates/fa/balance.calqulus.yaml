@@ -53,32 +53,82 @@
 ## SERIES ##
 ############
 
-- parameter: COP_zeroed
+# find out which FP is loaded
+# it is assumed that only teo FPs are connected to the system
+- parameter: COP_FP1
+  steps:
+    - import: ForcePlate1.fz
+    - mean:
+    - abs:
+
+- parameter: COP_FP2
+  steps:
+    - import: ForcePlate2.fz
+    - mean:
+    - abs:
+
+- parameter: COP_direct
+  where:
+    name: Balance_L*
+  steps:
+    - if: (COP_FP1 > COP_FP2)
+      then: ForcePlate1
+      else: ForcePlate2
+
+- parameter: COP_direct
+  where:
+    name: Balance_R*
+  steps:
+    - if: (COP_FP1 > COP_FP2)
+      then: ForcePlate1
+      else: ForcePlate2
+
+# calculate COP from skeleton data
+- parameter: COP_skeleton
   where:
     name: Balance_L*
     force: left
   steps:
     - import: LeftFootContact => foot
     - vector: [foot.x, foot.y, foot.z]
-    - convert:
-      from: mm
-      to: m
-    - multiply: [$prev, [1,1,0]]
-    - mean:
-    - subtract: [$prev(2), $prev]
 
-- parameter: COP_zeroed
+- parameter: COP_skeleton
   where:
     name: Balance_R*
     force: right
   steps:
     - import: RightFootContact => foot
     - vector: [foot.x, foot.y, foot.z]
+
+# use skeleton based COP if it exists
+- parameter: COP_zeroed
+  where:
+    name: Balance_L*
+  steps:
+    - if: exists(LeftFootContact)
+      then: COP_skeleton
+      else: COP_direct
+      space: VirtualLab
     - convert:
       from: mm
       to: m
     - multiply: [$prev, [1,1,0]]
-    - mean:
+    - median:
+    - subtract: [$prev(2), $prev]
+
+- parameter: COP_zeroed
+  where:
+    name: Balance_R*
+  steps:
+    - if: exists(RightFootContact)
+      then: COP_skeleton
+      else: COP_direct
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - multiply: [$prev, [1,1,0]]
+    - median:
     - subtract: [$prev(2), $prev]
 
 #############
