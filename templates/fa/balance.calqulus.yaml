@@ -74,6 +74,9 @@
     - if: (COP_FP1 > COP_FP2)
       then: ForcePlate1
       else: ForcePlate2
+    - lowpass:
+      cutoff: 10
+      extrapolate: 30
 
 - parameter: COP_direct
   where:
@@ -82,6 +85,9 @@
     - if: (COP_FP1 > COP_FP2)
       then: ForcePlate1
       else: ForcePlate2
+    - lowpass:
+      cutoff: 10
+      extrapolate: 30
 
 # calculate COP from skeleton data
 - parameter: COP_skeleton
