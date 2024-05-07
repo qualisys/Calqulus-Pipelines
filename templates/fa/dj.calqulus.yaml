@@ -268,19 +268,19 @@
   where:
     name: DJ_B*
   steps:
-    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DVJ_B]
+    - subtract: [CenterOfMass\@Landing_end.z, CenterOfMass_MIN_DVJ_B]
 
 - parameter: COM_displacement_MEAN_min_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DVJ_L]
+    - subtract: [CenterOfMass\@Landing_end.z, CenterOfMass_MIN_DVJ_L]
 
 - parameter: COM_displacement_MEAN_min_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - subtract: [CenterOfMass\@Landing_end, CenterOfMass_MIN_DVJ_R]
+    - subtract: [CenterOfMass\@Landing_end.z, CenterOfMass_MIN_DVJ_R]
 
 #COM peak eccentric velocity
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_B
