@@ -4,9 +4,11 @@
 ## SPACES ##
 ############
 
-- space: VirtualLab
-  alignWithSegment:
-    segment: Hips
+# We can't use space as we do not have skeleton
+
+# - space: VirtualLab
+#   alignWithSegment:
+#     segment: Hips
 
 ############
 ## EVENTS ##
@@ -68,23 +70,11 @@
     - abs:
 
 - parameter: COP_direct
-  where:
-    name: Balance_L*
   steps:
     - if: (COP_FP1 > COP_FP2)
       then: ForcePlate1
       else: ForcePlate2
-    - lowpass:
-      cutoff: 10
-      extrapolate: 30
-
-- parameter: COP_direct
-  where:
-    name: Balance_R*
-  steps:
-    - if: (COP_FP1 > COP_FP2)
-      then: ForcePlate1
-      else: ForcePlate2
+    - vector: [$prev.x, $prev.y, $prev.z]
     - lowpass:
       cutoff: 10
       extrapolate: 30
@@ -108,28 +98,10 @@
 
 # use skeleton based COP if it exists
 - parameter: COP_zeroed
-  where:
-    name: Balance_L*
   steps:
     - if: exists(LeftFootContact)
       then: COP_skeleton
       else: COP_direct
-      space: VirtualLab
-    - convert:
-      from: mm
-      to: m
-    - multiply: [$prev, [1,1,0]]
-    - median:
-    - subtract: [$prev(2), $prev]
-
-- parameter: COP_zeroed
-  where:
-    name: Balance_R*
-  steps:
-    - if: exists(RightFootContact)
-      then: COP_skeleton
-      else: COP_direct
-      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -187,9 +159,10 @@
 # find out which plate is loaded
 - parameter: loaded_FP
   steps:
-    - if: exists(LeftFootContact)
-      then: LeftFootContact
-      else: RightFootContact
+    - if: (COP_FP1 > COP_FP2)
+      then: ForcePlate1
+      else: ForcePlate2
+    - lowpass:
 
 - parameter: DPSI
   steps:
@@ -197,6 +170,7 @@
       output: bw
 
     - vector: [loaded_FP.fx, loaded_FP.fy, loaded_FP.fz]
+    - negate:
       output: my_force
 
     - subtract: [0, my_force]
