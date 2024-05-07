@@ -54,7 +54,7 @@
       value: 0
       direction: down
     - eventMask: [$prev, Pelvis_lowest, PelvisCGPos_vel_min]
-      keep: 0
+      keep: -1
 
 - event: pelvis_lowest_first
   steps:
