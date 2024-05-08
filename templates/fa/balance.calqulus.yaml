@@ -59,13 +59,17 @@
 # it is assumed that only teo FPs are connected to the system
 - parameter: COP_FP1
   steps:
-    - import: ForcePlate1.fz
+    - if: exists(ForcePlate1)
+      then: ForcePlate1.fz
+      else: [[0]]
     - mean:
     - abs:
 
 - parameter: COP_FP2
   steps:
-    - import: ForcePlate2.fz
+    - if: exists(ForcePlate2)
+      then: ForcePlate2.fz
+      else: [[0]]
     - mean:
     - abs:
 
