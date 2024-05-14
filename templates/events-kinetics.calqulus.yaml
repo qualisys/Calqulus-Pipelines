@@ -10,6 +10,17 @@
   steps:
     - subtract: [$length, 1]
 
+- event: BOF_fixed
+  steps:
+    - import: [0]
+
+# Fix for Drop Jump and Lateral Leap
+- event: BOF_fixed
+  where:
+    name: ^(DJ|LL|Lunge)*
+  steps:
+    - import: [5]
+
 - event: LOFF_force
   where:
     force: left
@@ -20,9 +31,13 @@
     - threshold: $prev
       value: 0.05
       direction: down
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: LON_force_1
     - eventMask: [$prev, BOF, EOF]
-      # keep: -1
-    # - add: [$prev, 1]
+      output: LON_force_2
+    - if: empty(LON_force_1)
+      then: LON_force_2
+      else: LON_force_1
     
 - event: LON_force
   where:
@@ -34,8 +49,13 @@
     - threshold: $prev
       value: 0.05
       direction: up
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: LON_force_1
     - eventMask: [$prev, BOF, EOF]
-      # keep: -1
+      output: LON_force_2
+    - if: empty(LON_force_1)
+      then: LON_force_2
+      else: LON_force_1
     - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     
 - event: ROFF_force
@@ -48,9 +68,13 @@
     - threshold: $prev
       value: 0.05
       direction: down
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: LON_force_1
     - eventMask: [$prev, BOF, EOF]
-      # keep: -1
-    # - add: [$prev, 1]
+      output: LON_force_2
+    - if: empty(LON_force_1)
+      then: LON_force_2
+      else: LON_force_1
     
 - event: RON_force
   where:
@@ -62,7 +86,12 @@
     - threshold: $prev
       value: 0.05
       direction: up
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: LON_force_1
     - eventMask: [$prev, BOF, EOF]
-      # keep: -1
+      output: LON_force_2
+    - if: empty(LON_force_1)
+      then: LON_force_2
+      else: LON_force_1
     - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     
