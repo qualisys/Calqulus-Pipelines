@@ -358,6 +358,15 @@
     - min:
       frames: true
 
+- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - min:
+      frames: true
+
 - event: COM_max # we do not have body COM so we use pelvis COM instead
   where:
     name: ^(CMJ_|SJ_)[RB]*
