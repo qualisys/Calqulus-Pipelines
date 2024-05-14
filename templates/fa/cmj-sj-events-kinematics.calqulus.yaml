@@ -43,6 +43,13 @@
       keep: -1
     - add: [$prev, 1]
 
+- event: LOFF_force_refined
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - eventMask: [LOFF_force, COM_MIN_first, EOF]
+
 - event: LOFF_prio2
   where:
     name: ^(CMJ_|SJ_)[LB]*
@@ -58,7 +65,7 @@
   set: left
   steps:
     - if: exists(LOFF_force)
-      then: LOFF_force@1
+      then: LOFF_force_refined@1
       else: LOFF_prio2
 
 - event: TakeOff_L
@@ -80,6 +87,13 @@
       frames: true
     - subtract: [$prev, 1]
 
+- event: LON_force_refined
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - eventMask: [LON_force, COM_MIN_first, EOF]
+
 - event: LON_prio2
   where:
     name: ^(CMJ_|SJ_)[LB]*
@@ -95,7 +109,7 @@
   set: left
   steps:
     - if: exists(LON_force)
-      then: LON_force@1
+      then: LON_force_refined@1
       else: LON_prio2
 
 - event: TouchDown_L
@@ -163,6 +177,22 @@
     - min:
       frames: true
 
+- event: COM_max # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - max: Hips.z
+      frames: true
+
+- event: COM_MIN_first # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, BOF, COM_max]
+    - min:
+      frames: true
+
 - event: Eccentric_end_calqulus
   where:
     name: CMJ_[LB]*
@@ -203,6 +233,13 @@
       keep: -1
     - add: [$prev, 1]
     
+- event: ROFF_force_refined
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - eventMask: [ROFF_force, COM_MIN_first, EOF]
+
 - event: ROFF_prio2
   where:
     name: ^(CMJ_|SJ_)[RB]*
@@ -218,7 +255,7 @@
   set: right
   steps:
     - if: exists(ROFF_force)
-      then: ROFF_force@1
+      then: ROFF_force_refined@1
       else: ROFF_prio2
 
 - event: TakeOff_R
@@ -240,6 +277,13 @@
       frames: true
     - subtract: [$prev, 1]
 
+- event: RON_force_refined
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - eventMask: [RON_force, COM_MIN_first, EOF]
+
 - event: RON_prio2
   where:
     name: ^(CMJ_|SJ_)[RB]*
@@ -255,7 +299,7 @@
   set: right
   steps:
     - if: exists(RON_force)
-      then: RON_force@1
+      then: RON_force_refined@1
       else: RON_prio2
 
 - event: TouchDown_R
@@ -314,12 +358,20 @@
     - min:
       frames: true
 
-- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+- event: COM_max # we do not have body COM so we use pelvis COM instead
   where:
     name: ^(CMJ_|SJ_)[RB]*
   steps:
     - import: Hips.z
-    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - max:
+      frames: true
+
+- event: COM_MIN_first # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, BOF, COM_max]
     - min:
       frames: true
 
