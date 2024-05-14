@@ -32,12 +32,12 @@
       value: 0.05
       direction: down
     - eventMask: [$prev, BOF_fixed, EOF]
-      output: LON_force_1
+      output: force_1
     - eventMask: [$prev, BOF, EOF]
-      output: LON_force_2
-    - if: empty(LON_force_1)
-      then: LON_force_2
-      else: LON_force_1
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
     
 - event: LON_force
   where:
@@ -50,12 +50,12 @@
       value: 0.05
       direction: up
     - eventMask: [$prev, BOF_fixed, EOF]
-      output: LON_force_1
+      output: force_1
     - eventMask: [$prev, BOF, EOF]
-      output: LON_force_2
-    - if: empty(LON_force_1)
-      then: LON_force_2
-      else: LON_force_1
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
     - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     
 - event: ROFF_force
@@ -69,12 +69,12 @@
       value: 0.05
       direction: down
     - eventMask: [$prev, BOF_fixed, EOF]
-      output: LON_force_1
+      output: force_1
     - eventMask: [$prev, BOF, EOF]
-      output: LON_force_2
-    - if: empty(LON_force_1)
-      then: LON_force_2
-      else: LON_force_1
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
     
 - event: RON_force
   where:
@@ -87,11 +87,11 @@
       value: 0.05
       direction: up
     - eventMask: [$prev, BOF_fixed, EOF]
-      output: LON_force_1
+      output: force_1
     - eventMask: [$prev, BOF, EOF]
-      output: LON_force_2
-    - if: empty(LON_force_1)
-      then: LON_force_2
-      else: LON_force_1
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
     - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     
