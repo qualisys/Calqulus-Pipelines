@@ -56,7 +56,7 @@
     - if: empty(force_1)
       then: force_2
       else: force_1
-    - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
+    # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     
 - event: ROFF_force
   where:
@@ -93,5 +93,5 @@
     - if: empty(force_1)
       then: force_2
       else: force_1
-    - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
+    # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     
