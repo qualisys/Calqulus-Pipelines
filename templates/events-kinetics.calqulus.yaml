@@ -27,7 +27,6 @@
   set: left
   steps:
     - import: Left GRF.z
-    - lowpass:
     - threshold: $prev
       value: 0.05
       direction: down
@@ -45,7 +44,6 @@
   set: left
   steps:
     - import: Left GRF.z
-    - lowpass:
     - threshold: $prev
       value: 0.05
       direction: up
@@ -64,7 +62,6 @@
   set: right
   steps:
     - import: Right GRF.z
-    - lowpass:
     - threshold: $prev
       value: 0.05
       direction: down
@@ -82,7 +79,6 @@
   set: right
   steps:
     - import: Right GRF.z
-    - lowpass:
     - threshold: $prev
       value: 0.05
       direction: up
