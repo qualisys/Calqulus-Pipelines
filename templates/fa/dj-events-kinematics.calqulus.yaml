@@ -10,7 +10,9 @@
   steps:
     - subtract: [$length, 1]
 
-# Bilateral and left
+# Bilateral and left ---
+
+# Takeoff
 - event: TakeOff_L_kinematics
   where:
     name: DJ_[LB]*
@@ -47,6 +49,7 @@
       then: TakeOff_prio
       else: TakeOff_L_kinematics
 
+# TouchDown
 - event: TouchDown_L_kinematics
   where:
     name: DJ_[LB]*
@@ -69,7 +72,7 @@
       then: LON_force@1
       else: TouchDown_L_kinematics
 
-- event: TouchDown_prio2
+- event: TouchDown_L_prio2
   where:
     name: DJ_[LB]*
   set: left
@@ -78,30 +81,31 @@
       then: UltimateTakeOff_L_ML
       else: TouchDown_L_kinematics
 
-- event: TouchDown_prio
+- event: TouchDown_L_prio
   where:
     name: DJ_[LB]*
   set: left
   steps:
-    - if: exists(LOFF_force)
+    - if: exists(LON_force)
       then: TouchDown_L_kinetics
-      else: TouchDown_prio2
+      else: TouchDown_L_prio2
 
 - event: TouchDown_L
   where:
     name: DJ_[LB]*
   set: left
   steps:
-    - if: exists(TouchDown_prio)
-      then: TouchDown_prio
+    - if: exists(TouchDown_L_prio)
+      then: TouchDown_L_prio
       else: TouchDown_L_kinematics
 
+# Landing
 - event: Landing_L_kinematics
   where:
     name: DJ_[LB]*
   set: left
   steps:
-    - eventMask: [PelvisCGPos_vel.z,TakeOff_L, EOF]
+    - eventMask: [PelvisCGPos_vel.z, TakeOff_L, EOF]
     - min:
       frames: true
     - subtract: [$prev, 4]
@@ -115,7 +119,7 @@
       then: LON_force@2
       else: Landing_L_kinematics
 
-- event: Landing_prio2
+- event: Landing_L_prio2
   where:
     name: DJ_[LB]*
   set: left
@@ -124,22 +128,22 @@
       then: Landing_L_ML
       else: Landing_L_kinematics
 
-- event: Landing_prio
+- event: Landing_L_prio
   where:
     name: DJ_[LB]*
   set: left
   steps:
-    - if: exists(Landing_L_kinetics)
+    - if: exists(LON_force)
       then: Landing_L_kinetics
-      else: Landing_prio2
+      else: Landing_L_prio2
 
 - event: Landing_L
   where:
     name: DJ_[LB]*
   set: left
   steps:
-    - if: exists(Landing_prio)
-      then: Landing_prio
+    - if: exists(Landing_L_prio)
+      then: Landing_L_prio
       else: Landing_L_kinematics
 
 - event: TakeOff
@@ -182,7 +186,9 @@
   steps:
     - import: Landing_L
 
-# Bilateral and right
+# Bilateral and right ---
+
+# TakeOff
 - event: TakeOff_R_kinematics
   where:
     name: DJ_[RB]*
@@ -219,12 +225,13 @@
       then: TakeOff_prio
       else: TakeOff_R_kinematics
 
+# TouchDown
 - event: TouchDown_R_kinematics
   where:
     name: DJ_[RB]*
   set: right
   steps:
-    - eventMask: [PelvisCGPos_vel.z,BOF, TakeOff_R]
+    - eventMask: [PelvisCGPos_vel.z, BOF, TakeOff_R]
     - min:
       frames: true
     - subtract: [$prev, 4]
@@ -241,7 +248,7 @@
       then: RON_force@1
       else: TouchDown_R_kinematics
 
-- event: TouchDown_prio2
+- event: TouchDown_R_prio2
   where:
     name: DJ_[RB]*
   set: right
@@ -250,24 +257,25 @@
       then: UltimateTakeOff_R_ML
       else: TouchDown_R_kinematics
 
-- event: TouchDown_prio
+- event: TouchDown_R_prio
   where:
     name: DJ_[RB]*
   set: right
   steps:
-    - if: exists(ROFF_force)
+    - if: exists(RON_force)
       then: TouchDown_R_kinetics
-      else: TouchDown_prio2
+      else: TouchDown_R_prio2
 
 - event: TouchDown_R
   where:
     name: DJ_[RB]*
   set: right
   steps:
-    - if: exists(TouchDown_prio)
-      then: TouchDown_prio
+    - if: exists(TouchDown_R_prio)
+      then: TouchDown_R_prio
       else: TouchDown_R_kinematics
 
+# Landing
 - event: Landing_R_kinematics
   where:
     name: DJ_[RB]*
@@ -287,7 +295,7 @@
       then: RON_force@2
       else: Landing_R_kinematics
 
-- event: Landing_prio2
+- event: Landing_R_prio2
   where:
     name: DJ_[RB]*
   set: right
@@ -296,22 +304,22 @@
       then: Landing_R_ML
       else: Landing_R_kinematics
 
-- event: Landing_prio
+- event: Landing_R_prio
   where:
     name: DJ_[RB]*
   set: right
   steps:
-    - if: exists(Landing_R_kinetics)
+    - if: exists(RON_force)
       then: Landing_R_kinetics
-      else: Landing_R_ML
+      else: Landing_R_prio2
 
 - event: Landing_R
   where:
     name: DJ_[RB]*
   set: right
   steps:
-    - if: exists(Landing_prio)
-      then: Landing_prio
+    - if: exists(Landing_R_prio)
+      then: Landing_R_prio
       else: Landing_R_kinematics
 
 - event: TakeOff
