@@ -115,7 +115,7 @@
 
 - event: Landing_L
   steps:
-    - eventMask: [LFT_DistEndPos.z, TakeOff, EOF]
+    - eventMask: [LFT_DistEndAcc.z, TakeOff, EOF]
     - max:
       frames: true
 
@@ -488,7 +488,7 @@
   steps:
     - max: Right Foot Progression
 
-# Jump distance - calculated as distance traposed by proximal end of foot from TakeOff to Landing
+# Jump distance - calculated as distance traveled by proximal end of foot from TakeOff to Landing
 # Left
 - parameter: LFT_DistEndPos@TakeOff
   steps:
