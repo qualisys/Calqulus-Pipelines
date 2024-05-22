@@ -15,8 +15,6 @@
     force: any
 
 - template: cmj-sj-events-kinematics.calqulus.yaml
-  where:
-    force: any
 
 ############
 ## SERIES ##
