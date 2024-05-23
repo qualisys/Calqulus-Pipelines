@@ -17,7 +17,7 @@
 # Fix for Drop Jump and Lateral Leap
 - event: BOF_fixed
   where:
-    name: ^(DJ|LL|Lunge)*
+    name: ^(DJ|LL|Lunge|CMJ)*
   steps:
     - import: [5]
 

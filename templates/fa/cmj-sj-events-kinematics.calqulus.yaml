@@ -6,6 +6,10 @@
   steps:
     - import: [0]
 
+- event: BOF_fixed
+  steps:
+    - import: [5]
+
 - event: EOF
   steps:
     - subtract: [$length, 1]
@@ -39,13 +43,14 @@
     - threshold: LFT_DistEndVel.z
       value: 0.5
       direction: up
-    - eventMask: [$prev, BOF, temp_L_max]
+    - eventMask: [$prev, BOF_fixed, temp_L_max]
       keep: -1
     - add: [$prev, 1]
 
 - event: LOFF_force_refined
   where:
     name: ^(CMJ_|SJ_)[LB]*
+    force: left
   set: left
   steps:
     - eventMask: [LOFF_force, COM_MIN_first, EOF]
@@ -90,6 +95,7 @@
 - event: LON_force_refined
   where:
     name: ^(CMJ_|SJ_)[LB]*
+    force: any
   set: left
   steps:
     - eventMask: [LON_force, COM_MIN_first, EOF]
@@ -132,8 +138,9 @@
     - threshold: RPV_CGVel.z
       value: -0.1
       direction: down
-    - eventMask: [$prev, BOF, TakeOff_L]
-      keep: -1
+    - eventMask: [$prev, BOF_fixed, TakeOff_L]
+    - import: $prev@-1
+      # keep: -1
     - subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
 
 - event: PlotStart_L_calqulus
@@ -146,7 +153,7 @@
     - threshold: RPV_CGVel.z
       value: 0.05
       direction: up
-    - eventMask: [$prev, BOF, TakeOff_L]
+    - eventMask: [$prev, BOF_fixed, TakeOff_L]
       keep: -1
     # - add: [$prev, shift] #shift by -0.1 s
 
@@ -189,7 +196,7 @@
     name: ^(CMJ_|SJ_)[LB]*
   steps:
     - import: Hips.z
-    - eventMask: [$prev, BOF, COM_max]
+    - eventMask: [$prev, BOF_fixed, COM_max]
     - min:
       frames: true
 
@@ -229,13 +236,14 @@
     - threshold: RFT_DistEndVel.z
       value: 0.5
       direction: up
-    - eventMask: [$prev, BOF, temp_R_max]
+    - eventMask: [$prev, BOF_fixed, temp_R_max]
       keep: -1
     - add: [$prev, 1]
     
 - event: ROFF_force_refined
   where:
     name: ^(CMJ_|SJ_)[RB]*
+    force: right
   set: right
   steps:
     - eventMask: [ROFF_force, COM_MIN_first, EOF]
@@ -280,6 +288,7 @@
 - event: RON_force_refined
   where:
     name: ^(CMJ_|SJ_)[RB]*
+    force: right
   set: right
   steps:
     - eventMask: [RON_force, COM_MIN_first, EOF]
@@ -322,7 +331,7 @@
     - threshold: RPV_CGVel.z
       value: -0.1
       direction: down
-    - eventMask: [$prev, BOF, TakeOff_R]
+    - eventMask: [$prev, BOF_fixed, TakeOff_R]
       keep: -1
     - subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
 
@@ -336,7 +345,7 @@
     - threshold: RPV_CGVel.z
       value: 0.05
       direction: up
-    - eventMask: [$prev, BOF, TakeOff_R]
+    - eventMask: [$prev, BOF_fixed, TakeOff_R]
       keep: -1
     # - subtract: [$prev, shift] #shift by -0.1 s
 
@@ -380,7 +389,7 @@
     name: ^(CMJ_|SJ_)[RB]*
   steps:
     - import: Hips.z
-    - eventMask: [$prev, BOF, COM_max]
+    - eventMask: [$prev, BOF_fixed, COM_max]
     - min:
       frames: true
 
