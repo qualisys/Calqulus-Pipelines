@@ -107,19 +107,19 @@
   where:
     name: DJ_B*
   steps:
-    - divide: [FlightTime_DVJ_B,EccentricTime_DVJ_B]
+    - divide: [FlightTime_DVJ_B,ConcentricTime_DVJ_B]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - divide: [FlightTime_DVJ_L,EccentricTime_DVJ_L]
+    - divide: [FlightTime_DVJ_L,ConcentricTime_DVJ_L]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_R
   where:
     name: DJ_R*
   steps:
-    - divide: [FlightTime_DVJ_R,EccentricTime_DVJ_R]
+    - divide: [FlightTime_DVJ_R,ConcentricTime_DVJ_R]
 
 # COM @TakeOff, max, min
 # We use Pelvis COM for now
