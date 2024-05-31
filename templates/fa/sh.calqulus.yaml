@@ -25,6 +25,15 @@
       height: 0.3
     - add: [$prev, 1]
 
+- event: LON_prio2
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - if: exists(TouchDown_L_ML)
+      then: TouchDown_L_ML
+      else: LON_kinematics
+
 - event: LON
   where:
     name: SH_L*
@@ -32,7 +41,7 @@
   steps:
     - if: exists(LON_force)
       then: LON_force
-      else: LON_kinematics
+      else: LON_prio2
 
 - event: LOFF_kinematics
   where:
@@ -44,6 +53,15 @@
       frames: true
     - subtract: [$prev, 2]
 
+- event: LOFF_prio2
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - if: exists(TakeOff_L_ML)
+      then: TakeOff_L_ML
+      else: LOFF_kinematics
+
 - event: LOFF
   where:
     name: SH_L*
@@ -51,7 +69,7 @@
   steps:
     - if: exists(LOFF_force)
       then: LOFF_force
-      else: LOFF_kinematics
+      else: LOFF_prio2
 
 - event: Left_On_Left_FP
   where:
@@ -126,6 +144,15 @@
       height: 0.3
     - add: [$prev, 1]
 
+- event: RON_prio2
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - if: exists(TouchDown_R_ML)
+      then: TouchDown_R_ML
+      else: RON_kinematics
+
 - event: RON
   where:
     name: SH_R*
@@ -133,7 +160,8 @@
   steps:
     - if: exists(RON_force)
       then: RON_force
-      else: RON_kinematics
+      else: RON_prio2
+
 
 - event: ROFF_kinematics
   where:
@@ -145,6 +173,15 @@
       frames: true
     - subtract: [$prev, 2]
 
+- event: ROFF_prio2
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - if: exists(TakeOff_R_ML)
+      then: TakeOff_R_ML
+      else: ROFF_kinematics
+
 - event: ROFF
   where:
     name: SH_R*
@@ -152,7 +189,7 @@
   steps:
     - if: exists(ROFF_force)
       then: ROFF_force
-      else: ROFF_kinematics
+      else: ROFF_prio2
 
 - event: Right_On_Left_FP
   where:
