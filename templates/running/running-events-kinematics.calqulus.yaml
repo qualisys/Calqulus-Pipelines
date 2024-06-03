@@ -323,7 +323,7 @@
 
 # Find out if running on treadmill or overground
 # If pelvis AP range is more than 1 m we assume overground running
-- event: LFS      
+- event: LFS_kinematics
   set: left
   where:
     name: ^(Running|Gait)*
@@ -332,16 +332,7 @@
       then: LFS_overground
       else: LFS_treadmill
 
-- event: RFS      
-  set: right
-  where:
-    name: ^(Running|Gait)*
-  steps:
-    - if: Pelvis_COG_range > 1
-      then: RFS_overground
-      else: RFS_treadmill
-
-- event: LTO      
+- event: LTO_kinematics
   set: left
   where:
     name: ^(Running|Gait)*
@@ -350,7 +341,16 @@
       then: LTO_overground
       else: LTO_treadmill
 
-- event: RTO      
+- event: RFS_kinematics
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: RFS_overground
+      else: RFS_treadmill
+
+- event: RTO_kinematics
   set: right
   where:
     name: ^(Running|Gait)*
@@ -358,6 +358,119 @@
     - if: Pelvis_COG_range > 1
       then: RTO_overground
       else: RTO_treadmill
+
+# ---- Merge kinetics and kinematics events ----
+- parameter: force_window
+  steps:
+    - import: 5
+
+- parameter: kinematics_window
+  steps:
+    - import: 30
+
+- event: LFS
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    # Specify kinetics window in which evens are located
+    - subtract: [LON_force, force_window]
+      frames: true
+      output: force_pre
+    - add: [LON_force, force_window]
+      frames: true
+      output: force_post
+      
+    # Refine kinematics events (remove kinematics events inside a force event window)
+    - subtract: [LFS_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_pre
+    - add: [LFS_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_post
+
+    # Spefify force event window in which kinematics events will be ignored (replaced by kinetics ones)
+    - refineEvent: LFS_kinematics
+      sequence: [kinematics_pre, LFS_kinematics, kinematics_post]
+      exclude: [force_pre, force_post]
+
+    # Combine kinematics and kinetics events
+    - concatenate: [$prev, LON_force]
+
+- event: LTO
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - subtract: [LOFF_force, force_window]
+      frames: true
+      output: force_pre
+    - add: [LOFF_force, force_window]
+      frames: true
+      output: force_post
+
+    - subtract: [LTO_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_pre
+    - add: [LTO_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_post
+
+    - refineEvent: LTO_kinematics
+      sequence: [kinematics_pre, LTO_kinematics, kinematics_post]
+      exclude: [force_pre, force_post]
+
+    - concatenate: [$prev, LOFF_force]
+
+- event: RFS
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - add: [RON_force, force_window]
+      frames: true
+      output: force_pre
+    - subtract: [ROFF_force, force_window]
+      frames: true
+      output: force_post
+
+    - subtract: [RFS_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_pre
+    - add: [RFS_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_post
+
+    - refineEvent: RFS_kinematics
+      sequence: [kinematics_pre, RFS_kinematics, kinematics_post]
+      exclude: [force_pre, force_post]
+
+    - concatenate: [$prev, RON_force]
+
+- event: RTO
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - subtract: [ROFF_force, force_window]
+      frames: true
+      output: force_pre
+    - add: [ROFF_force, force_window]
+      frames: true
+      output: force_post
+
+    - subtract: [RTO_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_pre
+    - add: [RTO_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_post
+
+    - refineEvent: RTO_kinematics
+      sequence: [kinematics_pre, RTO_kinematics, kinematics_post]
+      exclude: [force_pre, force_post]
+
+    - concatenate: [$prev, ROFF_force]
 
 # --- ZENI ---
 # Legacy event detection. Not used.
