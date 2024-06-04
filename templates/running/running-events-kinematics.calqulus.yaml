@@ -368,10 +368,11 @@
   steps:
     - import: 30
 
-- event: LFS
+- event: LFS_kinetics
   set: left
   where:
     name: ^(Running|Gait)*
+    force: left
   steps:
     # Specify kinetics window in which evens are located
     - subtract: [LON_force, force_window]
@@ -397,10 +398,11 @@
     # Combine kinematics and kinetics events
     - concatenate: [$prev, LON_force]
 
-- event: LTO
+- event: LTO_kinetics
   set: left
   where:
     name: ^(Running|Gait)*
+    force: left
   steps:
     - subtract: [LOFF_force, force_window]
       frames: true
@@ -422,10 +424,11 @@
 
     - concatenate: [$prev, LOFF_force]
 
-- event: RFS
+- event: RFS_kinetics
   set: right
   where:
     name: ^(Running|Gait)*
+    force: right
   steps:
     - add: [RON_force, force_window]
       frames: true
@@ -447,10 +450,11 @@
 
     - concatenate: [$prev, RON_force]
 
-- event: RTO
+- event: RTO_kinetics
   set: right
   where:
     name: ^(Running|Gait)*
+    force: right
   steps:
     - subtract: [ROFF_force, force_window]
       frames: true
@@ -471,6 +475,42 @@
       exclude: [force_pre, force_post]
 
     - concatenate: [$prev, ROFF_force]
+
+- event: LFS
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(LFS_kinetics)
+      then: LFS_kinetics
+      else: LFS_kinematics
+
+- event: LTO
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(LTO_kinetics)
+      then: LTO_kinetics
+      else: LTO_kinematics
+
+- event: RFS
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(RFS_kinetics)
+      then: RFS_kinetics
+      else: RFS_kinematics
+
+- event: RTO
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(RTO_kinetics)
+      then: RTO_kinetics
+      else: RTO_kinematics
 
 # --- ZENI ---
 # Legacy event detection. Not used.
