@@ -92,7 +92,7 @@
     name: LL_L*
   steps:
     - if: exists(LON_force)
-      then: LON_force
+      then: LON_force@1
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
@@ -110,7 +110,7 @@
     name: LL_L*
   steps:
     - if: exists(LOFF_force)
-      then: LOFF_force
+      then: LOFF_force@-1
       else: TakeOff_kinematics
 
 - event: Landing_L
@@ -173,7 +173,7 @@
     name: LL_R*
   steps:
     - if: exists(RON_force)
-      then: RON_force
+      then: RON_force@1
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
@@ -192,7 +192,7 @@
     name: LL_R*
   steps:
     - if: exists(ROFF_force)
-      then: ROFF_force
+      then: ROFF_force@-1
       else: TakeOff_kinematics
 
 - event: Landing_R
