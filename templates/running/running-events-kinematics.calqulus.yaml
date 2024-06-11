@@ -820,7 +820,8 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: LTO
+    # - import: LTO
+    - import: LFS
 
 - event: RightPlotStart
   set: right
@@ -834,7 +835,8 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - import: RTO
+    # - import: RTO
+    - import: RFS
 
 - event: LeftPlotStartForce
   set: left
