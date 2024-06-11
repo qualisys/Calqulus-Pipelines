@@ -100,9 +100,10 @@
     name: Acc_L*
   set: left
   steps:
-    - eventMask: [LFT_DistEndVel.z, LON_kinematics, EOF]
-    - max:
-      frames: true
+    - threshold: LFT_DistEndPos.z
+      direction: up
+      value: 0.1
+    - eventMask: [$prev, LON_kinematics, EOF]
 
 - event: LOFF
   where:
@@ -148,9 +149,10 @@
     name: Acc_R*
   set: right
   steps:
-    - eventMask: [RFT_DistEndVel.z, RON_kinematics, EOF]
-    - max:
-      frames: true
+    - threshold: RFT_DistEndPos.z
+      direction: up
+      value: 0.1
+    - eventMask: [$prev, RON_kinematics, EOF]
 
 - event: ROFF
   where:
