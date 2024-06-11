@@ -31,7 +31,16 @@
   steps:
     - if: exists(LON_force)
       then: LON_force
-      else: UltimateTouchDown_L_ML
+      else: TouchDown_prio2
+
+- event: TouchDown_prio2
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - if: exists(UltimateTouchDown_L_ML)
+      then: UltimateTouchDown_L_ML
+      else: TouchDown_kinematics
 
 - event: TouchDown
   where:
@@ -61,7 +70,16 @@
   steps:
     - if: exists(LOFF_force)
       then: LOFF_force
-      else: UltimateTakeOff_L_ML
+      else: TakeOff_prio2
+
+- event: TakeOff_prio2
+  where:
+    name: Cutting_L*
+  set: left
+  steps:
+    - if: exists(UltimateTakeOff_L_ML)
+      then: UltimateTakeOff_L_ML
+      else: TakeOff_kinematics
 
 - event: TakeOff
   where:
@@ -138,7 +156,16 @@
   steps:
     - if: exists(RON_force)
       then: RON_force
-      else: UltimateTouchDown_R_ML
+      else: TouchDown_prio2
+
+- event: TouchDown_prio2
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - if: exists(UltimateTouchDown_R_ML)
+      then: UltimateTouchDown_R_ML
+      else: TouchDown_kinematics
 
 - event: TouchDown
   where:
@@ -167,7 +194,16 @@
   steps:
     - if: exists(ROFF_force)
       then: ROFF_force
-      else: UltimateTakeOff_R_ML
+      else: TakeOff_prio2
+
+- event: TakeOff_prio2
+  where:
+    name: Cutting_R*
+  set: right
+  steps:
+    - if: exists(UltimateTakeOff_R_ML)
+      then: UltimateTakeOff_R_ML
+      else: TakeOff_kinematics
 
 - event: TakeOff
   where:
