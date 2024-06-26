@@ -18,3 +18,4 @@ resources:
 
 extends:
   template: base-pipelines.yml@calqulus-ci
+
