@@ -1,0 +1,872 @@
+############
+## EVENTS ##
+############
+
+# --- Treadmill running ---
+# FS and TO event detection is based on foot velocity and acceleration
+# First calculate midfoot velocity and acceleration
+# Toe off
+- event: LTOE_RISE
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - threshold: Left_MID_FOOT_acc.z => sig
+      value: 0
+      direction: down
+    - eventMask: [sig, R_MID_STANCE, R_MID_STANCE]
+      keep: -1
+
+# - event: LTO_treadmill_old
+#   set: left
+#   where:
+#     name: ^(Running|Gait)*
+#   steps:
+#     - peakFinder: Left_MID_FOOT_acc.z => sig2
+#     - eventMask: [sig2, LTOE_RISE, LTOE_RISE]
+#       keep: -1
+
+- event: LTO_treadmill
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - import: LHeelBack_vel.z => sig
+    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
+    - max:
+      frames: true
+
+- event: RTOE_RISE
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - threshold: Right_MID_FOOT_acc.z => sig
+      value: 0
+      direction: down
+    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
+      keep: -1
+
+# - event: RTO_treadmill
+#   set: right
+#   where:
+#     name: ^(Running|Gait)*
+#   steps:
+#     - peakFinder: Right_MID_FOOT_acc.z => sig
+#     - eventMask: [sig, RTOE_RISE, RTOE_RISE]
+#       keep: -1
+
+- event: RTO_treadmill
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - import: RHeelBack_vel.z => sig
+    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
+    - max:
+      frames: true
+
+# Footstrike
+- event: L_PEAK_MID_FOOT_VEL_z
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Left_MID_FOOT_vel.z => sig
+      width: 10
+      distance: 50
+    - eventMask: [sig, L_MID_STANCE, R_MID_STANCE]
+      keep: -1
+
+- event: L_MID_FOOT_vel_negative
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - threshold: Left_MID_FOOT_vel.z => sig
+      value: 0
+      direction: up
+    - eventMask: [sig, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
+      keep: -1
+
+- event: temp_event_1
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - threshold: Left_MID_FOOT_vel.y
+      value: 0
+      direction: down
+
+- event: temp_event_2
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Left_MID_FOOT_vel.y => sig
+    - eventMask: [sig, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
+      keep: -1
+  
+- event: LFS_treadmill
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    # - peakFinder: Left_MID_FOOT_vel.z => sig
+    #   width: 10
+    #   distance: 50
+    # - eventMask: [sig, L_MID_STANCE, R_MID_STANCE]
+    #   keep: -1
+    #   output: L_PEAK_MID_FOOT_VEL_z
+
+    # #z velocity of foot has to be negative, otherwise foot is not on its way down
+    # - threshold: Left_MID_FOOT_vel.z => sig1
+    #   value: 0
+    #   direction: up
+    # - eventMask: [sig1, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
+    #   keep: -1
+    #   output: L_MID_FOOT_vel_negative
+
+    # #temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+    # - threshold: Left_MID_FOOT_vel.y
+    #   value: 0
+    #   direction: down
+    #   output: temp_event_1
+
+    # - peakFinder: Left_MID_FOOT_vel.y => sig2
+    # - eventMask: [sig2, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
+    #   keep: -1
+    #   output: temp_event_2
+
+    - peakFinder: Left_MID_FOOT_acc.z => sig
+    - eventMask: [sig, temp_event_2, L_MID_FOOT_vel_negative]
+      keep: -1
+
+- event: RFS_treadmill
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Right_MID_FOOT_vel.z => sig
+      width: 10
+      distance: 50
+    - eventMask: [sig, R_MID_STANCE, L_MID_STANCE]
+      keep: -1
+      output: R_PEAK_MID_FOOT_VEL_z
+
+    # z velocity of foot has to be negative, otherwise foot is not on its way down
+    - threshold: Right_MID_FOOT_vel.z => sig1
+      value: 0
+      direction: up
+    - eventMask: [sig1, R_PEAK_MID_FOOT_VEL_z, R_PEAK_MID_FOOT_VEL_z]
+      keep: -1
+      output: R_MID_FOOT_vel_negative
+
+    # temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+    - threshold: Right_MID_FOOT_vel.y
+      value: 0
+      direction: down
+      output: temp_event_1
+
+    - peakFinder: Right_MID_FOOT_vel.y => sig2
+    - eventMask: [sig2, R_PEAK_MID_FOOT_VEL_z, temp_event_1]
+      keep: -1
+      output: temp_event_2
+
+    - peakFinder: Right_MID_FOOT_acc.z => sig3
+    - eventMask: [sig3, temp_event_2, R_MID_FOOT_vel_negative]
+      keep: -1
+
+- event: L_MID_STANCE
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - subtract: [Left_MID_FOOT, Pelvis_CGPos]
+    - threshold: $prev.y
+      value: 0
+      direction: down
+
+- event: R_MID_STANCE
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - subtract: [Right_MID_FOOT, Pelvis_CGPos]
+    - threshold: $prev.y
+      value: 0
+      direction: down
+
+# --- Overground running ---
+# Based on position of distal end and proximal end of foot
+# Footstrike
+- event: LFS_overground
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: [LForefoot2_wrt_Pelvis.y]
+      height: 0
+      output: temp1
+
+    - multiply: [$framerate, 0.05]
+    - add: [temp1, $prev]
+      output: temp2
+
+    - import: LHeelBack_wrt_Pelvis
+    - negate:
+    - eventMask: [$prev.z, temp1, temp2]
+    - max:
+      frames: true
+
+- event: RFS_overground
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: [RForefoot2_wrt_Pelvis.y]
+      height: 0
+      output: temp1
+
+    - multiply: [$framerate, 0.05]
+    - add: [temp1, $prev]
+      output: temp2
+
+    - import: RHeelBack_wrt_Pelvis
+    - negate:
+    - eventMask: [$prev.z, temp1, temp2]
+    - max:
+      frames: true
+
+# Toe Off
+- event: LTO_overground
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - divide: [$framerate, 40]
+      output: shift
+    - threshold: LForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: down
+    - subtract: [$prev,shift] # move event back by $framerate/40
+      frames: true
+      output: temp1
+
+    - threshold: LForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: down
+      output: temp1a
+
+    - threshold: LForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: up
+      output: temp1b
+
+    - eventMask: [LForefoot2_wrt_Pelvis.y,temp1a,temp1b]
+    - min:
+      frames: true
+      output: temp2
+
+    - marker: LForefoot2 => sig
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+    - acceleration:
+    - eventMask: [$prev.z,temp1,temp2]
+    - max:
+      frames: true
+      
+- event: RTO_overground
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - divide: [$framerate, 40]
+      output: shift
+    - threshold: RForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: down
+    - subtract: [$prev,shift] # move event back by $framerate/40
+      frames: true
+      output: temp1
+
+    - threshold: RForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: down
+      output: temp1a
+
+    - threshold: RForefoot2_wrt_Pelvis.y
+      value: 0
+      direction: up
+      output: temp1b
+
+    - eventMask: [RForefoot2_wrt_Pelvis.y,temp1a,temp1b]
+    - min:
+      frames: true
+      output: temp2
+
+    - marker: RForefoot2 => sig
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 6
+    - acceleration:
+    - eventMask: [$prev.z,temp1,temp2]
+    - max:
+      frames: true
+
+# Find out if running on treadmill or overground
+# If pelvis AP range is more than 1 m we assume overground running
+- event: LFS_kinematics
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: LFS_overground
+      else: LFS_treadmill
+
+- event: LTO_kinematics
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: LTO_overground
+      else: LTO_treadmill
+
+- event: RFS_kinematics
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: RFS_overground
+      else: RFS_treadmill
+
+- event: RTO_kinematics
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: RTO_overground
+      else: RTO_treadmill
+
+# ---- Merge kinetics and kinematics events ----
+- parameter: force_window
+  steps:
+    - import: 5
+
+- parameter: kinematics_window
+  steps:
+    - import: 30
+
+- event: LFS_kinetics
+  set: left
+  where:
+    name: ^(Running|Gait)*
+    force: left
+  steps:
+    # Specify kinetics window in which evens are located
+    - subtract: [LON_force, force_window]
+      frames: true
+      output: force_pre
+    - add: [LON_force, force_window]
+      frames: true
+      output: force_post
+      
+    # Refine kinematics events (remove kinematics events inside a force event window)
+    - subtract: [LFS_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_pre
+    - add: [LFS_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_post
+
+    # Spefify force event window in which kinematics events will be ignored (replaced by kinetics ones)
+    - refineEvent: LFS_kinematics
+      sequence: [kinematics_pre, LFS_kinematics, kinematics_post]
+      exclude: [force_pre, force_post]
+
+    # Combine kinematics and kinetics events
+    - concatenate: [$prev, LON_force]
+
+- event: LTO_kinetics
+  set: left
+  where:
+    name: ^(Running|Gait)*
+    force: left
+  steps:
+    - subtract: [LOFF_force, force_window]
+      frames: true
+      output: force_pre
+    - add: [LOFF_force, force_window]
+      frames: true
+      output: force_post
+
+    - subtract: [LTO_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_pre
+    - add: [LTO_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_post
+
+    - refineEvent: LTO_kinematics
+      sequence: [kinematics_pre, LTO_kinematics, kinematics_post]
+      exclude: [force_pre, force_post]
+
+    - concatenate: [$prev, LOFF_force]
+
+- event: RFS_kinetics
+  set: right
+  where:
+    name: ^(Running|Gait)*
+    force: right
+  steps:
+    - add: [RON_force, force_window]
+      frames: true
+      output: force_pre
+    - subtract: [ROFF_force, force_window]
+      frames: true
+      output: force_post
+
+    - subtract: [RFS_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_pre
+    - add: [RFS_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_post
+
+    - refineEvent: RFS_kinematics
+      sequence: [kinematics_pre, RFS_kinematics, kinematics_post]
+      exclude: [force_pre, force_post]
+
+    - concatenate: [$prev, RON_force]
+
+- event: RTO_kinetics
+  set: right
+  where:
+    name: ^(Running|Gait)*
+    force: right
+  steps:
+    - subtract: [ROFF_force, force_window]
+      frames: true
+      output: force_pre
+    - add: [ROFF_force, force_window]
+      frames: true
+      output: force_post
+
+    - subtract: [RTO_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_pre
+    - add: [RTO_kinematics, kinematics_window]
+      frames: true
+      output: kinematics_post
+
+    - refineEvent: RTO_kinematics
+      sequence: [kinematics_pre, RTO_kinematics, kinematics_post]
+      exclude: [force_pre, force_post]
+
+    - concatenate: [$prev, ROFF_force]
+
+- event: LFS
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(LFS_kinetics)
+      then: LFS_kinetics
+      else: LFS_kinematics
+
+- event: LTO
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(LTO_kinetics)
+      then: LTO_kinetics
+      else: LTO_kinematics
+
+- event: RFS
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(RFS_kinetics)
+      then: RFS_kinetics
+      else: RFS_kinematics
+
+- event: RTO
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(RTO_kinetics)
+      then: RTO_kinetics
+      else: RTO_kinematics
+
+# --- ZENI ---
+# Legacy event detection. Not used.
+
+# Left ZENI Foot-Strike, Toe-Off and Mid-Stance
+- parameter: Left_ZENI
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - segment: LeftFoot => l_foot
+      space: VirtualLab
+    - lowpass: l_foot.y => heel
+      extrapolate: 100
+      order: 6
+      cutoff: 20
+    - segment: LeftToeBase => l_toe
+      space: VirtualLab
+    - lowpass: l_toe.y => toe
+      extrapolate: 100
+      order: 6
+      cutoff: 20
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - lowpass: pelvis.y => sacrum
+      extrapolate: 100
+      order: 6
+      cutoff: 20
+
+    - subtract: [heel, sacrum]
+      output: heel_diff
+      export: Left_ZENI_heel_diff
+
+    - subtract: [toe, sacrum]
+      output: toe_diff
+    - negate: toe_diff => toe_diff_inv
+      export: Left_ZENI_toe_diff_inv
+    
+    - add: [heel, toe]
+      output: heel_toe
+    - divide: [heel_toe, 2]
+      output: mid_foot
+    - subtract: [mid_foot, sacrum]
+      export: Left_ZENI_mid_foot_wrt_hip_x
+
+    - abs: toe_diff => abs_toe_diff
+      export: abs_toe_diff
+    - negate: abs_toe_diff
+      export: Left_ZENI_toe_diff_abs_inv
+
+- event: LFS_ZENI
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Left_ZENI_heel_diff
+      width: 3
+      distance: 20
+      height: 0.65
+
+- event: LTO_temp
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Left_ZENI_toe_diff_inv
+      width: 3
+      distance: 20
+      height: 0.65
+
+- event: LTO_ZENI
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - refineEvent: LTO_temp
+      sequence: [LFS, LTO_temp]
+
+- event: L_MID_STANCE_ZENI
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Left_ZENI_toe_diff_abs_inv => sign_change
+      width: 10
+      prominence: 100
+    - eventMask: [sign_change, LFS, LTO]
+
+  # Right ZENI Foot-Strike, Toe-Off and Mid-Stance
+- parameter: Right_ZENI
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - segment: RightFoot => r_foot
+      space: VirtualLab
+    - lowpass: r_foot.y => heel
+      extrapolate: 100
+      order: 6
+      cutoff: 20
+    - segment: RightToeBase => r_toe
+      space: VirtualLab
+    - lowpass: r_toe.y => toe
+      extrapolate: 100
+      order: 6
+      cutoff: 20
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - lowpass: pelvis.y => sacrum
+      extrapolate: 100
+      order: 6
+      cutoff: 20
+
+    - subtract: [heel, sacrum]
+      output: heel_diff
+      export: Right_ZENI_heel_diff
+
+    - subtract: [toe, sacrum]
+      output: toe_diff
+    - negate: toe_diff => toe_diff_inv
+      export: Right_ZENI_toe_diff_inv
+    
+    - add: [heel, toe]
+      output: heel_toe
+    - divide: [heel_toe, 2]
+      output: mid_foot
+    - subtract: [mid_foot, sacrum]
+      export: Right_ZENI_mid_foot_wrt_hip_x
+
+    - abs: toe_diff => abs_toe_diff
+      export: abs_toe_diff
+    - negate: abs_toe_diff
+      export: Right_ZENI_toe_diff_abs_inv
+
+- event: RFS_ZENI
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Right_ZENI_heel_diff
+      width: 3
+      distance: 20
+      height: 0.65
+
+- event: RTO_temp
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Right_ZENI_toe_diff_inv
+      width: 3
+      distance: 20
+      height: 0.65
+
+- event: RTO_ZENI
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - refineEvent: RTO_temp
+      sequence: [RFS, RTO_temp]
+
+- event: R_MID_STANCE_ZENI
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Right_ZENI_toe_diff_abs_inv => sign_change
+      width: 10
+      prominence: 100
+    - eventMask: [sign_change, RFS, RTO]
+# --- end of ZENI detection ---
+
+# --- Additional events ---
+- event: L_peak_knee_flex
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Left Knee Angles.x => knee_flex_max
+      width: 10
+    - eventMask: [knee_flex_max, LTO, LFS]
+
+- event: R_peak_knee_flex
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Right Knee Angles.x => knee_flex_max
+      width: 10
+    - eventMask: [knee_flex_max, RTO, RFS]
+
+- event: L_stride_angle_max
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Left Stride Angle.x => stride_angle_max
+      width: 10
+      height: 20
+    - eventMask: [stride_angle_max, LFS, LFS]
+
+- event: R_stride_angle_max
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Right Stride Angle.x => stride_angle_max
+      width: 10
+      height: 20
+    - eventMask: [stride_angle_max, RFS, RFS]
+
+- event: L_peak_hip_flex
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Left Hip Angles.x => hip_flex_max
+      width: 10
+      height: 20
+    - eventMask: [hip_flex_max, LTO, LFS]
+  
+- event: R_peak_hip_flex
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - peakFinder: Right Hip Angles.x => hip_flex_max
+      width: 10
+      height: 20
+    - eventMask: [hip_flex_max, RTO, RFS]
+
+- event: L_Ankle_cross
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - threshold: [L_ankle_crossing_pelvis]
+      value: 0
+      direction: up
+
+- event: R_Ankle_cross
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - threshold: [R_ankle_crossing_pelvis]
+      value: 0
+      direction: up
+
+- event: L_peak_hip_extension_stride
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - negate: Left Hip Angles.x => hip_neg
+    - peakFinder: [hip_neg, LFS, LFS]
+      width: 10
+      height: 0
+
+- event: R_peak_hip_extension_stride
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - negate: Right Hip Angles.x => hip_neg
+    - peakFinder: [hip_neg, RFS, RFS]
+      width: 10
+      height: 0
+
+- event: L_peak_knee_extension_stride
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - negate: Left Knee Angles.x => knee_neg
+    - peakFinder: [knee_neg, LFS, LFS]
+      width: 10
+      sequence:
+        ranges: L 20 H
+        pattern: LH
+        keep: [0]
+
+- event: R_peak_knee_extension_stride
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - negate: Right Knee Angles.x => knee_neg
+    - peakFinder: [knee_neg, RFS, RFS]
+      width: 10
+      sequence:
+        ranges: L 20 H
+        pattern: LH
+        keep: [0]
+
+# Unified event names for web
+- event: LeftPlotStart
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - import: LFS
+
+- event: LeftPlotEnd
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    # - import: LTO
+    - import: LFS
+
+- event: RightPlotStart
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - import: RFS
+
+- event: RightPlotEnd
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    # - import: RTO
+    - import: RFS
+
+- event: LeftPlotStartForce
+  set: left
+  where:
+    name: ^(Running|Gait)*
+    force: left
+  steps:
+    - import: LON_force
+
+- event: LeftPlotEndForce
+  set: left
+  where:
+    name: ^(Running|Gait)*
+    force: left
+  steps:
+    - import: LOFF_force
+
+- event: RightPlotStartForce
+  set: right
+  where:
+    name: ^(Running|Gait)*
+    force: right
+  steps:
+    - import: RON_force
+
+- event: RightPlotEndForce
+  set: right
+  where:
+    name: ^(Running|Gait)*
+    force: right
+  steps:
+    - import: ROFF_force
+

@@ -1,0 +1,566 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [[0]]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+### measured events ###
+
+- event: PelvisCGPos_vel_min
+  steps:
+    - divide: [$framerate, 0.5] #0.5s
+      output: window
+    - lowpass: PelvisCGPos_vel.z
+      cutoff: 3
+      export: PelvisCGPos_vel_filt #keep it
+    - negate:
+    - peakFinder: 
+      height: 0.15
+      # distance: window
+      distance: 75
+
+- event: Pelvis_lowest
+  steps:
+    - divide: [$framerate, 0.5] #0.5s
+      export: window
+    - mean: PelvisCGPos.z
+      export: PelvisCGPos_mean
+    - multiply: [$prev, -0.95]
+      export: limit
+    - negate: PelvisCGPos.z
+    - peakFinder: 
+      height: limit
+      distance: 150
+      # distance: window
+
+# For repeating squats -----
+- event: TOP_temp
+  steps:
+    - threshold: PelvisCGPos_vel_filt
+      value: 0
+      direction: down
+    - eventMask: [$prev, Pelvis_lowest, PelvisCGPos_vel_min]
+      keep: -1
+
+- event: pelvis_lowest_first
+  steps:
+    - import: Pelvis_lowest@1
+
+- event: pelvis_lowest_last
+  steps:
+    - import: Pelvis_lowest@-1
+
+- event: TOP1_repeated
+  steps:
+    - threshold: PelvisCGPos_vel_filt
+      value: 0
+      direction: down
+    - eventMask: [$prev, BOF, pelvis_lowest_first]
+      keep: -1
+    
+- event: TOP2_repeated
+  steps:
+    - threshold: PelvisCGPos_vel_filt
+      value: 0
+      direction: down
+    - eventMask: [$prev, pelvis_lowest_last, EOF]
+      keep: 0
+    
+- event: TOP_repeated
+  steps:
+    - concatenate: [TOP1_repeated, TOP_temp, TOP2_repeated]
+
+# For single squat -----
+- event: TOP_single
+  steps:
+    - concatenate: [BOF, EOF]
+
+- event: TOP_measured
+  steps:
+    - if: Pelvis_lowest_count == 1
+      then: TOP_single
+      else: TOP_repeated
+
+### entered events ###
+
+# If user enters manual events LON/LOFF/RON/ROFF in QTM rename them to TOP
+- event: TOP_entered_1
+  steps:
+    - if: exists(LON)
+      then: LON
+      else: [[]]
+    
+- event: TOP_entered_2
+  steps:
+    - if: exists(RON)
+      then: RON
+      else: [[]]
+
+- event: TOP_entered_3
+  steps:
+    - if: exists(LOFF)
+      then: LOFF
+      else: [[]]
+
+- event: TOP_entered_4
+  steps:
+    - if: exists(ROFF)
+      then: ROFF
+      else: [[]]
+
+- event: TOP_entered
+  steps:
+    - concatenate: [TOP_entered_1, TOP_entered_2, TOP_entered_3, TOP_entered_4]
+
+# entered events prioritise over calculated ones
+- event: TOP_calqulus
+  steps:
+  - if: "!empty(TOP_entered)"
+    then: TOP_entered
+    else: TOP_measured
+
+- event: TOP_L_calqulus
+  where:
+    name: (Squatting_L|Squatting_B)*
+  steps:
+    - import: TOP_calqulus
+
+- event: TOP_R_calqulus
+  where:
+    name: (Squatting_R|Squatting_B)*
+  steps:
+    - import: TOP_calqulus
+
+# ML events prioritise over calqulus based events
+- event: TOP
+  steps:
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
+    then: EccentricStart_ML
+    else: TOP_calqulus
+
+- event: TOP_L
+  where:
+    name: (Squatting_L|Squatting_B)*
+  steps:
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
+    then: EccentricStart_ML
+    else: TOP_L_calqulus
+
+- event: TOP_R
+  where:
+    name: (Squatting_R|Squatting_B)*
+  steps:
+  - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
+    then: EccentricStart_ML
+    else: TOP_R_calqulus
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: (Squatting_L|Squatting_B)*
+  set: left
+  steps:
+    - import: TOP_L
+
+- event: LeftPlotEnd
+  where:
+    name: (Squatting_L|Squatting_B)*
+  set: left
+  steps:
+    - import: TOP_L
+
+- event: RightPlotStart
+  where:
+    name: (Squatting_R|Squatting_B)*
+  set: right
+  steps:
+    - import: TOP_R
+
+- event: RightPlotEnd
+  where:
+    name: (Squatting_R|Squatting_B)*
+  set: right
+  steps:
+    - import: TOP_R
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## Metrics ##
+#############
+
+# count ML cycles and calqulus cycles
+- parameter: Pelvis_lowest_count
+  steps:
+    - count: Pelvis_lowest
+
+- parameter: EccentricEnd_ML_temp
+  steps:
+    - if: exists(EccentricEnd_ML)
+      then: EccentricEnd_ML
+      else: 0
+
+- parameter: ML_cycles_count
+  steps:
+    - count: EccentricEnd_ML_temp
+
+# Squatting depth
+- parameter: Squatting_depth_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - refineEvent: TOP
+      sequence: [TOP, Pelvis_lowest]
+      export: TOP_refined
+
+    - refineEvent: Pelvis_lowest
+      sequence: [TOP, Pelvis_lowest]
+      export: Pelvis_lowest_refined
+
+    - import: PelvisCGPos@TOP_refined
+    - import: PelvisCGPos@Pelvis_lowest_refined
+    - subtract: [$prev(2), $prev]
+
+- parameter: Squatting_depth_Squat_L
+  where:
+    name: Squatting_L*
+  steps:
+    - refineEvent: TOP
+      sequence: [TOP, Pelvis_lowest]
+      export: TOP_refined
+
+    - refineEvent: Pelvis_lowest
+      sequence: [TOP, Pelvis_lowest]
+      export: Pelvis_lowest_refined
+
+    - import: PelvisCGPos@TOP_refined
+    - import: PelvisCGPos@Pelvis_lowest_refined
+    - subtract: [$prev(2), $prev]
+
+- parameter: Squatting_depth_Squat_R
+  where:
+    name: Squatting_R*
+  steps:
+    - refineEvent: TOP
+      sequence: [TOP, Pelvis_lowest]
+      export: TOP_refined
+
+    - refineEvent: Pelvis_lowest
+      sequence: [TOP, Pelvis_lowest]
+      export: Pelvis_lowest_refined
+
+    - import: PelvisCGPos@TOP_refined
+    - import: PelvisCGPos@Pelvis_lowest_refined
+    - subtract: [$prev(2), $prev]
+
+# Bilateral ---
+
+- parameter: Left Hip Angles_max_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - eventMask: [Left Hip Angles, TOP, TOP]
+    - max:
+
+- parameter: Left Knee Angles_max_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - eventMask: [Left Knee Angles, TOP, TOP]
+    - max:
+
+- parameter: Left Ankle Angles_max_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - eventMask: [Left Ankle Angles, TOP, TOP]
+    - max:
+
+- parameter: Right Hip Angles_max_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - eventMask: [Right Hip Angles, TOP, TOP]
+    - max:
+
+- parameter: Right Knee Angles_max_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - eventMask: [Right Knee Angles, TOP, TOP]
+    - max:
+
+- parameter: Right Ankle Angles_max_Squat_B
+  where:
+    name: Squatting_B*
+  steps:
+    - eventMask: [Right Ankle Angles, TOP, TOP]
+    - max:
+
+# Left ---
+- parameter: Left Hip Angles_max_Squat_L
+  where:
+    name: Squatting_L*
+  steps:
+    - eventMask: [Left Hip Angles, TOP, TOP]
+    - max:
+
+- parameter: Left Knee Angles_max_Squat_L
+  where:
+    name: Squatting_L*
+  steps:
+    - eventMask: [Left Knee Angles, TOP, TOP]
+    - max:
+
+- parameter: Left Ankle Angles_max_Squat_L
+  where:
+    name: Squatting_L*
+  steps:
+    - eventMask: [Left Ankle Angles, TOP, TOP]
+    - max:
+
+# Right ---
+- parameter: Right Hip Angles_max_Squat_R
+  where:
+    name: Squatting_R*
+  steps:
+    - eventMask: [Right Hip Angles, TOP, TOP]
+    - max:
+
+- parameter: Right Knee Angles_max_Squat_R
+  where:
+    name: Squatting_R*
+  steps:
+    - eventMask: [Right Knee Angles, TOP, TOP]
+    - max:
+
+- parameter: Right Ankle Angles_max_Squat_R
+  where:
+    name: Squatting_R*
+  steps:
+    - eventMask: [Right Ankle Angles, TOP, TOP]
+    - max:
+
+# Kinetics ------------
+# Bilateral - Total
+- parameter: Total GRF
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - add: [Left GRF, Right GRF]
+
+- parameter: Total GRF_max_concentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Total GRF, Pelvis_lowest, TOP]
+    - max:
+
+- parameter: Total GRF_mean_concentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Total GRF, Pelvis_lowest, TOP]
+    - mean:
+
+- parameter: Total GRF_max_eccentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Total GRF, TOP, Pelvis_lowest]
+    - max:
+
+- parameter: Total GRF_mean_eccentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Total GRF, TOP, Pelvis_lowest]
+    - mean:
+
+# Bilateral - Left
+- parameter: Left GRF_max_concentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Left GRF, Pelvis_lowest, TOP]
+    - max:
+
+- parameter: Left GRF_mean_concentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Left GRF, Pelvis_lowest, TOP]
+    - mean:
+
+- parameter: Left GRF_max_eccentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Left GRF, TOP, Pelvis_lowest]
+    - max:
+
+- parameter: Left GRF_mean_eccentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Left GRF, TOP, Pelvis_lowest]
+    - mean:
+
+- parameter: Left GRF_max_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Left GRF, TOP, TOP]
+    - max:
+
+# Bilateral - Right
+- parameter: Right GRF_max_concentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Right GRF, Pelvis_lowest, TOP]
+    - max:
+
+- parameter: Right GRF_mean_concentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Right GRF, Pelvis_lowest, TOP]
+    - mean:
+
+- parameter: Right GRF_max_eccentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Right GRF, TOP, Pelvis_lowest]
+    - max:
+
+- parameter: Right GRF_mean_eccentric_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Right GRF, TOP, Pelvis_lowest]
+    - mean:
+
+- parameter: Right GRF_max_Squat_B
+  where:
+    name: Squatting_B*
+    force: both
+  steps:
+    - eventMask: [Right GRF, TOP, TOP]
+    - max:
+
+# Single leg - Left
+- parameter: Left GRF_max_concentric_Squat_L
+  where:
+    name: Squatting_L*
+    force: left
+  steps:
+    - eventMask: [Left GRF, Pelvis_lowest, TOP]
+    - max:
+
+- parameter: Left GRF_mean_concentric_Squat_L
+  where:
+    name: Squatting_L*
+    force: left
+  steps:
+    - eventMask: [Left GRF, Pelvis_lowest, TOP]
+    - mean:
+
+- parameter: Left GRF_max_eccentric_Squat_L
+  where:
+    name: Squatting_L*
+    force: left
+  steps:
+    - eventMask: [Left GRF, TOP, Pelvis_lowest]
+    - max:
+
+- parameter: Left GRF_mean_eccentric_Squat_L
+  where:
+    name: Squatting_L*
+    force: left
+  steps:
+    - eventMask: [Left GRF, TOP, Pelvis_lowest]
+    - mean:
+
+- parameter: Left GRF_max_Squat_L
+  where:
+    name: Squatting_L*
+    force: left
+  steps:
+    - eventMask: [Left GRF, TOP, TOP]
+    - max:
+
+# Single leg - Right
+- parameter: Right GRF_max_concentric_Squat_R
+  where:
+    name: Squatting_R*
+    force: right
+  steps:
+    - eventMask: [Right GRF, Pelvis_lowest, TOP]
+    - max:
+
+- parameter: Right GRF_mean_concentric_Squat_R
+  where:
+    name: Squatting_R*
+    force: right
+  steps:
+    - eventMask: [Right GRF, Pelvis_lowest, TOP]
+    - mean:
+
+- parameter: Right GRF_max_eccentric_Squat_R
+  where:
+    name: Squatting_R*
+    force: right
+  steps:
+    - eventMask: [Right GRF, TOP, Pelvis_lowest]
+    - max:
+
+- parameter: Right GRF_mean_eccentric_Squat_R
+  where:
+    name: Squatting_R*
+    force: right
+  steps:
+    - eventMask: [Right GRF, TOP, Pelvis_lowest]
+    - mean:
+
+- parameter: Right GRF_max_Squat_R
+  where:
+    name: Squatting_R*
+    force: right
+  steps:
+    - eventMask: [Right GRF, TOP, TOP]
+    - max:
+

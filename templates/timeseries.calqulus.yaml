@@ -1,0 +1,458 @@
+############
+## SERIES ##
+############
+
+# Parameters needed for kinematics event detection in FA
+- parameter: PelvisCGPos_vel
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+      export: PelvisCGPos
+    - velocity:
+
+- parameter: LFT_DistEndAcc
+  set: left
+  steps:
+    - segment: LeftToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 9
+      export: LFT_DistEndPos
+    - velocity:
+    # - lowpass:
+    #   extrapolate: 100
+    #   cutoff: 16
+      export: LFT_DistEndVel
+    - velocity:
+
+- parameter: RFT_DistEndAcc
+  set: right
+  steps:
+    - segment: RightToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 9
+      export: RFT_DistEndPos
+    - velocity:
+    # - lowpass:
+    #   extrapolate: 100
+    #   cutoff: 16
+      export: RFT_DistEndVel
+    - velocity:
+
+# ####
+# Timeseries used in all FA tasks and in Running and Generic
+# ####
+
+# ----
+# Kinematics ---
+# ----
+
+# --- Pelvis ---
+
+- parameter: Left Pelvic Angles
+  set: left
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, -1]]
+
+- parameter: Right Pelvic Angles
+  set: right
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+    - multiply: [$prev, [-1, -1, 1]]
+
+# --- Hips ---
+
+- parameter: Left Hip Angles
+  set: left
+  steps:
+    - jointAngle: [Hips, LeftUpLeg]
+    - multiply: [$prev, [1, -1, -1]]
+
+- parameter: Right Hip Angles
+  set: right
+  steps:
+    - jointAngle: [Hips, RightUpLeg]
+    - multiply: [$prev, [1, 1, 1]]
+
+# --- Knee ---
+
+- parameter: Left Knee Angles
+  set: left
+  steps:
+    - jointAngle: [LeftUpLeg, LeftLeg]
+    - multiply: [$prev, [-1, -1, -1]]
+
+- parameter: Right Knee Angles
+  set: right
+  steps:
+    - jointAngle: [RightUpLeg, RightLeg]
+    - multiply: [$prev, [-1, 1, 1]]
+
+# --- Ankle ---
+
+- parameter: Left Ankle Angles
+  set: left
+  steps:
+    - jointAngle: [LeftLeg, LeftFoot]
+    - multiply: [$prev, [1, -1, -1]]
+
+- parameter: Right Ankle Angles
+  set: right
+  steps:
+    - jointAngle: [RightLeg, RightFoot]
+    - multiply: [$prev, [1, 1, 1]]
+
+- parameter: Left Foot Progression
+  set: left
+  steps:
+    - jointAngle: LeftFoot
+      space: VirtualLab
+    - multiply: [$prev, [1, 1, -1]]
+
+- parameter: Right Foot Progression
+  set: right
+  steps:
+    - jointAngle: RightFoot
+      space: VirtualLab
+    - multiply: [$prev, [1, 1, 1]]
+
+- parameter: Left Foot Pitch Angles
+  set: left
+  steps:
+    - jointAngle: LeftFoot
+      space: VirtualLab
+    - multiply: [$prev, [1, 1, -1]]
+
+- parameter: Right Foot Pitch Angles
+  set: right
+  steps:
+    - jointAngle: RightFoot
+      space: VirtualLab
+    - multiply: [$prev, [1, 1, 1]]
+
+# --- Upper body ---
+
+# Thorax
+- parameter: Left Thorax_Lab Angles
+  set: left
+  steps:
+    - jointAngle: Spine2
+      space: VirtualLab
+    - multiply: [$prev, [-1,1,-1]]
+
+- parameter: Right Thorax_Lab Angles
+  set: right
+  steps:
+    - jointAngle: Spine2
+      space: VirtualLab
+    - multiply: [$prev, [-1,-1,1]]
+
+- parameter: Left Thorax Angles
+  set: left
+  steps:
+    - jointAngle: [Hips, Spine2]
+    - multiply: [$prev, [-1, 1, -1]]
+
+- parameter: Right Thorax Angles
+  set: right
+  steps:
+    - jointAngle: [Hips, Spine2]
+    - multiply: [$prev, [-1, -1, 1]]
+
+# Shoulders
+- parameter: Left Shoulder Angles
+  set: left
+  steps:
+    - angle: [Spine2, LeftArm]
+      # unwrap: true
+      rotationOrder: YXZ #based on Vandana,P. at al. Comparison of Glenohumeral Motion Using Different Rotation Sequences, J Biomech. 2011 Feb 24; 44(4): 700–705. 
+    - multiply: [$prev, [1, -1, -1]]
+
+- parameter: Right Shoulder Angles
+  set: right
+  steps:
+    - angle: [Spine2, RightArm]
+      # unwrap: true
+      rotationOrder: YXZ
+    - multiply: [$prev, [1, 1, 1]]
+
+- parameter: Left Shoulder Ang Vel
+  set: left
+  steps:
+    - angularVelocity: [LeftShoulder, LeftArm, LeftShoulder, LeftArm]
+
+- parameter: Right Shoulder Ang Vel
+  set: right
+  steps:
+    - angularVelocity: [RightShoulder, RightArm, RightShoulder, RightArm]
+
+# --- Arms ---
+
+- parameter: Left Elbow Angles
+  set: left
+  steps:
+    - angle: [LeftArm, LeftForearm]
+    - multiply: [$prev, [1, 1, -1]]
+
+- parameter: Right Elbow Angles
+  set: right
+  steps:
+    - angle: [RightArm, RightForearm]
+    - multiply: [$prev, [1, 1, 1]]
+
+# --- Wrist ---
+
+- parameter: Left Wrist Angles
+  set: left
+  steps:
+    - angle: [LeftForeArm, LeftHand]
+    - multiply: [$prev, [1, -1, 1]]
+
+- parameter: Right Wrist Angles
+  set: right
+  steps:
+    - angle: [RightForeArm, RightHand]
+    - multiply: [$prev, [1, 1, -1]]
+
+# --- Head ---
+
+- parameter: Head Angles
+  steps:
+    - angle: [Head, Spine2]
+
+# COM distance to knee and ankle
+# for now using pelvis COM instead of body COM
+- parameter: Left_Knee_COM_distance
+  set: left
+  steps:
+    - segment: LeftLeg => knee
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, knee]
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Right_Knee_COM_distance
+  set: right
+  steps:
+    - segment: RightLeg => knee
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, knee]
+    - convert: 
+      from: mm
+      to: m
+    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+- parameter: Left_Ankle_COM_distance
+  set: left
+  steps:
+    - segment: LeftFoot => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, foot]
+    - convert: 
+      from: mm
+      to: m
+
+- parameter: Right_Ankle_COM_distance
+  set: right
+  steps:
+    - segment: RightFoot => foot
+      space: VirtualLab
+    - segment: Hips => pelvis
+      space: VirtualLab
+    - subtract: [pelvis, foot]
+    - convert: 
+      from: mm
+      to: m
+    - multiply: [$prev,[-1,1,1]] #Invert right signal to make lateral movement positive
+
+# ----
+# Kinetics
+# ----
+- parameter: BodyWeightNewton
+  steps:
+    - multiply: [$field(Weight; measurement; numeric), 9.81]
+
+# Left
+- parameter: Left GRF
+  where:
+    force: left
+  set: left
+  steps:
+    - import: LeftFootContact => foot
+    - vector: [foot.fx, foot.fy, foot.fz]
+      space: VirtualLab
+    - divide: [$prev, BodyWeightNewton]
+
+- parameter: Left Hip Moment
+  where:
+    force: left
+  set: left
+  steps:
+    - vector: [LeftHip.mx, LeftHip.my, LeftHip.mz]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[-1,1,1]]
+
+- parameter: Left Hip Power
+  where:
+    force: left
+  set: left
+  steps:
+    - vector: [LeftHip.p, LeftHip.p, LeftHip.p] #for compatibility with V3D power requires components
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+
+- parameter: Left Knee Moment
+  where:
+    force: left
+  set: left
+  steps:
+    - vector: [LeftKnee.mx, LeftKnee.my, LeftKnee.mz]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+
+- parameter: Left Knee Power
+  where:
+    force: left
+  set: left
+  steps:
+    - vector: [LeftKnee.p, LeftKnee.p, LeftKnee.p] #for compatibility with V3D power requires components
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+
+- parameter: Left Ankle Moment
+  where:
+    force: left
+  set: left
+  steps:
+    - vector: [LeftAnkle.mx, LeftAnkle.my, LeftAnkle.mz]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[-1,1,1]]
+
+- parameter: Left Ankle Power
+  where:
+    force: left
+  set: left
+  steps:
+    - vector: [LeftAnkle.p, LeftAnkle.p, LeftAnkle.p] #for compatibility with V3D power requires components
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+
+- parameter: Left_COP
+  where:
+    force: left
+  set: left
+  steps:
+    - import: LeftFootContact => foot
+    - vector: [foot.x, foot.y, foot.z]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: Left_COP_COM_distance
+  where:
+    force: left
+  set: left
+  steps:
+    - multiply: [Left_COP, [-1,-1,-1]]
+    - subtract: [PelvisCGPos, $prev]
+
+# Right
+- parameter: Right GRF
+  where:
+    force: right
+  set: right
+  steps:
+    - import: RightFootContact => foot
+    - vector: [foot.fx, foot.fy, foot.fz]
+      space: VirtualLab
+    - divide: [$prev, BodyWeightNewton]
+    - multiply: [$prev, [-1,1,1]]
+
+- parameter: Right Hip Moment
+  where:
+    force: right
+  set: right
+  steps:
+    - vector: [RightHip.mx, RightHip.my, RightHip.mz]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[-1,-1,-1]]
+
+- parameter: Right Hip Power
+  where:
+    force: right
+  set: right
+  steps:
+    - vector: [RightHip.p, RightHip.p, RightHip.p] #for compatibility with V3D power requires components
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+
+- parameter: Right Knee Moment
+  where:
+    force: right
+  set: right
+  steps:
+    - vector: [RightKnee.mx, RightKnee.my, RightKnee.mz]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[1,-1,-1]]
+
+- parameter: Right Knee Power
+  where:
+    force: right
+  set: right
+  steps:
+    - vector: [RightKnee.p, RightKnee.p, RightKnee.p] #for compatibility with V3D power requires components
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+
+- parameter: Right Ankle Moment
+  where:
+    force: right
+  set: right
+  steps:
+    - vector: [RightAnkle.mx, RightAnkle.my, RightAnkle.mz]
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - multiply: [$prev,[-1,-1,-1]]
+
+- parameter: Right Ankle Power
+  where:
+    force: right
+  set: right
+  steps:
+    - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
+    - divide: [$prev, $field(Weight; measurement; numeric)]
+
+- parameter: Right_COP
+  where:
+    force: right
+  set: right
+  steps:
+    - import: RightFootContact => foot
+    - vector: [foot.x, foot.y, foot.z]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: Right_COP_COM_distance
+  where:
+    force: right
+  set: right
+  steps:
+    - multiply: [Right_COP, [-1,-1,-1]]
+    - subtract: [PelvisCGPos, $prev]
+

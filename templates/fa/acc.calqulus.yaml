@@ -1,0 +1,195 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+- parameter: PelvisCGPos_vel
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - velocity:
+    - convert: $prev
+      from: mm/s
+      to: m/s
+
+- parameter: LFT_DistEndAcc
+  set: left
+  steps:
+    - segment: LeftToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 9
+      export: LFT_DistEndPos
+    - velocity:
+    # - lowpass:
+    #   extrapolate: 100
+    #   cutoff: 16
+      export: LFT_DistEndVel
+    - velocity:
+
+- parameter: RFT_DistEndAcc
+  set: right
+  steps:
+    - segment: RightToeBase
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - lowpass:
+      extrapolate: 100
+      cutoff: 9
+      export: RFT_DistEndPos
+    - velocity:
+    # - lowpass:
+    #   extrapolate: 100
+    #   cutoff: 16
+      export: RFT_DistEndVel
+    - velocity:
+
+# Left
+- event: L_temp1
+  where:
+    name: Acc_L*
+  set: left
+  steps:
+    - peakFinder: LFT_DistEndVel.y
+      height: 0.5
+    - import: $prev@1
+
+- event: LON_kinematics
+  where:
+    name: Acc_L*
+  set: left
+  steps:
+    - threshold: LFT_DistEndAcc.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, L_temp1, EOF]
+    - import: $prev@1
+
+- event: LON
+  where:
+    name: Acc_L*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: LON_kinematics
+      
+- event: LOFF_kinematics
+  where:
+    name: Acc_L*
+  set: left
+  steps:
+    - threshold: LFT_DistEndPos.z
+      direction: up
+      value: 0.1
+    - eventMask: [$prev, LON_kinematics, EOF]
+
+- event: LOFF
+  where:
+    name: Acc_L*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: LOFF_kinematics
+      
+# Right
+- event: R_temp1
+  where:
+    name: Acc_R*
+  set: right
+  steps:
+    - peakFinder: RFT_DistEndVel.y
+      height: 0.5
+    - import: $prev@1
+
+- event: RON_kinematics
+  where:
+    name: Acc_R*
+  set: right
+  steps:
+    - threshold: RFT_DistEndAcc.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, R_temp1, EOF]
+    - import: $prev@1
+
+- event: RON
+  where:
+    name: Acc_R*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: RON_kinematics
+      
+- event: ROFF_kinematics
+  where:
+    name: Acc_R*
+  set: right
+  steps:
+    - threshold: RFT_DistEndPos.z
+      direction: up
+      value: 0.1
+    - eventMask: [$prev, RON_kinematics, EOF]
+
+- event: ROFF
+  where:
+    name: Acc_R*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: ROFF_kinematics
+      
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: Acc_L*
+  steps:
+    - import: LON
+
+- event: LeftPlotEnd
+  where:
+    name: Acc_L*
+  steps:
+    - import: LOFF
+
+- event: RightPlotStart
+  where:
+    name: Acc_R*
+  steps:
+    - import: RON
+
+- event: RightPlotEnd
+  where:
+    name: Acc_R*
+  steps:
+    - import: ROFF
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml

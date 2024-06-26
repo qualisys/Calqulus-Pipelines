@@ -1,0 +1,198 @@
+# It is assumed that only one FP is loaded
+
+############
+## SPACES ##
+############
+
+# We can't use space as we do not have skeleton
+
+# - space: VirtualLab
+#   alignWithSegment:
+#     segment: Hips
+
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# Unified event names for web
+- event: LeftPlotStart
+  set: left
+  where:
+    name: Balance_L*
+  steps:
+    - import: BOF
+
+- event: LeftPlotEnd
+  set: left
+  where:
+    name: Balance_L*
+  steps:
+    - import: EOF
+
+- event: RightPlotStart
+  set: right
+  where:
+    name: Balance_R*
+  steps:
+    - import: BOF
+
+- event: RightPlotEnd
+  set: right
+  where:
+    name: Balance_R*
+  steps:
+    - import: EOF
+
+############
+## SERIES ##
+############
+
+# find out which FP is loaded
+# it is assumed that only teo FPs are connected to the system
+- parameter: COP_FP1
+  steps:
+    - if: exists(ForcePlate1)
+      then: ForcePlate1.fz
+      else: [[0]]
+    - mean:
+    - abs:
+
+- parameter: COP_FP2
+  steps:
+    - if: exists(ForcePlate2)
+      then: ForcePlate2.fz
+      else: [[0]]
+    - mean:
+    - abs:
+
+- parameter: COP_direct
+  steps:
+    - if: (COP_FP1 > COP_FP2)
+      then: ForcePlate1
+      else: ForcePlate2
+    - vector: [$prev.x, $prev.y, $prev.z]
+    - lowpass:
+      cutoff: 10
+      extrapolate: 30
+
+# calculate COP from skeleton data
+- parameter: COP_skeleton
+  where:
+    name: Balance_L*
+    force: left
+  steps:
+    - import: LeftFootContact => foot
+    - vector: [foot.x, foot.y, foot.z]
+
+- parameter: COP_skeleton
+  where:
+    name: Balance_R*
+    force: right
+  steps:
+    - import: RightFootContact => foot
+    - vector: [foot.x, foot.y, foot.z]
+
+# use skeleton based COP if it exists
+- parameter: COP_zeroed
+  steps:
+    - if: exists(LeftFootContact)
+      then: COP_skeleton
+      else: COP_direct
+    - convert:
+      from: mm
+      to: m
+    - multiply: [$prev, [1,1,0]]
+    - median:
+    - subtract: [$prev(2), $prev]
+
+#############
+## METRICS ##
+#############
+
+- parameter: Measurement_length
+  steps:
+    - divide: [$length, $framerate]
+
+- parameter: COP_zeroed_vel_filt_mag_max
+  steps:
+    - velocity: COP_zeroed
+    - lowpass:
+      cutoff: 6
+      output: COP_zeroed_vel_filt
+    - max:
+      export: COP_zeroed_vel_filt_max
+    - mean: COP_zeroed_vel_filt
+      export: COP_zeroed_vel_filt_mean
+    - magnitude: COP_zeroed_vel_filt
+    - mean:
+      export: COP_zeroed_vel_filt_mag_mean
+    - max: $prev(2)
+
+- parameter: COP_zeroed_acc_filt_mag_max
+  steps:
+    - acceleration: COP_zeroed
+    - lowpass:
+      cutoff: 6
+      output: COP_zeroed_acc_filt
+    - max:
+      export: COP_zeroed_acc_filt_max
+    - mean: COP_zeroed_acc_filt
+      export: COP_zeroed_acc_filt_mean
+    - magnitude: COP_zeroed_acc_filt
+    - mean:
+      export: COP_zeroed_acc_filt_mag_mean
+    - max: $prev(2)
+
+- parameter: COP_range
+  steps:
+    - min: COP_zeroed
+    - max: COP_zeroed
+    - subtract: [$prev, $prev(2)]
+
+# Dynamic Postural Stability Index -----------
+# Based on Erik A Wikstrom, Mark A Arrigenna,Mark D Tillman, and Paul A Borsa: Dynamic Postural Stability in Subjects With Braced, Functionally Unstable Ankles. J Athl Train. 2006; 41(3): 245–250. 
+
+# find out which plate is loaded
+- parameter: loaded_FP
+  steps:
+    - if: (COP_FP1 > COP_FP2)
+      then: ForcePlate1
+      else: ForcePlate2
+    - lowpass:
+
+- parameter: DPSI
+  steps:
+    - multiply: [$field(Weight; measurement; numeric), 9.81]
+      output: bw
+
+    - vector: [loaded_FP.fx, loaded_FP.fy, loaded_FP.fz]
+    - negate:
+      output: my_force
+
+    - subtract: [0, my_force]
+    - power:
+    - sum:
+      output: FS
+
+    - subtract: [bw, my_force.z]
+    - power:
+    - sum:
+      output: FSZ
+    - concatenate: [FS.x, FS.y, FSZ]
+    - sum:
+      output: FP_SUM_ALL
+
+    # get number of force frames
+    - multiply: [Measurement_length, $framerate]
+      output: nframe
+
+    - sqrt: FP_SUM_ALL
+    - divide: [$prev, nframe]

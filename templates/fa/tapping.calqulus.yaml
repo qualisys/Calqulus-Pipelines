@@ -1,0 +1,144 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
+- event: LON_kinematics
+  set: left
+  steps:
+    - negate: LFT_DistEndVel.z
+    - peakFinder: 
+      height: 0.2
+      output: temp1
+    
+    - eventMask: [LFT_DistEndVel.z, temp1, temp1]
+    - peakFinder: 
+      height: 0.15
+      output: temp2
+
+    - eventMask: [LFT_DistEndVel.z, temp1, temp2]
+    - min:
+      frames: true
+    - subtract: [$prev, 2]
+
+- event: LON
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: LON_kinematics
+
+- event: LOFF_kinematics
+  set: left
+  steps:
+    - eventMask: [LFT_DistEndVel.z, LON, LON]
+    - max:
+      frames: true
+    - subtract: [$prev, 2]
+
+- event: LOFF
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: LOFF_kinematics
+
+- event: RON_kinematics
+  set: right
+  steps:
+    - negate: RFT_DistEndVel.z
+    - peakFinder: 
+      height: 0.2
+      output: temp1
+    
+    - eventMask: [RFT_DistEndVel.z, temp1, temp1]
+    - peakFinder: 
+      height: 0.15
+      output: temp2
+
+    - eventMask: [RFT_DistEndVel.z, temp1, temp2]
+    - min:
+      frames: true
+    - subtract: [$prev, 2]
+
+- event: RON
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: RON_kinematics
+
+- event: ROFF_kinematics
+  set: right
+  steps:
+    - eventMask: [RFT_DistEndVel.z, RON, RON]
+    - max:
+      frames: true
+    - subtract: [$prev, 2]
+
+- event: ROFF
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: ROFF_kinematics
+
+# Unified event names for web
+- event: LeftPlotStart
+  set: left
+  steps:
+    - import: LON
+
+- event: LeftPlotEnd
+  set: left
+  steps:
+    - import: LOFF
+
+- event: RightPlotStart
+  set: right
+  steps:
+    - import: RON
+
+- event: RightPlotEnd
+  set: right
+  steps:
+    - import: ROFF
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## Metrics ##
+#############
+
+- parameter: LON_contact_time
+  steps:
+    - eventDuration: [LON, LON]
+
+- parameter: Left_frequency_min
+  steps:
+    - divide: [1, LON_contact_time]
+      export: Left_frequency
+    - max: Left_frequency
+      export: Left_frequency_max
+    - min: Left_frequency
+      export: Left_frequency_min
+
+- parameter: Contact_count
+  steps:
+    - eventDuration: [LON, LOFF]
+    - count: 

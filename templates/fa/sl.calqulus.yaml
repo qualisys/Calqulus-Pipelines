@@ -1,0 +1,498 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
+- template: sl-events-kinematics.calqulus.yaml
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## METRICS ##
+#############
+
+# Left -------------
+- parameter: Left Knee Angles@TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - import: Left Knee Angles@TouchDown
+
+- parameter: Left Hip Angles@TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - import: Left Hip Angles@TouchDown
+
+# COM displacement
+- parameter: COM_displacement_Left_MEAN_range
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Hips, TouchDown, Max_knee_flex]
+    - convert: 
+      from: mm
+      to: m
+    - max:
+      export: CenterOfMass_MAX_Left
+    - min: $prev(2)
+      export: CenterOfMass_MIN_Left
+    - subtract: [CenterOfMass_MAX_Left.z, CenterOfMass_MIN_Left.z]
+
+# COM distance to knee and ankle
+# @TouchDown
+- parameter: Left_Knee_COM_distance@TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - import: Left_Knee_COM_distance@TouchDown
+
+- parameter: Left_Ankle_COM_distance@TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - import: Left_Ankle_COM_distance@TouchDown
+
+# TakeOff
+- parameter: Left_Knee_COM_distance@TakeOff
+  where:
+    name: ^(SLJ_|SLL_)L*
+  set: left
+  steps:
+    - import: Left_Knee_COM_distance@TakeOff
+
+- parameter: Left_Ankle_COM_distance@TakeOff
+  where:
+    name: ^(SLJ_|SLL_)L*
+  set: left
+  steps:
+    - import: Left_Ankle_COM_distance@TakeOff
+
+# Max Knee Flex
+- parameter: Left Knee Angles@Max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - import: Left Knee Angles@Max_knee_flex
+
+- parameter: Left Thorax Angles@Max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - import: Left Thorax Angles@Max_knee_flex
+
+# Min
+- parameter: Left Hip Angles_min
+  where:
+    name: ^(SLJ_|SLL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Angles, TouchDown, Max_knee_flex]
+    - min: 
+
+- parameter: Left Knee Angles_min
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
+    - min: 
+
+- parameter: Left Ankle Angles_min
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Angles, TouchDown, Max_knee_flex]
+    - min: 
+
+# Max
+- parameter: Left Hip Angles_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Hip Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Knee Angles_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Ankle Angles_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Ankle Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Thorax Angles_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Thorax Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Knee Angles_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+# Calculate hop distance
+- parameter: Left_hop_distance
+  where:
+    name: ^(SLJ_|SLL_)L*
+  set: left
+  steps:
+    - marker: LHeelBack => heel
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - import: heel@TakeOff
+      export: LFT_DistEndPos@TakeOff
+    - import: heel@TouchDwon
+      export: LFT_DistEndPos@TouchDown
+    - subtract: [$prev(2).y, $prev.y]
+    # - subtract: [LFT_DistEndPos\@TakeOff.y,LFT_DistEndPos\@TouchDown.y]
+    - abs:
+
+# Right -------------
+- parameter: Right Knee Angles@TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - import: Right Knee Angles@TouchDown
+
+- parameter: Right Hip Angles@TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - import: Right Hip Angles@TouchDown
+
+# COM displacement
+- parameter: COM_displacement_Right_MEAN_range
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Hips, TouchDown, Max_knee_flex]
+    - convert: 
+      from: mm
+      to: m
+    - max:
+      export: CenterOfMass_MAX_Right
+    - min: $prev(2)
+      export: CenterOfMass_MIN_Right
+    - subtract: [CenterOfMass_MAX_Right.z, CenterOfMass_MIN_Right.z]
+
+# COM distance to knee and ankle
+# @TouchDown
+- parameter: Right_Knee_COM_distance@TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - import: Right_Knee_COM_distance@TouchDown
+
+- parameter: Right_Ankle_COM_distance@TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - import: Right_Ankle_COM_distance@TouchDown
+
+# TakeOff
+- parameter: Right_Knee_COM_distance@TakeOff
+  where:
+    name: ^(SLJ_|SLL_)R*
+  set: right
+  steps:
+    - import: Right_Knee_COM_distance@TakeOff
+
+- parameter: Right_Ankle_COM_distance@TakeOff
+  where:
+    name: ^(SLJ_|SLL_)R*
+  set: right
+  steps:
+    - import: Right_Ankle_COM_distance@TakeOff
+
+# Max Knee Flex
+- parameter: Right Knee Angles@Max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - import: Right Knee Angles@Max_knee_flex
+
+- parameter: Right Thorax Angles@Max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - import: Right Thorax Angles@Max_knee_flex
+
+# Min
+- parameter: Right Hip Angles_min
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Angles, TouchDown, Max_knee_flex]
+    - min: 
+
+- parameter: Right Knee Angles_min
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
+    - min: 
+
+- parameter: Right Ankle Angles_min
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Angles, TouchDown, Max_knee_flex]
+    - min: 
+
+# Max
+- parameter: Right Hip Angles_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Hip Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Knee Angles_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Ankle Angles_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Ankle Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Thorax Angles_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Thorax Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Knee Angles_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, TouchDown, Max_knee_flex]
+    - max: 
+
+# Calculate hop distance
+- parameter: Right_hop_distance
+  where:
+    name: ^(SLJ_|SLL_)R*
+  set: right
+  steps:
+    - marker: RHeelBack => heel
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
+    - import: heel@TakeOff
+      export: RFT_DistEndPos@TakeOff
+    - import: heel@TouchDwon
+      export: RFT_DistEndPos@TouchDown
+    - subtract: [$prev(2).y, $prev.y]
+    # - subtract: [RFT_DistEndPos\@TakeOff.y,RFT_DistEndPos\@TouchDown.y]
+    - abs:
+
+# Kinetics --------
+# Left
+- parameter: Left Hip Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Knee Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Ankle Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Ankle Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Hip Moment_mean
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Knee Moment_mean
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left Knee Moment_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Left GRF_max_landing
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left GRF, TouchDown, PlotEnd]
+    - max:
+
+- parameter: Left GRF_mean_landing
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left GRF, TouchDown, PlotEnd]
+    - mean:
+
+# Right
+- parameter: Right Hip Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Knee Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Ankle Moment_max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Ankle Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Hip Moment_mean
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Knee Moment_mean
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Knee Moment_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right GRF_max_landing
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right GRF, TouchDown, PlotEnd]
+    - max:
+
+- parameter: Right GRF_mean_landing
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right GRF, TouchDown, PlotEnd]
+    - mean:

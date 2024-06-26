@@ -1,0 +1,601 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
+# Left
+- event: TakeOff_L_kinematics
+  where:
+    name: PJ_[LB]*
+  set: left
+  steps:
+    - lowpass: PelvisCGPos_vel.z
+    - peakFinder:
+      height: 0.5
+      distance: 10
+
+- event: TakeOff_L
+  where:
+    name: PJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: TakeOff_L_kinematics
+
+- event: TouchDown_L_kinematics
+  where:
+    name: PJ_[LB]*
+  set: left
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder: 
+      height: 0.5
+      distance: 20
+
+- event: TouchDown_L
+  where:
+    name: PJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: TouchDown_L_kinematics
+
+- event: Max_knee_flex
+  where:
+    name: PJ_[LB]*
+  steps:
+    - eventMask: [Left Knee Angles.x, TouchDown_L, TakeOff_L]
+    - max:
+      frames: true
+
+- event: TakeOff_full_cycle
+  where:
+    name: PJ_L*
+  steps:
+    - refineEvent: TakeOff_L
+      sequence: [TakeOff_L, TouchDown_L]
+
+- event: COM_MIN
+  where:
+    name: PJ_L*
+  steps:
+    - eventMask: [Hips.z, TouchDown_L, TakeOff_full_cycle]
+    - max:
+      frames: true
+
+# Right
+- event: TakeOff_R_kinematics
+  where:
+    name: PJ_[RB]*
+  set: right
+  steps:
+    - lowpass: PelvisCGPos_vel.z
+    - peakFinder: 
+      height: 0.5
+      distance: 10
+
+- event: TakeOff_R
+  where:
+    name: PJ_[RB]*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: TakeOff_R_kinematics
+
+- event: TouchDown_R_kinematics
+  where:
+    name: PJ_[RB]*
+  set: right
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder: 
+      height: 0.5
+      distance: 20
+
+- event: TouchDown_R
+  where:
+    name: PJ_[RB]*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: TouchDown_R_kinematics
+
+- event: Max_knee_flex
+  where:
+    name: PJ_[RB]*
+  steps:
+    - eventMask: [Right Knee Angles.x, TouchDown_R, TakeOff_R]
+    - max:
+      frames: true
+
+- event: TakeOff_full_cycle
+  where:
+    name: PJ_[RB]*
+  steps:
+    - refineEvent: TakeOff_R
+      sequence: [TakeOff_R, TouchDown_R]
+
+- event: COM_MIN
+  where:
+    name: PJ_[RB]*
+  steps:
+    - eventMask: [Hips.z, TouchDown_R, TakeOff_full_cycle]
+    - max:
+      frames: true
+
+- event: TakeOff
+  where:
+    name: PJ_L*
+  steps:
+    - import: TakeOff_L
+
+- event: TouchDown
+  where:
+    name: PJ_L*
+  steps:
+    - import: TouchDown_L
+
+- event: TakeOff
+  where:
+    name: PJ_[RB]*
+  steps:
+    - import: TakeOff_R
+
+- event: TouchDown
+  where:
+    name: PJ_[RB]*
+  steps:
+    - import: TouchDown_R
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: PJ_[LB]*
+  set: left
+  steps:
+    - import: TouchDown_L
+
+- event: LeftPlotEnd
+  where:
+    name: PJ_[LB]*
+  set: left
+  steps:
+    - import: TakeOff_L
+
+- event: RightPlotStart
+  where:
+    name: PJ_[RB]*
+  set: right
+  steps:
+    - import: TouchDown_R
+
+- event: RightPlotEnd
+  where:
+    name: PJ_[RB]*
+  set: right
+  steps:
+    - import: TakeOff_R
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## Metrics ##
+#############
+
+# Average and Max jump height
+- parameter: PelvisCGPos_max
+  steps:
+    - eventMask: [PelvisCGPos.z, TakeOff_full_cycle, TouchDown]
+    - max:
+
+- parameter: PelvisCGPos@TakeOff
+  steps:
+    - import: PelvisCGPos.z@TakeOff_full_cycle
+
+# Left ---------
+- parameter: Jump_height_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
+
+- parameter: Jump_height_PJ_L_max
+  where:
+    name: PJ_L*
+  steps:
+    - max: Jump_height_PJ_L
+
+# Number of repetitions
+- parameter: Left_TouchDown_count_PJ_L
+  where:
+    name: PJ_L*
+  set: left
+  steps:
+    - count: TouchDown
+
+# Right ---------
+- parameter: Jump_height_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
+
+- parameter: Jump_height_PJ_R_max
+  where:
+    name: PJ_R*
+  steps:
+    - max: Jump_height_PJ_R
+
+# Number of repetitions
+- parameter: Right_TouchDown_count_PJ_R
+  where:
+    name: PJ_R*
+  set: right
+  steps:
+    - count: TouchDown
+
+# Bilateral ---------
+- parameter: Jump_height_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
+
+- parameter: Jump_height_PJ_B_max
+  where:
+    name: PJ_B*
+  steps:
+    - max: Jump_height_PJ_B
+
+# Number of repetitions
+- parameter: Right_TouchDown_count_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - count: TouchDown
+
+# Kinetics ------------
+# Bilateral - left
+- parameter: Left Power
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Left Power_min_ecc_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Left Power, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Left Power_max_conc_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Left Power, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Left GRF_max_ecc_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Left GRF, TouchDown, COM_MIN]
+    - max: $prev.z
+
+- parameter: Left GRF_max_conc_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Left GRF, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Left GRF_max_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Left GRF, TouchDown, TakeOff]
+    - max: $prev.z
+
+- parameter: Left Power_max_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Left Power, TouchDown, TakeOff]
+    - max: $prev.z
+
+# Power decrement and force decrement (% decrease from first rep to last rep)
+- parameter: Left GRF_decrement_pct_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - import: Left GRF_max_PJ_B@1
+      output: first
+    - import: Left GRF_max_PJ_B@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+- parameter: Left Power_decrement_pct_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - import: Left Power_max_PJ_B@1
+      output: first
+    - import: Left Power_max_PJ_B@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+# Bilateral - right
+- parameter: Right Power
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right Power_min_ecc_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Right Power, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Right Power_max_conc_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Right Power, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Right GRF_max_ecc_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Right GRF, TouchDown, COM_MIN]
+    - max: $prev.z
+
+- parameter: Right GRF_max_conc_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Right GRF, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Right GRF_max_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Right GRF, TouchDown, TakeOff]
+    - max: $prev.z
+
+- parameter: Right Power_max_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - eventMask: [Right Power, TouchDown, TakeOff]
+    - max: $prev.z
+
+# Power decrement and force decrement (% decrease from first rep to last rep)
+- parameter: Right GRF_decrement_pct_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - import: Right GRF_max_PJ_B@1
+      output: first
+    - import: Right GRF_max_PJ_B@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+- parameter: Right Power_decrement_pct_PJ_B
+  where:
+    name: PJ_B*
+    force: both
+  steps:
+    - import: Right Power_max_PJ_B@1
+      output: first
+    - import: Right Power_max_PJ_B@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+# Single leg - Left
+- parameter: Left Power
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Left Power_min_ecc_PJ_L
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - eventMask: [Left Power, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Left Power_max_conc_PJ_L
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - eventMask: [Left Power, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Left GRF_max_ecc_PJ_L
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - eventMask: [Left GRF, TouchDown, COM_MIN]
+    - max: $prev.z
+
+- parameter: Left GRF_max_conc_PJ_L
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - eventMask: [Left GRF, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Left GRF_max_PJ_L
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - eventMask: [Left GRF, TouchDown, TakeOff]
+    - max: $prev.z
+
+- parameter: Left Power_max_PJ_L
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - eventMask: [Left Power, TouchDown, TakeOff]
+    - max: $prev.z
+
+# Power decrement and force decrement (% decrease from first rep to last rep)
+- parameter: Left GRF_decrement_pct_PJ_L
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - import: Left GRF_max_PJ_L@1
+      output: first
+    - import: Left GRF_max_PJ_L@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+- parameter: Left Power_decrement_pct_PJ_L
+  where:
+    name: PJ_L*
+    force: left
+  steps:
+    - import: Left Power_max_PJ_L@1
+      output: first
+    - import: Left Power_max_PJ_L@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+# Single leg - Right
+- parameter: Right Power
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right Power_min_ecc_PJ_R
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - eventMask: [Right Power, TouchDown, COM_MIN]
+    - min: $prev.z
+
+- parameter: Right Power_max_conc_PJ_R
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - eventMask: [Right Power, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Right GRF_max_ecc_PJ_R
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - eventMask: [Right GRF, TouchDown, COM_MIN]
+    - max: $prev.z
+
+- parameter: Right GRF_max_conc_PJ_R
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - eventMask: [Right GRF, COM_MIN, TakeOff]
+    - max: $prev.z
+
+- parameter: Right GRF_max_PJ_R
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - eventMask: [Right GRF, TouchDown, TakeOff]
+    - max: $prev.z
+
+- parameter: Right Power_max_PJ_R
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - eventMask: [Right Power, TouchDown, TakeOff]
+    - max: $prev.z
+
+# Power decrement and force decrement (% decrease from first rep to last rep)
+- parameter: Right GRF_decrement_pct_PJ_R
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - import: Right GRF_max_PJ_R@1
+      output: first
+    - import: Right GRF_max_PJ_R@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]
+
+- parameter: Right Power_decrement_pct_PJ_R
+  where:
+    name: PJ_R*
+    force: right
+  steps:
+    - import: Right Power_max_PJ_R@1
+      output: first
+    - import: Right Power_max_PJ_R@-1
+      output: last
+    - divide: [last, first]
+    - multiply: [$prev, 100]

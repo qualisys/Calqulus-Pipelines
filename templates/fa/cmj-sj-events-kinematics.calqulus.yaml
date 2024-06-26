@@ -1,0 +1,533 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: BOF_fixed
+  steps:
+    - import: [5]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# used by CMJ and SJ
+- parameter: RPV_CGVel
+  steps:
+    - segment: Hips
+      space: VirtualLab
+    - velocity:
+    - convert: $prev
+      from: mm/s
+      to: m/s
+
+# Bilateral and left
+- event: temp_L_max
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - import: LFT_DistEndVel.z
+    - max:
+      frames: true
+
+# LOFF - priority order is Kinetics > ML >  kinematics
+- event: LOFF_kinematics
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - threshold: LFT_DistEndVel.z
+      value: 0.5
+      direction: up
+    - eventMask: [$prev, BOF_fixed, temp_L_max]
+      keep: -1
+    - add: [$prev, 1]
+
+- event: LOFF_force_refined
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+    force: left
+  set: left
+  steps:
+    - eventMask: [LOFF_force, COM_MIN_first, EOF]
+
+- event: LOFF_prio2
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(TakeOff_L_ML)
+      then: TakeOff_L_ML
+      else: LOFF_kinematics
+
+- event: LOFF_prio
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force_refined@1
+      else: LOFF_prio2
+
+- event: TakeOff_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(LOFF_prio)
+      then: LOFF_prio
+      else: LOFF_kinematics
+
+# LON - priority order is Kinetics > ML >  kinematics
+- event: LON_kinematics
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - min: RPV_CGVel.z
+      frames: true
+    - subtract: [$prev, 1]
+
+- event: LON_force_refined
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+    force: any
+  set: left
+  steps:
+    - eventMask: [LON_force, COM_MIN_first, EOF]
+
+- event: LON_prio2
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(TouchDown_L_ML)
+      then: TouchDown_L_ML
+      else: LON_kinematics
+
+- event: LON_prio
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force_refined@1
+      else: LON_prio2
+
+- event: TouchDown_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(LON_prio)
+      then: LON_prio
+      else: LON_kinematics
+
+# Plotstart
+- event: PlotStart_L_calqulus
+  where:
+    name: ^CMJ_[LB]*
+  set: left
+  steps:
+    # - divide: [$framerate, 10]
+    #   output: shift
+    - threshold: RPV_CGVel.z
+      value: -0.1
+      direction: down
+    - eventMask: [$prev, BOF_fixed, TakeOff_L]
+    - import: $prev@-1
+      # keep: -1
+    - subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
+
+- event: PlotStart_L_calqulus
+  where:
+    name: ^SJ_[LB]*
+  set: left
+  steps:
+    # - divide: [$framerate, 10]
+    #   output: shift
+    - threshold: RPV_CGVel.z
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF_fixed, TakeOff_L]
+      keep: -1
+    # - add: [$prev, shift] #shift by -0.1 s
+
+- event: PlotStart_L
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - if: exists(EccentricStart_ML)
+      then: EccentricStart_ML
+      else: PlotStart_L_calqulus
+
+- event: Pelvis_lowest
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+    - min:
+      frames: true
+
+- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+    - min:
+      frames: true
+
+- event: COM_max # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - max: Hips.z
+      frames: true
+
+- event: COM_MIN_first # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, BOF_fixed, COM_max]
+    - min:
+      frames: true
+
+- event: Eccentric_end_calqulus
+  where:
+    name: CMJ_[LB]*
+  steps:
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, PlotStart_L, TakeOff_L]
+
+- event: Eccentric_end
+  where:
+    name: CMJ_[LB]*
+  steps:
+    - if: exists(EccentricEnd_ML)
+      then: EccentricEnd_ML
+      else: Eccentric_end_calqulus
+
+# Bilateral and right
+- event: temp_R_max
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - import: RFT_DistEndVel.z
+    - max:
+      frames: true
+
+# ROFF
+- event: ROFF_kinematics
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - threshold: RFT_DistEndVel.z
+      value: 0.5
+      direction: up
+    - eventMask: [$prev, BOF_fixed, temp_R_max]
+      keep: -1
+    - add: [$prev, 1]
+    
+- event: ROFF_force_refined
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+    force: right
+  set: right
+  steps:
+    - eventMask: [ROFF_force, COM_MIN_first, EOF]
+
+- event: ROFF_prio2
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(TakeOff_R_ML)
+      then: TakeOff_R_ML
+      else: ROFF_kinematics
+
+- event: ROFF_prio
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force_refined@1
+      else: ROFF_prio2
+
+- event: TakeOff_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(ROFF_prio)
+      then: ROFF_prio
+      else: ROFF_kinematics
+
+# RON
+- event: RON_kinematics
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - min: RPV_CGVel.z
+      frames: true
+    - subtract: [$prev, 1]
+
+- event: RON_force_refined
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+    force: right
+  set: right
+  steps:
+    - eventMask: [RON_force, COM_MIN_first, EOF]
+
+- event: RON_prio2
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(TouchDown_R_ML)
+      then: TouchDown_R_ML
+      else: RON_kinematics
+
+- event: RON_prio
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force_refined@1
+      else: RON_prio2
+
+- event: TouchDown_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(RON_prio)
+      then: RON_prio
+      else: RON_kinematics
+
+# Plotstart
+- event: PlotStart_R_calqulus
+  where:
+    name: ^CMJ_[RB]*
+  set: right
+  steps:
+    # - divide: [$framerate, 10]
+    #   output: shift
+    - threshold: RPV_CGVel.z
+      value: -0.1
+      direction: down
+    - eventMask: [$prev, BOF_fixed, TakeOff_R]
+      keep: -1
+    - subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
+
+- event: PlotStart_R_calqulus
+  where:
+    name: ^SJ_[RB]*
+  set: right
+  steps:
+    # - divide: [$framerate, 10]
+    #   output: shift
+    - threshold: RPV_CGVel.z
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF_fixed, TakeOff_R]
+      keep: -1
+    # - subtract: [$prev, shift] #shift by -0.1 s
+
+- event: PlotStart_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - if: exists(EccentricStart_ML)
+      then: EccentricStart_ML
+      else: PlotStart_R_calqulus
+
+- event: Pelvis_lowest
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - min:
+      frames: true
+
+- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+    - min:
+      frames: true
+
+- event: COM_max # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: Hips.z
+    - max:
+      frames: true
+
+- event: COM_MIN_first # we do not have body COM so we use pelvis COM instead
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, BOF_fixed, COM_max]
+    - min:
+      frames: true
+
+- event: Eccentric_end_calqulus
+  where:
+    name: CMJ_[RB]*
+  steps:
+    - threshold: RPV_CGVel.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, PlotStart_R, TakeOff_R]
+
+- event: Eccentric_end
+  where:
+    name: CMJ_[RB]*
+  steps:
+    - if: exists(EccentricEnd_ML)
+      then: EccentricEnd_ML
+      else: Eccentric_end_calqulus
+
+- event: TakeOff
+  where:
+    name: ^(CMJ_|SJ_)B*
+  steps:
+    - concatenate: [TakeOff_L, TakeOff_R]
+    - mean: 
+
+- event: TakeOff
+  where:
+    name: ^(CMJ_|SJ_)L*
+  steps:
+    - mean: TakeOff_L
+
+- event: TakeOff
+  where:
+    name: ^(CMJ_|SJ_)R*
+  steps:
+    - mean: TakeOff_R
+
+- event: TouchDown
+  where:
+    name: ^(CMJ_|SJ_)B*
+  steps:
+    - concatenate: [TouchDown_L, TouchDown_R]
+    - mean: 
+
+- event: TouchDown
+  where:
+    name: ^(CMJ_|SJ_)L*
+  steps:
+    - mean: TouchDown_L
+
+- event: TouchDown
+  where:
+    name: ^(CMJ_|SJ_)R*
+  steps:
+    - mean: TouchDown_R
+
+- event: PlotStart
+  where:
+    name: ^(CMJ_|SJ_)B*
+  steps:
+    - concatenate: [PlotStart_L, PlotStart_R]
+    - mean: 
+
+- event: PlotStart
+  where:
+    name: ^(CMJ_|SJ_)L*
+  steps:
+    - mean: PlotStart_L
+
+- event: PlotStart
+  where:
+    name: ^(CMJ_|SJ_)R*
+  steps:
+    - mean: PlotStart_R
+  
+- event: TouchDown_100ms
+  steps:
+    - multiply: [0.1, $framerate]
+      output: myShift
+    - add: [TouchDown, myShift]
+
+- event: PlotEnd_L # We might need to review this after dependency issue is resolved
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - subtract: [EOF, TouchDown_L]
+      output: diff
+    - multiply: [0.75, $framerate]
+      output: myShift
+    - multiply: [TouchDown_L, 1]
+    - add: [$prev, $prev(2)] #place PlotEnd 0.75 s after TouchDown
+    - if: diff <= myShift
+      then: EOF
+      else: $prev
+
+- event: PlotEnd_R
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - subtract: [EOF, TouchDown_R]
+      output: diff
+    - multiply: [0.75, $framerate]
+      output: myShift
+    - multiply: [TouchDown_R, 1]
+    - add: [$prev, $prev(2)] #place PlotEnd 0.75 s after TouchDown
+    - if: diff <= myShift
+      then: EOF
+      else: $prev
+
+# unified event names for web
+- event: LeftPlotStart
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - import: PlotStart_L
+
+- event: RightPlotStart
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - import: PlotStart_R
+
+- event: LeftPlotEnd
+  where:
+    name: ^(CMJ_|SJ_)[LB]*
+  set: left
+  steps:
+    - import: PlotEnd_L
+
+- event: RightPlotEnd
+  where:
+    name: ^(CMJ_|SJ_)[RB]*
+  set: right
+  steps:
+    - import: PlotEnd_R

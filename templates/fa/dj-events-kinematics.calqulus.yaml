@@ -1,0 +1,438 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# Bilateral and left ---
+
+# Takeoff
+- event: TakeOff_L_kinematics
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - max: PelvisCGPos_vel.z
+      frames: true
+    - add: [$prev, 3]
+
+- event: TakeOff_prio2
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(TakeOff_L_ML)
+      then: TakeOff_L_ML
+      else: TakeOff_L_kinematics
+
+- event: TakeOff_prio
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: TakeOff_prio2
+
+- event: TakeOff_L
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(TakeOff_prio)
+      then: TakeOff_prio
+      else: TakeOff_L_kinematics
+
+# TouchDown
+- event: TouchDown_L_kinematics
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - eventMask: [PelvisCGPos_vel.z,BOF, TakeOff_L]
+    - min:
+      frames: true
+    - subtract: [$prev, 4]
+    # Ensure that the frame is not negative
+    - concatenate: [$prev, 0]
+    - max: $prev
+
+- event: TouchDown_L_kinetics
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force@1
+      else: TouchDown_L_kinematics
+
+- event: TouchDown_L_prio2
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(UltimateTakeOff_L_ML)
+      then: UltimateTakeOff_L_ML
+      else: TouchDown_L_kinematics
+
+- event: TouchDown_L_prio
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: TouchDown_L_kinetics
+      else: TouchDown_L_prio2
+
+- event: TouchDown_L
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(TouchDown_L_prio)
+      then: TouchDown_L_prio
+      else: TouchDown_L_kinematics
+
+# Landing
+- event: Landing_L_kinematics
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - eventMask: [PelvisCGPos_vel.z, TakeOff_L, EOF]
+    - min:
+      frames: true
+    - subtract: [$prev, 4]
+
+- event: Landing_L_kinetics
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force@2
+      else: Landing_L_kinematics
+
+- event: Landing_L_prio2
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(Landing_L_ML)
+      then: Landing_L_ML
+      else: Landing_L_kinematics
+
+- event: Landing_L_prio
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: Landing_L_kinetics
+      else: Landing_L_prio2
+
+- event: Landing_L
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - if: exists(Landing_L_prio)
+      then: Landing_L_prio
+      else: Landing_L_kinematics
+
+- event: TakeOff
+  where:
+    name: DJ_[LB]*
+  steps:
+    - import: TakeOff_L
+
+- event: TouchDown
+  where:
+    name: DJ_[LB]*
+  steps:
+    - import: TouchDown_L
+
+- event: Landing
+  where:
+    name: DJ_[LB]*
+  steps:
+    - import: Landing_L
+
+# Following events are needed for compatibility with force data event detection
+- event: LON
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - import: TouchDown_L
+
+- event: LOFF
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - import: TakeOff_L
+
+- event: LON
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - import: Landing_L
+
+# Bilateral and right ---
+
+# TakeOff
+- event: TakeOff_R_kinematics
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - max: PelvisCGPos_vel.z
+      frames: true
+    - add: [$prev, 3]
+
+- event: TakeOff_prio2
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(TakeOff_R_ML)
+      then: TakeOff_R_ML
+      else: TakeOff_R_kinematics
+
+- event: TakeOff_prio
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: TakeOff_prio2
+
+- event: TakeOff_R
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(TakeOff_prio)
+      then: TakeOff_prio
+      else: TakeOff_R_kinematics
+
+# TouchDown
+- event: TouchDown_R_kinematics
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - eventMask: [PelvisCGPos_vel.z, BOF, TakeOff_R]
+    - min:
+      frames: true
+    - subtract: [$prev, 4]
+    # Ensure that the frame is not negative
+    - concatenate: [$prev, 0]
+    - max: $prev
+
+- event: TouchDown_R_kinetics
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force@1
+      else: TouchDown_R_kinematics
+
+- event: TouchDown_R_prio2
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(UltimateTakeOff_R_ML)
+      then: UltimateTakeOff_R_ML
+      else: TouchDown_R_kinematics
+
+- event: TouchDown_R_prio
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: TouchDown_R_kinetics
+      else: TouchDown_R_prio2
+
+- event: TouchDown_R
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(TouchDown_R_prio)
+      then: TouchDown_R_prio
+      else: TouchDown_R_kinematics
+
+# Landing
+- event: Landing_R_kinematics
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - eventMask: [PelvisCGPos_vel.z,TakeOff_R, EOF]
+    - min:
+      frames: true
+    - subtract: [$prev, 4]
+
+- event: Landing_R_kinetics
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force@2
+      else: Landing_R_kinematics
+
+- event: Landing_R_prio2
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(Landing_R_ML)
+      then: Landing_R_ML
+      else: Landing_R_kinematics
+
+- event: Landing_R_prio
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: Landing_R_kinetics
+      else: Landing_R_prio2
+
+- event: Landing_R
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - if: exists(Landing_R_prio)
+      then: Landing_R_prio
+      else: Landing_R_kinematics
+
+- event: TakeOff
+  where:
+    name: DJ_[RB]*
+  steps:
+    - import: TakeOff_R
+
+- event: TouchDown
+  where:
+    name: DJ_[RB]*
+  steps:
+    - import: TouchDown_R
+
+- event: Landing
+  where:
+    name: DJ_[RB]*
+  steps:
+    - import: Landing_R
+
+# Following events are needed for compatibility with force data event detection
+- event: RON
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - import: TouchDown_R
+
+- event: ROFF
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - import: TakeOff_R
+
+- event: RON
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - import: Landing_R
+
+- event: Pelvis_lowest
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, TouchDown, TakeOff]
+    - min:
+      frames: true
+
+- event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  steps:
+    - import: Hips.z
+    - eventMask: [$prev, TouchDown, TakeOff]
+    - min:
+      frames: true
+
+# Landing end 
+# Place Landing_end at EOF if Landing_end cannot be created because there is no descending zero crossing of PelvisCGPos_vel after landing.
+# - event: Landing_end_temp
+#   steps:
+#     - threshold: PelvisCGPos_vel.z
+#       value: 0
+#       direction: down
+#     - eventMask: [$prev, Landing, EOF]
+#       keep: 1
+
+# - event: EOF-1
+#   steps:
+#     - import: EOF
+#       frames: true
+#     - subtract: [$length,2]
+
+- event: Landing_end
+  steps:
+    - threshold: PelvisCGPos_vel.z
+      value: 0
+      direction: down
+    - eventMask: [$prev, Landing, EOF]
+      keep: 1
+      export: Landing_end_temp
+
+    - subtract: [$length,2]
+      export: EOF-1
+
+    - if: Landing_end_temp
+      then: Landing_end_temp
+      else: EOF-1
+
+# unified event names for web
+- event: LeftPlotStart
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - import: TouchDown_L
+
+- event: RightPlotStart
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - import: TouchDown_R
+
+- event: LeftPlotEnd
+  where:
+    name: DJ_[LB]*
+  set: left
+  steps:
+    - import: TakeOff_L
+
+- event: RightPlotEnd
+  where:
+    name: DJ_[RB]*
+  set: right
+  steps:
+    - import: TakeOff_R

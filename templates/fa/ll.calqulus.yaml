@@ -1,0 +1,606 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+- event: COM_MIN
+  steps:
+    - min: Hips.z
+      frames: true
+
+- event: PlotStart_stand
+  steps:
+    - negate: PelvisCGPos_vel
+    - lowpass:
+    - threshold: $prev.z
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF, COM_MIN]
+    - import: $prev@1
+    # - subtract: [$prev, 1]
+
+# Left
+- event: LFT_DistEndVel_max
+  where:
+    name: LL_L*
+  steps:
+    - max: LFT_DistEndVel.x
+      frames: true
+
+- event: LFT_DistEndVel_min
+  where:
+    name: LL_L*
+  steps:
+    - min: LFT_DistEndVel.x
+      frames: true
+
+- event: TouchDown_kinematics
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_min, LFT_DistEndVel_max]
+    - max:
+      frames: true
+      output: temp_max
+    - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_min, temp_max]
+    - min:
+      frames: true
+
+- event: TouchDown
+  where:
+    name: LL_L*
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: TouchDown_kinematics
+
+- event: TouchDown_prio
+  where:
+    name: LL_L*
+  steps:
+    - median: PelvisCGPos.x
+      export: median
+    - import: PelvisCGPos.x@BOF
+      export: first
+    - import: PelvisCGPos.x@EOF
+      export: last
+    - if: (first < median && median < last) || (first > median && median > last)
+      then: PlotStart_stand
+      else: TouchDown
+
+- event: PlotStart
+  where:
+    name: LL_L*
+  steps:
+    - if: exists(LON_force)
+      then: LON_force@1
+      else: TouchDown_prio
+
+- event: TakeOff_kinematics
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [LFT_DistEndVel.x, TouchDown, LFT_DistEndVel_max]
+    - threshold: $prev
+      value: 1
+      direction: up
+    - import: $prev@-1
+
+- event: TakeOff
+  where:
+    name: LL_L*
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force@-1
+      else: TakeOff_kinematics
+
+- event: Landing_L
+  steps:
+    - eventMask: [LFT_DistEndAcc.z, TakeOff, EOF]
+    - max:
+      frames: true
+
+# Right
+- event: RFT_DistEndVel_max
+  where:
+    name: LL_R*
+  steps:
+    - max: RFT_DistEndVel.x
+      frames: true
+
+- event: RFT_DistEndVel_min
+  where:
+    name: LL_R*
+  steps:
+    - min: RFT_DistEndVel.x
+      frames: true
+
+- event: TouchDown_kinematics
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_max, RFT_DistEndVel_min]
+    - max:
+      frames: true
+      output: temp_max
+    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_max, temp_max]
+    - min: 
+      frames: true
+
+- event: TouchDown
+  where:
+    name: LL_R*
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: TouchDown_kinematics
+
+- event: TouchDown_prio
+  where:
+    name: LL_R*
+  steps:
+    - median: PelvisCGPos.x
+      export: median
+    - import: PelvisCGPos.x@BOF
+      export: first
+    - import: PelvisCGPos.x@EOF
+      export: last
+    - if: (first < median && median < last) || (first > median && median > last)
+      then: PlotStart_stand
+      else: TouchDown
+
+- event: PlotStart
+  where:
+    name: LL_R*
+  steps:
+    - if: exists(RON_force)
+      then: RON_force@1
+      else: TouchDown_prio
+
+- event: TakeOff_kinematics
+  where:
+    name: LL_R*
+  steps:
+    - negate: RFT_DistEndVel
+    - eventMask: [$prev.x, TouchDown, RFT_DistEndVel_min]
+    - threshold: $prev
+      value: 1
+      direction: up
+    - import: $prev@-1
+
+- event: TakeOff
+  where:
+    name: LL_R*
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force@-1
+      else: TakeOff_kinematics
+
+- event: Landing_R
+  steps:
+    - eventMask: [RFT_DistEndAcc.z, TakeOff, EOF]
+    - max:
+      frames: true
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: PlotStart
+
+- event: LeftPlotEnd
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: TakeOff
+
+- event: RightPlotStart
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: PlotStart
+
+- event: RightPlotEnd
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: TakeOff
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## Metrics ##
+#############
+
+# COM @TakeOff, max, min
+# We use Pelvis COM for now
+- parameter: COM_Z_TO_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - import: Hips@TakeOff
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass_MIN
+  steps:
+    - min: Hips.z
+    - convert:
+      from: mm
+      to: m
+
+- parameter: CenterOfMass@PlotStart
+  steps:
+    - import: Hips@PlotStart
+    - convert:
+      from: mm
+      to: m
+
+- parameter: COM_displacement_MEAN_min_LL_L 
+  where:
+    name: LL_L*
+  steps:
+    - subtract: [CenterOfMass\@PlotStart, CenterOfMass_MIN]
+    - import: $prev.z
+
+- parameter: COM_displacement_MEAN_min_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - subtract: [CenterOfMass\@PlotStart, CenterOfMass_MIN]
+    - import: $prev.z
+
+# COM distance to knee and ankle #####
+# Left ------
+# @TouchDown
+- parameter: Left_Ankle_COM_distance@TouchDown_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left_Ankle_COM_distance@TouchDown
+
+- parameter: Left_Knee_COM_distance@TouchDown_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left_Knee_COM_distance@TouchDown
+
+# @TakeOff
+- parameter: Left_Ankle_COM_distance@TakeOff_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left_Ankle_COM_distance@TakeOff
+
+- parameter: Left_Knee_COM_distance@TakeOff_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left_Knee_COM_distance@TakeOff
+
+# Other metrics @TouchDown
+- parameter: Left Knee Angles@TouchDown_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left Knee Angles@TouchDown
+
+- parameter: Left Hip Angles@TouchDown_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left Hip Angles@TouchDown
+
+- parameter: Left Thorax Angles@TouchDown_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left Thorax Angles@TouchDown
+
+# @COM_MIN
+- parameter: Left Ankle Angles@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left Ankle Angles@COM_MIN
+
+- parameter: Left Knee Angles@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left Knee Angles@COM_MIN
+
+- parameter: Left Hip Angles@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - import: Left Hip Angles@COM_MIN
+
+# @Max
+- parameter: Left Hip Angles_max_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - max: Left Hip Angles
+
+- parameter: Left Knee Angles_max_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - max: Left Knee Angles
+
+- parameter: Left Ankle Angles_max_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - max: Left Ankle Angles
+
+- parameter: Left Foot Progression_max_LL_L
+  where:
+    name: LL_L*
+  set: left
+  steps:
+    - max: Left Foot Progression
+
+# Right ------
+# @TouchDown
+- parameter: Right_Ankle_COM_distance@TouchDown_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right_Ankle_COM_distance@TouchDown
+
+- parameter: Right_Knee_COM_distance@TouchDown_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right_Knee_COM_distance@TouchDown
+
+# @TakeOff
+- parameter: Right_Ankle_COM_distance@TakeOff_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right_Ankle_COM_distance@TakeOff
+
+- parameter: Right_Knee_COM_distance@TakeOff_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right_Knee_COM_distance@TakeOff
+
+# Other metrics @TouchDown
+- parameter: Right Knee Angles@TouchDown_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right Knee Angles@TouchDown
+
+- parameter: Right Hip Angles@TouchDown_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right Hip Angles@TouchDown
+
+- parameter: Right Thorax Angles@TouchDown_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right Thorax Angles@TouchDown
+
+# @COM_MIN
+- parameter: Right Ankle Angles@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right Ankle Angles@COM_MIN
+
+- parameter: Right Knee Angles@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right Knee Angles@COM_MIN
+
+- parameter: Right Hip Angles@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - import: Right Hip Angles@COM_MIN
+
+# @Max
+- parameter: Right Hip Angles_max_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - max: Right Hip Angles
+
+- parameter: Right Knee Angles_max_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - max: Right Knee Angles
+
+- parameter: Right Ankle Angles_max_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - max: Right Ankle Angles
+
+- parameter: Right Foot Progression_max_LL_R
+  where:
+    name: LL_R*
+  set: right
+  steps:
+    - max: Right Foot Progression
+
+# Jump distance - calculated as distance traveled by proximal end of foot from TakeOff to Landing
+# Left
+- parameter: LFT_DistEndPos@TakeOff
+  steps:
+    - import: LFT_DistEndPos@TakeOff
+
+- parameter: RFT_DistEndPos@Landing_R
+  steps:
+    - import: RFT_DistEndPos@Landing_R
+
+- parameter: Left_jump_distance
+  where:
+    name: LL_L*
+  steps:
+    - subtract: [LFT_DistEndPos@TakeOff, RFT_DistEndPos@Landing_R]
+    - abs:
+
+# Right
+- parameter: RFT_DistEndPos@TakeOff
+  steps:
+    - import: RFT_DistEndPos@TakeOff
+
+- parameter: LFT_DistEndPos@Landing_L
+  steps:
+    - import: LFT_DistEndPos@Landing_L
+
+- parameter: Right_jump_distance
+  where:
+    name: LL_R*
+  steps:
+    - subtract: [RFT_DistEndPos@TakeOff, LFT_DistEndPos@Landing_L]
+    - abs:
+
+# Kinetics -----
+# Left
+- parameter: Left Hip Moment@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - import: Left Hip Moment@COM_MIN
+
+- parameter: Left Knee Moment@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - import: Left Knee Moment@COM_MIN
+
+- parameter: Left Ankle Moment@COM_MIN_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - import: Left Ankle Moment@COM_MIN
+
+- parameter: Left GRF_max_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, PlotStart, TakeOff]
+    - max:
+
+- parameter: Left GRF_max_landing_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, PlotStart, EOF]
+    - max:
+
+- parameter: Left Knee Moment_max_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left Knee Moment, PlotStart, TakeOff]
+    - max:
+
+# Right
+- parameter: Right Hip Moment@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - import: Right Hip Moment@COM_MIN
+
+- parameter: Right Knee Moment@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - import: Right Knee Moment@COM_MIN
+
+- parameter: Right Ankle Moment@COM_MIN_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - import: Right Ankle Moment@COM_MIN
+
+- parameter: Right GRF_max_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, PlotStart, TakeOff]
+    - max:
+
+- parameter: Right GRF_max_landing_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, PlotStart, EOF]
+    - max:
+
+- parameter: Right Knee Moment_max_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right Knee Moment, PlotStart, TakeOff]
+    - max:
+
+
+

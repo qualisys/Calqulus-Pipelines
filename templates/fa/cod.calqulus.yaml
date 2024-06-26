@@ -1,0 +1,209 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# Find when RPV vel x component is crossing zero > this is when foot strike in focus occures
+- event: temp_max
+  steps:
+    - max: PelvisCGPos_vel.x
+      frames: true
+
+- event: temp_min
+  steps:
+    - min: PelvisCGPos_vel.x
+      frames: true
+
+- event: temp
+  steps:
+    - concatenate: [temp_max, temp_min]
+
+# Decide which leg is a landing one and create corresponding tags
+- event: pelvis_stop
+  steps:
+    - threshold: PelvisCGPos_vel.x
+      value: 0
+      direction: down
+    - eventMask: [$prev, temp, temp]
+    - import: $prev@1
+      export: max #output does not work here
+
+    - threshold: PelvisCGPos_vel.x
+      value: 0
+      direction: up
+    - eventMask: [$prev, temp, temp]
+    - import: $prev@1
+      export: min #output does not work here
+
+    - if: temp_max < temp_min
+      then: max
+      else: min
+
+#Left 
+- event: temp_pre
+  where:
+    name: COD_L*
+  steps:
+    - eventMask: [LFT_DistEndVel.x, BOF, pelvis_stop]
+    - min: 
+      frames: true
+
+- event: temp_post
+  where:
+    name: COD_L*
+  steps:
+    - eventMask: [LFT_DistEndVel.x, pelvis_stop, EOF]
+    - max:
+      frames: true
+
+- event: LON_kinematics
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - eventMask: [LFT_DistEndVel.z, temp_pre, pelvis_stop]
+    - min:
+      frames: true
+
+- event: LON
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: LON_kinematics
+
+- event: LOFF_kinematics
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - threshold: LFT_DistEndVel.x
+      value: 0.2
+      direction: up
+    - eventMask: [$prev, pelvis_stop, temp_post]
+    - add: [$prev, 3]
+
+- event: LOFF
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: LOFF_kinematics
+
+# Right
+- event: temp_pre
+  where:
+    name: COD_R*
+  steps:
+    - eventMask: [RFT_DistEndVel.x, BOF, pelvis_stop]
+    - max: 
+      frames: true
+
+- event: temp_post
+  where:
+    name: COD_R*
+  steps:
+    - eventMask: [RFT_DistEndVel.x, pelvis_stop, EOF]
+    - min:
+      frames: true
+
+- event: RON_kinematics
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - eventMask: [RFT_DistEndVel.z, temp_pre, pelvis_stop]
+    - min:
+      frames: true
+
+- event: RON
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: RON_kinematics
+
+- event: ROFF_kinematics
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - threshold: RFT_DistEndVel.x
+      value: -0.2
+      direction: down
+    - eventMask: [$prev, pelvis_stop, temp_post]
+    - add: [$prev, 3]
+
+- event: ROFF
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: ROFF_kinematics
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - import: LON
+
+- event: LeftPlotEnd
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - import: LOFF
+
+- event: RightPlotStart
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - import: RON
+
+- event: RightPlotEnd
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - import: ROFF
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+#############
+## Metrics ##
+#############
+

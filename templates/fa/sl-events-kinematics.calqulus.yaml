@@ -1,0 +1,136 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# Left
+- event: TouchDown_kinematics
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - min: LFT_DistEndVel.z
+      frames: true
+    - add: [$prev, 1]
+
+- event: TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: TouchDown_kinematics
+
+- event: Max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles.x, TouchDown, EOF]
+    - max:
+      frames: true
+
+# Right
+- event: TouchDown_kinematics
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - min: RFT_DistEndVel.z
+      frames: true
+    - add: [$prev, 1]
+
+- event: TouchDown
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: TouchDown_kinematics
+
+- event: Max_knee_flex
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles.x, TouchDown, EOF]
+    - max:
+      frames: true
+
+# For SLJ and SLCDL PlotEnd is set to 1 sec after TouchDown. For SLL it is 3 sec
+- event: PlotEnd
+  where:
+    name: ^(SLJ|SLCDL)*
+  steps:
+    - multiply: [$framerate, 1] # 1 sec
+    - add: [$prev, TouchDown] # 1 s after TouchDown
+      export: end_fr
+
+    - if: EOF > end_fr
+      then: end_fr
+      else: EOF
+
+- event: PlotEnd
+  where:
+    name: SLL*
+  steps:
+    - multiply: [$framerate, 3] #3 sec
+    - add: [$prev, TouchDown] # 3 s after TouchDown
+      export: end_fr
+
+    - if: EOF > end_fr
+      then: end_fr
+      else: EOF
+
+- event: TakeOff
+  where:
+    name: ^(SLJ|SLL)*
+  steps:
+    - eventMask: [PelvisCGPos_vel.z, BOF, TouchDown]
+    - max:
+      frames: true
+    - import: $prev@-1
+
+- event: COM_MIN # using Pelvis for now
+  steps:
+    - eventMask: [Hips.z, TouchDown, Max_knee_flex]
+    - min:
+      frames: true
+
+# Unified event names for web
+- event: LeftPlotStart
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - import: TouchDown
+
+- event: LeftPlotEnd
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - import: PlotEnd
+
+- event: RightPlotStart
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - import: TouchDown
+
+- event: RightPlotEnd
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - import: PlotEnd

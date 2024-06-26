@@ -11,10 +11,18 @@ pool:
 
 resources:
   repositories:
-    - repository: calqulus-ci
-      type: git
-      name: app-calqulus-ci-templates
-      ref: main
+  - repository: calqulus
+    type: git
+    name: app-calqulus
+    ref: refs/heads/main
+  - repository: calqulus-ci
+    type: git
+    name: app-calqulus-ci-templates
+    ref: main
+  - repository: toolbelt
+    type: git
+    name: Dev/app-calqulus-toolbelt
+    ref: refs/heads/main
 
 extends:
   template: base-pipelines.yml@calqulus-ci

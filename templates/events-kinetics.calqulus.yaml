@@ -1,0 +1,93 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+- event: BOF_fixed
+  steps:
+    - import: [0]
+
+# Fix for Drop Jump and Lateral Leap
+- event: BOF_fixed
+  where:
+    name: ^(DJ|LL|Lunge|CMJ)*
+  steps:
+    - import: [5]
+
+- event: LOFF_force
+  where:
+    force: left
+  set: left
+  steps:
+    - import: Left GRF.z
+    - threshold: $prev
+      value: 0.05
+      direction: down
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: force_1
+    - eventMask: [$prev, BOF, EOF]
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
+    
+- event: LON_force
+  where:
+    force: left
+  set: left
+  steps:
+    - import: Left GRF.z
+    - threshold: $prev
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: force_1
+    - eventMask: [$prev, BOF, EOF]
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
+    # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
+    
+- event: ROFF_force
+  where:
+    force: right
+  set: right
+  steps:
+    - import: Right GRF.z
+    - threshold: $prev
+      value: 0.05
+      direction: down
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: force_1
+    - eventMask: [$prev, BOF, EOF]
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
+    
+- event: RON_force
+  where:
+    force: right
+  set: right
+  steps:
+    - import: Right GRF.z
+    - threshold: $prev
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: force_1
+    - eventMask: [$prev, BOF, EOF]
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
+    # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
+    
