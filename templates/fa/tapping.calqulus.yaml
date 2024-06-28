@@ -136,9 +136,8 @@
     - max: Left_frequency
       export: Left_frequency_max
     - min: Left_frequency
-      export: Left_frequency_min
 
 - parameter: Contact_count
   steps:
-    - eventDuration: [LON, LOFF]
+    - eventDuration: [LON, LON]
     - count: 
