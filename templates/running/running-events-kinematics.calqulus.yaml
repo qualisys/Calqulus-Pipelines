@@ -870,3 +870,20 @@
   steps:
     - import: ROFF_force
 
+# Events required by running report
+- event: LON
+  set: left
+  where:
+    name: ^(Running|Gait)*
+    force: left
+  steps:
+    - import: LON_force
+
+- event: RON
+  set: right
+  where:
+    name: ^(Running|Gait)*
+    force: right
+  steps:
+    - import: RON_force
+
