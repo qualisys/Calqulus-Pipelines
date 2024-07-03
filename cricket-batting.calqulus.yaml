@@ -55,6 +55,10 @@
 ## EVENTS ##
 ############
 
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
 # Commencement of the downswing (DS), 
 - event: Downswing
   where: 
@@ -154,6 +158,8 @@
 ############
 ## SERIES ##
 ############
+
+- template: /templates/timeseries.calqulus.yaml
 
 # Find out which foot moves using its displacement. Moving foot defines handedness.
 - parameter: Left_Foot_range
