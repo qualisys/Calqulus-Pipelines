@@ -135,13 +135,13 @@
   where: 
     name: Batting*
   steps:
-    - subtract: [3, 1]
+    - subtract: [2, 1]
 
 - event: EOF
   where: 
     name: Batting*
   steps:
-    - subtract: [$length, 2]
+    - subtract: [$length, 1]
 
 - event: PLOTSTART
   where: 
