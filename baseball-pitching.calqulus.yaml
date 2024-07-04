@@ -2348,3 +2348,59 @@
     name: Pitching*
   steps:
     - import: Force_FS1_1_BW@Release
+
+- parameter: Lead_Leg_GRF_mag_max
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Lead_Leg_GRF_mag, SETUP, Release100msAfter]
+    - max: Lead_Leg_GRF_mag
+
+- parameter: Lead_Leg_GRF_max
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Lead GRF_BW, SETUP, Release100msAfter]
+    - max: $prev
+
+- parameter: Lead_Leg_GRF_min
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Lead GRF_BW, SETUP, Release100msAfter]
+    - min: $prev
+
+- parameter: Back_Leg_GRF_mag_max
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Back_Leg_GRF_mag, SETUP, Release100msAfter]
+    - max: $prev
+
+- parameter: Back_Leg_GRF_max
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Trail GRF_BW, SETUP, Release100msAfter]
+    - max: $prev
+
+- parameter: Back_Leg_GRF_min
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Trail GRF_BW, SETUP, Release100msAfter]
+    - min: $prev
+
+- parameter: Lead_Leg_GRF_mag_impulse
+  where:
+    name: Pitching*
+  steps:
+    - eventMask: [Lead_Leg_GRF_mag, Footstrike, Max_Shoulder_Rot]
+    - integral: $prev
+      scalar: true
+
+
+
+
+
+
