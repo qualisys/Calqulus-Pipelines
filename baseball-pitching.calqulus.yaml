@@ -999,6 +999,62 @@
   steps:
     - magnitude: Trail GRF_BW
 
+# COM/COP
+- parameter: LeadHeel
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LHeelBack
+      else: RHeelBack
+    - convert:
+      from: mm
+      to: m
+
+- parameter: COM wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - vector: [Hips.x, Hips.y, Hips.z]
+    - convert:
+      from: mm
+      to: m
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
+- parameter: COM wrt Lead Heel
+  where: 
+    name: Pitching*
+  steps:
+    - vector: [Hips.x, Hips.y, Hips.z]
+    - convert:
+      from: mm
+      to: m
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
+- parameter: Left COP wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - import: LeadHeel@Release
+    - subtract: [Left_COP, $prev]
+
+- parameter: Right COP wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - import: LeadHeel@Release
+    - subtract: [Right_COP, $prev]
+
+- parameter: COM wrt Lead Heel_vel
+  where: 
+    name: Pitching*
+  steps:
+    - velocity: COM wrt Lead Heel
+    - lowpass:
+      cutoff: 12
+
 # Moments
 # - parameter: Left Foot Total Moment COM_BW
 #   where: 
@@ -2398,6 +2454,43 @@
     - eventMask: [Lead_Leg_GRF_mag, Footstrike, Max_Shoulder_Rot]
     - integral: $prev
       scalar: true
+
+- parameter: COM wrt Lead Heel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel@Footstrike
+
+- parameter: COM wrt Lead Heel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel@MaxKneeHeight
+
+- parameter: COM wrt Lead Heel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel@Release
+
+- parameter: COM wrt Lead Heel_vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel_vel@Footstrike
+
+- parameter: COM wrt Lead Heel_vel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel_vel@MaxKneeHeight
+
+- parameter: COM wrt Lead Heel_vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel_vel@Release
+
 
 
 
