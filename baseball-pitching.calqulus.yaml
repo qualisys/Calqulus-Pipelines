@@ -1023,40 +1023,41 @@
 #     - add: [Left_Free_Moment, Left AP Force Torque COM]
 #     - add: [$prev, Left ML Force Torque COM]
 
-- parameter: Left_Free_Moment
-  where: 
-    name: Pitching*
-    force: left
-  steps:
-    - multiply: [LeftFootContact.mz, 100]
+# Breakup of previous step for debugging
+# - parameter: Left_Free_Moment
+#   where: 
+#     name: Pitching*
+#     force: left
+#   steps:
+#     - multiply: [LeftFootContact.mz, 100]
     
-- parameter: Left AP Force Torque COM
-  where: 
-    name: Pitching*
-    force: left
-  steps:
-    - add: [LeftFootContact.x, PelvisCGPos.x] #are components correct?
-      output: Left X COM Dist
-    - multiply: [$prev,LeftFootContact.fy]
-    - multiply: [$prev, 100]
+# - parameter: Left AP Force Torque COM
+#   where: 
+#     name: Pitching*
+#     force: left
+#   steps:
+#     - add: [LeftFootContact.x, PelvisCGPos.x] #are components correct?
+#       output: Left X COM Dist
+#     - multiply: [$prev,LeftFootContact.fy]
+#     - multiply: [$prev, 100]
     
-- parameter: Left ML Force Torque COM
-  where: 
-    name: Pitching*
-    force: left
-  steps:
-    - add: [LeftFootContact.y, PelvisCGPos.y] #are components correct?
-      output: Left Y COM Dist
-    - multiply: [$prev,LeftFootContact.fx]
-    - multiply: [$prev, 100]
+# - parameter: Left ML Force Torque COM
+#   where: 
+#     name: Pitching*
+#     force: left
+#   steps:
+#     - add: [LeftFootContact.y, PelvisCGPos.y] #are components correct?
+#       output: Left Y COM Dist
+#     - multiply: [$prev,LeftFootContact.fx]
+#     - multiply: [$prev, 100]
 
-- parameter: Left Foot Total Moment COM_BW
-  where: 
-    name: Pitching*
-    force: left
-  steps:
-    - add: [Left_Free_Moment, Left AP Force Torque COM]
-    - add: [$prev, Left ML Force Torque COM]
+# - parameter: Left Foot Total Moment COM_BW
+#   where: 
+#     name: Pitching*
+#     force: left
+#   steps:
+#     - add: [Left_Free_Moment, Left AP Force Torque COM]
+#     - add: [$prev, Left ML Force Torque COM]
 
 
 
@@ -2293,4 +2294,57 @@
   steps:
     - import: Pitching_Shoulder_Angle_XYZ@Release
 
+# Kinetics
+- parameter: Lead GRF_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead GRF_BW@Footstrike
 
+- parameter: Lead GRF_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead GRF_BW@MaxKneeHeight
+
+- parameter: Lead GRF_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead GRF_BW@Release
+
+- parameter: Trail GRF_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail GRF_BW@Footstrike
+
+- parameter: Trail GRF_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail GRF_BW@MaxKneeHeight
+
+- parameter: Trail GRF_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail GRF_BW@Release
+
+- parameter: Force_FS1_1_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Force_FS1_1_BW@Footstrike
+
+- parameter: Force_FS1_1_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Force_FS1_1_BW@MaxKneeHeight
+
+- parameter: Force_FS1_1_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Force_FS1_1_BW@Release
