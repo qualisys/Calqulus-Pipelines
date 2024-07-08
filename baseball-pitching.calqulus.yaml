@@ -1120,16 +1120,23 @@
     - import: LeadHeel@Release
     - subtract: [$prev(2), $prev]
 
-# Combined COP - mean of all available force vector origins
+# Combined COP - mean COP
 - parameter: Combined COP wrt Lead Heel_plot
   where: 
     name: Pitching*
-    force: any
+    force: both
   steps:
     - add: [Left_COP, Right_COP]
     - divide: [$prev, 2]
     - import: LeadHeel@Release
     - subtract: [$prev(2), $prev]
+
+- parameter: Combined COP wrt Lead Heel #for compatibility with layout
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - import: Combined COP wrt Lead Heel_plot
 
 # Moments
 # - parameter: Left Foot Total Moment COM_BW
