@@ -1098,6 +1098,28 @@
       from: mm
       to: m
       
+- parameter: Pelvis_COG wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - vector: [Hips.x, Hips.y, Hips.z]
+    - convert:
+      from: mm
+      to: m
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
+- parameter: Trunk_COG wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - vector: [Spine1.x, Spine1.y, Spine1.z]
+    - convert:
+      from: mm
+      to: m
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
 
 
 # Moments
