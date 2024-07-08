@@ -2581,6 +2581,42 @@
   steps:
     - import: COM wrt Lead Heel_vel@Release
 
+- parameter: Combined COP wrt Lead Heel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel@Footstrike
+
+- parameter: Combined COP wrt Lead Heel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel@MaxKneeHeight
+
+- parameter: Combined COP wrt Lead Heel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel@Release
+
+- parameter: Combined COP wrt Lead Heel_vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel_vel@Footstrike
+
+- parameter: Combined COP wrt Lead Heel_vel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel_vel@MaxKneeHeight
+
+- parameter: Combined COP wrt Lead Heel_vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel_vel@Release
+
 
 
 
