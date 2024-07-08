@@ -275,6 +275,17 @@
       then: $prev@1
       else: EOF
 
+- event: Lead_Comm
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - subtract: [Lead GRF_BW.z, Trail GRF_BW.z]
+    - threshold: [$prev, Footstrike, Release]
+      value: 0
+      direction: up
+    - import: $prev@1
+
 ############
 ## SERIES ##
 ############
@@ -1054,6 +1065,33 @@
     - velocity: COM wrt Lead Heel
     - lowpass:
       cutoff: 12
+
+- parameter: Left_Foot_wrt_Lead_Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - import: LHeelBack@Lead_Comm
+      output: heel
+    - import: LForefoot2@Lead_Comm
+      output: toe
+    - concatenate: [heel, toe]
+      output: foot
+    - import: LeadHeel@Release
+    - subtract: [foot, $prev]
+
+- parameter: Right_Foot_wrt_Lead_Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - import: RHeelBack@Lead_Comm
+      output: heel
+    - import: RForefoot2@Lead_Comm
+      output: toe
+    - concatenate: [heel, toe]
+      output: foot
+    - import: ReadHeel@Release
+    - subtract: [foot, $prev]
+
 
 # Moments
 # - parameter: Left Foot Total Moment COM_BW
