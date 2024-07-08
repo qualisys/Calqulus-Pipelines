@@ -1138,6 +1138,13 @@
   steps:
     - import: Combined COP wrt Lead Heel_plot
 
+- parameter: Combined COP wrt Lead Heel_vel
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - velocity: Combined COP wrt Lead Heel
+
 # Moments
 # - parameter: Left Foot Total Moment COM_BW
 #   where: 
