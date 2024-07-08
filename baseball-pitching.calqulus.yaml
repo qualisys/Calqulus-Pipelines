@@ -1078,6 +1078,9 @@
       output: foot
     - import: LeadHeel@Release
     - subtract: [foot, $prev]
+    - convert:
+      from: mm
+      to: m
 
 - parameter: Right_Foot_wrt_Lead_Heel_plot
   where: 
@@ -1089,8 +1092,12 @@
       output: toe
     - concatenate: [heel, toe]
       output: foot
-    - import: ReadHeel@Release
+    - import: LeadHeel@Release
     - subtract: [foot, $prev]
+    - convert:
+      from: mm
+      to: m
+      
 
 
 # Moments
