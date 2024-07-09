@@ -5,7 +5,7 @@
 # Parameters needed for kinematics event detection in FA
 - parameter: PelvisCGPos_vel
   steps:
-    - import: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips.x, Hips.y, Hips.z]
       space: VirtualLab
     - convert:
       from: mm
