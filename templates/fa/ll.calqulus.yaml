@@ -246,7 +246,8 @@
   where:
     name: LL_L*
   steps:
-    - import: Hips@TakeOff
+    - vector: [Hips.x, Hips.y, Hips.z]
+    - import: $prev@TakeOff
     - convert:
       from: mm
       to: m
