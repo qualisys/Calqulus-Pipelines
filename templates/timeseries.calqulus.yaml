@@ -5,7 +5,7 @@
 # Parameters needed for kinematics event detection in FA
 - parameter: PelvisCGPos_vel
   steps:
-    - segment: Hips
+    - vector: [Hips.x, Hips.y, Hips.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -179,7 +179,7 @@
   set: left
   steps:
     - angle: [Spine2, LeftArm]
-      # unwrap: true
+      unwrap: true
       rotationOrder: YXZ #based on Vandana,P. at al. Comparison of Glenohumeral Motion Using Different Rotation Sequences, J Biomech. 2011 Feb 24; 44(4): 700–705. 
     - multiply: [$prev, [1, -1, -1]]
 
@@ -187,7 +187,7 @@
   set: right
   steps:
     - angle: [Spine2, RightArm]
-      # unwrap: true
+      unwrap: true
       rotationOrder: YXZ
     - multiply: [$prev, [1, 1, 1]]
 

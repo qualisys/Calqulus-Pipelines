@@ -221,7 +221,7 @@
 #debugging signal, can be removed
 - parameter: Pelvis_COM
   steps:
-    - import: Hips
+    - vector: [Hips.x, Hips.y, Hips.z]
     - convert:
       from: mm
       to: m

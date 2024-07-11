@@ -1,4 +1,3 @@
-
 - template: templates/running/running.calqulus.yaml
 
 # ############
@@ -19,23 +18,30 @@
       from: mm
       to: m
 
-# deal with naming incompatibility between Running and FA
-- parameter: Left Pelvic Angles_Calq
+# Deal with Pelvc Obliquity sign incompatibility between Running and FA
+- parameter: Left Pelvic Angles
   set: left
+  where:
+    name: Running*
+    session: 
+       FA session: "!true"
   steps:
     - jointAngle: Hips
       space: VirtualLab
-    - multiply: [$prev, [-1, 1, -1]]
+    - multiply: [$prev, [-1, -1, -1]]
 
-- parameter: Right Pelvic Angles_Calq
+- parameter: Right Pelvic Angles
   set: right
+  where:
+    name: Running*
+    fields: 
+       FA session: "!true"
   steps:
     - jointAngle: Hips
       space: VirtualLab
-    - multiply: [$prev, [-1, -1, 1]]
+    - multiply: [$prev, [-1, 1, 1]]
 
-# --- Arms ---
-
+# Deal with naming incompatibility between Running and FA
 - parameter: Left Elbow Angle
   set: left
   where:
