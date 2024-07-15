@@ -223,7 +223,7 @@
     - count: EccentricEnd_ML_temp
 
 # Squatting depth
-- parameter: Squat_depth_Squat_B
+- parameter: Squatting_depth_Squat_B
   where:
     name: (Squat|Squatting)_B*
   steps:
@@ -239,7 +239,7 @@
     - import: PelvisCGPos@Pelvis_lowest_refined
     - subtract: [$prev(2), $prev]
 
-- parameter: Squat_depth_Squat_L
+- parameter: Squatting_depth_Squat_L
   where:
     name: (Squat|Squatting)_L*
   steps:
@@ -255,7 +255,7 @@
     - import: PelvisCGPos@Pelvis_lowest_refined
     - subtract: [$prev(2), $prev]
 
-- parameter: Squat_depth_Squat_R
+- parameter: Squatting_depth_Squat_R
   where:
     name: (Squat|Squatting)_R*
   steps:
