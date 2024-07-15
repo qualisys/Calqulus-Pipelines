@@ -8,7 +8,7 @@
 
 - template: templates/fa/cutting.calqulus.yaml
   where:
-    name: Cutting*
+    name: Cut*
 
 - template: templates/fa/cod.calqulus.yaml
   where:
@@ -44,7 +44,7 @@
 
 - template: templates/fa/squatting.calqulus.yaml
   where:
-    name: Squatting*
+    name: Squat*
 
 - template: templates/generic/generic.calqulus.yaml
   where:
@@ -52,7 +52,7 @@
 
 - template: templates/running/running.calqulus.yaml
   where:
-    name: ^(Running|Gait)*
+    name: ^(Gait|Run|Walk)*
 
 - template: templates/fa/balance.calqulus.yaml
   where:
