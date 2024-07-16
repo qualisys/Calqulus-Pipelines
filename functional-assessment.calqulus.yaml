@@ -36,7 +36,7 @@
 
 - template: templates/fa/tapping.calqulus.yaml
   where:
-    name: Tapping*
+    name: Tap*
 
 - template: templates/fa/ll.calqulus.yaml
   where:
