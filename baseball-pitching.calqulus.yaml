@@ -24,7 +24,7 @@
 
 - parameter: VirtualLabOrigin
   steps:
-    - marker: RForefoot2
+    - segment: RightToeBase
     - multiply: [$prev, 0]
 
 - segment: VirtualLabSegment
@@ -74,7 +74,7 @@
     - max: LeadShank.z
       frames: true
 
-- event: Footstrike
+- event: Footstrike_kinematics
   where: 
     name: Pitching*
   steps:
@@ -92,6 +92,24 @@
       direction: down
     - eventMask: [$prev, MaxKneeHeight, Release]
     - import: $prev@-1
+
+- event: Footstrike_kinetics
+  where: 
+    name: Pitching*
+    force: any
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LON_force
+      else: RON_force
+
+- event: Footstrike
+  where: 
+    name: Pitching*
+  steps:
+    - import: Footstrike_kinetics
+    - if: exists(Footstrike_kinetics)
+      then: Footstrike_kinetics
+      else: Footstrike_kinematics
 
 - event: SETUP
   where: 
@@ -405,29 +423,61 @@
       then: RightToeBase
       else: LeftToeBase
 
+- parameter: LeftForefoot
+  where: 
+    name: Pitching*
+  steps:
+    - if: exists(LForefoot2)
+      then: LForefoot2
+      else: LeftToeBase
+      
+- parameter: RightForefoot
+  where: 
+    name: Pitching*
+  steps:
+    - if: exists(RForefoot2)
+      then: RForefoot2
+      else: RightToeBase
+      
 - parameter: LeadForefoot2
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LForefoot2
-      else: RForefoot2
+      then: LeftForefoot
+      else: RightForefoot
 
 - parameter: BackForefoot2
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RForefoot2
-      else: LForefoot2
+      then: RightToeBase
+      else: LeftToeBase
+
+- parameter: LeftHeelBack
+  where: 
+    name: Pitching*
+  steps:
+    - if: exists(LHeelBack)
+      then: LHeelBack
+      else: LeftAnkle
+
+- parameter: RightHeelBack
+  where: 
+    name: Pitching*
+  steps:
+    - if: exists(RHeelBack)
+      then: RHeelBack
+      else: RightAnkle
 
 - parameter: LeadHeelBack
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LHeelBack
-      else: RHeelBack
+      then: LeftHeelBack
+      else: RightHeelBack
 
 # Set side conventions
 - parameter: Pitching_Shoulder_Convention
