@@ -441,6 +441,7 @@
     - if: exists(LForefoot2)
       then: LForefoot2
       else: LeftToeBase
+    - vector: [$prev.x, $prev.y, $prev.z]
       
 - parameter: RightForefoot
   where: 
@@ -449,6 +450,7 @@
     - if: exists(RForefoot2)
       then: RForefoot2
       else: RightToeBase
+    - vector: [$prev.x, $prev.y, $prev.z]
       
 - parameter: LeadForefoot2
   where: 
@@ -473,6 +475,7 @@
     - if: exists(LHeelBack)
       then: LHeelBack
       else: LeftAnkle
+    - vector: [$prev.x, $prev.y, $prev.z]
 
 - parameter: RightHeelBack
   where: 
@@ -481,6 +484,7 @@
     - if: exists(RHeelBack)
       then: RHeelBack
       else: RightAnkle
+    - vector: [$prev.x, $prev.y, $prev.z]
 
 - parameter: LeadHeelBack
   where: 
@@ -1066,8 +1070,8 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LHeelBack
-      else: RHeelBack
+      then: LeftHeelBack
+      else: RightHeelBack
     - convert:
       from: mm
       to: m
@@ -1120,9 +1124,9 @@
   where: 
     name: Pitching*
   steps:
-    - import: LHeelBack@Lead_Comm
+    - import: LeftHeelBack@Lead_Comm
       output: heel
-    - import: LForefoot2@Lead_Comm
+    - import: LeftForefoot@Lead_Comm
       output: toe
     - concatenate: [heel, toe]
       output: foot
@@ -1136,9 +1140,9 @@
   where: 
     name: Pitching*
   steps:
-    - import: RHeelBack@Lead_Comm
+    - import: RightHeelBack@Lead_Comm
       output: heel
-    - import: RForefoot2@Lead_Comm
+    - import: RightForefoot@Lead_Comm
       output: toe
     - concatenate: [heel, toe]
       output: foot
