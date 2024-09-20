@@ -293,6 +293,17 @@
       then: $prev@1
       else: EOF
 
+- event: Lead_Comm
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - subtract: [Lead GRF_BW.z, Trail GRF_BW.z]
+    - threshold: [$prev, Footstrike, Release]
+      value: 0
+      direction: up
+    - import: $prev@1
+
 ############
 ## SERIES ##
 ############
@@ -1049,67 +1060,362 @@
   steps:
     - magnitude: Trail GRF_BW
 
-# Moments
-# - parameter: Left Foot Total Moment COM_BW
-#   where: 
-#     name: Pitching*
-#     force: left
-#   steps:
-#     - multiply: [LeftFootContact.mz, 100]
-#       output: Left_Free_Moment
+# COM/COP
+- parameter: LeadHeel
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LHeelBack
+      else: RHeelBack
+    - convert:
+      from: mm
+      to: m
+
+- parameter: COM wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - vector: [Hips.x, Hips.y, Hips.z]
+    - convert:
+      from: mm
+      to: m
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
+- parameter: COM wrt Lead Heel
+  where: 
+    name: Pitching*
+  steps:
+    - vector: [Hips.x, Hips.y, Hips.z]
+    - convert:
+      from: mm
+      to: m
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
+- parameter: Left COP wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - import: LeadHeel@Release
+    - subtract: [Left_COP, $prev]
+
+- parameter: Right COP wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - import: LeadHeel@Release
+    - subtract: [Right_COP, $prev]
+
+- parameter: COM wrt Lead Heel_vel
+  where: 
+    name: Pitching*
+  steps:
+    - velocity: COM wrt Lead Heel
+    - lowpass:
+      cutoff: 12
+
+- parameter: Left_Foot_wrt_Lead_Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - import: LHeelBack@Lead_Comm
+      output: heel
+    - import: LForefoot2@Lead_Comm
+      output: toe
+    - concatenate: [heel, toe]
+      output: foot
+    - import: LeadHeelBack@Release
+    - subtract: [foot, $prev]
+    - convert:
+      from: mm
+      to: m
+
+- parameter: Right_Foot_wrt_Lead_Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - import: RHeelBack@Lead_Comm
+      output: heel
+    - import: RForefoot2@Lead_Comm
+      output: toe
+    - concatenate: [heel, toe]
+      output: foot
+    - import: LeadHeelBack@Release
+    - subtract: [foot, $prev]
+    - convert:
+      from: mm
+      to: m
+      
+- parameter: Pelvis_COG wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - vector: [Hips.x, Hips.y, Hips.z]
+    - convert:
+      from: mm
+      to: m
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
+- parameter: Trunk_COG wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+  steps:
+    - vector: [Spine1.x, Spine1.y, Spine1.z]
+    - convert:
+      from: mm
+      to: m
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
+# Combined COP - mean COP
+- parameter: Combined COP wrt Lead Heel_plot
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - add: [Left_COP, Right_COP]
+    - divide: [$prev, 2]
+    - import: LeadHeel@Release
+    - subtract: [$prev(2), $prev]
+
+- parameter: Combined COP wrt Lead Heel #for compatibility with layout
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - import: Combined COP wrt Lead Heel_plot
+
+- parameter: Combined COP wrt Lead Heel_vel
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - velocity: Combined COP wrt Lead Heel
+
+- parameter: LeadFootContact_mz
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftFootContact.mz
+      else: RightFootContact.mz
+
+# Moments ----
+# Horizontal
+- parameter: Left_Free_Moment_BW
+  where: 
+    name: Pitching*
+    force: left
+  steps:
+    - multiply: [LeftFootContact.mz, 100]
+    - divide: [$prev, BodyWeightNewton]
+
+- parameter: Right_Free_Moment_BW
+  where: 
+    name: Pitching*
+    force: right
+  steps:
+    - multiply: [RightFootContact.mz, 100]
+    - divide: [$prev, BodyWeightNewton]
+
+- parameter: Left AP Force Torque COM_BW
+  where: 
+    name: Pitching*
+    force: left
+  steps:
+    - import: LeftFootContact.x
+    - subtract: [$prev, Hips.x]
+    - convert:
+      from: mm
+      to: m
+      output: Left X COM Dist
+
+    - multiply: [Left X COM Dist, LeftFootContact.fy]
+    - multiply: [$prev, 100]
+      export: Left AP Force Torque COM
     
-#     - add: [LeftFootContact.x, PelvisCGPos.x] #are components correct?
-#       output: Left X COM Dist
-#     - multiply: [$prev,LeftFootContact.fy]
-#     - multiply: [$prev, 100]
-#       output: Left AP Force Torque COM
+    - divide: [$prev, BodyWeightNewton]
+
+- parameter: Left ML Force Torque COM_BW
+  where: 
+    name: Pitching*
+    force: left
+  steps:
+    - import: LeftFootContact.y
+    - subtract: [$prev, Hips.y]
+    - convert:
+      from: mm
+      to: m
+      output: Left Y COM Dist
+
+    - multiply: [Left Y COM Dist, LeftFootContact.fx]
+    - multiply: [$prev, 100]
+      export: Left ML Force Torque COM
     
-#     - add: [LeftFootContact.y, PelvisCGPos.y] #are components correct?
-#       output: Left Y COM Dist
-#     - multiply: [$prev,LeftFootContact.fx]
-#     - multiply: [$prev, 100]
-#       output: Left ML Force Torque COM
+    - divide: [$prev, BodyWeightNewton]
 
-#     - add: [Left_Free_Moment, Left AP Force Torque COM]
-#     - add: [$prev, Left ML Force Torque COM]
+- parameter: Right AP Force Torque COM_BW
+  where: 
+    name: Pitching*
+    force: right
+  steps:
+    - import: RightFootContact.x
+    - subtract: [$prev, Hips.x]
+    - convert:
+      from: mm
+      to: m
+      output: Right X COM Dist
 
-# Breakup of previous step for debugging
-# - parameter: Left_Free_Moment
-#   where: 
-#     name: Pitching*
-#     force: left
-#   steps:
-#     - multiply: [LeftFootContact.mz, 100]
+    - multiply: [Right X COM Dist, RightFootContact.fy]
+    - multiply: [$prev, 100]
+      export: Right AP Force Torque COM
     
-# - parameter: Left AP Force Torque COM
-#   where: 
-#     name: Pitching*
-#     force: left
-#   steps:
-#     - add: [LeftFootContact.x, PelvisCGPos.x] #are components correct?
-#       output: Left X COM Dist
-#     - multiply: [$prev,LeftFootContact.fy]
-#     - multiply: [$prev, 100]
+    - divide: [$prev, BodyWeightNewton]
+
+- parameter: Right ML Force Torque COM_BW
+  where: 
+    name: Pitching*
+    force: right
+  steps:
+    - import: RightFootContact.y
+    - subtract: [$prev, Hips.y]
+    - convert:
+      from: mm
+      to: m
+      output: Right Y COM Dist
+
+    - multiply: [Right Y COM Dist, RightFootContact.fx]
+    - multiply: [$prev, 100]
+      export: Right ML Force Torque COM
     
-# - parameter: Left ML Force Torque COM
-#   where: 
-#     name: Pitching*
-#     force: left
-#   steps:
-#     - add: [LeftFootContact.y, PelvisCGPos.y] #are components correct?
-#       output: Left Y COM Dist
-#     - multiply: [$prev,LeftFootContact.fx]
-#     - multiply: [$prev, 100]
+    - divide: [$prev, BodyWeightNewton]
 
-# - parameter: Left Foot Total Moment COM_BW
-#   where: 
-#     name: Pitching*
-#     force: left
-#   steps:
-#     - add: [Left_Free_Moment, Left AP Force Torque COM]
-#     - add: [$prev, Left ML Force Torque COM]
+- parameter: Lead Foot Total Moment COM_BW
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: Left AP Force Torque COM_BW
+      else: Right AP Force Torque COM_BW
 
+- parameter: Trail Foot Total Moment COM_BW
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: Right AP Force Torque COM_BW
+      else: Left AP Force Torque COM_BW
 
+- parameter: Left Foot Total Moment COM_BW
+  where: 
+    name: Pitching*
+    force: left
+  steps:
+    - add: [Left_Free_Moment_BW, Left AP Force Torque COM_BW]
+    - add: [$prev, Left ML Force Torque COM_BW]
+
+- parameter: Right Foot Total Moment COM_BW
+  where: 
+    name: Pitching*
+    force: right
+  steps:
+    - add: [Right_Free_Moment_BW, Right AP Force Torque COM_BW]
+    - add: [$prev, Right ML Force Torque COM_BW]
+
+- parameter: Total Horizontal Moment COM_BW
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - add: [Left Foot Total Moment COM_BW, Right Foot Total Moment COM_BW]
+
+# Frontal
+- parameter: Left Frontal Cont Total_BW
+  where: 
+    name: Pitching*
+    force: left
+  steps:
+    - multiply: [LeftFootContact.fx, Hips.z]
+    - multiply: [$prev, 100]
+    - convert:
+      from: mm
+      to: m
+      output: Left H Force Cont
+
+    - subtract: [LeftFootContact.x, Hips.x]
+    - convert:
+      from: mm
+      to: m
+      output: COM X Dist Left
+    - multiply: [LeftFootContact.fz, COM X Dist Left]
+    - multiply: [$prev, 100]
+      output: Left V Force Cont
+
+    - add: [Left H Force Cont, Left V Force Cont]
+    - divide: [$prev, BodyWeightNewton]
+
+- parameter: Right Frontal Cont Total_BW
+  where: 
+    name: Pitching*
+    force: right
+  steps:
+    - multiply: [RightFootContact.fx, Hips.z]
+    - multiply: [$prev, 100]
+    - convert:
+      from: mm
+      to: m
+      output: Right H Force Cont
+
+    - subtract: [RightFootContact.x, Hips.x]
+    - convert:
+      from: mm
+      to: m
+      output: COM X Dist Right
+    - multiply: [RightFootContact.fz, COM X Dist Right]
+    - multiply: [$prev, 100]
+      output: Right V Force Cont
+
+    - add: [Right H Force Cont, Right V Force Cont]
+    - divide: [$prev, BodyWeightNewton]
+
+- parameter: Lead Frontal Cont Total_BW
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: Left Frontal Cont Total_BW
+      else: Right Frontal Cont Total_BW
+
+- parameter: Trail Frontal Cont Total_BW
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: Right Frontal Cont Total_BW
+      else: Left Frontal Cont Total_BW
+
+- parameter: Total Frontal Moment_BW
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - add: [Left Frontal Cont Total_BW, Right Frontal Cont Total_BW]
+
+# Total
+- parameter: Total Moment COM_BW
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - add: [Total Horizontal Moment COM_BW, Total Frontal Moment_BW]
 
 #--------------
 # PAF fields
@@ -2448,6 +2754,205 @@
     - eventMask: [Lead_Leg_GRF_mag, Footstrike, Max_Shoulder_Rot]
     - integral: $prev
       scalar: true
+
+- parameter: COM wrt Lead Heel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel@Footstrike
+
+- parameter: COM wrt Lead Heel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel@MaxKneeHeight
+
+- parameter: COM wrt Lead Heel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel@Release
+
+- parameter: COM wrt Lead Heel_vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel_vel@Footstrike
+
+- parameter: COM wrt Lead Heel_vel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel_vel@MaxKneeHeight
+
+- parameter: COM wrt Lead Heel_vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: COM wrt Lead Heel_vel@Release
+
+- parameter: Combined COP wrt Lead Heel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel@Footstrike
+
+- parameter: Combined COP wrt Lead Heel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel@MaxKneeHeight
+
+- parameter: Combined COP wrt Lead Heel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel@Release
+
+- parameter: Combined COP wrt Lead Heel_vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel_vel@Footstrike
+
+- parameter: Combined COP wrt Lead Heel_vel@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel_vel@MaxKneeHeight
+
+- parameter: Combined COP wrt Lead Heel_vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Combined COP wrt Lead Heel_vel@Release
+
+- parameter: Lead Foot Total Moment COM_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead Foot Total Moment COM_BW@Footstrike
+
+- parameter: Lead Foot Total Moment COM_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead Foot Total Moment COM_BW@MaxKneeHeight
+
+- parameter: Lead Foot Total Moment COM_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead Foot Total Moment COM_BW@Release
+
+- parameter: Trail Foot Total Moment COM_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail Foot Total Moment COM_BW@Footstrike
+
+- parameter: Trail Foot Total Moment COM_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail Foot Total Moment COM_BW@MaxKneeHeight
+
+- parameter: Trail Foot Total Moment COM_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail Foot Total Moment COM_BW@Release
+
+- parameter: Lead Frontal Cont Total_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead Frontal Cont Total_BW@Footstrike
+
+- parameter: Lead Frontal Cont Total_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead Frontal Cont Total_BW@MaxKneeHeight
+
+- parameter: Lead Frontal Cont Total_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead Frontal Cont Total_BW@Release
+
+- parameter: Trail Frontal Cont Total_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail Frontal Cont Total_BW@Footstrike
+
+- parameter: Trail Frontal Cont Total_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail Frontal Cont Total_BW@MaxKneeHeight
+
+- parameter: Trail Frontal Cont Total_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trail Frontal Cont Total_BW@Release
+
+- parameter: Total Horizontal Moment COM_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Horizontal Moment COM_BW@Footstrike
+
+- parameter: Total Horizontal Moment COM_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Horizontal Moment COM_BW@MaxKneeHeight
+
+- parameter: Total Horizontal Moment COM_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Horizontal Moment COM_BW@Release
+
+- parameter: Total Frontal Moment_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Frontal Moment_BW@Footstrike
+
+- parameter: Total Frontal Moment_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Frontal Moment_BW@MaxKneeHeight
+
+- parameter: Total Frontal Moment_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Frontal Moment_BW@Release
+
+- parameter: Total Moment COM_BW@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Moment COM_BW@Footstrike
+
+- parameter: Total Moment COM_BW@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Moment COM_BW@MaxKneeHeight
+
+- parameter: Total Moment COM_BW@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Total Moment COM_BW@Release
+
 
 
 
