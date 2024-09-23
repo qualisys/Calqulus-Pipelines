@@ -378,6 +378,14 @@
       then: LeftArm
       else: RightArm
 
+- parameter: GloveForearm
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftForearm
+      else: RightForearm
+
 - parameter: LeadThigh
   where: 
     name: Pitching*
@@ -727,6 +735,14 @@
     - angle: [Spine2, GloveArm]
       rotationOrder: XYZ
     - multiply: [$prev, Glove_Shoulder_Convention]
+
+# Glove Elbow Angle
+- parameter: Glove_Elbow_Angle
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [GloveArm, GloveForearm]
+    - multiply: [$prev, Elbow_Convention]
 
 # Glove Shoulder Ang Vel
 - parameter: Glove_Shoulder_Ang_Vel
@@ -1608,6 +1624,30 @@
     name: Pitching*
   steps:
     - import: Pitching_Elbow_Angle@Release
+
+- parameter: Glove_Elbow_Angle@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Glove_Elbow_Angle@Footstrike
+
+- parameter: Glove_Elbow_Angle@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Glove_Elbow_Angle@Max_Shoulder_Rot
+
+- parameter: Glove_Elbow_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Glove_Elbow_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Glove_Elbow_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Glove_Elbow_Angle@Release
 
 - parameter: Pitching_Elbow_Angle@Release100msAfter
   where:
