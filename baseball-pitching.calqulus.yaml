@@ -2367,17 +2367,53 @@
   steps:
     - import: Pelvis_COG@Release
 
+- parameter: Pelvis_COG@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG@Max_Shoulder_Int_Rot_FollowThru
+
 - parameter: Pelvis_COG_Vel@Release100msAfter
   where:
     name: Pitching*
   steps:
     - import: Pelvis_COG_Vel@Release100msAfter
 
+- parameter: Pelvis_COG_vel@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG_vel@Max_Shoulder_Int_Rot_FollowThru
+
 - parameter: Pelvis_COG@Release100msAfter
   where:
     name: Pitching*
   steps:
     - import: Pelvis_COG@Release100msAfter
+
+- parameter: Trunk_COG@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG@Footstrike
+
+- parameter: Trunk_COG@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG@Max_Shoulder_Rot
+
+- parameter: Trunk_COG@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG@Release
+
+- parameter: Trunk_COG@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG@Max_Shoulder_Int_Rot_FollowThru
 
 - parameter: Trunk_COG_Vel@Footstrike
   where:
