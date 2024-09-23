@@ -533,7 +533,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, 1, 1]]
-      else: [[1, 1, 1]]
+      else: [[1, 1, -1]]
 
 - parameter: Hip_Convention
   where: 
@@ -1209,6 +1209,16 @@
       else: RightFootContact.mz
 
 # Moments ----
+# - parameter: Shoulder Torque
+#   where:
+#     name: Pitching*
+#     force: both
+#   steps:
+#     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+#       then: LeftArm.mz
+#       else: RightArm.mz
+#     - divide: [$prev, $field(Weight; measurement; numeric)]
+
 # Horizontal
 - parameter: Left_Free_Moment_BW
   where: 
