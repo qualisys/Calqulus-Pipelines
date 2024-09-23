@@ -2283,6 +2283,12 @@
   steps:
     - import: Back_Knee_Angle@Release
 
+- parameter: Back_Knee_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Angle@Max_Shoulder_Int_Rot_FollowThru
+
 - parameter: Back_Ankle_Angle@Setup
   where:
     name: Pitching*
