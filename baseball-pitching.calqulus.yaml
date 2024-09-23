@@ -1523,6 +1523,12 @@
   steps:
     - import: Glove_Shoulder_Angle@Footstrike
 
+- parameter: Glove_Shoulder_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Glove_Shoulder_Angle@Max_Shoulder_Int_Rot_FollowThru
+
 - parameter: Glove_Shoulder_Angle@Max_Shoulder_Rot
   where:
     name: Pitching*
