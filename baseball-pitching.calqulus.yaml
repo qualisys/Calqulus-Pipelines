@@ -2193,6 +2193,12 @@
   steps:
     - import: Lead_Hip_Angle@Release
 
+- parameter: Lead_Hip_Angle@Lead_Hip_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Lead_Hip_Angle@Max_Shoulder_Int_Rot_FollowThru
+
 - parameter: Lead_Knee_Angle@Setup
   where:
     name: Pitching*
@@ -2240,6 +2246,12 @@
     name: Pitching*
   steps:
     - import: Back_Hip_Angle@Release
+
+- parameter: Back_Hip_Angle@Lead_Hip_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Hip_Angle@Lead_Hip_Angle@Max_Shoulder_Int_Rot_FollowThru
 
 - parameter: Back_Knee_Angle@Setup
   where:
