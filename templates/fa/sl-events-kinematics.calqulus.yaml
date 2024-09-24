@@ -20,6 +20,15 @@
       frames: true
     - add: [$prev, 1]
 
+- event: TouchDown_prio2
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+  set: left
+  steps:
+    - if: exists(TouchDown_L_ML)
+      then: TouchDown_L_ML
+      else: TouchDown_kinematics
+
 - event: TouchDown
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
@@ -27,7 +36,7 @@
   steps:
     - if: exists(LON_force)
       then: LON_force
-      else: TouchDown_kinematics
+      else: TouchDown_prio2
 
 - event: Max_knee_flex
   where:
@@ -48,6 +57,15 @@
       frames: true
     - add: [$prev, 1]
 
+- event: TouchDown_prio2
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - if: exists(TouchDown_R_ML)
+      then: TouchDown_R_ML
+      else: TouchDown_kinematics
+
 - event: TouchDown
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
@@ -55,7 +73,7 @@
   steps:
     - if: exists(RON_force)
       then: RON_force
-      else: TouchDown_kinematics
+      else: TouchDown_prio2
 
 - event: Max_knee_flex
   where:
