@@ -1191,15 +1191,34 @@
     - subtract: [$prev(2), $prev]
 
 # Combined COP - mean COP
+- parameter: Combined_COP
+  where: 
+    name: Pitching*
+    force: both
+  steps:
+    - magnitude: Left GRF
+      output: left_grf_mag
+    - magnitude: Right GRF
+      output: right_grf_mag
+
+    - multiply: [Left_COP, [left_grf_mag, left_grf_mag, left_grf_mag]]
+      output: l_temp
+    - multiply: [Right_COP, [right_grf_mag, right_grf_mag, right_grf_mag]]
+      output: r_temp
+
+    - add: [l_temp, r_temp]
+      output: temp_sum
+    - add: [left_grf_mag, right_grf_mag]
+      output: grf_sum
+    - divide: [temp_sum, [grf_sum, grf_sum, grf_sum]]
+
 - parameter: Combined COP wrt Lead Heel_plot
   where: 
     name: Pitching*
     force: both
   steps:
-    - add: [Left_COP, Right_COP]
-    - divide: [$prev, 2]
     - import: LeadHeel@Release
-    - subtract: [$prev(2), $prev]
+    - subtract: [Combined_COP, $prev]
 
 - parameter: Combined COP wrt Lead Heel #for compatibility with layout
   where: 
@@ -1225,6 +1244,7 @@
       else: RightFootContact.mz
 
 # Moments ----
+# Add upper body kinetics after it is added to the model
 # - parameter: Shoulder Torque
 #   where:
 #     name: Pitching*
