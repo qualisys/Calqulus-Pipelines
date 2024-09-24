@@ -8,7 +8,7 @@
 
 - parameter: Pelvis_Height_Normalised
   where:
-    name: Running*
+    name: Run*
   steps:
     - segment: Hips => hipsDynamic
     - segment: Hips?name=Static* => hipsStatic
@@ -22,7 +22,7 @@
 - parameter: Left Pelvic Angles
   set: left
   where:
-    name: Running*
+    name: Run*
     session: 
        FA session: "!true"
   steps:
@@ -33,7 +33,7 @@
 - parameter: Right Pelvic Angles
   set: right
   where:
-    name: Running*
+    name: Run*
     fields: 
        FA session: "!true"
   steps:
@@ -45,7 +45,7 @@
 - parameter: Left Elbow Angle
   set: left
   where:
-    name: Running*
+    name: Run*
   steps:
     - angle: [LeftArm, LeftForeArm, LeftHand]
     - convert: $prev
@@ -55,7 +55,7 @@
 - parameter: Right Elbow Angle
   set: right
   where:
-    name: Running*
+    name: Run*
   steps:
     - angle: [RightArm, RightForeArm, RightHand]
     - convert: $prev
