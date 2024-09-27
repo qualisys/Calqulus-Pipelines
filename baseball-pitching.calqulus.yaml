@@ -1214,41 +1214,7 @@
     - divide: [temp_sum, [grf_sum, grf_sum, grf_sum]]
 
 # Merge combined COP with single leg COPs
-# for LH player
-- parameter: Combined_COP_full_LH
-  where: 
-    name: Pitching*
-    force: both
-  steps:
-    - eventMask: [Left_COP, BOF, RON_force]
-      truncate: true
-      output: cop_n_l
-    - eventMask: [Right_COP, LOFF_force, EOF]
-      truncate: true
-      output: cop_n_r
-    - eventMask: [Combined_COP, RON_force, LOFF_force]
-      truncate: true
-      output: cop_n_combined
-    - concatenate: [cop_n_l,cop_n_combined,cop_n_r]
-    - gapFill:
-
-# for RH player
-- parameter: Combined_COP_full_RH
-  where: 
-    name: Pitching*
-    force: both
-  steps:
-    - eventMask: [Right_COP, BOF, LON_force]
-      truncate: true
-      output: cop_n_r
-    - eventMask: [Left_COP, ROFF_force, EOF]
-      truncate: true
-      output: cop_n_l
-    - eventMask: [Combined_COP, LON_force, ROFF_force]
-      truncate: true
-      output: cop_n_combined
-    - concatenate: [cop_n_r,cop_n_combined,cop_n_l]
-    - gapFill:
+# TO DO: we need a new merge step
 
 # Normalize COP to Lead heel
 - parameter: Combined COP wrt Lead Heel_plot
@@ -1256,11 +1222,8 @@
     name: Pitching*
     force: both
   steps:
-    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: Combined_COP_full_RH
-      else: Combined_COP_full_LH
     - import: LeadHeel@Release
-    - subtract: [$prev(2), $prev]
+    - subtract: [Combined_COP, $prev]
 
 - parameter: Combined COP wrt Lead Heel #for compatibility with layout
   where: 
