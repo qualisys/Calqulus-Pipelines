@@ -106,7 +106,6 @@
   where: 
     name: Pitching*
   steps:
-    - import: Footstrike_kinetics
     - if: exists(Footstrike_kinetics)
       then: Footstrike_kinetics
       else: Footstrike_kinematics
@@ -1117,6 +1116,7 @@
 - parameter: Left COP wrt Lead Heel_plot
   where: 
     name: Pitching*
+    force: left
   steps:
     - import: LeadHeel@Release
     - subtract: [Left_COP, $prev]
@@ -1124,6 +1124,7 @@
 - parameter: Right COP wrt Lead Heel_plot
   where: 
     name: Pitching*
+    force: right
   steps:
     - import: LeadHeel@Release
     - subtract: [Right_COP, $prev]
@@ -1139,6 +1140,7 @@
 - parameter: Left_Foot_wrt_Lead_Heel_plot
   where: 
     name: Pitching*
+    force: both
   steps:
     - import: LeftHeelBack@Lead_Comm
       output: heel
@@ -1155,6 +1157,7 @@
 - parameter: Right_Foot_wrt_Lead_Heel_plot
   where: 
     name: Pitching*
+    force: both
   steps:
     - import: RightHeelBack@Lead_Comm
       output: heel
@@ -2799,60 +2802,70 @@
 - parameter: Lead GRF_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead GRF_BW@Footstrike
 
 - parameter: Lead GRF_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead GRF_BW@MaxKneeHeight
 
 - parameter: Lead GRF_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead GRF_BW@Release
 
 - parameter: Trail GRF_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail GRF_BW@Footstrike
 
 - parameter: Trail GRF_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail GRF_BW@MaxKneeHeight
 
 - parameter: Trail GRF_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail GRF_BW@Release
 
 - parameter: Force_FS1_1_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Force_FS1_1_BW@Footstrike
 
 - parameter: Force_FS1_1_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Force_FS1_1_BW@MaxKneeHeight
 
 - parameter: Force_FS1_1_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Force_FS1_1_BW@Release
 
 - parameter: Lead_Leg_GRF_mag_max
   where:
     name: Pitching*
+    force: both
   steps:
     - eventMask: [Lead_Leg_GRF_mag, SETUP, Release100msAfter]
     - max: Lead_Leg_GRF_mag
@@ -2860,6 +2873,7 @@
 - parameter: Lead_Leg_GRF_max
   where:
     name: Pitching*
+    force: both
   steps:
     - eventMask: [Lead GRF_BW, SETUP, Release100msAfter]
     - max: $prev
@@ -2867,6 +2881,7 @@
 - parameter: Lead_Leg_GRF_min
   where:
     name: Pitching*
+    force: both
   steps:
     - eventMask: [Lead GRF_BW, SETUP, Release100msAfter]
     - min: $prev
@@ -2874,6 +2889,7 @@
 - parameter: Back_Leg_GRF_mag_max
   where:
     name: Pitching*
+    force: both
   steps:
     - eventMask: [Back_Leg_GRF_mag, SETUP, Release100msAfter]
     - max: $prev
@@ -2881,6 +2897,7 @@
 - parameter: Back_Leg_GRF_max
   where:
     name: Pitching*
+    force: both
   steps:
     - eventMask: [Trail GRF_BW, SETUP, Release100msAfter]
     - max: $prev
@@ -2888,6 +2905,7 @@
 - parameter: Back_Leg_GRF_min
   where:
     name: Pitching*
+    force: both
   steps:
     - eventMask: [Trail GRF_BW, SETUP, Release100msAfter]
     - min: $prev
@@ -2895,6 +2913,7 @@
 - parameter: Lead_Leg_GRF_mag_impulse
   where:
     name: Pitching*
+    force: both
   steps:
     - eventMask: [Lead_Leg_GRF_mag, Footstrike, Max_Shoulder_Rot]
     - integral: $prev
@@ -2939,162 +2958,189 @@
 - parameter: Combined COP wrt Lead Heel@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Combined COP wrt Lead Heel@Footstrike
 
 - parameter: Combined COP wrt Lead Heel@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Combined COP wrt Lead Heel@MaxKneeHeight
 
 - parameter: Combined COP wrt Lead Heel@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Combined COP wrt Lead Heel@Release
 
 - parameter: Combined COP wrt Lead Heel_vel@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Combined COP wrt Lead Heel_vel@Footstrike
 
 - parameter: Combined COP wrt Lead Heel_vel@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Combined COP wrt Lead Heel_vel@MaxKneeHeight
 
 - parameter: Combined COP wrt Lead Heel_vel@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Combined COP wrt Lead Heel_vel@Release
 
 - parameter: Lead Foot Total Moment COM_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead Foot Total Moment COM_BW@Footstrike
 
 - parameter: Lead Foot Total Moment COM_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead Foot Total Moment COM_BW@MaxKneeHeight
 
 - parameter: Lead Foot Total Moment COM_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead Foot Total Moment COM_BW@Release
 
 - parameter: Trail Foot Total Moment COM_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail Foot Total Moment COM_BW@Footstrike
 
 - parameter: Trail Foot Total Moment COM_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail Foot Total Moment COM_BW@MaxKneeHeight
 
 - parameter: Trail Foot Total Moment COM_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail Foot Total Moment COM_BW@Release
 
 - parameter: Lead Frontal Cont Total_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead Frontal Cont Total_BW@Footstrike
 
 - parameter: Lead Frontal Cont Total_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead Frontal Cont Total_BW@MaxKneeHeight
 
 - parameter: Lead Frontal Cont Total_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Lead Frontal Cont Total_BW@Release
 
 - parameter: Trail Frontal Cont Total_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail Frontal Cont Total_BW@Footstrike
 
 - parameter: Trail Frontal Cont Total_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail Frontal Cont Total_BW@MaxKneeHeight
 
 - parameter: Trail Frontal Cont Total_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Trail Frontal Cont Total_BW@Release
 
 - parameter: Total Horizontal Moment COM_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Horizontal Moment COM_BW@Footstrike
 
 - parameter: Total Horizontal Moment COM_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Horizontal Moment COM_BW@MaxKneeHeight
 
 - parameter: Total Horizontal Moment COM_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Horizontal Moment COM_BW@Release
 
 - parameter: Total Frontal Moment_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Frontal Moment_BW@Footstrike
 
 - parameter: Total Frontal Moment_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Frontal Moment_BW@MaxKneeHeight
 
 - parameter: Total Frontal Moment_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Frontal Moment_BW@Release
 
 - parameter: Total Moment COM_BW@Footstrike
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Moment COM_BW@Footstrike
 
 - parameter: Total Moment COM_BW@MaxKneeHeight
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Moment COM_BW@MaxKneeHeight
 
 - parameter: Total Moment COM_BW@Release
   where:
     name: Pitching*
+    force: both
   steps:
     - import: Total Moment COM_BW@Release
 
