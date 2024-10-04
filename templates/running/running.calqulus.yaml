@@ -723,18 +723,14 @@
     name: ^(Running|Gait)*
   steps:
   - eventDuration: [RFS, LFS]
-    output: Left_Step_Time
     export: Left_Step_Time
   - eventDuration: [LFS, RFS]
-    output: Right_Step_Time
     export: Right_Step_Time
   - mean: Left_Step_Time => Left_Step_Time_mean
   - divide: [60, Left_Step_Time_mean]
-    output: Left_Steps_Per_Minute_Mean
     export: Left_Steps_Per_Minute_Mean
   - mean: Right_Step_Time => Right_Step_Time_mean
   - divide: [60, Right_Step_Time_mean]
-    output: Right_Steps_Per_Minute_Mean
     export: Right_Steps_Per_Minute_Mean
   - concatenate: [Left_Steps_Per_Minute_Mean, Right_Steps_Per_Minute_Mean]
   - mean:
