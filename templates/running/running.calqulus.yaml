@@ -8,21 +8,14 @@
 
 - parameter: VirtualLabOrigin
   steps:
-    - marker: RForefoot2
+    - vector: [Hips.x, Hips.x, Hips.x]
     - multiply: [$prev, 0]
-
-- parameter: VirtualLabForward
-  steps:
-    - add: [WaistRFront, WaistLFront]
-    - multiply: [$prev, 0.5]
-    - subtract: [$prev, WaistBack]
-    - mean: $prev
 
 - segment: VirtualLabSegment
   steps:
     - segment:
       origin: VirtualLabOrigin
-      primaryAxis: VirtualLabForward
+      primaryAxis: [[0,0,0], [1,0,0]]
       secondaryAxis: [[0,0,0], [0,0,1]]
       order: yz 
 
@@ -80,12 +73,28 @@
       extrapolate: 100
       cutoff: 20
 
+- parameter: LAnkle
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - vector: [LeftAnkle.x, LeftAnkle.y, LeftAnkle.z]
+
+- parameter: LeftHeelBack
+  set: left
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(LHeelBack)
+      then: LHeelBack
+      else: LAnkle
+
 - parameter: LHeelBack_vel
   set: left
   where:
     name: ^(Running|Gait)*
   steps:
-    - marker: LHeelBack => sig
+    - import: LeftHeelBack
     - velocity:
 
 - parameter: Right_MID_FOOT_vel
@@ -125,12 +134,28 @@
       extrapolate: 100
       cutoff: 20
 
+- parameter: RAnkle
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - vector: [RightAnkle.x, RightAnkle.y, RightAnkle.z]
+
+- parameter: RightHeelBack
+  set: right
+  where:
+    name: ^(Running|Gait)*
+  steps:
+    - if: exists(RHeelBack)
+      then: RHeelBack
+      else: RAnkle
+
 - parameter: RHeelBack_vel
   set: right
   where:
     name: ^(Running|Gait)*
   steps:
-    - marker: RHeelBack => sig
+    - import: RightHeelBack
     - velocity:
 
 # Midstance event is based on pelvis position wrt foot position
@@ -150,8 +175,9 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - marker: LForefoot2 => foot
+    - vector: [LeftToeBase.x, LeftToeBase.y, LeftToeBase.z]
       space: VirtualLab
+      output: foot
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
@@ -161,7 +187,7 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - marker: LHeelBack => heel
+    - import: LeftHeelBack => heel
       space: VirtualLab
     - segment: Hips => pelvis
       space: VirtualLab
@@ -172,8 +198,9 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - marker: RForefoot2 => foot
+    - vector: [RightToeBase.x, RightToeBase.y, RightToeBase.z]
       space: VirtualLab
+      output: foot
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
@@ -183,7 +210,7 @@
   where:
     name: ^(Running|Gait)*
   steps:
-    - marker: RHeelBack => heel
+    - import: RightHeelBack => heel
       space: VirtualLab
     - segment: Hips => pelvis
       space: VirtualLab
