@@ -216,19 +216,7 @@
       space: VirtualLab
     - subtract: [heel, pelvis]
 
-# workaround for Theia changing units from [mm] to [m]
-- parameter: Pelvis_COG_range_non_conv
-  where:
-    name: ^(Running|Gait)*
-  steps:
-    - import: Hips
-      space: VirtualLab
-    # - convert:
-    #   from: mm
-    #   to: m
-    - range: $prev.y
-
-- parameter: Pelvis_COG_range_conv
+- parameter: Pelvis_COG_range
   where:
     name: ^(Running|Gait)*
   steps:
@@ -239,13 +227,6 @@
       to: m
     - range: $prev.y
 
-- parameter: Pelvis_COG_range
-  where:
-    name: ^(Running|Gait)*
-  steps:
-    - if: Pelvis_COG_range_conv < 0.01
-      then: Pelvis_COG_range_non_conv
-      else: Pelvis_COG_range_conv
 # -----------------
 
 # # --- Pelvis ---
