@@ -700,7 +700,7 @@
     - segment: RightUpLeg => Right_Hip
       space: VirtualLab
       export: Right_Hip
-    - eventMask: [Right_Hip.z, L_BDC, L_BDC]
+    - eventMask: [Right_Hip.z, R_BDC, R_BDC]
     - max:
       frames: true
 
