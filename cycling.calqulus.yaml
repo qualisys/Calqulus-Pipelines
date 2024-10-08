@@ -679,8 +679,9 @@
     - segment: LeftUpLeg => Left_Hip
       space: VirtualLab
       export: Left_Hip
-    - peakFinder: Left_Hip.z
-      width: 100
+    - eventMask: [Left_Hip.z, L_BDC, L_BDC]
+    - max:
+      frames: true
 
 - event: LEFT_HIP_min
   where:
@@ -699,8 +700,9 @@
     - segment: RightUpLeg => Right_Hip
       space: VirtualLab
       export: Right_Hip
-    - peakFinder: Right_Hip.z
-      width: 100
+    - eventMask: [Right_Hip.z, L_BDC, L_BDC]
+    - max:
+      frames: true
 
 - event: RIGHT_HIP_min
   where:
