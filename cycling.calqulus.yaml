@@ -717,97 +717,101 @@
 ## SERIES ##
 ############
 
+- template: /templates/timeseries.calqulus.yaml
+  where:
+    name: '!Bike*'
+
 # --- Pelvis ---
 
-- parameter: Left Pelvic Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: Hips
-      space: VirtualLab
-    - multiply: [$prev, [-1, 1, -1]]
+# - parameter: Left Pelvic Angles
+#   where:
+#     name: Cycling*
+#   set: left
+#   steps:
+#     - jointAngle: Hips
+#       space: VirtualLab
+#     - multiply: [$prev, [-1, 1, -1]]
 
-- parameter: Right Pelvic Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: Hips
-      space: VirtualLab
-    - multiply: [$prev, [-1, -1, 1]]
+# - parameter: Right Pelvic Angles
+#   where:
+#     name: Cycling*
+#   set: right
+#   steps:
+#     - jointAngle: Hips
+#       space: VirtualLab
+#     - multiply: [$prev, [-1, -1, 1]]
 
 # --- Hips ---
 
-- parameter: Left Hip Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [Hips, LeftUpLeg]
-    - multiply: [$prev, [1, -1, 1]]
+# - parameter: Left Hip Angles
+#   where:
+#     name: Cycling*
+#   set: left
+#   steps:
+#     - jointAngle: [Hips, LeftUpLeg]
+#     - multiply: [$prev, [1, -1, 1]]
 
-- parameter: Right Hip Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [Hips, RightUpLeg]
+# - parameter: Right Hip Angles
+#   where:
+#     name: Cycling*
+#   set: right
+#   steps:
+#     - jointAngle: [Hips, RightUpLeg]
 
 # --- Knee ---
 
-- parameter: Left Knee Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [LeftUpLeg, LeftLeg]
-      output: kneeAngle
-    - multiply: [kneeAngle, [-1, -1, -1]]
+# - parameter: Left Knee Angles
+#   where:
+#     name: Cycling*
+#   set: left
+#   steps:
+#     - jointAngle: [LeftUpLeg, LeftLeg]
+#       output: kneeAngle
+#     - multiply: [kneeAngle, [-1, -1, -1]]
 
-- parameter: Right Knee Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [RightUpLeg, RightLeg]
-    - multiply: [$prev, [-1, 1, 1]]
+# - parameter: Right Knee Angles
+#   where:
+#     name: Cycling*
+#   set: right
+#   steps:
+#     - jointAngle: [RightUpLeg, RightLeg]
+#     - multiply: [$prev, [-1, 1, 1]]
 
 # --- Ankle ---
 
-- parameter: Left Ankle Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [LeftLeg, LeftFoot]
-    - multiply: [$prev, [1, -1, 1]]
+# - parameter: Left Ankle Angles
+#   where:
+#     name: Cycling*
+#   set: left
+#   steps:
+#     - jointAngle: [LeftLeg, LeftFoot]
+#     - multiply: [$prev, [1, -1, 1]]
 
-- parameter: Right Ankle Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [RightLeg, RightFoot]
-    - multiply: [$prev, [1, 1, -1]]
+# - parameter: Right Ankle Angles
+#   where:
+#     name: Cycling*
+#   set: right
+#   steps:
+#     - jointAngle: [RightLeg, RightFoot]
+#     - multiply: [$prev, [1, 1, -1]]
 
-- parameter: Left Foot Progression
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: LeftFoot
-      space: VirtualLab
-    - multiply: [$prev, [-1, 1, -1]]
+# - parameter: Left Foot Progression
+#   where:
+#     name: Cycling*
+#   set: left
+#   steps:
+#     - jointAngle: LeftFoot
+#       space: VirtualLab
+#     - multiply: [$prev, [-1, 1, -1]]
 
-- parameter: Right Foot Progression
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: RightFoot
-      space: VirtualLab
-    - multiply: [$prev, [-1, 1, 1]]
+# - parameter: Right Foot Progression
+#   where:
+#     name: Cycling*
+#   set: right
+#   steps:
+#     - jointAngle: RightFoot
+#       space: VirtualLab
+#     - multiply: [$prev, [-1, 1, 1]]
 
 
 # --- Trunk ---
@@ -828,20 +832,20 @@
     - multiply: [$prev, [-1, 1, 1]]
 
 # --- Shoulders ---
-- parameter: Left Shoulder Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [Spine2, LeftArm]
+# - parameter: Left Shoulder Angles
+#   where:
+#     name: Cycling*
+#   set: left
+#   steps:
+#     - jointAngle: [Spine2, LeftArm]
     
-- parameter: Right Shoulder Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [Spine2, RightArm]
-    - multiply: [$prev, [1, -1, 1]]
+# - parameter: Right Shoulder Angles
+#   where:
+#     name: Cycling*
+#   set: right
+#   steps:
+#     - jointAngle: [Spine2, RightArm]
+#     - multiply: [$prev, [1, -1, 1]]
    
 - parameter: Left Shoulder_Pelvis Angle
   where:
@@ -866,27 +870,27 @@
       space: VirtualLab
 
 # --- Wrists ---
-- parameter: Left Wrist Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [LeftHand, LeftForeArm]
+# - parameter: Left Wrist Angles
+#   where:
+#     name: Cycling*
+#   set: left
+#   steps:
+#     - jointAngle: [LeftHand, LeftForeArm]
 
-- parameter: Right Wrist Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [RightHand, RightForeArm]
+# - parameter: Right Wrist Angles
+#   where:
+#     name: Cycling*
+#   set: right
+#   steps:
+#     - jointAngle: [RightHand, RightForeArm]
 
 # --- Head ---
-- parameter: Head Angles
-  where:
-    name: Cycling*
-  steps:
-    - jointAngle: [Spine2, Head]
-    - multiply: [$prev, [-1, 1, 1]]
+# - parameter: Head Angles
+#   where:
+#     name: Cycling*
+#   steps:
+#     - jointAngle: [Spine2, Head]
+#     - multiply: [$prev, [-1, 1, 1]]
 
 #############
 ## METRICS ##
