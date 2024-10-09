@@ -1,21 +1,20 @@
 ############
 ## SPACES ##
 ############
-#- space: VirtualLab
-#  alignWithSegment:
-#    segment: Hips
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
 
 - parameter: seatTubeMoved
   where:
     name: Cycling*
   steps:
-    - vector: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
-
-- space: VirtualLab
-  origin: B_Stem?name=Cycling*
-  primaryAxis: [seatTubeMoved?name=Cycling*, B_Stem?name=Cycling*]
-  secondaryAxis: [[0,0,0], [0,0,1]]
-  order: yz
+    - import: Hips
+    - median:
+    - convert:
+      from: mm
+      to: m
+    - vector: [$prev.x, $prev.y, 0.5]
 
 ############
 # Bike trials
@@ -36,7 +35,13 @@
     - mean:
       output: Bottom_Bracket_temp
 
-    - plane: [B_Stem, B_Seat_Tube, B_Down_Tube]
+    - vector: [0,0,0]
+      output: a
+    - vector: [1,0,0]
+      output: b
+    - vector: [0,0,1]
+      output: c
+    - plane: [a,b,c]
       export: BikePlane
     - project: [Bottom_Bracket_temp, $prev]
     - import: $prev
@@ -433,14 +438,10 @@
 
 # Crank Angle
 #-----------------
-# for now we allow to put crank marker only at opposite side of crank in respect to pedal (near axis)
-
-# Filter crank markers
+# using foot proximal end for compatibility with markerless system
 - marker: L_crank_filtered
   steps:
-    - marker: L_crank
-      # Gap fill as it is important to get clean data for further processing
-    - gapFill:
+    - vector: [LeftFoot.x,LeftFoot.y,LeftFoot.z]
     - lowpass: $prev
       order: 2
       cutoff: 6
@@ -448,9 +449,7 @@
 
 - marker: R_crank_filtered
   steps:
-    - marker: R_crank
-      # Gap fill as it is important to get clean data for further processing
-    - gapFill:
+    - vector: [RightFoot.x,RightFoot.y,RightFoot.z]
     - lowpass: $prev
       order: 2
       cutoff: 6
@@ -493,8 +492,6 @@
     # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
     - mean: Left_Crank_Vlab.z@L_TDC_Temp
       output: L_crank_Z_TDC
-    #- mean: Left_Crank_Vlab.y@L_TDC_Temp # would be used if crank marker is on crank itself
-    #  output: L_crank_VLY_TDC
     - mean: Left_Crank_Vlab.z@L_BDC_Temp
       output: L_crank_Z_BDC
     - mean: Left_Crank_Vlab.y@L_BDC_Temp
@@ -721,99 +718,6 @@
   where:
     name: '!Bike*'
 
-# --- Pelvis ---
-
-# - parameter: Left Pelvic Angles
-#   where:
-#     name: Cycling*
-#   set: left
-#   steps:
-#     - jointAngle: Hips
-#       space: VirtualLab
-#     - multiply: [$prev, [-1, 1, -1]]
-
-# - parameter: Right Pelvic Angles
-#   where:
-#     name: Cycling*
-#   set: right
-#   steps:
-#     - jointAngle: Hips
-#       space: VirtualLab
-#     - multiply: [$prev, [-1, -1, 1]]
-
-# --- Hips ---
-
-# - parameter: Left Hip Angles
-#   where:
-#     name: Cycling*
-#   set: left
-#   steps:
-#     - jointAngle: [Hips, LeftUpLeg]
-#     - multiply: [$prev, [1, -1, 1]]
-
-# - parameter: Right Hip Angles
-#   where:
-#     name: Cycling*
-#   set: right
-#   steps:
-#     - jointAngle: [Hips, RightUpLeg]
-
-# --- Knee ---
-
-# - parameter: Left Knee Angles
-#   where:
-#     name: Cycling*
-#   set: left
-#   steps:
-#     - jointAngle: [LeftUpLeg, LeftLeg]
-#       output: kneeAngle
-#     - multiply: [kneeAngle, [-1, -1, -1]]
-
-# - parameter: Right Knee Angles
-#   where:
-#     name: Cycling*
-#   set: right
-#   steps:
-#     - jointAngle: [RightUpLeg, RightLeg]
-#     - multiply: [$prev, [-1, 1, 1]]
-
-# --- Ankle ---
-
-# - parameter: Left Ankle Angles
-#   where:
-#     name: Cycling*
-#   set: left
-#   steps:
-#     - jointAngle: [LeftLeg, LeftFoot]
-#     - multiply: [$prev, [1, -1, 1]]
-
-# - parameter: Right Ankle Angles
-#   where:
-#     name: Cycling*
-#   set: right
-#   steps:
-#     - jointAngle: [RightLeg, RightFoot]
-#     - multiply: [$prev, [1, 1, -1]]
-
-# - parameter: Left Foot Progression
-#   where:
-#     name: Cycling*
-#   set: left
-#   steps:
-#     - jointAngle: LeftFoot
-#       space: VirtualLab
-#     - multiply: [$prev, [-1, 1, -1]]
-
-# - parameter: Right Foot Progression
-#   where:
-#     name: Cycling*
-#   set: right
-#   steps:
-#     - jointAngle: RightFoot
-#       space: VirtualLab
-#     - multiply: [$prev, [-1, 1, 1]]
-
-
 # --- Trunk ---
 
 - parameter: Trunk Angles
@@ -832,20 +736,6 @@
     - multiply: [$prev, [-1, 1, 1]]
 
 # --- Shoulders ---
-# - parameter: Left Shoulder Angles
-#   where:
-#     name: Cycling*
-#   set: left
-#   steps:
-#     - jointAngle: [Spine2, LeftArm]
-    
-# - parameter: Right Shoulder Angles
-#   where:
-#     name: Cycling*
-#   set: right
-#   steps:
-#     - jointAngle: [Spine2, RightArm]
-#     - multiply: [$prev, [1, -1, 1]]
    
 - parameter: Left Shoulder_Pelvis Angle
   where:
@@ -868,29 +758,6 @@
   steps:
     - jointAngle: Neck
       space: VirtualLab
-
-# --- Wrists ---
-# - parameter: Left Wrist Angles
-#   where:
-#     name: Cycling*
-#   set: left
-#   steps:
-#     - jointAngle: [LeftHand, LeftForeArm]
-
-# - parameter: Right Wrist Angles
-#   where:
-#     name: Cycling*
-#   set: right
-#   steps:
-#     - jointAngle: [RightHand, RightForeArm]
-
-# --- Head ---
-# - parameter: Head Angles
-#   where:
-#     name: Cycling*
-#   steps:
-#     - jointAngle: [Spine2, Head]
-#     - multiply: [$prev, [-1, 1, 1]]
 
 #############
 ## METRICS ##
@@ -2499,7 +2366,8 @@
     name: Cycling*
   set: left
   steps:
-    - angle: [LeftForeArm, LeftHand, seatTubeMoved , B_Stem]
+    - angle: [LeftForeArm, LeftHand, [0,0,0], [1,0,0]]
+      project: xz
     - mean:
     - convert:
       from: radians
@@ -2510,7 +2378,8 @@
     name: Cycling*
   set: right
   steps:
-    - angle: [RightForeArm, RightHand, seatTubeMoved , B_Stem]
+    - angle: [RightForeArm, RightHand, [0,0,0], [1,0,0]]
+      project: xz
     - mean:
     - convert:
       from: radians
