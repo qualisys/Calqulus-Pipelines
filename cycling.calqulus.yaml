@@ -1656,8 +1656,7 @@
   set: left
   steps:
     - eventMask: [Left_Knee_Foot_distance, L_TDC, L_TDC]
-      output: knee_mask
-    - max: knee_mask.x
+    - max: $prev.y
 
 - parameter: Left_Knee_Foot_distance_min
   where:
@@ -1665,8 +1664,7 @@
   set: left
   steps:
     - eventMask: [Left_Knee_Foot_distance, L_TDC, L_TDC]
-      output: knee_mask
-    - min: knee_mask.x
+    - min: $prev.y
     
 - parameter: Left_Knee_Foot_distance_range
   where:
@@ -1730,8 +1728,7 @@
   set: right
   steps:
     - eventMask: [Right_Knee_Foot_distance, R_TDC, R_TDC]
-      output: knee_mask
-    - max: knee_mask.x
+    - max: $prev.y
 
 - parameter: Right_Knee_Foot_distance_min
   where:
@@ -1739,8 +1736,7 @@
   set: right
   steps:
     - eventMask: [Right_Knee_Foot_distance, R_TDC, R_TDC]
-      output: knee_mask
-    - min: knee_mask.x
+    - min: $prev.y
     
 - parameter: Right_Knee_Foot_distance_range
   where:
