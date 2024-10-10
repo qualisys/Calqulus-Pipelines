@@ -438,18 +438,18 @@
 
 # Crank Angle
 #-----------------
-# using foot proximal end for compatibility with markerless system
-- marker: L_crank_filtered
+# using foot distal end for compatibility with markerless system
+- parameter: L_crank_filtered
   steps:
-    - vector: [LeftFoot.x,LeftFoot.y,LeftFoot.z]
+    - vector: [LeftToeBase.x,LeftToeBase.y,LeftToeBase.z]
     - lowpass: $prev
       order: 2
       cutoff: 6
       extrapolate: 100
 
-- marker: R_crank_filtered
+- parameter: R_crank_filtered
   steps:
-    - vector: [RightFoot.x,RightFoot.y,RightFoot.z]
+    - vector: [RightToeBase.x,RightToeBase.y,RightToeBase.z]
     - lowpass: $prev
       order: 2
       cutoff: 6
