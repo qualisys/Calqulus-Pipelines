@@ -17,7 +17,7 @@
 # Left
 - event: TouchDown_kinematics
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - import: LFT_DistEndAcc.y
@@ -26,7 +26,7 @@
 
 - event: TouchDown_prio
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - if: exists(LON_force)
@@ -35,7 +35,7 @@
 
 - event: TouchDown_prio2
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - if: exists(UltimateTouchDown_L_ML)
@@ -44,7 +44,7 @@
 
 - event: TouchDown
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - if: exists(TouchDown_prio)
@@ -53,7 +53,7 @@
 
 - event: TakeOff_kinematics
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - threshold: LFT_DistEndPos.z
@@ -65,7 +65,7 @@
 
 - event: TakeOff_prio
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - if: exists(LOFF_force)
@@ -74,7 +74,7 @@
 
 - event: TakeOff_prio2
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - if: exists(UltimateTakeOff_L_ML)
@@ -83,7 +83,7 @@
 
 - event: TakeOff
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - if: exists(TakeOff_prio)
@@ -92,7 +92,7 @@
 
 - event: temp_R1
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - eventMask: [RFT_DistEndVel.y, BOF, TouchDown]
@@ -102,7 +102,7 @@
 
 - event: Right Penultimate TouchDown
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: right
   steps:
     - negate: RFT_DistEndVel.z
@@ -112,7 +112,7 @@
 
 - event: temp_R2
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - eventMask: [RFT_DistEndVel.z, BOF, TakeOff]
@@ -121,7 +121,7 @@
 
 - event: Right Penultimate TakeOff
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: right
   steps:
     - eventMask: [RFT_DistEndVel.z, temp_R1, temp_R2]
@@ -132,7 +132,7 @@
 
 - event: Max_knee_flex
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   steps:
     - eventMask: [Left Knee Angles.x, TouchDown, TakeOff]
     - max:
@@ -142,7 +142,7 @@
 # Right
 - event: TouchDown_kinematics
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - import: RFT_DistEndAcc.y
@@ -151,7 +151,7 @@
 
 - event: TouchDown_prio
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - if: exists(RON_force)
@@ -160,7 +160,7 @@
 
 - event: TouchDown_prio2
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - if: exists(UltimateTouchDown_R_ML)
@@ -169,7 +169,7 @@
 
 - event: TouchDown
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - if: exists(TouchDown_prio)
@@ -178,7 +178,7 @@
 
 - event: TakeOff_kinematics
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - threshold: RFT_DistEndPos.z
@@ -189,7 +189,7 @@
 
 - event: TakeOff_prio
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - if: exists(ROFF_force)
@@ -198,7 +198,7 @@
 
 - event: TakeOff_prio2
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - if: exists(UltimateTakeOff_R_ML)
@@ -207,7 +207,7 @@
 
 - event: TakeOff
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - if: exists(TakeOff_prio)
@@ -216,7 +216,7 @@
 
 - event: temp_L1
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - eventMask: [LFT_DistEndVel.y, BOF, TouchDown]
@@ -226,7 +226,7 @@
 
 - event: Left Penultimate TouchDown
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: left
   steps:
     - negate: LFT_DistEndVel.z
@@ -236,7 +236,7 @@
 
 - event: temp_L2
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - eventMask: [LFT_DistEndVel.z, BOF, TakeOff]
@@ -245,7 +245,7 @@
 
 - event: Left Penultimate TakeOff
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: left
   steps:
     - eventMask: [LFT_DistEndVel.z, temp_L1, temp_L2]
@@ -256,7 +256,7 @@
 
 - event: Max_knee_flex
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   steps:
     - eventMask: [Right Knee Angles.x, TouchDown, TakeOff]
     - max:
@@ -303,28 +303,28 @@
 # Unified event names for web
 - event: LeftPlotStart
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - import: TouchDown
 
 - event: LeftPlotEnd
   where:
-    name: Cutting_L*
+    name: (Cut|Cutting)_L*
   set: left
   steps:
     - import: TakeOff
 
 - event: RightPlotStart
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - import: TouchDown
 
 - event: RightPlotEnd
   where:
-    name: Cutting_R*
+    name: (Cut|Cutting)_R*
   set: right
   steps:
     - import: TakeOff
