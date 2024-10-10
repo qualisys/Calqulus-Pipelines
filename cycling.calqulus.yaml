@@ -456,7 +456,41 @@
       extrapolate: 100
 
 # Left crank angle
+- event: L_TDC_Temp_MB
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - negate: Left_Crank_Vlab.z
+    - peakFinder:
+      width: 10
+
+- event: L_TDC_Temp_ML
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - peakFinder: Left_Crank_Vlab.z
+      width: 10
+
 - event: L_TDC_Temp
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - if: exists(L_crank)
+      then: L_TDC_Temp_MB
+      else: L_TDC_Temp_ML
+
+- event: L_BDC_Temp_MB
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - peakFinder: Left_Crank_Vlab.z
+      width: 10
+
+- event: L_BDC_Temp_ML
   where:
     name: Cycling*
   set: left
@@ -470,8 +504,9 @@
     name: Cycling*
   set: left
   steps:
-    - peakFinder: Left_Crank_Vlab.z
-      width: 10
+    - if: exists(L_crank)
+      then: L_BDC_Temp_MB
+      else: L_BDC_Temp_ML
 
 - parameter: Left_Crank_Vlab
   where:
@@ -484,7 +519,7 @@
       from: mm
       to: m
 
-- parameter: Left_Crank_Angle
+- parameter: Left_Crank_Angle_MB #crank marker opposite to crank
   where:
     name: Cycling*
   set: left
@@ -516,8 +551,54 @@
     - multiply: [$prev, 57.2958] #to deg
     - add: [180, $prev]
 
+- parameter: Left_Crank_Angle_ML #markerless or crank marker on crank
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
+    - mean: Left_Crank_Vlab.z@L_TDC_Temp
+      output: L_crank_Z_TDC
+    - mean: Left_Crank_Vlab.y@L_TDC_Temp # would be used if crank marker is on crank itself
+      output: L_crank_VLY_TDC
+    - mean: Left_Crank_Vlab.z@L_BDC_Temp
+      output: L_crank_Z_BDC
+    - mean: Left_Crank_Vlab.y@L_BDC_Temp
+      output: L_crank_VLY_BDC
+
+    - subtract: [L_crank_Z_BDC, L_crank_Z_TDC]
+    - divide: [$prev, 2]
+    - abs: $prev
+      output: L_Crank_Radius
+
+    # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean y (forward) position at BDC using transformed crank
+    - subtract: [Left_Crank_Vlab.y, L_crank_VLY_TDC]
+      output: L_Pedal_Y
+
+    # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean Z (vertical) position at TDC and then subtracting the radius
+    # - subtract: [Left_Crank_Vlab.z, L_crank_Z_TDC]
+    - subtract: [Left_Crank_Vlab.z, L_crank_Z_BDC]
+    - subtract: [$prev, L_Crank_Radius]
+    - multiply: [$prev, -1]
+      output: L_Pedal_Z
+
+    # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
+    - atan2: [L_Pedal_Y, L_Pedal_Z]
+    - multiply: [$prev, 57.2958] #to deg
+    - multiply: [$prev, -1]
+    - add: [180, $prev]
+
+- parameter: Left_Crank_Angle
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - if: exists(L_crank) # TODO: find a way how to find out if marker is on crank itself or opposite to crank and use it instead of assuming that L_crank is always oopsite to crank?
+      then: Left_Crank_Angle_MB
+      else: Left_Crank_Angle_ML
+
 # Right crank angle 
-- event: R_TDC_Temp
+- event: R_TDC_Temp_MB
   where:
     name: Cycling*
   set: right
@@ -526,13 +607,48 @@
     - peakFinder:
       width: 10
 
-- event: R_BDC_Temp
+- event: R_TDC_Temp_ML
   where:
     name: Cycling*
   set: right
   steps:
     - peakFinder: Right_Crank_Vlab.z
       width: 10
+
+- event: R_TDC_Temp
+  where:
+    name: Cycling*
+  set: rihgt
+  steps:
+    - if: exists(R_crank)
+      then: R_TDC_Temp_MB
+      else: R_TDC_Temp_ML
+
+- event: R_BDC_Temp_MB
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - peakFinder: Right_Crank_Vlab.z
+      width: 10
+
+- event: R_BDC_Temp_ML
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - negate: Right_Crank_Vlab.z
+    - peakFinder: 
+      width: 10
+
+- event: R_BDC_Temp
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - if: exists(R_crank)
+      then: R_BDC_Temp_MB
+      else: R_BDC_Temp_ML
 
 - parameter: Right_Crank_Vlab
   where:
@@ -545,7 +661,7 @@
       from: mm
       to: m
 
-- parameter: Right_Crank_Angle
+- parameter: Right_Crank_Angle_MB
   where:
     name: Cycling*
   set: right
@@ -576,6 +692,52 @@
     - atan2: [R_Pedal_Y, R_Pedal_Z]
     - multiply: [$prev, 57.2958] #to deg
     - add: [180, $prev]
+
+- parameter: Right_Crank_Angle_ML
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
+    - mean: Right_Crank_Vlab.z@R_TDC_Temp
+      output: R_crank_Z_TDC
+    - mean: Right_Crank_Vlab.y@R_TDC_Temp # would be used if crank marker is on crank itself
+      output: R_crank_VLY_TDC
+    - mean: Right_Crank_Vlab.z@R_BDC_Temp
+      output: R_crank_Z_BDC
+    - mean: Right_Crank_Vlab.y@R_BDC_Temp
+      output: R_crank_VLY_BDC
+
+    - subtract: [R_crank_Z_BDC, R_crank_Z_TDC]
+    - divide: [$prev, 2]
+    - abs: $prev
+      output: R_Crank_Radius
+
+    # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean y (forward) position at BDC using transformed crank
+    - subtract: [Right_Crank_Vlab.y, R_crank_VLY_TDC]
+      output: R_Pedal_Y
+
+    # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean Z (vertical) position at TDC and then subtracting the radius
+    # - subtract: [Right_Crank_Vlab.z, R_crank_Z_TDC]
+    - subtract: [Right_Crank_Vlab.z, R_crank_Z_BDC]
+    - subtract: [$prev, R_Crank_Radius]
+    - multiply: [$prev, -1]
+      output: R_Pedal_Z
+      
+    # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
+    - atan2: [R_Pedal_Y, R_Pedal_Z]
+    - multiply: [$prev, 57.2958] #to deg
+    - multiply: [$prev, -1]
+    - add: [180, $prev]
+
+- parameter: Right_Crank_Angle
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - if: exists(R_crank) # TODO: find a way how to find out if marker is on crank itself or opposite to crank and use it instead of assuming that L_crank is always oopsite to crank?
+      then: Right_Crank_Angle_MB
+      else: Right_Crank_Angle_ML
 
 ############
 ## EVENTS ##
