@@ -22,35 +22,21 @@
 
 # Bottom bracket
 # midpoint of mean position of L_crank and mean position of R_crank
-#   B_Bottom_Bracket_proj is calculated as projection of 
-#     mean((TARGET::ORIGINAL::L_crank + TARGET::ORIGINAL::R_crank) / 2) 
-#     to plane created by B_Down_Tube+B_SEAT_TUBE+B_STEM
 - parameter: Bottom_Bracket_proj
   where:
     name: Cycling*
   steps:
     - import: L_crank_filtered => L_spindle
+      space: VirtualLab
     - import: R_crank_filtered => R_spindle
+      space: VirtualLab
     - concatenate: [L_spindle, R_spindle]
     - mean:
-      output: Bottom_Bracket_temp
-
-    - vector: [0,0,0]
-      output: a
-    - vector: [1,0,0]
-      output: b
-    - vector: [0,0,1]
-      output: c
-    - plane: [a,b,c]
-      export: BikePlane
-    - project: [Bottom_Bracket_temp, $prev]
-    - import: $prev
-      space: VirtualLab
 
 # Saddle height
 #   distance of Seat_Mid_Adj landmark to B_Bottom_Bracket_proj
 #   Seat_Mid_Adj landmark is calculated as B_seat_mid marker shifter vertically down by saddle marker radius
-#   TO DO!!! we will add settings to report center pipeline definition, until them we assume marker radius is 7 mm.
+#   TO DO!!! we will add settings to report center pipeline definition, until then we assume marker radius is 7 mm.
 - parameter: Saddle_Height_mean
   where:
     name: Bike*
