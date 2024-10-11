@@ -37,6 +37,7 @@
     - if: exists(LON_force)
       then: LON_force
       else: TouchDown_prio2
+    - import: $prev@1
 
 - event: Max_knee_flex
   where:
@@ -74,6 +75,7 @@
     - if: exists(RON_force)
       then: RON_force
       else: TouchDown_prio2
+    - import: $prev@1
 
 - event: Max_knee_flex
   where:
