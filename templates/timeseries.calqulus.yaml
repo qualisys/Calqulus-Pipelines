@@ -64,15 +64,6 @@
 
 # --- Pelvis ---
 
-# - parameter: Left Pelvic Angles_filt
-#   set: left
-#   steps:
-#     - jointAngle: Hips
-#       space: VirtualLab
-#     - multiply: [$prev, [-1, 1, -1]]
-#     - lowpass:
-#       cutoff: KinematicsLowpassCutoffFq
-
 - parameter: Left Pelvic Angles
   set: left
   steps:
