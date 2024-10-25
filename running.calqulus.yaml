@@ -29,6 +29,8 @@
     - jointAngle: Hips
       space: VirtualLab
     - multiply: [$prev, [-1, -1, -1]]
+    - lowpass:
+      cutoff: KinematicsLowpassCutoffFq
 
 - parameter: Right Pelvic Angles
   set: right
@@ -40,6 +42,8 @@
     - jointAngle: Hips
       space: VirtualLab
     - multiply: [$prev, [-1, 1, 1]]
+    - lowpass:
+      cutoff: KinematicsLowpassCutoffFq
 
 # Deal with naming incompatibility between Running and FA
 - parameter: Left Elbow Angle
@@ -51,6 +55,8 @@
     - convert: $prev
       from: radians
       to: degrees
+    - lowpass:
+      cutoff: KinematicsLowpassCutoffFq
 
 - parameter: Right Elbow Angle
   set: right
@@ -61,4 +67,6 @@
     - convert: $prev
       from: radians
       to: degrees
+    - lowpass:
+      cutoff: KinematicsLowpassCutoffFq
 
