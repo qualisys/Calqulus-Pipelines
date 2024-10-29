@@ -640,7 +640,7 @@
     - multiply: [l_foot_vel.y, -1]
       output: l_foot_vel_inv
     - mean: l_foot_vel_inv@L_MID_STANCE
-    
+
 - parameter: right_treadmill_speed
   where:
     name: ^(Gait|Run|Walk)*
@@ -662,7 +662,7 @@
       from: mm/s
       to: m/s
 
-- parameter: actual_running_speed_ms
+- parameter: actual_running_speed_ms_treadmill
   where:
     name: ^(Gait|Run|Walk)*
   steps:
@@ -674,7 +674,34 @@
     - add: [$prev, treadmill_speed]
       output: pelvis_vel_adj
     - mean: pelvis_vel_adj.y
-      export: walking_speed # for FA report
+
+- parameter: actual_running_speed_ms_overground
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - velocity: Hips
+      space: VirtualLab
+    - convert:
+      from: mm/s
+      to: m/s
+    - mean: $prev.y
+      export: walking_speed_overground # for FA report
+
+- parameter: actual_running_speed_ms
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: actual_running_speed_ms_overground
+      else: actual_running_speed_ms_treadmill
+
+- parameter: walking_speed
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: walking_speed_overground
+      else: walking_speed_treadmill
 
 # Seconds per meter, to be displayed as minutes per kilometer.
 - parameter: seconds_per_meter
