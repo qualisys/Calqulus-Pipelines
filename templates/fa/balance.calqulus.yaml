@@ -83,7 +83,6 @@
       cutoff: 10
       extrapolate: 30
 
-# use skeleton based COP if it exists
 - parameter: COP_zeroed
   steps:
     - import: COP_direct

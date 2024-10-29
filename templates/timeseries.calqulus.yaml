@@ -62,6 +62,10 @@
   steps:
     - import: [15]
 
+- parameter: KinematicsLowpassExtrapolate
+  steps:
+    - import: [15]
+
 # --- Pelvis ---
 
 - parameter: Left Pelvic Angles
@@ -72,6 +76,7 @@
     - multiply: [$prev, [-1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Pelvic Angles
   set: right
@@ -81,6 +86,7 @@
     - multiply: [$prev, [-1, -1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 # --- Hips ---
 
@@ -91,6 +97,7 @@
     - multiply: [$prev, [1, -1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Hip Angles
   set: right
@@ -99,6 +106,7 @@
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 # --- Knee ---
 
@@ -109,6 +117,7 @@
     - multiply: [$prev, [-1, -1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Knee Angles
   set: right
@@ -117,6 +126,7 @@
     - multiply: [$prev, [-1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 # --- Ankle ---
 
@@ -127,6 +137,7 @@
     - multiply: [$prev, [1, -1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Ankle Angles
   set: right
@@ -135,6 +146,7 @@
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Left Foot Progression
   set: left
@@ -144,6 +156,7 @@
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Foot Progression
   set: right
@@ -153,6 +166,7 @@
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Left Foot Pitch Angles
   set: left
@@ -162,6 +176,7 @@
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Foot Pitch Angles
   set: right
@@ -171,6 +186,7 @@
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 # --- Upper body ---
 
@@ -183,6 +199,7 @@
     - multiply: [$prev, [-1,1,-1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Thorax_Lab Angles
   set: right
@@ -192,6 +209,7 @@
     - multiply: [$prev, [-1,-1,1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Left Thorax Angles
   set: left
@@ -200,6 +218,7 @@
     - multiply: [$prev, [-1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Thorax Angles
   set: right
@@ -208,6 +227,7 @@
     - multiply: [$prev, [-1, -1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 # Shoulders
 - parameter: Left Shoulder Angles
@@ -219,6 +239,7 @@
     - multiply: [$prev, [1, -1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Shoulder Angles
   set: right
@@ -229,6 +250,7 @@
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Left Shoulder Ang Vel
   set: left
@@ -249,6 +271,7 @@
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Elbow Angles
   set: right
@@ -257,6 +280,7 @@
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 # --- Wrist ---
 
@@ -267,6 +291,7 @@
     - multiply: [$prev, [1, -1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Right Wrist Angles
   set: right
@@ -275,6 +300,7 @@
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 # --- Head ---
 
@@ -283,6 +309,7 @@
     - angle: [Head, Spine2]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 # COM distance to knee and ankle
 # for now using pelvis COM instead of body COM
