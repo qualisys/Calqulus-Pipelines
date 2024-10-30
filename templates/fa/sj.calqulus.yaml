@@ -208,8 +208,9 @@
       to: m
 
 # Jump height calculated from pelvis height
-# other options ('takeoff_velocity', 'flight_time', 'static_trial') are not available, yet
+# other options ('impulse') are not available, yet
 
+# Pelvis height
 - parameter: COM_displacement_MEAN_max_SJ_B
   where:
     name: SJ_B*
@@ -245,6 +246,99 @@
     - convert:
       from: mm
       to: m
+
+# Static trial
+- parameter: COM_displacement_MEAN_max_static_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - segment: Hips.z
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: COM_displacement_MEAN_max_static_SJ_L
+  where:
+    name: SJ_L*
+  steps:
+    - segment: Hips.z
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: COM_displacement_MEAN_max_static_SJ_R
+  where:
+    name: SJ_R*
+  steps:
+    - segment: Hips.z
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
+
+# Takeoff velocity (vel@takeoff^2 /2g)
+- parameter: COM_displacement_MEAN_max_takeoff_vel_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_takeoff_vel_SJ_L
+  where:
+    name: SJ_L*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_takeoff_vel_SJ_R
+  where:
+    name: SJ_R*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+# Flight time (1/2g(t/2)^2)
+- parameter: COM_displacement_MEAN_max_flight_time_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - divide: [FlightTime_SJ_B, 2]
+    - power:
+    - multiply: [4.905, $prev]
+
+- parameter: COM_displacement_MEAN_max_flight_time_SJ_L
+  where:
+    name: SJ_L*
+  steps:
+    - divide: [FlightTime_SJ_L, 2]
+    - power:
+    - multiply: [4.905, $prev]
+
+- parameter: COM_displacement_MEAN_max_flight_time_SJ_R
+  where:
+    name: SJ_R*
+  steps:
+    - divide: [FlightTime_SJ_R, 2]
+    - power:
+    - multiply: [4.905, $prev]
 
 - parameter: COM_displacement_MEAN_min_SJ_B 
   where:
@@ -282,6 +376,42 @@
     name: SJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_SJ_R,FlightTime_SJ_R]
+
+- parameter: Jump_height_flight_time_ratio_static_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_SJ_B,FlightTime_SJ_B]
+
+- parameter: Jump_height_flight_time_ratio_static_SJ_L
+  where:
+    name: SJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_SJ_L,FlightTime_SJ_L]
+
+- parameter: Jump_height_flight_time_ratio_static_SJ_R
+  where:
+    name: SJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_SJ_R,FlightTime_SJ_R]
+
+- parameter: Jump_height_flight_time_ratio_takeoff_vel_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_SJ_B,FlightTime_SJ_B]
+
+- parameter: Jump_height_flight_time_ratio_takeoff_vel_SJ_L
+  where:
+    name: SJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_SJ_L,FlightTime_SJ_L]
+
+- parameter: Jump_height_flight_time_ratio_takeoff_vel_SJ_R
+  where:
+    name: SJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_SJ_R,FlightTime_SJ_R]
 
 # COM distance to knee and ankle
 # @TouchDown
