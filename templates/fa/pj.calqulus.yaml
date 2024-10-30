@@ -203,6 +203,8 @@
 ## Metrics ##
 #############
 
+### Jump height ###
+# from pelvis height -------
 # Average and Max jump height
 - parameter: PelvisCGPos_max
   steps:
@@ -212,6 +214,26 @@
 - parameter: PelvisCGPos@TakeOff
   steps:
     - import: PelvisCGPos.z@TakeOff_full_cycle
+
+# Bilateral ---------
+- parameter: Jump_height_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
+
+- parameter: Jump_height_PJ_B_max
+  where:
+    name: PJ_B*
+  steps:
+    - max: Jump_height_PJ_B
+
+# Number of repetitions
+- parameter: Right_TouchDown_count_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - count: TouchDown
 
 # Left ---------
 - parameter: Jump_height_PJ_L
@@ -255,25 +277,112 @@
   steps:
     - count: TouchDown
 
-# Bilateral ---------
-- parameter: Jump_height_PJ_B
+### From static trial ###
+- parameter: Jump_height_static_PJ_B
   where:
     name: PJ_B*
   steps:
-    - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
+    - segment: Hips.z
+    - eventMask: [$prev, TakeOff, TouchDown]
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
 
-- parameter: Jump_height_PJ_B_max
+- parameter: Jump_height_static_PJ_L
   where:
-    name: PJ_B*
+    name: PJ_L*
   steps:
-    - max: Jump_height_PJ_B
+    - segment: Hips.z
+    - eventMask: [$prev, TakeOff, TouchDown]
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
 
-# Number of repetitions
-- parameter: Right_TouchDown_count_PJ_B
+- parameter: Jump_height_static_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - segment: Hips.z
+    - eventMask: [$prev, TakeOff, TouchDown]
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: Jump_height_static_PJ_B_max
   where:
     name: PJ_B*
   steps:
-    - count: TouchDown
+    - max: Jump_height_static_PJ_B
+
+- parameter: Jump_height_static_PJ_L_max
+  where:
+    name: PJ_L*
+  steps:
+    - max: Jump_height_static_PJ_L
+
+- parameter: Jump_height_static_PJ_R_max
+  where:
+    name: PJ_R*
+  steps:
+    - max: Jump_height_static_PJ_R
+
+### From takeoff velocity ###
+- parameter: Jump_height_takeoff_vel_PJ_B
+  where:
+    name: PJ_B*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: Jump_height_takeoff_vel_PJ_L
+  where:
+    name: PJ_L*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: Jump_height_takeoff_vel_PJ_R
+  where:
+    name: PJ_R*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: Jump_height_takeoff_vel_PJ_B_max
+  where:
+    name: PJ_B*
+  steps:
+    - max: Jump_height_takeoff_vel_PJ_B
+
+- parameter: Jump_height_takeoff_vel_PJ_L_max
+  where:
+    name: PJ_L*
+  steps:
+    - max: Jump_height_takeoff_vel_PJ_L
+
+- parameter: Jump_height_takeoff_vel_PJ_R_max
+  where:
+    name: PJ_R*
+  steps:
+    - max: Jump_height_takeoff_vel_PJ_R
 
 # Kinetics ------------
 # Bilateral - left

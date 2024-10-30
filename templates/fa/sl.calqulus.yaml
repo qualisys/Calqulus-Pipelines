@@ -175,8 +175,9 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - marker: LHeelBack => heel
+    - vector: [LeftFoot.x, LeftFoot.y, LeftFoot.z]
       space: VirtualLab
+      output: heel
     - convert:
       from: mm
       to: m
@@ -337,8 +338,9 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - marker: RHeelBack => heel
+    - vector: [RightFoot.x, RightFoot.y, RightFoot.z]
       space: VirtualLab
+      output: heel
     - convert:
       from: mm
       to: m

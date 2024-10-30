@@ -56,7 +56,7 @@
 ############
 
 # find out which FP is loaded
-# it is assumed that only teo FPs are connected to the system
+# it is assumed that only two FPs are connected to the system
 - parameter: COP_FP1
   steps:
     - if: exists(ForcePlate1)
@@ -83,29 +83,9 @@
       cutoff: 10
       extrapolate: 30
 
-# calculate COP from skeleton data
-- parameter: COP_skeleton
-  where:
-    name: Balance_L*
-    force: left
-  steps:
-    - import: LeftFootContact => foot
-    - vector: [foot.x, foot.y, foot.z]
-
-- parameter: COP_skeleton
-  where:
-    name: Balance_R*
-    force: right
-  steps:
-    - import: RightFootContact => foot
-    - vector: [foot.x, foot.y, foot.z]
-
-# use skeleton based COP if it exists
 - parameter: COP_zeroed
   steps:
-    - if: exists(LeftFootContact)
-      then: COP_skeleton
-      else: COP_direct
+    - import: COP_direct
     - convert:
       from: mm
       to: m

@@ -228,6 +228,7 @@
 # Jump height calculated from pelvis height
 # other options ('takeoff_velocity', 'flight_time', 'static_trial') are not available, yet
 
+# Pelvis height
 - parameter: COM_displacement_MEAN_max_DVJ_B
   where:
     name: DJ_B*
@@ -263,6 +264,74 @@
     - convert:
       from: mm
       to: m
+
+# Static trial
+- parameter: COM_displacement_MEAN_max_static_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - segment: Hips.z
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: COM_displacement_MEAN_max_static_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - segment: Hips.z
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
+
+- parameter: COM_displacement_MEAN_max_static_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - segment: Hips.z
+    - max:
+      output: hipMax
+    - segment: Hips?name=Static* => hipsStatic
+    - mean: hipsStatic
+    - subtract: [hipMax, $prev.z]
+    - convert: $prev
+      from: mm
+      to: m
+
+# Takeoff velocity (vel@takeoff^2 /2g)
+- parameter: COM_displacement_MEAN_max_takeoff_vel_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_takeoff_vel_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_takeoff_vel_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - import: PelvisCGPos_vel.z@TakeOff
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_min_DVJ_B
   where:
@@ -323,6 +392,42 @@
   steps:
     - divide: [COM_displacement_MEAN_max_DVJ_R,FlightTime_DVJ_R]
 
+- parameter: Jump_height_flight_time_ratio_static_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_DVJ_B,FlightTime_DVJ_B]
+
+- parameter: Jump_height_flight_time_ratio_static_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_DVJ_L,FlightTime_DVJ_L]
+
+- parameter: Jump_height_flight_time_ratio_static_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_DVJ_R,FlightTime_DVJ_R]
+
+- parameter: Jump_height_flight_time_ratio_takeoff_vel_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_B,FlightTime_DVJ_B]
+
+- parameter: Jump_height_flight_time_ratio_takeoff_vel_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_L,FlightTime_DVJ_L]
+
+- parameter: Jump_height_flight_time_ratio_takeoff_vel_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_R,FlightTime_DVJ_R]
+
 # Jump height to Contact Time Ratio
 - parameter: Jump_height_contact_time_ratio_DVJ_B
   where:
@@ -341,6 +446,42 @@
     name: DJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_DVJ_R, ContactTime_DVJ_R]
+
+- parameter: Jump_height_contact_time_ratio_static_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_DVJ_B, ContactTime_DVJ_B]
+
+- parameter: Jump_height_contact_time_ratio_static_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_DVJ_L, ContactTime_DVJ_L]
+
+- parameter: Jump_height_contact_time_ratio_static_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_static_DVJ_R, ContactTime_DVJ_R]
+
+- parameter: Jump_height_contact_time_ratio_takeoff_vel_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_B, ContactTime_DVJ_B]
+
+- parameter: Jump_height_contact_time_ratio_takeoff_vel_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_L, ContactTime_DVJ_L]
+
+- parameter: Jump_height_contact_time_ratio_takeoff_vel_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_R, ContactTime_DVJ_R]
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_DVJ_B
