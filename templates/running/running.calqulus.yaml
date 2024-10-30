@@ -685,7 +685,7 @@
       from: mm/s
       to: m/s
     - mean: $prev.y
-      export: walking_speed_overground # for FA report
+      export: walking_speed_overground
 
 - parameter: actual_running_speed_ms
   where:
@@ -695,7 +695,7 @@
       then: actual_running_speed_ms_overground
       else: actual_running_speed_ms_treadmill
 
-- parameter: walking_speed
+- parameter: walking_speed # for FA report
   where:
     name: ^(Gait|Run|Walk)*
   steps:
