@@ -265,18 +265,18 @@
 
 # Time to complete the task
 # calculated as time between event at x distance for pelvis COG before touchdown to event at y distance for pelvis COG after touchdown. 
-# (default is pelvis COG 3 m before and 2 m after touchdown)
+# (default is pelvis COG 1 m before and 1 m after touchdown)
 
 - parameter: Pelvis_Origin_Floor_mag_corr
   steps:
-    - multiply: [Hips, [1,1,0]]
+    - vector: [Hips.x, Hips.y, Hips.z]
+    - import: $prev@TouchDown
+    - subtract: [$prev(2), $prev]
+    - multiply: [$prev, [1,1,0]]
+    - magnitude:
     - convert:
       from: mm
       to: m
-    - magnitude:
-    - import: $prev@TouchDown => shift
-
-    - subtract: [$prev(2), shift]
 
 - event: Virtual_gate_start
   steps:
