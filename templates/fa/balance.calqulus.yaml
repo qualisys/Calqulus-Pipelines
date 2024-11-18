@@ -81,7 +81,7 @@
     - vector: [$prev.x, $prev.y, $prev.z]
     - lowpass:
       cutoff: 10
-      extrapolate: 30
+      extrapolate: 75
 
 - parameter: COP_zeroed
   steps:
@@ -106,6 +106,7 @@
     - velocity: COP_zeroed
     - lowpass:
       cutoff: 6
+      extrapolate: 100
       output: COP_zeroed_vel_filt
     - max:
       export: COP_zeroed_vel_filt_max
@@ -122,6 +123,7 @@
     - lowpass:
       cutoff: 6
       output: COP_zeroed_acc_filt
+      extrapolate: 100
     - max:
       export: COP_zeroed_acc_filt_max
     - mean: COP_zeroed_acc_filt
