@@ -1,8 +1,8 @@
 {
 	"ci": "main",
 	"current": {
-		"engine": "feature/on-off-events",
-		"steps": "feature/on-off-events",
+		"engine": "main",
+		"steps": "feature/buffer-options-on-filter",
 		"toolbelt": "main"
 	},
 	"reference": {
