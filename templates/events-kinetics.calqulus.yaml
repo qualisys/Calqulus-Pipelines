@@ -21,73 +21,102 @@
   steps:
     - import: [5]
 
-- event: LOFF_force
-  where:
-    force: left
-  set: left
-  steps:
-    - import: Left GRF.z
-    - threshold: $prev
-      value: 0.05
-      direction: down
-    - eventMask: [$prev, BOF_fixed, EOF]
-      output: force_1
-    - eventMask: [$prev, BOF, EOF]
-      output: force_2
-    - if: empty(force_1)
-      then: force_2
-      else: force_1
-    
 - event: LON_force
   where:
     force: left
   set: left
   steps:
-    - import: Left GRF.z
-    - threshold: $prev
-      value: 0.05
-      direction: up
-    - eventMask: [$prev, BOF_fixed, EOF]
-      output: force_1
-    - eventMask: [$prev, BOF, EOF]
-      output: force_2
-    - if: empty(force_1)
-      then: force_2
-      else: force_1
-    # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
-    
-- event: ROFF_force
+    - import: LeftFootContact.events.on
+
+- event: LOFF_force
   where:
-    force: right
-  set: right
+    force: left
+  set: left
   steps:
-    - import: Right GRF.z
-    - threshold: $prev
-      value: 0.05
-      direction: down
-    - eventMask: [$prev, BOF_fixed, EOF]
-      output: force_1
-    - eventMask: [$prev, BOF, EOF]
-      output: force_2
-    - if: empty(force_1)
-      then: force_2
-      else: force_1
-    
+    - import: LeftFootContact.events.off
+
 - event: RON_force
   where:
     force: right
   set: right
   steps:
-    - import: Right GRF.z
-    - threshold: $prev
-      value: 0.05
-      direction: up
-    - eventMask: [$prev, BOF_fixed, EOF]
-      output: force_1
-    - eventMask: [$prev, BOF, EOF]
-      output: force_2
-    - if: empty(force_1)
-      then: force_2
-      else: force_1
-    # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
+    - import: RightFootContact.events.on
+
+- event: ROFF_force
+  where:
+    force: right
+  set: right
+  steps:
+    - import: RightFootContact.events.off
+
+# Threshold based ON/OFF events
+# - event: LOFF_force
+#   where:
+#     force: left
+#   set: left
+#   steps:
+#     - import: Left GRF.z
+#     - threshold: $prev
+#       value: 0.05
+#       direction: down
+#     - eventMask: [$prev, BOF_fixed, EOF]
+#       output: force_1
+#     - eventMask: [$prev, BOF, EOF]
+#       output: force_2
+#     - if: empty(force_1)
+#       then: force_2
+#       else: force_1
+
+# - event: LON_force
+#   where:
+#     force: left
+#   set: left
+#   steps:
+#     - import: Left GRF.z
+#     - threshold: $prev
+#       value: 0.05
+#       direction: up
+#     - eventMask: [$prev, BOF_fixed, EOF]
+#       output: force_1
+#     - eventMask: [$prev, BOF, EOF]
+#       output: force_2
+#     - if: empty(force_1)
+#       then: force_2
+#       else: force_1
+#     # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
+    
+# - event: ROFF_force
+#   where:
+#     force: right
+#   set: right
+#   steps:
+#     - import: Right GRF.z
+#     - threshold: $prev
+#       value: 0.05
+#       direction: down
+#     - eventMask: [$prev, BOF_fixed, EOF]
+#       output: force_1
+#     - eventMask: [$prev, BOF, EOF]
+#       output: force_2
+#     - if: empty(force_1)
+#       then: force_2
+#       else: force_1
+    
+# - event: RON_force
+#   where:
+#     force: right
+#   set: right
+#   steps:
+#     - import: Right GRF.z
+#     - threshold: $prev
+#       value: 0.05
+#       direction: up
+#     - eventMask: [$prev, BOF_fixed, EOF]
+#       output: force_1
+#     - eventMask: [$prev, BOF, EOF]
+#       output: force_2
+#     - if: empty(force_1)
+#       then: force_2
+#       else: force_1
+#     # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
     

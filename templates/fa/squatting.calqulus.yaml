@@ -135,13 +135,13 @@
 
 - event: TOP_L_calqulus
   where:
-    name: (Squatting_L|Squatting_B)*
+    name: ((Squat|Squatting)_(L|B))*
   steps:
     - import: TOP_calqulus
 
 - event: TOP_R_calqulus
   where:
-    name: (Squatting_R|Squatting_B)*
+    name: ((Squat|Squatting)_(R|B))*
   steps:
     - import: TOP_calqulus
 
@@ -154,7 +154,7 @@
 
 - event: TOP_L
   where:
-    name: (Squatting_L|Squatting_B)*
+    name: ((Squat|Squatting)_(L|B))*
   steps:
   - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
     then: EccentricStart_ML
@@ -162,7 +162,7 @@
 
 - event: TOP_R
   where:
-    name: (Squatting_R|Squatting_B)*
+    name: ((Squat|Squatting)_(R|B))*
   steps:
   - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
     then: EccentricStart_ML
@@ -171,28 +171,28 @@
 # Unified event names for web
 - event: LeftPlotStart
   where:
-    name: (Squatting_L|Squatting_B)*
+    name: ((Squat|Squatting)_(L|B))*
   set: left
   steps:
     - import: TOP_L
 
 - event: LeftPlotEnd
   where:
-    name: (Squatting_L|Squatting_B)*
+    name: ((Squat|Squatting)_(L|B))*
   set: left
   steps:
     - import: TOP_L
 
 - event: RightPlotStart
   where:
-    name: (Squatting_R|Squatting_B)*
+    name: ((Squat|Squatting)_(R|B))*
   set: right
   steps:
     - import: TOP_R
 
 - event: RightPlotEnd
   where:
-    name: (Squatting_R|Squatting_B)*
+    name: ((Squat|Squatting)_(R|B))*
   set: right
   steps:
     - import: TOP_R
@@ -225,7 +225,7 @@
 # Squatting depth
 - parameter: Squatting_depth_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
   steps:
     - refineEvent: TOP
       sequence: [TOP, Pelvis_lowest]
@@ -241,7 +241,7 @@
 
 - parameter: Squatting_depth_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
   steps:
     - refineEvent: TOP
       sequence: [TOP, Pelvis_lowest]
@@ -257,7 +257,7 @@
 
 - parameter: Squatting_depth_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
   steps:
     - refineEvent: TOP
       sequence: [TOP, Pelvis_lowest]
@@ -275,42 +275,42 @@
 
 - parameter: Left Hip Angles_max_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
   steps:
     - eventMask: [Left Hip Angles, TOP, TOP]
     - max:
 
 - parameter: Left Knee Angles_max_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
   steps:
     - eventMask: [Left Knee Angles, TOP, TOP]
     - max:
 
 - parameter: Left Ankle Angles_max_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
   steps:
     - eventMask: [Left Ankle Angles, TOP, TOP]
     - max:
 
 - parameter: Right Hip Angles_max_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
   steps:
     - eventMask: [Right Hip Angles, TOP, TOP]
     - max:
 
 - parameter: Right Knee Angles_max_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
   steps:
     - eventMask: [Right Knee Angles, TOP, TOP]
     - max:
 
 - parameter: Right Ankle Angles_max_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
   steps:
     - eventMask: [Right Ankle Angles, TOP, TOP]
     - max:
@@ -318,21 +318,21 @@
 # Left ---
 - parameter: Left Hip Angles_max_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
   steps:
     - eventMask: [Left Hip Angles, TOP, TOP]
     - max:
 
 - parameter: Left Knee Angles_max_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
   steps:
     - eventMask: [Left Knee Angles, TOP, TOP]
     - max:
 
 - parameter: Left Ankle Angles_max_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
   steps:
     - eventMask: [Left Ankle Angles, TOP, TOP]
     - max:
@@ -340,21 +340,21 @@
 # Right ---
 - parameter: Right Hip Angles_max_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
   steps:
     - eventMask: [Right Hip Angles, TOP, TOP]
     - max:
 
 - parameter: Right Knee Angles_max_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
   steps:
     - eventMask: [Right Knee Angles, TOP, TOP]
     - max:
 
 - parameter: Right Ankle Angles_max_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
   steps:
     - eventMask: [Right Ankle Angles, TOP, TOP]
     - max:
@@ -363,14 +363,14 @@
 # Bilateral - Total
 - parameter: Total GRF
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - add: [Left GRF, Right GRF]
 
 - parameter: Total GRF_max_concentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Total GRF, Pelvis_lowest, TOP]
@@ -378,7 +378,7 @@
 
 - parameter: Total GRF_mean_concentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Total GRF, Pelvis_lowest, TOP]
@@ -386,7 +386,7 @@
 
 - parameter: Total GRF_max_eccentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Total GRF, TOP, Pelvis_lowest]
@@ -394,7 +394,7 @@
 
 - parameter: Total GRF_mean_eccentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Total GRF, TOP, Pelvis_lowest]
@@ -403,7 +403,7 @@
 # Bilateral - Left
 - parameter: Left GRF_max_concentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
@@ -411,7 +411,7 @@
 
 - parameter: Left GRF_mean_concentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
@@ -419,7 +419,7 @@
 
 - parameter: Left GRF_max_eccentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
@@ -427,7 +427,7 @@
 
 - parameter: Left GRF_mean_eccentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
@@ -435,7 +435,7 @@
 
 - parameter: Left GRF_max_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Left GRF, TOP, TOP]
@@ -444,7 +444,7 @@
 # Bilateral - Right
 - parameter: Right GRF_max_concentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
@@ -452,7 +452,7 @@
 
 - parameter: Right GRF_mean_concentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
@@ -460,7 +460,7 @@
 
 - parameter: Right GRF_max_eccentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
@@ -468,7 +468,7 @@
 
 - parameter: Right GRF_mean_eccentric_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
@@ -476,7 +476,7 @@
 
 - parameter: Right GRF_max_Squat_B
   where:
-    name: Squatting_B*
+    name: (Squat|Squatting)_B*
     force: both
   steps:
     - eventMask: [Right GRF, TOP, TOP]
@@ -485,7 +485,7 @@
 # Single leg - Left
 - parameter: Left GRF_max_concentric_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
     force: left
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
@@ -493,7 +493,7 @@
 
 - parameter: Left GRF_mean_concentric_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
     force: left
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
@@ -501,7 +501,7 @@
 
 - parameter: Left GRF_max_eccentric_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
     force: left
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
@@ -509,7 +509,7 @@
 
 - parameter: Left GRF_mean_eccentric_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
     force: left
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
@@ -517,7 +517,7 @@
 
 - parameter: Left GRF_max_Squat_L
   where:
-    name: Squatting_L*
+    name: (Squat|Squatting)_L*
     force: left
   steps:
     - eventMask: [Left GRF, TOP, TOP]
@@ -526,7 +526,7 @@
 # Single leg - Right
 - parameter: Right GRF_max_concentric_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
     force: right
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
@@ -534,7 +534,7 @@
 
 - parameter: Right GRF_mean_concentric_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
     force: right
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
@@ -542,7 +542,7 @@
 
 - parameter: Right GRF_max_eccentric_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
     force: right
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
@@ -550,7 +550,7 @@
 
 - parameter: Right GRF_mean_eccentric_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
     force: right
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
@@ -558,7 +558,7 @@
 
 - parameter: Right GRF_max_Squat_R
   where:
-    name: Squatting_R*
+    name: (Squat|Squatting)_R*
     force: right
   steps:
     - eventMask: [Right GRF, TOP, TOP]
