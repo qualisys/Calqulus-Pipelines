@@ -22,7 +22,7 @@
       frames: true
     - add: [$prev, 3]
 
-- event: TakeOff_prio2
+- event: TakeOff_L_prio2
   where:
     name: DJ_[LB]*
   set: left
@@ -31,22 +31,22 @@
       then: TakeOff_L_ML
       else: TakeOff_L_kinematics
 
-- event: TakeOff_prio
+- event: TakeOff_L_prio
   where:
     name: DJ_[LB]*
   set: left
   steps:
     - if: exists(LOFF_force)
       then: LOFF_force
-      else: TakeOff_prio2
+      else: TakeOff_L_prio2
 
 - event: TakeOff_L
   where:
     name: DJ_[LB]*
   set: left
   steps:
-    - if: exists(TakeOff_prio)
-      then: TakeOff_prio
+    - if: exists(TakeOff_L_prio)
+      then: TakeOff_L_prio
       else: TakeOff_L_kinematics
 
 # TouchDown
@@ -198,7 +198,7 @@
       frames: true
     - add: [$prev, 3]
 
-- event: TakeOff_prio2
+- event: TakeOff_R_prio2
   where:
     name: DJ_[RB]*
   set: right
@@ -207,22 +207,22 @@
       then: TakeOff_R_ML
       else: TakeOff_R_kinematics
 
-- event: TakeOff_prio
+- event: TakeOff_R_prio
   where:
     name: DJ_[RB]*
   set: right
   steps:
     - if: exists(ROFF_force)
       then: ROFF_force
-      else: TakeOff_prio2
+      else: TakeOff_R_prio2
 
 - event: TakeOff_R
   where:
     name: DJ_[RB]*
   set: right
   steps:
-    - if: exists(TakeOff_prio)
-      then: TakeOff_prio
+    - if: exists(TakeOff_R_prio)
+      then: TakeOff_R_prio
       else: TakeOff_R_kinematics
 
 # TouchDown
