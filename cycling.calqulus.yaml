@@ -1672,7 +1672,6 @@
   steps:
     - segment: LeftLeg => knee
     - segment: LeftToeBase => foot_tip
-      space: VirtualLab
     - subtract: [knee, foot_tip]
       space: VirtualLab
     - convert:
@@ -1743,10 +1742,9 @@
   set: right
   steps:
     - segment: RightLeg => knee
-      space: VirtualLab
     - segment: RightToeBase => foot_tip
-      space: VirtualLab
     - subtract: [knee, foot_tip]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
