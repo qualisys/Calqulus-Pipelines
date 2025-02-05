@@ -1,9 +1,9 @@
 ############
 ## SPACES ##
 ############
-- space: VirtualLab
-  alignWithSegment:
-    segment: Hips
+# - space: VirtualLab
+#   alignWithSegment:
+#     segment: Hips
 
 - parameter: seatTubeMoved
   where:
@@ -15,6 +15,12 @@
       from: mm
       to: m
     - vector: [$prev.x, $prev.y, 0.5]
+
+- space: VirtualLab
+  origin: B_Stem?name=Cycling*
+  primaryAxis: [seatTubeMoved?name=Cycling*, B_Stem?name=Cycling*]
+  secondaryAxis: [[0,0,0], [0,0,1]]
+  order: yz
 
 ############
 # Bike trials
@@ -426,6 +432,8 @@
 #-----------------
 # using foot distal end for compatibility with markerless system
 - parameter: L_crank_filtered
+  where:
+    name: Cycling*
   steps:
     - vector: [LeftToeBase.x,LeftToeBase.y,LeftToeBase.z]
     - lowpass: $prev
@@ -434,6 +442,8 @@
       extrapolate: 100
 
 - parameter: R_crank_filtered
+  where:
+    name: Cycling*
   steps:
     - vector: [RightToeBase.x,RightToeBase.y,RightToeBase.z]
     - lowpass: $prev
