@@ -1503,8 +1503,8 @@
       space: VirtualLab
       output: leg
     - vector: [Hips.x,Hips.y,Hips.z]
-    - mean:
       output: pelvis
+    - mean:
     - subtract: [leg, pelvis]
     - convert:
       from: mm
@@ -1542,13 +1542,15 @@
     name: Cycling*
   set: left
   steps:
-    - segment: Hips
+    - segment: LeftLeg
       space: VirtualLab
+      output: leg
+    - vector: [Hips.x,Hips.y,Hips.z]
+      output: pelvis
+    - subtract: [leg, pelvis]
     - convert:
       from: mm
       to: m
-      output: pelvis
-    - subtract: [LEFT_KNEE_VLab, pelvis]
 
 - parameter: LEFT_KNEE_lat_travel_range_RPV_mean
   where:
@@ -1625,13 +1627,15 @@
     name: Cycling*
   set: right
   steps:
-    - segment: Hips
+    - segment: LeftLeg
       space: VirtualLab
+      output: leg
+    - vector: [Hips.x,Hips.y,Hips.z]
+      output: pelvis
+    - subtract: [leg, pelvis]
     - convert:
       from: mm
       to: m
-      output: pelvis
-    - subtract: [RIGHT_KNEE_VLab, pelvis]
 
 - parameter: RIGHT_KNEE_lat_travel_range_RPV_mean
   where:
