@@ -1500,12 +1500,12 @@
   set: left
   steps:
     - segment: LeftLeg
-      space: VirtualLab
       output: leg
     - vector: [Hips.x,Hips.y,Hips.z]
       output: pelvis
     - mean:
     - subtract: [leg, pelvis]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -1543,11 +1543,11 @@
   set: left
   steps:
     - segment: LeftLeg
-      space: VirtualLab
       output: leg
     - vector: [Hips.x,Hips.y,Hips.z]
       output: pelvis
     - subtract: [leg, pelvis]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -1585,12 +1585,12 @@
   set: right
   steps:
     - segment: RightLeg
-      space: VirtualLab
       output: leg
     - vector: [Hips.x,Hips.y,Hips.z]
     - mean:
       output: pelvis
     - subtract: [leg, pelvis]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -1628,11 +1628,11 @@
   set: right
   steps:
     - segment: LeftLeg
-      space: VirtualLab
       output: leg
     - vector: [Hips.x,Hips.y,Hips.z]
       output: pelvis
     - subtract: [leg, pelvis]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -1671,10 +1671,10 @@
   set: left
   steps:
     - segment: LeftLeg => knee
-      space: VirtualLab
     - segment: LeftToeBase => foot_tip
       space: VirtualLab
     - subtract: [knee, foot_tip]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -2607,12 +2607,12 @@
   set: left
   steps:
     - segment: LeftFoot
-      space: VirtualLab
       output: foot
     - vector: [Hips.x,Hips.y,Hips.z]
     - mean:
       output: pelvis
     - subtract: [foot, pelvis]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -2645,12 +2645,12 @@
   set: right
   steps:
     - segment: RightFoot
-      space: VirtualLab
       output: foot
     - vector: [Hips.x,Hips.y,Hips.z]
     - mean:
       output: pelvis
     - subtract: [foot, pelvis]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
