@@ -1627,7 +1627,7 @@
     name: Cycling*
   set: right
   steps:
-    - segment: LeftLeg
+    - segment: RightLeg
       output: leg
     - vector: [Hips.x,Hips.y,Hips.z]
       output: pelvis
@@ -2585,6 +2585,11 @@
   set: left
   steps:
     - segment: LeftToeBase
+      output: foot
+    - vector: [Hips.x,Hips.y,Hips.z]
+    - mean:
+      output: pelvis
+    - subtract: [foot, pelvis]
       space: VirtualLab
     - convert:
       from: mm
@@ -2623,6 +2628,11 @@
   set: right
   steps:
     - segment: RightToeBase
+      output: foot
+    - vector: [Hips.x,Hips.y,Hips.z]
+    - mean:
+      output: pelvis
+    - subtract: [foot, pelvis]
       space: VirtualLab
     - convert:
       from: mm
