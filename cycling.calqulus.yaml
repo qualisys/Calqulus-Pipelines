@@ -1,9 +1,11 @@
 ############
 ## SPACES ##
 ############
-# - space: VirtualLab
-#   alignWithSegment:
-#     segment: Hips
+- space: VirtualLab
+  where:
+    name: ^(Cycling|Static)*
+  alignWithSegment:
+    segment: Hips
 
 - parameter: seatTubeMoved
   where:
@@ -17,10 +19,29 @@
     - vector: [$prev.x, $prev.y, 0.5]
 
 - space: VirtualLab
-  origin: B_Stem?name=Cycling*
-  primaryAxis: [seatTubeMoved?name=Cycling*, B_Stem?name=Cycling*]
+  where:
+    name: Bike*
+  origin: B_Seat_Tube
+  primaryAxis: [seatTubeMoved, B_Stem]
   secondaryAxis: [[0,0,0], [0,0,1]]
   order: yz
+
+- parameter: seatTubeMoved
+  where:
+    name: Bike*
+  steps:
+    - marker: B_Seat_Tube
+    - median:
+    - convert:
+      from: mm
+      to: m
+    - vector: [$prev.x, $prev.y, 0.5]
+
+- parameter: BikePlane
+  where:
+    name: Bike*
+  steps:
+    - plane: [B_Stem, B_Seat_Tube, B_Down_Tube]
 
 ############
 # Bike trials
@@ -102,7 +123,7 @@
   where:
     name: Bike*
   steps:
-    - project: [B_Head_Tube, BikePlane?name=Cycling*]
+    - project: [B_Head_Tube, BikePlane]
       space: VirtualLab
     - subtract: [$prev.z, Bottom_Bracket_proj.z?name=Cycling*]
     - mean:
@@ -117,7 +138,7 @@
   where:
     name: Bike*
   steps:
-    - project: [B_Head_Tube, BikePlane?name=Cycling*]
+    - project: [B_Head_Tube, BikePlane]
       space: VirtualLab
     - subtract: [$prev.y, Bottom_Bracket_proj.y?name=Cycling*]
     - mean: 
@@ -132,7 +153,7 @@
   where:
     name: Bike*
   steps:
-    - angle: [B_Seat_Back, B_Seat_Front, B_Stem, seatTubeMoved?name=Cycling*]
+    - angle: [B_Seat_Back, B_Seat_Front, B_Stem, seatTubeMoved]
       project: xz
     - mean:
     - convert:
