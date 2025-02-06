@@ -893,9 +893,25 @@
 ## SERIES ##
 ############
 
-- template: /templates/timeseries.calqulus.yaml
+# --- Foot ---
+
+- parameter: Left Foot Progression
   where:
-    name: '!Bike*'
+    name: Cycling*
+  set: left
+  steps:
+    - jointAngle: LeftFoot
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, -1]]
+
+- parameter: Right Foot Progression
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - jointAngle: RightFoot
+      space: VirtualLab
+    - multiply: [$prev, [-1, 1, 1]]
 
 # --- Trunk ---
 
@@ -937,6 +953,10 @@
   steps:
     - jointAngle: Neck
       space: VirtualLab
+
+- template: /templates/timeseries.calqulus.yaml
+  where:
+    name: '!Bike*'
 
 #############
 ## METRICS ##
