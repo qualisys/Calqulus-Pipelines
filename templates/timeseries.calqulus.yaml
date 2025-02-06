@@ -310,6 +310,7 @@
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
       extrapolate: KinematicsLowpassExtrapolate
+    - multiply: [$prev, [1, -1, -1]] # in cycling we use this convention
 
 # COM distance to knee and ankle
 # for now using pelvis COM instead of body COM

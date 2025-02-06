@@ -1,21 +1,47 @@
 ############
 ## SPACES ##
 ############
-#- space: VirtualLab
-#  alignWithSegment:
-#    segment: Hips
+- space: VirtualLab
+  where:
+    name: ^(Cycling|Static)*
+  alignWithSegment:
+    segment: Hips
 
 - parameter: seatTubeMoved
   where:
     name: Cycling*
   steps:
-    - vector: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
+    - import: Hips
+    - median:
+    - convert:
+      from: mm
+      to: m
+    - vector: [$prev.x, $prev.y, 0.5]
 
 - space: VirtualLab
-  origin: B_Stem?name=Cycling*
-  primaryAxis: [seatTubeMoved?name=Cycling*, B_Stem?name=Cycling*]
+  where:
+    name: Bike*
+  origin: B_Seat_Tube
+  primaryAxis: [seatTubeMoved, B_Stem]
   secondaryAxis: [[0,0,0], [0,0,1]]
   order: yz
+
+- parameter: seatTubeMoved
+  where:
+    name: Bike*
+  steps:
+    - marker: B_Seat_Tube
+    - median:
+    - convert:
+      from: mm
+      to: m
+    - vector: [$prev.x, $prev.y, 0.5]
+
+- parameter: BikePlane
+  where:
+    name: Bike*
+  steps:
+    - plane: [B_Stem, B_Seat_Tube, B_Down_Tube]
 
 ############
 # Bike trials
@@ -23,29 +49,21 @@
 
 # Bottom bracket
 # midpoint of mean position of L_crank and mean position of R_crank
-#   B_Bottom_Bracket_proj is calculated as projection of 
-#     mean((TARGET::ORIGINAL::L_crank + TARGET::ORIGINAL::R_crank) / 2) 
-#     to plane created by B_Down_Tube+B_SEAT_TUBE+B_STEM
 - parameter: Bottom_Bracket_proj
   where:
     name: Cycling*
   steps:
     - import: L_crank_filtered => L_spindle
+      space: VirtualLab
     - import: R_crank_filtered => R_spindle
+      space: VirtualLab
     - concatenate: [L_spindle, R_spindle]
     - mean:
-      output: Bottom_Bracket_temp
-
-    - plane: [B_Stem, B_Seat_Tube, B_Down_Tube]
-      export: BikePlane
-    - project: [Bottom_Bracket_temp, $prev]
-    - import: $prev
-      space: VirtualLab
 
 # Saddle height
 #   distance of Seat_Mid_Adj landmark to B_Bottom_Bracket_proj
 #   Seat_Mid_Adj landmark is calculated as B_seat_mid marker shifter vertically down by saddle marker radius
-#   TO DO!!! we will add settings to report center pipeline definition, until them we assume marker radius is 7 mm.
+#   TO DO!!! we will add settings to report center pipeline definition, until then we assume marker radius is 7 mm.
 - parameter: Saddle_Height_mean
   where:
     name: Bike*
@@ -105,7 +123,7 @@
   where:
     name: Bike*
   steps:
-    - project: [B_Head_Tube, BikePlane?name=Cycling*]
+    - project: [B_Head_Tube, BikePlane]
       space: VirtualLab
     - subtract: [$prev.z, Bottom_Bracket_proj.z?name=Cycling*]
     - mean:
@@ -120,7 +138,7 @@
   where:
     name: Bike*
   steps:
-    - project: [B_Head_Tube, BikePlane?name=Cycling*]
+    - project: [B_Head_Tube, BikePlane]
       space: VirtualLab
     - subtract: [$prev.y, Bottom_Bracket_proj.y?name=Cycling*]
     - mean: 
@@ -135,7 +153,7 @@
   where:
     name: Bike*
   steps:
-    - angle: [B_Seat_Back, B_Seat_Front, B_Stem, seatTubeMoved?name=Cycling*]
+    - angle: [B_Seat_Back, B_Seat_Front, B_Stem, seatTubeMoved]
       project: xz
     - mean:
     - convert:
@@ -433,31 +451,63 @@
 
 # Crank Angle
 #-----------------
-# for now we allow to put crank marker only at opposite side of crank in respect to pedal (near axis)
-
-# Filter crank markers
-- marker: L_crank_filtered
+# using foot distal end for compatibility with markerless system
+- parameter: L_crank_filtered
+  where:
+    name: Cycling*
   steps:
-    - marker: L_crank
-      # Gap fill as it is important to get clean data for further processing
-    - gapFill:
+    - vector: [LeftToeBase.x,LeftToeBase.y,LeftToeBase.z]
     - lowpass: $prev
       order: 2
       cutoff: 6
       extrapolate: 100
 
-- marker: R_crank_filtered
+- parameter: R_crank_filtered
+  where:
+    name: Cycling*
   steps:
-    - marker: R_crank
-      # Gap fill as it is important to get clean data for further processing
-    - gapFill:
+    - vector: [RightToeBase.x,RightToeBase.y,RightToeBase.z]
     - lowpass: $prev
       order: 2
       cutoff: 6
       extrapolate: 100
 
 # Left crank angle
+- event: L_TDC_Temp_MB
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - negate: Left_Crank_Vlab.z
+    - peakFinder:
+      width: 10
+
+- event: L_TDC_Temp_ML
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - peakFinder: Left_Crank_Vlab.z
+      width: 10
+
 - event: L_TDC_Temp
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - if: exists(L_crank)
+      then: L_TDC_Temp_MB
+      else: L_TDC_Temp_ML
+
+- event: L_BDC_Temp_MB
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - peakFinder: Left_Crank_Vlab.z
+      width: 10
+
+- event: L_BDC_Temp_ML
   where:
     name: Cycling*
   set: left
@@ -471,8 +521,9 @@
     name: Cycling*
   set: left
   steps:
-    - peakFinder: Left_Crank_Vlab.z
-      width: 10
+    - if: exists(L_crank)
+      then: L_BDC_Temp_MB
+      else: L_BDC_Temp_ML
 
 - parameter: Left_Crank_Vlab
   where:
@@ -485,7 +536,7 @@
       from: mm
       to: m
 
-- parameter: Left_Crank_Angle
+- parameter: Left_Crank_Angle_MB #crank marker opposite to crank
   where:
     name: Cycling*
   set: left
@@ -493,8 +544,6 @@
     # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
     - mean: Left_Crank_Vlab.z@L_TDC_Temp
       output: L_crank_Z_TDC
-    #- mean: Left_Crank_Vlab.y@L_TDC_Temp # would be used if crank marker is on crank itself
-    #  output: L_crank_VLY_TDC
     - mean: Left_Crank_Vlab.z@L_BDC_Temp
       output: L_crank_Z_BDC
     - mean: Left_Crank_Vlab.y@L_BDC_Temp
@@ -519,8 +568,54 @@
     - multiply: [$prev, 57.2958] #to deg
     - add: [180, $prev]
 
+- parameter: Left_Crank_Angle_ML #markerless or crank marker on crank
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
+    - mean: Left_Crank_Vlab.z@L_TDC_Temp
+      output: L_crank_Z_TDC
+    - mean: Left_Crank_Vlab.y@L_TDC_Temp # would be used if crank marker is on crank itself
+      output: L_crank_VLY_TDC
+    - mean: Left_Crank_Vlab.z@L_BDC_Temp
+      output: L_crank_Z_BDC
+    - mean: Left_Crank_Vlab.y@L_BDC_Temp
+      output: L_crank_VLY_BDC
+
+    - subtract: [L_crank_Z_BDC, L_crank_Z_TDC]
+    - divide: [$prev, 2]
+    - abs: $prev
+      output: L_Crank_Radius
+
+    # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean y (forward) position at BDC using transformed crank
+    - subtract: [Left_Crank_Vlab.y, L_crank_VLY_TDC]
+      output: L_Pedal_Y
+
+    # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean Z (vertical) position at TDC and then subtracting the radius
+    # - subtract: [Left_Crank_Vlab.z, L_crank_Z_TDC]
+    - subtract: [Left_Crank_Vlab.z, L_crank_Z_BDC]
+    - subtract: [$prev, L_Crank_Radius]
+    - multiply: [$prev, -1]
+      output: L_Pedal_Z
+
+    # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
+    - atan2: [L_Pedal_Y, L_Pedal_Z]
+    - multiply: [$prev, 57.2958] #to deg
+    - multiply: [$prev, -1]
+    - add: [180, $prev]
+
+- parameter: Left_Crank_Angle
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - if: exists(L_crank) # TODO: find a way how to find out if marker is on crank itself or opposite to crank and use it instead of assuming that L_crank is always oopsite to crank?
+      then: Left_Crank_Angle_MB
+      else: Left_Crank_Angle_ML
+
 # Right crank angle 
-- event: R_TDC_Temp
+- event: R_TDC_Temp_MB
   where:
     name: Cycling*
   set: right
@@ -529,13 +624,48 @@
     - peakFinder:
       width: 10
 
-- event: R_BDC_Temp
+- event: R_TDC_Temp_ML
   where:
     name: Cycling*
   set: right
   steps:
     - peakFinder: Right_Crank_Vlab.z
       width: 10
+
+- event: R_TDC_Temp
+  where:
+    name: Cycling*
+  set: rihgt
+  steps:
+    - if: exists(R_crank)
+      then: R_TDC_Temp_MB
+      else: R_TDC_Temp_ML
+
+- event: R_BDC_Temp_MB
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - peakFinder: Right_Crank_Vlab.z
+      width: 10
+
+- event: R_BDC_Temp_ML
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - negate: Right_Crank_Vlab.z
+    - peakFinder: 
+      width: 10
+
+- event: R_BDC_Temp
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - if: exists(R_crank)
+      then: R_BDC_Temp_MB
+      else: R_BDC_Temp_ML
 
 - parameter: Right_Crank_Vlab
   where:
@@ -548,7 +678,7 @@
       from: mm
       to: m
 
-- parameter: Right_Crank_Angle
+- parameter: Right_Crank_Angle_MB
   where:
     name: Cycling*
   set: right
@@ -579,6 +709,52 @@
     - atan2: [R_Pedal_Y, R_Pedal_Z]
     - multiply: [$prev, 57.2958] #to deg
     - add: [180, $prev]
+
+- parameter: Right_Crank_Angle_ML
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
+    - mean: Right_Crank_Vlab.z@R_TDC_Temp
+      output: R_crank_Z_TDC
+    - mean: Right_Crank_Vlab.y@R_TDC_Temp # would be used if crank marker is on crank itself
+      output: R_crank_VLY_TDC
+    - mean: Right_Crank_Vlab.z@R_BDC_Temp
+      output: R_crank_Z_BDC
+    - mean: Right_Crank_Vlab.y@R_BDC_Temp
+      output: R_crank_VLY_BDC
+
+    - subtract: [R_crank_Z_BDC, R_crank_Z_TDC]
+    - divide: [$prev, 2]
+    - abs: $prev
+      output: R_Crank_Radius
+
+    # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean y (forward) position at BDC using transformed crank
+    - subtract: [Right_Crank_Vlab.y, R_crank_VLY_TDC]
+      output: R_Pedal_Y
+
+    # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean Z (vertical) position at TDC and then subtracting the radius
+    # - subtract: [Right_Crank_Vlab.z, R_crank_Z_TDC]
+    - subtract: [Right_Crank_Vlab.z, R_crank_Z_BDC]
+    - subtract: [$prev, R_Crank_Radius]
+    - multiply: [$prev, -1]
+      output: R_Pedal_Z
+      
+    # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
+    - atan2: [R_Pedal_Y, R_Pedal_Z]
+    - multiply: [$prev, 57.2958] #to deg
+    - multiply: [$prev, -1]
+    - add: [180, $prev]
+
+- parameter: Right_Crank_Angle
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - if: exists(R_crank) # TODO: find a way how to find out if marker is on crank itself or opposite to crank and use it instead of assuming that L_crank is always oopsite to crank?
+      then: Right_Crank_Angle_MB
+      else: Right_Crank_Angle_ML
 
 ############
 ## EVENTS ##
@@ -679,8 +855,9 @@
     - segment: LeftUpLeg => Left_Hip
       space: VirtualLab
       export: Left_Hip
-    - peakFinder: Left_Hip.z
-      width: 100
+    - eventMask: [Left_Hip.z, L_BDC, L_BDC]
+    - max:
+      frames: true
 
 - event: LEFT_HIP_min
   where:
@@ -699,8 +876,9 @@
     - segment: RightUpLeg => Right_Hip
       space: VirtualLab
       export: Right_Hip
-    - peakFinder: Right_Hip.z
-      width: 100
+    - eventMask: [Right_Hip.z, R_BDC, R_BDC]
+    - max:
+      frames: true
 
 - event: RIGHT_HIP_min
   where:
@@ -715,79 +893,7 @@
 ## SERIES ##
 ############
 
-# --- Pelvis ---
-
-- parameter: Left Pelvic Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: Hips
-      space: VirtualLab
-    - multiply: [$prev, [-1, 1, -1]]
-
-- parameter: Right Pelvic Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: Hips
-      space: VirtualLab
-    - multiply: [$prev, [-1, -1, 1]]
-
-# --- Hips ---
-
-- parameter: Left Hip Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [Hips, LeftUpLeg]
-    - multiply: [$prev, [1, -1, 1]]
-
-- parameter: Right Hip Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [Hips, RightUpLeg]
-
-# --- Knee ---
-
-- parameter: Left Knee Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [LeftUpLeg, LeftLeg]
-      output: kneeAngle
-    - multiply: [kneeAngle, [-1, -1, -1]]
-
-- parameter: Right Knee Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [RightUpLeg, RightLeg]
-    - multiply: [$prev, [-1, 1, 1]]
-
-# --- Ankle ---
-
-- parameter: Left Ankle Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [LeftLeg, LeftFoot]
-    - multiply: [$prev, [1, -1, 1]]
-
-- parameter: Right Ankle Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [RightLeg, RightFoot]
-    - multiply: [$prev, [1, 1, -1]]
+# --- Foot ---
 
 - parameter: Left Foot Progression
   where:
@@ -807,7 +913,6 @@
       space: VirtualLab
     - multiply: [$prev, [-1, 1, 1]]
 
-
 # --- Trunk ---
 
 - parameter: Trunk Angles
@@ -826,20 +931,6 @@
     - multiply: [$prev, [-1, 1, 1]]
 
 # --- Shoulders ---
-- parameter: Left Shoulder Angles
-  where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [Spine2, LeftArm]
-    
-- parameter: Right Shoulder Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [Spine2, RightArm]
-    - multiply: [$prev, [1, -1, 1]]
    
 - parameter: Left Shoulder_Pelvis Angle
   where:
@@ -863,28 +954,9 @@
     - jointAngle: Neck
       space: VirtualLab
 
-# --- Wrists ---
-- parameter: Left Wrist Angles
+- template: /templates/timeseries.calqulus.yaml
   where:
-    name: Cycling*
-  set: left
-  steps:
-    - jointAngle: [LeftHand, LeftForeArm]
-
-- parameter: Right Wrist Angles
-  where:
-    name: Cycling*
-  set: right
-  steps:
-    - jointAngle: [RightHand, RightForeArm]
-
-# --- Head ---
-- parameter: Head Angles
-  where:
-    name: Cycling*
-  steps:
-    - jointAngle: [Spine2, Head]
-    - multiply: [$prev, [-1, 1, 1]]
+    name: '!Bike*'
 
 #############
 ## METRICS ##
@@ -1448,6 +1520,11 @@
   set: left
   steps:
     - segment: LeftLeg
+      output: leg
+    - vector: [Hips.x,Hips.y,Hips.z]
+      output: pelvis
+    - mean:
+    - subtract: [leg, pelvis]
       space: VirtualLab
     - convert:
       from: mm
@@ -1485,13 +1562,15 @@
     name: Cycling*
   set: left
   steps:
-    - segment: Hips
+    - segment: LeftLeg
+      output: leg
+    - vector: [Hips.x,Hips.y,Hips.z]
+      output: pelvis
+    - subtract: [leg, pelvis]
       space: VirtualLab
     - convert:
       from: mm
       to: m
-      output: pelvis
-    - subtract: [LEFT_KNEE_VLab, pelvis]
 
 - parameter: LEFT_KNEE_lat_travel_range_RPV_mean
   where:
@@ -1526,6 +1605,11 @@
   set: right
   steps:
     - segment: RightLeg
+      output: leg
+    - vector: [Hips.x,Hips.y,Hips.z]
+    - mean:
+      output: pelvis
+    - subtract: [leg, pelvis]
       space: VirtualLab
     - convert:
       from: mm
@@ -1563,13 +1647,15 @@
     name: Cycling*
   set: right
   steps:
-    - segment: Hips
+    - segment: RightLeg
+      output: leg
+    - vector: [Hips.x,Hips.y,Hips.z]
+      output: pelvis
+    - subtract: [leg, pelvis]
       space: VirtualLab
     - convert:
       from: mm
       to: m
-      output: pelvis
-    - subtract: [RIGHT_KNEE_VLab, pelvis]
 
 - parameter: RIGHT_KNEE_lat_travel_range_RPV_mean
   where:
@@ -1605,10 +1691,9 @@
   set: left
   steps:
     - segment: LeftLeg => knee
-      space: VirtualLab
     - segment: LeftToeBase => foot_tip
-      space: VirtualLab
     - subtract: [knee, foot_tip]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -1654,8 +1739,7 @@
   set: left
   steps:
     - eventMask: [Left_Knee_Foot_distance, L_TDC, L_TDC]
-      output: knee_mask
-    - max: knee_mask.x
+    - max: $prev.y
 
 - parameter: Left_Knee_Foot_distance_min
   where:
@@ -1663,8 +1747,7 @@
   set: left
   steps:
     - eventMask: [Left_Knee_Foot_distance, L_TDC, L_TDC]
-      output: knee_mask
-    - min: knee_mask.x
+    - min: $prev.y
     
 - parameter: Left_Knee_Foot_distance_range
   where:
@@ -1679,10 +1762,9 @@
   set: right
   steps:
     - segment: RightLeg => knee
-      space: VirtualLab
     - segment: RightToeBase => foot_tip
-      space: VirtualLab
     - subtract: [knee, foot_tip]
+      space: VirtualLab
     - convert:
       from: mm
       to: m
@@ -1728,8 +1810,7 @@
   set: right
   steps:
     - eventMask: [Right_Knee_Foot_distance, R_TDC, R_TDC]
-      output: knee_mask
-    - max: knee_mask.x
+    - max: $prev.y
 
 - parameter: Right_Knee_Foot_distance_min
   where:
@@ -1737,8 +1818,7 @@
   set: right
   steps:
     - eventMask: [Right_Knee_Foot_distance, R_TDC, R_TDC]
-      output: knee_mask
-    - min: knee_mask.x
+    - min: $prev.y
     
 - parameter: Right_Knee_Foot_distance_range
   where:
@@ -2497,7 +2577,8 @@
     name: Cycling*
   set: left
   steps:
-    - angle: [LeftForeArm, LeftHand, seatTubeMoved , B_Stem]
+    - angle: [LeftForeArm, LeftHand, [0,0,0], [1,0,0]]
+      project: xz
     - mean:
     - convert:
       from: radians
@@ -2508,7 +2589,8 @@
     name: Cycling*
   set: right
   steps:
-    - angle: [RightForeArm, RightHand, seatTubeMoved , B_Stem]
+    - angle: [RightForeArm, RightHand, [0,0,0], [1,0,0]]
+      project: xz
     - mean:
     - convert:
       from: radians
@@ -2521,6 +2603,11 @@
   set: left
   steps:
     - segment: LeftToeBase
+      output: foot
+    - vector: [Hips.x,Hips.y,Hips.z]
+    - mean:
+      output: pelvis
+    - subtract: [foot, pelvis]
       space: VirtualLab
     - convert:
       from: mm
@@ -2543,6 +2630,11 @@
   set: left
   steps:
     - segment: LeftFoot
+      output: foot
+    - vector: [Hips.x,Hips.y,Hips.z]
+    - mean:
+      output: pelvis
+    - subtract: [foot, pelvis]
       space: VirtualLab
     - convert:
       from: mm
@@ -2554,6 +2646,11 @@
   set: right
   steps:
     - segment: RightToeBase
+      output: foot
+    - vector: [Hips.x,Hips.y,Hips.z]
+    - mean:
+      output: pelvis
+    - subtract: [foot, pelvis]
       space: VirtualLab
     - convert:
       from: mm
@@ -2576,6 +2673,11 @@
   set: right
   steps:
     - segment: RightFoot
+      output: foot
+    - vector: [Hips.x,Hips.y,Hips.z]
+    - mean:
+      output: pelvis
+    - subtract: [foot, pelvis]
       space: VirtualLab
     - convert:
       from: mm
