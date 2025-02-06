@@ -334,6 +334,21 @@
       output: on_time
     - subtract: [on_time@20, on_time@1]
 
+# Number of jumps (count of OFF to ON sequences)
+- parameter: Left_flight_time
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - eventDuration: [LOFF, LON]
+
+- parameter: Left_flight_count
+  where:
+    name: SH_L*
+  set: left
+  steps:
+    - count: Left_flight_time
+
 # Right ------------
 # Contact time - both directions
 - parameter: Right_contact_time
@@ -375,6 +390,21 @@
     - eventTime: RON
       output: on_time
     - subtract: [on_time@20, on_time@1]
+
+# Number of jumps (count of OFF to ON sequences)
+- parameter: Right_flight_time
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - eventDuration: [ROFF, RON]
+
+- parameter: Right_flight_count
+  where:
+    name: SH_R*
+  set: right
+  steps:
+    - count: Right_flight_time
 
 # Kinetics ----------------
 # Left
