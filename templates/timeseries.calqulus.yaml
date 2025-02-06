@@ -64,7 +64,7 @@
 
 - parameter: KinematicsLowpassExtrapolate
   steps:
-    - import: [50]
+    - import: [15]
 
 # --- Pelvis ---
 

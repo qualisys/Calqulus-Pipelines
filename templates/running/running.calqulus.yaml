@@ -8,21 +8,14 @@
 
 - parameter: VirtualLabOrigin
   steps:
-    - marker: RForefoot2
+    - vector: [Hips.x, Hips.x, Hips.x]
     - multiply: [$prev, 0]
-
-- parameter: VirtualLabForward
-  steps:
-    - add: [WaistRFront, WaistLFront]
-    - multiply: [$prev, 0.5]
-    - subtract: [$prev, WaistBack]
-    - mean: $prev
 
 - segment: VirtualLabSegment
   steps:
     - segment:
       origin: VirtualLabOrigin
-      primaryAxis: VirtualLabForward
+      primaryAxis: [[0,0,0], [1,0,0]]
       secondaryAxis: [[0,0,0], [0,0,1]]
       order: yz 
 
@@ -80,12 +73,28 @@
       extrapolate: 100
       cutoff: 20
 
+- parameter: LAnkle
+  set: left
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - vector: [LeftAnkle.x, LeftAnkle.y, LeftAnkle.z]
+
+- parameter: LeftHeelBack
+  set: left
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - if: exists(LHeelBack)
+      then: LHeelBack
+      else: LAnkle
+
 - parameter: LHeelBack_vel
   set: left
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - marker: LHeelBack => sig
+    - import: LeftHeelBack
     - velocity:
 
 - parameter: Right_MID_FOOT_vel
@@ -125,12 +134,28 @@
       extrapolate: 100
       cutoff: 20
 
+- parameter: RAnkle
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - vector: [RightAnkle.x, RightAnkle.y, RightAnkle.z]
+
+- parameter: RightHeelBack
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - if: exists(RHeelBack)
+      then: RHeelBack
+      else: RAnkle
+
 - parameter: RHeelBack_vel
   set: right
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - marker: RHeelBack => sig
+    - import: RightHeelBack
     - velocity:
 
 # Midstance event is based on pelvis position wrt foot position
@@ -150,8 +175,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - marker: LForefoot2 => foot
+    - vector: [LeftToeBase.x, LeftToeBase.y, LeftToeBase.z]
       space: VirtualLab
+      output: foot
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
@@ -161,7 +187,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - marker: LHeelBack => heel
+    - import: LeftHeelBack => heel
       space: VirtualLab
     - segment: Hips => pelvis
       space: VirtualLab
@@ -172,8 +198,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - marker: RForefoot2 => foot
+    - vector: [RightToeBase.x, RightToeBase.y, RightToeBase.z]
       space: VirtualLab
+      output: foot
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
@@ -183,7 +210,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - marker: RHeelBack => heel
+    - import: RightHeelBack => heel
       space: VirtualLab
     - segment: Hips => pelvis
       space: VirtualLab
@@ -199,6 +226,7 @@
       from: mm
       to: m
     - range: $prev.y
+
 # -----------------
 
 # # --- Pelvis ---
@@ -227,7 +255,7 @@
     - segment: LeftLeg
     - velocity: $prev
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm/s
       to: m/s
 
@@ -239,7 +267,7 @@
     - segment: RightLeg
     - velocity: $prev
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm/s
       to: m/s
 
@@ -255,9 +283,8 @@
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [pelvis, shank]
-      output: knee
-    - multiply: [knee.y,-1]
-    - convert: $prev
+    - multiply: [$prev.y,-1]
+    - convert:
       from: mm
       to: m
 
@@ -270,9 +297,8 @@
     - segment: Hips
     - subtract: [Hips, RightLeg]
       space: VirtualLab
-      output: knee
-    - multiply: [knee.y,-1]
-    - convert: $prev
+    - multiply: [$prev.y,-1]
+    - convert:
       from: mm
       to: m
 
@@ -316,7 +342,6 @@
     name: ^(Gait|Run|Walk)*
   steps:
     - jointAngle: [RightFoot, RightLeg]
-      output: tibialRot
 
 # ---
 
@@ -385,7 +410,7 @@
       output: ankle
 
     - multiply: [ankle.y,[-1]]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       export: L_ANKLE_X
@@ -404,7 +429,7 @@
       output: ankle
 
     - multiply: [ankle.y,-1]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       export: R_ANKLE_X
@@ -446,8 +471,8 @@
   steps:
     - segment: LeftFoot
       space: VirtualLab
-    - velocity: $prev
-    - convert: $prev
+    - velocity:
+    - convert:
       from: mm/s
       to: m/s
 
@@ -458,8 +483,8 @@
   steps:
     - segment: RightFoot
       space: VirtualLab
-    - velocity: $prev
-    - convert: $prev
+    - velocity:
+    - convert:
       from: mm/s
       to: m/s
 
@@ -500,7 +525,7 @@
       export: L_ELBOW_RT_PELVIS_Z
 
     - multiply: [elbowPelvis.x,-1]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -523,7 +548,7 @@
       export: R_ELBOW_RT_PELVIS_Z
 
     - multiply: [elbowPelvis.x,-1]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -548,7 +573,7 @@
       export: L_WRIST_RT_PELVIS_Z
 
     - multiply: [wristPelvis.x,-1]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -571,7 +596,7 @@
       export: R_WRIST_RT_PELVIS_Z
 
     - multiply: [wristPelvis.x,-1]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -615,7 +640,7 @@
     - multiply: [l_foot_vel.y, -1]
       output: l_foot_vel_inv
     - mean: l_foot_vel_inv@L_MID_STANCE
-    
+
 - parameter: right_treadmill_speed
   where:
     name: ^(Gait|Run|Walk)*
@@ -632,12 +657,12 @@
     name: ^(Gait|Run|Walk)*
   steps:
     - concatenate: [left_treadmill_speed, right_treadmill_speed]
-    - mean: $prev
-    - convert: $prev
+    - mean:
+    - convert:
       from: mm/s
       to: m/s
 
-- parameter: actual_running_speed_ms
+- parameter: actual_running_speed_ms_treadmill
   where:
     name: ^(Gait|Run|Walk)*
   steps:
@@ -649,7 +674,34 @@
     - add: [$prev, treadmill_speed]
       output: pelvis_vel_adj
     - mean: pelvis_vel_adj.y
-      export: walking_speed # for FA report
+
+- parameter: actual_running_speed_ms_overground
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - velocity: Hips
+      space: VirtualLab
+    - convert:
+      from: mm/s
+      to: m/s
+    - mean: $prev.y
+      export: walking_speed_overground
+
+- parameter: actual_running_speed_ms
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: actual_running_speed_ms_overground
+      else: actual_running_speed_ms_treadmill
+
+- parameter: walking_speed # for FA report
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - if: Pelvis_COG_range > 1
+      then: walking_speed_overground
+      else: walking_speed_treadmill
 
 # Seconds per meter, to be displayed as minutes per kilometer.
 - parameter: seconds_per_meter
@@ -698,21 +750,17 @@
     name: ^(Gait|Run|Walk)*
   steps:
   - eventDuration: [RFS, LFS]
-    output: Left_Step_Time
     export: Left_Step_Time
   - eventDuration: [LFS, RFS]
-    output: Right_Step_Time
     export: Right_Step_Time
   - mean: Left_Step_Time => Left_Step_Time_mean
   - divide: [60, Left_Step_Time_mean]
-    output: Left_Steps_Per_Minute_Mean
     export: Left_Steps_Per_Minute_Mean
   - mean: Right_Step_Time => Right_Step_Time_mean
   - divide: [60, Right_Step_Time_mean]
-    output: Right_Steps_Per_Minute_Mean
     export: Right_Steps_Per_Minute_Mean
   - concatenate: [Left_Steps_Per_Minute_Mean, Right_Steps_Per_Minute_Mean]
-  - mean: $prev
+  - mean:
 
 # Step length
 - parameter: Right_Step_Length_Mean_treadmill
@@ -725,7 +773,7 @@
       space: VirtualLab
     - subtract: [r_foot.y@RFS, l_foot.y@LFS]
       frameSequenceOrder: reverse
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: Step_Length
@@ -743,7 +791,7 @@
       space: VirtualLab
     - subtract: [r_foot.y@RFS, l_foot.y@LFS]
       frameSequenceOrder: reverse
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -757,7 +805,7 @@
       space: VirtualLab
     - subtract: [l_foot.y@LFS, r_foot.y@RFS]
       frameSequenceOrder: reverse
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: Step_Length
@@ -775,7 +823,7 @@
       space: VirtualLab
     - subtract: [l_foot.y@LFS, r_foot.y@RFS]
       frameSequenceOrder: reverse
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -802,7 +850,7 @@
     name: ^(Gait|Run|Walk)*
   steps:
     - concatenate: [Right_Step_Length_Mean, Left_Step_Length_Mean]
-    - mean: $prev
+    - mean:
 
 # Stride length
 - parameter: Right_Stride_Length_Mean_treadmill
@@ -814,7 +862,7 @@
     - eventDuration: [RFS, RFS]
       export: right_stride_time
     - diff: foot.y@RFS
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: strideLength
@@ -831,7 +879,7 @@
     - eventDuration: [RFS, RFS]
       export: right_stride_time
     - diff: foot.y@RFS
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -844,7 +892,7 @@
     - eventDuration: [LFS, LFS]
       export: left_stride_time
     - diff: foot.y@LFS
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: strideLength
@@ -861,7 +909,7 @@
     - eventDuration: [LFS, LFS]
       export: left_stride_time
     - diff: foot.y@LFS
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -888,7 +936,7 @@
     name: ^(Gait|Run|Walk)*
   steps:
     - concatenate: [Right_Stride_Length_Mean, Left_Stride_Length_Mean]
-    - mean: $prev
+    - mean:
       export: Stride_Length # for FA Running
 
 # Stride width
@@ -903,7 +951,7 @@
       space: VirtualLab
     - subtract: [r_foot.x@RFS, l_foot.x@LFS]
       frameSequenceOrder: reverse
-    - abs: $prev
+    - abs:
 
 - parameter: Left_Stride_Width_Mean
   where:
@@ -915,15 +963,15 @@
       space: VirtualLab
     - subtract: [l_foot.x@LFS, r_foot.x@RFS]
       frameSequenceOrder: reverse
-    - abs: $prev
+    - abs:
 
 - parameter: Stride_Width_Mean
   where:
     name: ^(Gait|Run|Walk)*
   steps:
     - concatenate: [Right_Stride_Width_Mean, Left_Stride_Width_Mean]
-    - mean: $prev
-    - convert: $prev
+    - mean:
+    - convert:
       from: mm
       to: m
       export: Stride_Width # for FA Running
@@ -972,14 +1020,14 @@
     name: ^(Gait|Run|Walk)*
   steps:
     - divide: [60, left_stride_time]
-    - mean: $prev
+    - mean:
 
 - parameter: Right_Strides_Per_Minute_Mean
   where:
     name: ^(Gait|Run|Walk)*
   steps:
     - divide: [60, right_stride_time]
-    - mean: $prev
+    - mean:
 
 # Vertical pelvis movement
 - parameter: Pelvis_Height_RANGE
@@ -991,7 +1039,7 @@
     - max: mask.z => max
     - min: mask.z => min
     - subtract: [max, min]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -1007,7 +1055,7 @@
   - mean: Left_Stance_Time_Mean => left_contact_time_mean
   - mean: Right_Stance_Time_Mean => right_contact_time_mean
   - concatenate: [left_contact_time_mean, right_contact_time_mean]
-  - mean: $prev
+  - mean:
 
 # Flight time
 - parameter: Flight_Time_Mean_MEAN
@@ -1021,7 +1069,7 @@
   - mean: Flight_time_LTO_RFS => left_flight_time_mean
   - mean: Flight_time_RTO_LFS => right_flight_time_mean
   - concatenate: [left_flight_time_mean, right_flight_time_mean]
-  - mean: $prev
+  - mean:
 
 # Flight time/contact time ratio
 - parameter: Swing_Contact_Ratio
@@ -1053,7 +1101,7 @@
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [l_foot.y, pelvis.y]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: heel_pelvis
@@ -1071,7 +1119,7 @@
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [r_foot.y, pelvis.y]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: heel_pelvis
@@ -1113,7 +1161,7 @@
   steps:
     - eventMask: [Left Pelvic Angles, LFS, LTO]
       truncate: true
-    - max: $prev
+    - max:
 
 - parameter: Right Pelvic Angles_MAX_stance
   where:
@@ -1121,7 +1169,7 @@
   steps:
     - eventMask: [Right Pelvic Angles, RFS, RTO]
       truncate: true
-    - max: $prev
+    - max:
 
 # min during stance
 - parameter: Left Pelvic Angles_MIN_stance
@@ -1130,7 +1178,7 @@
   steps:
     - eventMask: [Left Pelvic Angles, LFS, LTO]
       truncate: true
-    - min: $prev
+    - min:
 
 - parameter: Right Pelvic Angles_MIN_stance
   where:
@@ -1138,7 +1186,7 @@
   steps:
     - eventMask: [Right Pelvic Angles, RFS, RTO]
       truncate: true
-    - min: $prev
+    - min:
 
 # max during stride
 - parameter: Left Pelvic Angles_MAX_stride
@@ -1147,7 +1195,7 @@
   steps:
     - eventMask: [Left Pelvic Angles, LFS, LFS]
       truncate: true
-    - max: $prev
+    - max:
 
 - parameter: Right Pelvic Angles_MAX_stride
   where:
@@ -1155,7 +1203,7 @@
   steps:
     - eventMask: [Right Pelvic Angles, RFS, RFS]
       truncate: true
-    - max: $prev
+    - max:
 
 # --- Hip angles ---
 # at FS
@@ -1180,7 +1228,7 @@
   steps:
     - eventMask: [Left Hip Angles, LFS, LTO]
       truncate: true
-    - max: $prev
+    - max:
 
 - parameter: Right Hip Angles_MAX_stance
   where:
@@ -1188,7 +1236,7 @@
   steps:
     - eventMask: [Right Hip Angles, RFS, RTO]
       truncate: true
-    - max: $prev
+    - max:
 
 # min during stance
 - parameter: Left Hip Angles_MIN_stance
@@ -1197,7 +1245,7 @@
   steps:
     - eventMask: [Left Hip Angles, LFS, LTO]
       truncate: true
-    - min: $prev
+    - min:
 
 - parameter: Right Hip Angles_MIN_stance
   where:
@@ -1205,7 +1253,7 @@
   steps:
     - eventMask: [Right Hip Angles, RFS, RTO]
       truncate: true
-    - min: $prev
+    - min:
 
 # max during stride
 - parameter: Left Hip Angles_MAX_stride
@@ -1214,7 +1262,7 @@
   steps:
     - eventMask: [Left Hip Angles, LFS, LFS]
       truncate: true
-    - max: $prev
+    - max:
 
 - parameter: Right Hip Angles_MAX_stride
   where:
@@ -1222,7 +1270,7 @@
   steps:
     - eventMask: [Right Hip Angles, RFS, RFS]
       truncate: true
-    - max: $prev
+    - max:
 
 # --- Knee angles ---
 # at FS
@@ -1247,7 +1295,7 @@
   steps:
     - eventMask: [Left Knee Angles, LFS, LTO]
       truncate: true
-    - max: $prev
+    - max:
 
 - parameter: Right Knee Angles_MAX_stance
   where:
@@ -1255,7 +1303,7 @@
   steps:
     - eventMask: [Right Knee Angles, RFS, RTO]
       truncate: true
-    - max: $prev
+    - max:
 
 # min during stance
 - parameter: Left Knee Angles_MIN_stance
@@ -1264,7 +1312,7 @@
   steps:
     - eventMask: [Left Knee Angles, LFS, LTO]
       truncate: true
-    - min: $prev
+    - min:
 
 - parameter: Right Knee Angles_MIN_stance
   where:
@@ -1272,7 +1320,7 @@
   steps:
     - eventMask: [Right Knee Angles, RFS, RTO]
       truncate: true
-    - min: $prev
+    - min:
 
 # max during stride
 - parameter: Left Knee Angles_MAX
@@ -1281,7 +1329,7 @@
   steps:
     - eventMask: [Left Knee Angles, LFS, LFS]
       truncate: true
-    - max: $prev
+    - max:
 
 - parameter: Right Knee Angles_MAX
   where:
@@ -1289,7 +1337,7 @@
   steps:
     - eventMask: [Right Knee Angles, RFS, RFS]
       truncate: true
-    - max: $prev
+    - max:
 
 # --- Ankle angles ---
 # max during stance
@@ -1299,7 +1347,7 @@
   steps:
     - eventMask: [Left Ankle Angles, LFS, LTO]
       truncate: true
-    - max: $prev
+    - max:
 
 - parameter: Right Ankle Angles_MAX_stance
   where:
@@ -1307,7 +1355,7 @@
   steps:
     - eventMask: [Right Ankle Angles, RFS, RTO]
       truncate: true
-    - max: $prev
+    - max:
 
 # min during stance
 - parameter: Left Ankle Angles_MIN_stance
@@ -1316,7 +1364,7 @@
   steps:
     - eventMask: [Left Ankle Angles, LFS, LTO]
       truncate: true
-    - min: $prev
+    - min:
 
 - parameter: Right Ankle Angles_MIN_stance
   where:
@@ -1324,7 +1372,7 @@
   steps:
     - eventMask: [Right Ankle Angles, RFS, RTO]
       truncate: true
-    - min: $prev
+    - min:
 
 # Foot wrt lab at footstrike
 - parameter: L_FOOT_CONTACT_ANGLE@LFS
@@ -1424,7 +1472,7 @@
   steps:
     - eventMask: [Left Hip Angles, LFS, LFS]
       truncate: true
-    - min: $prev
+    - min:
 
 - parameter: Right Hip Angles_MIN_stride
   where:
@@ -1432,7 +1480,7 @@
   steps:
     - eventMask: [Right Hip Angles, RFS, RFS]
       truncate: true
-    - min: $prev
+    - min:
 
 # Hip angular velocity at footstrike
 - parameter: Left Hip Angles_Velocity
@@ -1443,7 +1491,7 @@
       extrapolate: 100
       order: 6
       cutoff: 12
-    - velocity: $prev
+    - velocity:
 
 - parameter: Right Hip Angles_Velocity
   where:
@@ -1453,7 +1501,7 @@
       extrapolate: 100
       order: 6
       cutoff: 12
-    - velocity: $prev
+    - velocity:
 
 - parameter: Left Hip Angles_Velocity@LFS
   where:
@@ -1574,7 +1622,7 @@
     - segment: RightLeg => r_knee
       space: VirtualLab
     - subtract: [r_knee, l_knee]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: knee_dist
@@ -1589,7 +1637,7 @@
     - segment: RightLeg => r_knee
       space: VirtualLab
     - subtract: [l_knee, r_knee]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: knee_dist
@@ -1784,7 +1832,7 @@
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: foot_pelvis_dist
@@ -1799,7 +1847,7 @@
     - segment: Hips => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: foot_pelvis_dist
