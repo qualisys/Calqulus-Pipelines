@@ -168,7 +168,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: '!empty(LHeelBack)'
+    - if: "!empty(LHeelBack.x)"
       then: LHeelBack
       else: LAnkle
 
@@ -184,7 +184,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: '!empty(RHeelBack)'
+    - if: "!empty(RHeelBack.x)"
       then: RHeelBack
       else: RAnkle
 
@@ -195,7 +195,7 @@
   steps:
     - vector: [LeftToeBase.x, LeftToeBase.y, LeftToeBase.z]
       output: foot
-    - if: '!empty(LForefoot2)'
+    - if: "!empty(LForefoot2.x)"
       then: LForefoot2
       else: foot
 
@@ -206,7 +206,7 @@
   steps:
     - vector: [RightToeBase.x, RightToeBase.y, RightToeBase.z]
       output: foot
-    - if: '!empty(RForefoot2)'
+    - if: "!empty(RForefoot2.x)"
       then: RForefoot2
       else: foot
 
