@@ -21,14 +21,10 @@
   secondaryAxis: [[0,0,0], [0,0,1]]
   order: yz
 
-- parameter: VirtualLabOrigin
-  steps:
-    - multiply: [RForefoot2, 0]
-
 - segment: VirtualLabSegment
   steps:
     - segment:
-      origin: VirtualLabOrigin
+      origin: [0,0,0]
       primaryAxis: Feet_unit_vector?name=Bowling*
       secondaryAxis: [[0,0,0], [0,0,1]]
       order: yz  
@@ -160,6 +156,60 @@
 
 - template: /templates/timeseries.calqulus.yaml
 
+- parameter: LAnkle
+  set: left
+  where: 
+    name: Bowling*
+  steps:
+    - vector: [LeftAnkle.x, LeftAnkle.y, LeftAnkle.z]
+
+- parameter: LeftHeelBack
+  set: left
+  where: 
+    name: Bowling*
+  steps:
+    - if: '!empty(LHeelBack)'
+      then: LHeelBack
+      else: LAnkle
+
+- parameter: RAnkle
+  set: right
+  where: 
+    name: Bowling*
+  steps:
+    - vector: [RightAnkle.x, RightAnkle.y, RightAnkle.z]
+
+- parameter: RightHeelBack
+  set: right
+  where: 
+    name: Bowling*
+  steps:
+    - if: '!empty(RHeelBack)'
+      then: RHeelBack
+      else: RAnkle
+
+- parameter: LeftForefoot2
+  set: left
+  where: 
+    name: Bowling*
+  steps:
+    - vector: [LeftToeBase.x, LeftToeBase.y, LeftToeBase.z]
+      output: foot
+    - if: '!empty(LForefoot2)'
+      then: LForefoot2
+      else: foot
+
+- parameter: RightForefoot2
+  set: right
+  where: 
+    name: Bowling*
+  steps:
+    - vector: [RightToeBase.x, RightToeBase.y, RightToeBase.z]
+      output: foot
+    - if: '!empty(RForefoot2)'
+      then: RForefoot2
+      else: foot
+
 # Define body side
 - parameter: Right_Hand_Vel@Release
   where: 
@@ -183,24 +233,24 @@
     name: Bowling*
   steps:
     - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
-      then: LForefoot2
-      else: RForefoot2
+      then: LeftForefoot2
+      else: RightForefoot2
 
 - parameter: Front_HeelBack
   where: 
     name: Bowling*
   steps:
     - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
-      then: LHeelBack
-      else: RHeeLBack
+      then: LeftHeelBack
+      else: RightHeelBack
 
 - parameter: Back_Forefoot2
   where: 
     name: Bowling*
   steps:
     - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
-      then: RForefoot2
-      else: LForefoot2
+      then: RightForefoot2
+      else: LeftForefoot2
 
 - parameter: BackThigh
   where: 
