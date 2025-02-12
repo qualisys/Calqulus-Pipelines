@@ -210,29 +210,25 @@
       then: RForefoot2
       else: foot
 
-# Define body side
-- parameter: Right_Hand_Vel@Release
+# Define body side - throwing hand is higher at Release
+- parameter: Right_Hand@Release
   where: 
     name: Bowling*
   steps:
-    - velocity: RightHand
-    - magnitude:
-    - import: $prev@Release
+    - import: RightHand.z@Release
 
-- parameter: Left_Hand_Vel@Release
+- parameter: Left_Hand@Release
   where: 
     name: Bowling*
   steps:
-    - velocity: LeftHand
-    - magnitude:
-    - import: $prev@Release
+    - import: LeftHand.z@Release
 
 # Define body side
 - parameter: Front_Forefoot2
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: LeftForefoot2
       else: RightForefoot2
 
@@ -240,7 +236,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: LeftHeelBack
       else: RightHeelBack
 
@@ -248,7 +244,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: RightForefoot2
       else: LeftForefoot2
 
@@ -256,7 +252,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: RightUpLeg
       else: LeftUpLeg
 
@@ -264,7 +260,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: LeftUpLeg
       else: RightUpLeg
 
@@ -272,7 +268,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: RightLeg
       else: LeftLeg
 
@@ -280,7 +276,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: LeftLeg
       else: RightLeg
 
@@ -288,7 +284,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: RightFoot
       else: LeftFoot
 
@@ -296,7 +292,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: LeftFoot
       else: RightFoot
 
@@ -304,7 +300,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: RightArm
       else: LeftArm
 
@@ -312,7 +308,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: RightForearm
       else: LeftForearm
 
@@ -320,7 +316,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: RightHand
       else: LeftHand
 
@@ -328,7 +324,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[1, -1, 1]]
       else: [[1, -1, -1]]
 
@@ -336,7 +332,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[-1, -1, 1]]
       else: [[-1, -1, -1]]
 
@@ -344,7 +340,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[1, -1, 1]]
       else: [[1, 1, -1]]
 
@@ -352,7 +348,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[1, 1, 1]]
       else: [[1, 1, -1]]
 
@@ -360,7 +356,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[1, 1, -1]]
       else: [[1, 1, 1]]
 
@@ -368,7 +364,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[-1, 1, -1]]
       else: [[1, -1, 1]]
 
@@ -376,7 +372,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[-1, 1, -1]]
       else: [[1, -1, 1]]
 
@@ -384,7 +380,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[-1, -1, -1]]
       else: [[1, -1, 1]]
 
@@ -392,7 +388,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[1, -1, 1]]
       else: [[1, 1, -1]]
 
@@ -400,7 +396,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[1, -1, 1]]
       else: [[1, 1, -1]]
 
@@ -408,7 +404,7 @@
   where: 
     name: Bowling*
   steps:
-    - if: Right_Hand_Vel\@Release > Left_Hand_Vel\@Release
+    - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[1, -1, 1]]
       else: [[1, 1, -1]]
 
