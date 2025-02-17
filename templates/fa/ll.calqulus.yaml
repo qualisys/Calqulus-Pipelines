@@ -65,12 +65,19 @@
     - min:
       frames: true
 
+- event: my_LON_force
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [LON_force, LFT_DistEndVel_min, LFT_DistEndVel_max]
+      frames: true
+
 - event: TouchDown
   where:
     name: LL_L*
   steps:
     - if: exists(LON_force)
-      then: LON_force
+      then: my_LON_force
       else: TouchDown_kinematics
 
 - event: TouchDown_prio
@@ -92,7 +99,7 @@
     name: LL_L*
   steps:
     - if: exists(LON_force)
-      then: LON_force@1
+      then: my_LON_force@1
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
@@ -105,12 +112,16 @@
       direction: up
     - import: $prev@-1
 
+- event: LOFF_force_max
+  steps:
+    - max: LOFF_force
+    
 - event: TakeOff
   where:
     name: LL_L*
   steps:
     - if: exists(LOFF_force)
-      then: LOFF_force@-1
+      then: LOFF_force_max
       else: TakeOff_kinematics
 
 - event: Landing_L
@@ -146,12 +157,19 @@
     - min: 
       frames: true
 
+- event: my_RON_force
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [RON_force, RFT_DistEndVel_max, RFT_DistEndVel_min]
+      frames: true
+
 - event: TouchDown
   where:
     name: LL_R*
   steps:
     - if: exists(RON_force)
-      then: RON_force
+      then: my_RON_force
       else: TouchDown_kinematics
 
 - event: TouchDown_prio
@@ -173,7 +191,7 @@
     name: LL_R*
   steps:
     - if: exists(RON_force)
-      then: RON_force@1
+      then: my_RON_force@1
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
@@ -187,12 +205,16 @@
       direction: up
     - import: $prev@-1
 
+- event: ROFF_force_max
+  steps:
+    - max: ROFF_force
+    
 - event: TakeOff
   where:
     name: LL_R*
   steps:
     - if: exists(ROFF_force)
-      then: ROFF_force@-1
+      then: ROFF_force_max
       else: TakeOff_kinematics
 
 - event: Landing_R
