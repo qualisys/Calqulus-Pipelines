@@ -689,6 +689,7 @@
   steps:
     - angle: [Spine2, PitchingArm]
       rotationOrder: ZYZ
+      unwrap: true
     - multiply: [$prev, Pitching_Shoulder_Convention]
 
 - parameter: Pitching_Shoulder_Angle_XYZ
