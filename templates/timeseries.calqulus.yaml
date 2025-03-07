@@ -515,6 +515,15 @@
     - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $field(Weight; measurement; numeric)]
 
+# Bilateral Power
+# Power = F * v
+- parameter: Bilateral Power
+  where:
+    force: both
+  steps:
+    - add: [Left GRF, Right GRF]
+    - multiply: [$prev, PelvisCGPos_vel]
+
 - parameter: Right_COP
   where:
     force: right

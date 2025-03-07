@@ -408,6 +408,19 @@
       then: Landing_end_temp
       else: EOF-1
 
+- event: Eccentric_end
+  steps:
+    - threshold: PelvisCGPos_vel.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, TouchDown, TakeOff]
+
+- event: TouchDown_100ms
+  steps:
+    - multiply: [0.1, $framerate]
+      output: myShift
+    - add: [TouchDown, myShift]
+
 # unified event names for web
 - event: LeftPlotStart
   where:
