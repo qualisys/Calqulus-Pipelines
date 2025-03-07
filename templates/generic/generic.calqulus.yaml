@@ -936,3 +936,118 @@
   set: left
   steps:
     - subtract: [Head Forward Tilt max, Head Forward Tilt min]
+
+# Kinetics ---
+# Left
+- parameter: Left Hip Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Hip Moment
+
+- parameter: Left Knee Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Knee Moment
+
+- parameter: Left Ankle Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Ankle Moment
+
+- parameter: Left Hip Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Hip Power
+
+- parameter: Left Knee Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Knee Moment
+
+- parameter: Left Ankle Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Ankle Moment
+
+- parameter: Left GRF_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left GRF
+
+# Right
+- parameter: Right Hip Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Hip Moment
+
+- parameter: Right Knee Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Knee Moment
+
+- parameter: Right Ankle Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Ankle Moment
+
+- parameter: Right Hip Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Hip Power
+
+- parameter: Right Knee Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Knee Moment
+
+- parameter: Right Ankle Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Ankle Moment
+
+- parameter: Right GRF_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right GRF
