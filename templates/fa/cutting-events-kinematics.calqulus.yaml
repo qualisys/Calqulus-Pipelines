@@ -124,10 +124,10 @@
     name: (Cut|Cutting)_L*
   set: right
   steps:
-    - eventMask: [RFT_DistEndVel.z, temp_R1, temp_R2]
     - threshold: RFT_DistEndVel.z
       value: 0.2
       direction: up
+    - eventMask: [$prev, temp_R1, temp_R2]
     - import: $prev@1
 
 - event: Max_knee_flex
@@ -248,10 +248,10 @@
     name: (Cut|Cutting)_R*
   set: left
   steps:
-    - eventMask: [LFT_DistEndVel.z, temp_L1, temp_L2]
     - threshold: LFT_DistEndVel.z
       value: 0.2
       direction: up
+    - eventMask: [$prev, temp_L1, temp_L2]
     - import: $prev@1
 
 - event: Max_knee_flex
