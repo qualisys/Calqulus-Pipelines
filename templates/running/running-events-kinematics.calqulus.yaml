@@ -807,6 +807,43 @@
         pattern: LH
         keep: [0]
 
+# Kinetics events
+- event: Left_peak_landing_GRF
+  set: left
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: left
+  steps:
+    - peakFinder: Left GRF.z
+    - import: $prev@1
+
+- event: Left_peak_concentric_GRF
+  set: left
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: left
+  steps:
+    - peakFinder: Left GRF.z
+    - import: $prev@-1
+
+- event: Right_peak_landing_GRF
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: right
+  steps:
+    - peakFinder: Right GRF.z
+    - import: $prev@1
+
+- event: Right_peak_concentric_GRF
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: right
+  steps:
+    - peakFinder: Right GRF.z
+    - import: $prev@-1
+
 # Unified event names for web
 - event: LeftPlotStart
   set: left

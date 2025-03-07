@@ -1852,3 +1852,32 @@
       to: m
       output: foot_pelvis_dist
     - import: foot_pelvis_dist@RFS
+
+# Kinetics
+- parameter: Left GRF@Left_peak_landing_GRF
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: left
+  steps:
+    - import: Left GRF@Left_peak_landing_GRF
+
+- parameter: Left GRF@Left_peak_concentric_GRF
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: left
+  steps:
+    - import: Left GRF@Left_peak_concentric_GRF
+
+- parameter: Right GRF@Right_peak_landing_GRF
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: right
+  steps:
+    - import: Right GRF@Right_peak_landing_GRF
+
+- parameter: Right GRF@Right_peak_concentric_GRF
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: right
+  steps:
+    - import: Right GRF@Right_peak_concentric_GRF
