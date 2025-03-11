@@ -103,6 +103,23 @@
   steps:
     - import: Left Thorax Angles@Max_knee_flex
 
+# Weight Acceptance
+- parameter: Left_Knee_COM_distance@END_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - import: Left_Knee_COM_distance@END_WA
+
+- parameter: Left_Ankle_COM_distance@END_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - import: Left_Ankle_COM_distance@END_WA
+
 # Min
 - parameter: Left Hip Angles_min
   where:
@@ -266,6 +283,23 @@
   steps:
     - import: Right Thorax Angles@Max_knee_flex
 
+# Weight Acceptance
+- parameter: Right_Knee_COM_distance@END_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - import: Right_Knee_COM_distance@END_WA
+
+- parameter: Right_Ankle_COM_distance@END_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - import: Right_Ankle_COM_distance@END_WA
+
 # Min
 - parameter: Right Hip Angles_min
   where:
@@ -408,6 +442,33 @@
     - eventMask: [Left Hip Moment, TouchDown, Max_knee_flex]
     - max: 
 
+- parameter: Left Hip Moment_max_TD_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Hip Moment, TouchDown, END_WA]
+    - max: 
+
+- parameter: Left Knee Moment_max_TD_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, END_WA]
+    - max: 
+
+- parameter: Left Ankle Moment_max_TD_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left Ankle Moment, TouchDown, END_WA]
+    - max: 
+
 - parameter: Left GRF_max_landing
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
@@ -479,6 +540,33 @@
   set: right
   steps:
     - eventMask: [Right Hip Moment, TouchDown, Max_knee_flex]
+    - max: 
+
+- parameter: Right Hip Moment_max_TD_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Hip Moment, TouchDown, END_WA]
+    - max: 
+
+- parameter: Right Knee Moment_max_TD_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, END_WA]
+    - max: 
+
+- parameter: Right Ankle Moment_max_TD_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right Ankle Moment, TouchDown, END_WA]
     - max: 
 
 - parameter: Right GRF_max_landing

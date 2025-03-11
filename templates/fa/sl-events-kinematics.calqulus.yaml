@@ -48,6 +48,16 @@
     - max:
       frames: true
 
+- event: END_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - negate: Left GRF.z
+    - eventMask: [$prev, TouchDown, EOF]
+    - peakFinder: 
+    - import: $prev@1
+
 # Right
 - event: TouchDown_kinematics
   where:
@@ -85,6 +95,16 @@
     - eventMask: [Right Knee Angles.x, TouchDown, EOF]
     - max:
       frames: true
+
+- event: END_WA
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - negate: Right GRF.z
+    - eventMask: [$prev, TouchDown, EOF]
+    - peakFinder: 
+    - import: $prev@1
 
 # For SLJ and SLCDL PlotEnd is set to 1 sec after TouchDown. For SLL it is 3 sec
 - event: PlotEnd
