@@ -53,8 +53,7 @@
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
   steps:
-    - negate: Left GRF.z
-    - eventMask: [$prev, TouchDown, EOF]
+    - eventMask: [Left GRF.z, TouchDown, EOF]
     - peakFinder: 
     - import: $prev@1
 
@@ -101,8 +100,7 @@
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
   steps:
-    - negate: Right GRF.z
-    - eventMask: [$prev, TouchDown, EOF]
+    - eventMask: [Right GRF.z, TouchDown, EOF]
     - peakFinder: 
     - import: $prev@1
 
