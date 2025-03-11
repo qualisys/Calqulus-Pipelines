@@ -62,4 +62,4 @@
 # Body weight (applies to all tasks)
 - parameter: MASS
   steps:
-    - import: $field(Weight; measurement; numeric)
+    - import: $bodyMass
