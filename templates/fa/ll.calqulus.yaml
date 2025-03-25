@@ -27,7 +27,7 @@
     - min: Hips.z
       frames: true
 
-- event: PlotStart_stand
+- event: PlotStart_stand_temp
   steps:
     - negate: PelvisCGPos_vel
     - lowpass:
@@ -37,6 +37,12 @@
     - eventMask: [$prev, BOF, COM_MIN]
     - import: $prev@1
     # - subtract: [$prev, 1]
+
+- event: PlotStart_stand
+  steps:
+    - if: empty(PlotStart_stand_temp)
+      then: BOF_fixed
+      else: PlotStart_stand_temp
 
 # Left
 - event: LFT_DistEndVel_max
