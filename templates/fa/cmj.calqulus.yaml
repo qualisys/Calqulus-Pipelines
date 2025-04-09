@@ -227,7 +227,6 @@
       to: m
 
 # Jump height calculated from pelvis height -------
-# other options ('impulse') are not available, yet
 
 # Pelvis height
 - parameter: COM_displacement_MEAN_max_CMJ_B
@@ -358,6 +357,61 @@
     - divide: [FlightTime_CMJ_R, 2]
     - power:
     - multiply: [4.905, $prev]
+
+# Impulse (vel = impulse/m, h = vel@takeoff^2 /2g)
+- parameter: COM_displacement_MEAN_max_impulse_CMJ_B
+  where:
+    name: CMJ_B*
+    force: both
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    # - multiply: [$field(Weight; measurement; numeric),9.81]
+    - multiply: [Total GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, PlotStart, TakeOff]
+      replacement:
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_impulse_CMJ_L
+  where:
+    name: CMJ_L*
+    force: left
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    # - multiply: [$field(Weight; measurement; numeric),9.81]
+    - multiply: [Left GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, PlotStart_L, TakeOff_L]
+      replacement:
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_impulse_CMJ_R
+  where:
+    name: CMJ_R*
+    force: right
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    # - multiply: [$field(Weight; measurement; numeric),9.81]
+    - multiply: [Right GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, PlotStart_R, TakeOff_R]
+      replacement:
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_min_CMJ_B 
   where:
