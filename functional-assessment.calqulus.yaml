@@ -48,7 +48,12 @@
 
 - template: templates/generic/generic.calqulus.yaml
   where:
-    name: ^(Generic|Lunge)*
+    name: Lunge*
+
+- template: templates/generic/generic.calqulus.yaml
+  where:
+    fields: 
+      Session Type: Generic*
 
 - template: templates/running/running.calqulus.yaml
   where:
