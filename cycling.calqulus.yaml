@@ -457,20 +457,38 @@
     name: Cycling*
   steps:
     - vector: [LeftToeBase.x,LeftToeBase.y,LeftToeBase.z]
+      output: fottDistEnd
+
+    - if: exists(L_crank)
+      then: L_crank
+      else: fottDistEnd
+
     - lowpass: $prev
       order: 2
       cutoff: 6
       extrapolate: 100
+    - convert:
+      from: mm
+      to: m
 
 - parameter: R_crank_filtered
   where:
     name: Cycling*
   steps:
     - vector: [RightToeBase.x,RightToeBase.y,RightToeBase.z]
+      output: fottDistEnd
+
+    - if: exists(R_crank)
+      then: R_crank
+      else: fottDistEnd
+
     - lowpass: $prev
       order: 2
       cutoff: 6
       extrapolate: 100
+    - convert:
+      from: mm
+      to: m
 
 # Left crank angle
 - event: L_TDC_Temp_MB
@@ -532,9 +550,6 @@
   steps:
     - import: L_crank_filtered
       space: VirtualLab
-    - convert:
-      from: mm
-      to: m
 
 - parameter: Left_Crank_Angle_MB #crank marker opposite to crank
   where:
@@ -605,6 +620,46 @@
     - multiply: [$prev, -1]
     - add: [180, $prev]
 
+# Find out if marker is on crank itself or opposite to crank
+  # if L_crank marker exists:
+    # calculated mean position of L_crank -> spindle
+    # calculater mean distance from spindle to L_crank -> fm2_to_spindle
+    # calculate mean distance from spindle to toe -> fm2_to_crank
+    # if fm2_to_spindle < fm2_to_crank then L_crank is opposite -> use Left_Crank_Angle_MB
+    # if fm2_to_spindle > fm2_to_crank then L_crank is on crank -> use Left_Crank_Angle_ML
+  # if L_crank does not exist use Left_Crank_Angle_ML
+
+# - parameter: fm2_to_spindle
+#   where:
+#     name: Cycling*
+#   steps:
+#     - mean: Left_Crank_Vlab
+#     - distance: [L_crank, $prev]
+#     - mean:
+#       output: my_mean
+
+#     - if: exists(L_crank)
+#       then: my_mean
+#       else: [0]
+
+# - parameter: fm2_to_crank
+#   where:
+#     name: Cycling*
+#   steps:
+#     - mean: Left_Crank_Vlab
+#     - vector: [LeftToeBase.x,LeftToeBase.y,LeftToeBase.z]
+#     - distance: [$prev, $prev(2)]
+#     - mean:
+
+# - parameter: Left_Crank_Angle
+#   where:
+#     name: Cycling*
+#   set: left
+#   steps:
+#     - if: fm2_to_spindle < fm2_to_crank
+#       then: Left_Crank_Angle_MB
+#       else: Left_Crank_Angle_ML
+
 - parameter: Left_Crank_Angle
   where:
     name: Cycling*
@@ -674,9 +729,6 @@
   steps:
     - import: R_crank_filtered
       space: VirtualLab
-    - convert:
-      from: mm
-      to: m
 
 - parameter: Right_Crank_Angle_MB
   where:
@@ -746,6 +798,15 @@
     - multiply: [$prev, 57.2958] #to deg
     - multiply: [$prev, -1]
     - add: [180, $prev]
+
+# - parameter: Right_Crank_Angle
+#   where:
+#     name: Cycling*
+#   set: right
+#   steps:
+#     - if: fm2_to_spindle < fm2_to_crank
+#       then: Right_Crank_Angle_MB
+#       else: Rightt_Crank_Angle_ML
 
 - parameter: Right_Crank_Angle
   where:
