@@ -674,6 +674,7 @@
     - add: [$prev, treadmill_speed]
       output: pelvis_vel_adj
     - mean: pelvis_vel_adj.y
+      export: walking_speed_treadmill
 
 - parameter: actual_running_speed_ms_overground
   where:
