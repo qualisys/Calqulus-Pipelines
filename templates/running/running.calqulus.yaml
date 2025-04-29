@@ -71,7 +71,7 @@
     - acceleration:
     - lowpass:
       extrapolate: 100
-      cutoff: 20
+      cutoff: 12 # 20 can produce LFS_treadmill event slightly too late, nearer to L_MID_FOOT_vel_negative
 
 - parameter: LAnkle
   set: left
@@ -132,7 +132,7 @@
     - acceleration:
     - lowpass:
       extrapolate: 100
-      cutoff: 20
+      cutoff: 12
 
 - parameter: RAnkle
   set: right
