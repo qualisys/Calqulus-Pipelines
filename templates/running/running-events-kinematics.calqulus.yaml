@@ -142,7 +142,7 @@
     - eventMask: [$prev, temp_event_2, L_MID_FOOT_vel_negative]
       keep: -1
 
-- event: RFS_treadmill
+- event: R_PEAK_MID_FOOT_VEL_z
   set: right
   where:
     name: ^(Gait|Run|Walk)*
@@ -152,26 +152,66 @@
       distance: 50
     - eventMask: [$prev, R_MID_STANCE, L_MID_STANCE]
       keep: -1
-      output: R_PEAK_MID_FOOT_VEL_z
 
-    # z velocity of foot has to be negative, otherwise foot is not on its way down
+- event: R_MID_FOOT_vel_negative
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
     - threshold: Right_MID_FOOT_vel.z
       value: 0
       direction: up
     - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, R_PEAK_MID_FOOT_VEL_z]
       keep: -1
-      output: R_MID_FOOT_vel_negative
 
-    # temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+- event: temp_event_1
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
     - threshold: Right_MID_FOOT_vel.y
       value: 0
       direction: down
-      output: temp_event_1
 
+- event: temp_event_2
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
     - peakFinder: Right_MID_FOOT_vel.y
     - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, temp_event_1]
       keep: -1
-      output: temp_event_2
+
+- event: RFS_treadmill
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    # - peakFinder: Right_MID_FOOT_vel.z
+    #   width: 10
+    #   distance: 50
+    # - eventMask: [$prev, R_MID_STANCE, L_MID_STANCE]
+    #   keep: -1
+    #   output: R_PEAK_MID_FOOT_VEL_z
+
+    # # z velocity of foot has to be negative, otherwise foot is not on its way down
+    # - threshold: Right_MID_FOOT_vel.z
+    #   value: 0
+    #   direction: up
+    # - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, R_PEAK_MID_FOOT_VEL_z]
+    #   keep: -1
+    #   output: R_MID_FOOT_vel_negative
+
+    # # temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+    # - threshold: Right_MID_FOOT_vel.y
+    #   value: 0
+    #   direction: down
+    #   output: temp_event_1
+
+    # - peakFinder: Right_MID_FOOT_vel.y
+    # - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, temp_event_1]
+    #   keep: -1
+    #   output: temp_event_2
 
     - peakFinder: Right_MID_FOOT_acc.z
     - eventMask: [$prev, temp_event_2, R_MID_FOOT_vel_negative]
