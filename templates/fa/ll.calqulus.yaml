@@ -70,7 +70,7 @@
     name: LL_L*
   steps:
     - if: exists(LON_force)
-      then: LON_force
+      then: LON_force@1
       else: TouchDown_kinematics
 
 - event: TouchDown_prio
@@ -105,12 +105,20 @@
       direction: up
     - import: $prev@-1
 
+- event: LOFF_force_ordered
+  where:
+    name: LL_L*
+  steps:
+    - import: LOFF_force
+    - concatenate: [$prev, []]
+      sort: asc
+
 - event: TakeOff
   where:
     name: LL_L*
   steps:
-    - if: exists(LOFF_force)
-      then: LOFF_force@-1
+    - if: exists(LOFF_force_ordered)
+      then: LOFF_forc_orderede@-1
       else: TakeOff_kinematics
 
 - event: Landing_L
@@ -151,7 +159,7 @@
     name: LL_R*
   steps:
     - if: exists(RON_force)
-      then: RON_force
+      then: RON_force@1
       else: TouchDown_kinematics
 
 - event: TouchDown_prio
@@ -187,12 +195,20 @@
       direction: up
     - import: $prev@-1
 
+- event: ROFF_force_ordered
+  where:
+    name: LL_R*
+  steps:
+    - import: ROFF_force
+    - concatenate: [$prev, []]
+      sort: asc
+
 - event: TakeOff
   where:
     name: LL_R*
   steps:
-    - if: exists(ROFF_force)
-      then: ROFF_force@-1
+    - if: exists(ROFF_force_ordered)
+      then: ROFF_force_ordered@-1
       else: TakeOff_kinematics
 
 - event: Landing_R
