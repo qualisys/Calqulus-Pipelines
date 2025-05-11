@@ -118,7 +118,7 @@
     name: LL_L*
   steps:
     - if: exists(LOFF_force_ordered)
-      then: LOFF_force_orderede@-1
+      then: LOFF_force_ordered@-1
       else: TakeOff_kinematics
 
 - event: Landing_L
