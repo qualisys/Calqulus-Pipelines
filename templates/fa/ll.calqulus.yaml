@@ -147,6 +147,7 @@
 - event: LOFF_force_ordered
   where:
     name: LL_L*
+    force: left
   steps:
     - import: LOFF_force
     - concatenate: [$prev, []]
@@ -275,6 +276,7 @@
 - event: ROFF_force_ordered
   where:
     name: LL_R*
+    force: right
   steps:
     - import: ROFF_force
     - concatenate: [$prev, []]
