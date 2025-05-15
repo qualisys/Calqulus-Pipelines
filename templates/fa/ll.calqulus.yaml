@@ -99,7 +99,7 @@
     force: left
   steps:
     - if: exists(LON_force)
-      then: LON_force
+      then: LON_force@1
       else: emptyEvent
     - eventMask: [$prev, LFT_DistEndVel_first, LFT_DistEndVel_second]
       frames: true
@@ -144,18 +144,20 @@
       direction: up
     - import: $prev@-1
 
-- event: LOFF_force_max
+- event: LOFF_force_ordered
   where:
-    force: left
+    name: LL_L*
   steps:
-    - max: LOFF_force
-    
+    - import: LOFF_force
+    - concatenate: [$prev, []]
+      sort: asc
+
 - event: TakeOff
   where:
     name: LL_L*
   steps:
-    - if: exists(LOFF_force_max)
-      then: LOFF_force_max
+    - if: exists(LOFF_force_ordered)
+      then: LOFF_force_ordered@-1
       else: TakeOff_kinematics
 
 - event: Landing_L
@@ -215,7 +217,7 @@
     force: right
   steps:
     - if: exists(RON_force)
-      then: RON_force
+      then: RON_force@1
       else: emptyEvent
     - eventMask: [$prev, RFT_DistEndVel_first, RFT_DistEndVel_second]
       frames: true
@@ -270,18 +272,20 @@
       direction: up
     - import: $prev@-1
 
-- event: ROFF_force_max
+- event: ROFF_force_ordered
   where:
-    force: right
+    name: LL_R*
   steps:
-    - max: ROFF_force
-    
+    - import: ROFF_force
+    - concatenate: [$prev, []]
+      sort: asc
+
 - event: TakeOff
   where:
     name: LL_R*
   steps:
-    - if: exists(ROFF_force_max)
-      then: ROFF_force_max
+    - if: exists(ROFF_force_ordered)
+      then: ROFF_force_ordered@-1
       else: TakeOff_kinematics
 
 - event: Landing_R
