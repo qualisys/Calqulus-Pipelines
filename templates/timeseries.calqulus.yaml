@@ -310,6 +310,7 @@
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
       extrapolate: KinematicsLowpassExtrapolate
+    - multiply: [$prev, [1, -1, -1]] # in cycling we use this convention
 
 # COM distance to knee and ankle
 # for now using pelvis COM instead of body COM
@@ -368,7 +369,8 @@
 # ----
 - parameter: BodyWeightNewton
   steps:
-    - multiply: [$field(Weight; measurement; numeric), 9.81]
+    # - multiply: [$field(Weight; measurement; numeric), 9.81]
+    - multiply: [$bodyMass, 9.81]
 
 # Left
 - parameter: Left GRF
@@ -387,7 +389,7 @@
   set: left
   steps:
     - vector: [LeftHip.mx, LeftHip.my, LeftHip.mz]
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,1,1]]
 
 - parameter: Left Hip Power
@@ -396,7 +398,7 @@
   set: left
   steps:
     - vector: [LeftHip.p, LeftHip.p, LeftHip.p] #for compatibility with V3D power requires components
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
 
 - parameter: Left Knee Moment
   where:
@@ -404,7 +406,7 @@
   set: left
   steps:
     - vector: [LeftKnee.mx, LeftKnee.my, LeftKnee.mz]
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
 
 - parameter: Left Knee Power
   where:
@@ -412,7 +414,7 @@
   set: left
   steps:
     - vector: [LeftKnee.p, LeftKnee.p, LeftKnee.p] #for compatibility with V3D power requires components
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
 
 - parameter: Left Ankle Moment
   where:
@@ -420,7 +422,7 @@
   set: left
   steps:
     - vector: [LeftAnkle.mx, LeftAnkle.my, LeftAnkle.mz]
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,1,1]]
 
 - parameter: Left Ankle Power
@@ -429,7 +431,7 @@
   set: left
   steps:
     - vector: [LeftAnkle.p, LeftAnkle.p, LeftAnkle.p] #for compatibility with V3D power requires components
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
 
 - parameter: Left_COP
   where:
@@ -469,7 +471,7 @@
   set: right
   steps:
     - vector: [RightHip.mx, RightHip.my, RightHip.mz]
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,-1,-1]]
 
 - parameter: Right Hip Power
@@ -478,7 +480,7 @@
   set: right
   steps:
     - vector: [RightHip.p, RightHip.p, RightHip.p] #for compatibility with V3D power requires components
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
 
 - parameter: Right Knee Moment
   where:
@@ -486,7 +488,7 @@
   set: right
   steps:
     - vector: [RightKnee.mx, RightKnee.my, RightKnee.mz]
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
     - multiply: [$prev,[1,-1,-1]]
 
 - parameter: Right Knee Power
@@ -495,7 +497,7 @@
   set: right
   steps:
     - vector: [RightKnee.p, RightKnee.p, RightKnee.p] #for compatibility with V3D power requires components
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
 
 - parameter: Right Ankle Moment
   where:
@@ -503,7 +505,7 @@
   set: right
   steps:
     - vector: [RightAnkle.mx, RightAnkle.my, RightAnkle.mz]
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,-1,-1]]
 
 - parameter: Right Ankle Power
@@ -512,7 +514,16 @@
   set: right
   steps:
     - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
-    - divide: [$prev, $field(Weight; measurement; numeric)]
+    - divide: [$prev, $bodyMass]
+
+# Bilateral Power
+# Power = F * v
+- parameter: Bilateral Power
+  where:
+    force: both
+  steps:
+    - add: [Left GRF, Right GRF]
+    - multiply: [$prev, PelvisCGPos_vel]
 
 - parameter: Right_COP
   where:

@@ -340,6 +340,61 @@
     - power:
     - multiply: [4.905, $prev]
 
+# Impulse (vel = impulse/m, h = vel@takeoff^2 /2g)
+- parameter: COM_displacement_MEAN_max_impulse_SJ_B
+  where:
+    name: SJ_B*
+    force: both
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    # - multiply: [$field(Weight; measurement; numeric),9.81]
+    - multiply: [Total GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, PlotStart, TakeOff]
+      replacement:
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_impulse_SJ_L
+  where:
+    name: SJ_L*
+    force: left
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    # - multiply: [$field(Weight; measurement; numeric),9.81]
+    - multiply: [Left GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, PlotStart_L, TakeOff_L]
+      replacement:
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_impulse_SJ_R
+  where:
+    name: SJ_R*
+    force: right
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    # - multiply: [$field(Weight; measurement; numeric),9.81]
+    - multiply: [Right GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, PlotStart_R, TakeOff_R]
+      replacement:
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
 - parameter: COM_displacement_MEAN_min_SJ_B 
   where:
     name: SJ_B*
@@ -1226,11 +1281,25 @@
     - max:
 
 # Kinetics -------------
+- parameter: Left_RFD
+  where:
+    name: ^SJ_[BL]*
+    force: left
+  steps:
+    - derivative: Left GRF
+
 - parameter: Left Power
   where:
     name: ^SJ_[BL]*
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Right_RFD
+  where:
+    name: ^SJ_[BR]*
+    force: right
+  steps:
+    - derivative: Right GRF
 
 - parameter: Right Power
   where:
@@ -1245,6 +1314,13 @@
   steps:
     - add: [Left GRF, Right GRF]
 
+- parameter: Total_RFD
+  where:
+    name: SJ_B*
+    force: both
+  steps:
+    - derivative: Total GRF
+
 - parameter: Total Power
   where:
     name: SJ_B*
@@ -1256,6 +1332,13 @@
   steps:
     - eventMask: [Total Power, COM_MIN, TakeOff]
     - max:
+
+- parameter: Total_RFD@TouchDown_100ms_SJ_B
+  where:
+    name: SJ_B*
+    force: both
+  steps:
+    - import: Total_RFD@TouchDown_100ms
 
 - parameter: Total Power_mean_concentric_SJ_B
   where:
@@ -1292,7 +1375,15 @@
   steps:
     - eventMask: [Total GRF, TouchDown, EOF]
     - mean:
+
 # Bilateral - Left
+- parameter: Left_RFD@TouchDown_100ms_SJ_B
+  where:
+    name: ^SJ_B*
+    force: both
+  steps:
+    - import: Left_RFD@TouchDown_100ms
+
 - parameter: Left Power_max_concentric_SJ_B
   where:
     name: ^SJ_B*
@@ -1369,6 +1460,13 @@
     - max:
 
 # Bilateral - Right
+- parameter: Right_RFD@TouchDown_100ms_SJ_B
+  where:
+    name: SJ_B*
+    force: both
+  steps:
+    - import: Right_RFD@TouchDown_100ms
+
 - parameter: Right Power_max_concentric_SJ_B
   where:
     name: ^SJ_B*
@@ -1445,6 +1543,13 @@
     - max:
 
 # Single leg - Left
+- parameter: Left_RFD@TouchDown_100ms_SJ_L
+  where:
+    name: ^SJ_L*
+    force: left
+  steps:
+    - import: Left_RFD@TouchDown_100ms
+
 - parameter: Left Power_max_concentric_SJ_L
   where:
     name: ^SJ_L*
@@ -1521,6 +1626,13 @@
     - max:
 
 # Single leg - Right
+- parameter: Right_RFD@TouchDown_100ms_SJ_R
+  where:
+    name: SJ_R*
+    force: right
+  steps:
+    - import: Right_RFD@TouchDown_100ms
+
 - parameter: Right Power_max_concentric_SJ_R
   where:
     name: ^SJ_R*

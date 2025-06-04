@@ -936,3 +936,342 @@
   set: left
   steps:
     - subtract: [Head Forward Tilt max, Head Forward Tilt min]
+
+# Kinetics ---
+# Left
+- parameter: Left Hip Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Hip Moment
+
+- parameter: Left Knee Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Knee Moment
+
+- parameter: Left Ankle Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Ankle Moment
+
+- parameter: Left Hip Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Hip Power
+
+- parameter: Left Knee Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Knee Moment
+
+- parameter: Left Ankle Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Ankle Moment
+
+- parameter: Left GRF_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left GRF
+
+- parameter: Left Hip Moment_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Hip Moment
+
+- parameter: Left Knee Moment_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Knee Moment
+
+- parameter: Left Ankle Moment_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Ankle Moment
+
+- parameter: Left Hip Power_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Hip Power
+
+- parameter: Left Knee Power_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Knee Moment
+
+- parameter: Left Ankle Power_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Ankle Moment
+
+- parameter: Left GRF_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left GRF
+
+- parameter: Left Hip Moment_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Hip Moment
+
+- parameter: Left Knee Moment_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Knee Moment
+
+- parameter: Left Ankle Moment_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Ankle Moment
+
+- parameter: Left Hip Power_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Hip Power
+
+- parameter: Left Knee Power_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Knee Moment
+
+- parameter: Left Ankle Power_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Ankle Moment
+
+- parameter: Left GRF_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left GRF
+
+# Right
+- parameter: Right Hip Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Hip Moment
+
+- parameter: Right Knee Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Knee Moment
+
+- parameter: Right Ankle Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Ankle Moment
+
+- parameter: Right Hip Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Hip Power
+
+- parameter: Right Knee Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Knee Moment
+
+- parameter: Right Ankle Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Ankle Moment
+
+- parameter: Right GRF_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right GRF
+
+- parameter: Right Hip Moment_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Hip Moment
+
+- parameter: Right Knee Moment_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Knee Moment
+
+- parameter: Right Ankle Moment_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Ankle Moment
+
+- parameter: Right Hip Power_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Hip Power
+
+- parameter: Right Knee Power_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Knee Moment
+
+- parameter: Right Ankle Power_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Ankle Moment
+
+- parameter: Right GRF_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right GRF
+
+- parameter: Right Hip Moment_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Hip Moment
+
+- parameter: Right Knee Moment_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Knee Moment
+
+- parameter: Right Ankle Moment_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Ankle Moment
+
+- parameter: Right Hip Power_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Hip Power
+
+- parameter: Right Knee Power_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Knee Moment
+
+- parameter: Right Ankle Power_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Ankle Moment
+
+- parameter: Right GRF_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right GRF

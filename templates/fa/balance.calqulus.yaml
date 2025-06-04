@@ -152,7 +152,7 @@
 
 - parameter: DPSI
   steps:
-    - multiply: [$field(Weight; measurement; numeric), 9.81]
+    - multiply: [$bodyMass, 9.81]
       output: bw
 
     - vector: [loaded_FP.fx, loaded_FP.fy, loaded_FP.fz]

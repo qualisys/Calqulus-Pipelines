@@ -14,7 +14,7 @@
     - segment: Hips?name=Static* => hipsStatic
     - mean: hipsStatic.z
     - subtract: [hipsDynamic.z, $prev]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -54,7 +54,7 @@
     name: Run*
   steps:
     - angle: [LeftArm, LeftForeArm, LeftHand]
-    - convert: $prev
+    - convert:
       from: radians
       to: degrees
     - lowpass:
@@ -67,7 +67,7 @@
     name: Run*
   steps:
     - angle: [RightArm, RightForeArm, RightHand]
-    - convert: $prev
+    - convert:
       from: radians
       to: degrees
     - lowpass:

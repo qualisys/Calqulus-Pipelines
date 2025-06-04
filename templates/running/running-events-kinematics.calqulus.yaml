@@ -11,10 +11,10 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - threshold: Left_MID_FOOT_acc.z => sig
+    - threshold: Left_MID_FOOT_acc.z
       value: 0
       direction: down
-    - eventMask: [sig, R_MID_STANCE, R_MID_STANCE]
+    - eventMask: [$prev, R_MID_STANCE, R_MID_STANCE]
       keep: -1
 
 # - event: LTO_treadmill_old
@@ -31,8 +31,8 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - import: LHeelBack_vel.z => sig
-    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
+    - import: LHeelBack_vel.z
+    - eventMask: [$prev, L_MID_STANCE, L_MID_STANCE]
     - max:
       frames: true
 
@@ -41,10 +41,10 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - threshold: Right_MID_FOOT_acc.z => sig
+    - threshold: Right_MID_FOOT_acc.z
       value: 0
       direction: down
-    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
+    - eventMask: [$prev, L_MID_STANCE, L_MID_STANCE]
       keep: -1
 
 # - event: RTO_treadmill
@@ -61,8 +61,8 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - import: RHeelBack_vel.z => sig
-    - eventMask: [sig, L_MID_STANCE, L_MID_STANCE]
+    - import: RHeelBack_vel.z
+    - eventMask: [$prev, L_MID_STANCE, L_MID_STANCE]
     - max:
       frames: true
 
@@ -72,10 +72,10 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - peakFinder: Left_MID_FOOT_vel.z => sig
+    - peakFinder: Left_MID_FOOT_vel.z
       width: 10
       distance: 50
-    - eventMask: [sig, L_MID_STANCE, R_MID_STANCE]
+    - eventMask: [$prev, L_MID_STANCE, R_MID_STANCE]
       keep: -1
 
 - event: L_MID_FOOT_vel_negative
@@ -83,10 +83,10 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - threshold: Left_MID_FOOT_vel.z => sig
+    - threshold: Left_MID_FOOT_vel.z
       value: 0
       direction: up
-    - eventMask: [sig, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
+    - eventMask: [$prev, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
       keep: -1
 
 - event: temp_event_1
@@ -103,8 +103,8 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - peakFinder: Left_MID_FOOT_vel.y => sig
-    - eventMask: [sig, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
+    - peakFinder: Left_MID_FOOT_vel.y
+    - eventMask: [$prev, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
       keep: -1
   
 - event: LFS_treadmill
@@ -138,8 +138,48 @@
     #   keep: -1
     #   output: temp_event_2
 
-    - peakFinder: Left_MID_FOOT_acc.z => sig
-    - eventMask: [sig, temp_event_2, L_MID_FOOT_vel_negative]
+    - peakFinder: Left_MID_FOOT_acc.z
+    - eventMask: [$prev, temp_event_2, L_MID_FOOT_vel_negative]
+      keep: -1
+
+- event: R_PEAK_MID_FOOT_VEL_z
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - peakFinder: Right_MID_FOOT_vel.z
+      width: 10
+      distance: 50
+    - eventMask: [$prev, R_MID_STANCE, L_MID_STANCE]
+      keep: -1
+
+- event: R_MID_FOOT_vel_negative
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - threshold: Right_MID_FOOT_vel.z
+      value: 0
+      direction: up
+    - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, R_PEAK_MID_FOOT_VEL_z]
+      keep: -1
+
+- event: temp_event_1
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - threshold: Right_MID_FOOT_vel.y
+      value: 0
+      direction: down
+
+- event: temp_event_2
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - peakFinder: Right_MID_FOOT_vel.y
+    - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, temp_event_1]
       keep: -1
 
 - event: RFS_treadmill
@@ -147,34 +187,34 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - peakFinder: Right_MID_FOOT_vel.z => sig
-      width: 10
-      distance: 50
-    - eventMask: [sig, R_MID_STANCE, L_MID_STANCE]
-      keep: -1
-      output: R_PEAK_MID_FOOT_VEL_z
+    # - peakFinder: Right_MID_FOOT_vel.z
+    #   width: 10
+    #   distance: 50
+    # - eventMask: [$prev, R_MID_STANCE, L_MID_STANCE]
+    #   keep: -1
+    #   output: R_PEAK_MID_FOOT_VEL_z
 
-    # z velocity of foot has to be negative, otherwise foot is not on its way down
-    - threshold: Right_MID_FOOT_vel.z => sig1
-      value: 0
-      direction: up
-    - eventMask: [sig1, R_PEAK_MID_FOOT_VEL_z, R_PEAK_MID_FOOT_VEL_z]
-      keep: -1
-      output: R_MID_FOOT_vel_negative
+    # # z velocity of foot has to be negative, otherwise foot is not on its way down
+    # - threshold: Right_MID_FOOT_vel.z
+    #   value: 0
+    #   direction: up
+    # - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, R_PEAK_MID_FOOT_VEL_z]
+    #   keep: -1
+    #   output: R_MID_FOOT_vel_negative
 
-    # temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
-    - threshold: Right_MID_FOOT_vel.y
-      value: 0
-      direction: down
-      output: temp_event_1
+    # # temp_event_1 and temp_event_2 are used to reduce range where FS is searched for
+    # - threshold: Right_MID_FOOT_vel.y
+    #   value: 0
+    #   direction: down
+    #   output: temp_event_1
 
-    - peakFinder: Right_MID_FOOT_vel.y => sig2
-    - eventMask: [sig2, R_PEAK_MID_FOOT_VEL_z, temp_event_1]
-      keep: -1
-      output: temp_event_2
+    # - peakFinder: Right_MID_FOOT_vel.y
+    # - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, temp_event_1]
+    #   keep: -1
+    #   output: temp_event_2
 
-    - peakFinder: Right_MID_FOOT_acc.z => sig3
-    - eventMask: [sig3, temp_event_2, R_MID_FOOT_vel_negative]
+    - peakFinder: Right_MID_FOOT_acc.z
+    - eventMask: [$prev, temp_event_2, R_MID_FOOT_vel_negative]
       keep: -1
 
 - event: L_MID_STANCE
@@ -268,7 +308,7 @@
       frames: true
       output: temp2
 
-    - marker: LForefoot2 => sig
+    - import: LeftToeBase
     - convert:
       from: mm
       to: m
@@ -309,7 +349,7 @@
       frames: true
       output: temp2
 
-    - marker: RForefoot2 => sig
+    - import: RightToeBase
     - convert:
       from: mm
       to: m
@@ -806,6 +846,43 @@
         ranges: L 20 H
         pattern: LH
         keep: [0]
+
+# Kinetics events
+- event: Left_peak_landing_GRF
+  set: left
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: left
+  steps:
+    - peakFinder: Left GRF.z
+    - import: $prev@1
+
+- event: Left_peak_concentric_GRF
+  set: left
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: left
+  steps:
+    - peakFinder: Left GRF.z
+    - import: $prev@-1
+
+- event: Right_peak_landing_GRF
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: right
+  steps:
+    - peakFinder: Right GRF.z
+    - import: $prev@1
+
+- event: Right_peak_concentric_GRF
+  set: right
+  where:
+    name: ^(Gait|Run|Walk)*
+    force: right
+  steps:
+    - peakFinder: Right GRF.z
+    - import: $prev@-1
 
 # Unified event names for web
 - event: LeftPlotStart

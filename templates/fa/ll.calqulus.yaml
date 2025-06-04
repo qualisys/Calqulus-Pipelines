@@ -27,7 +27,7 @@
     - min: Hips.z
       frames: true
 
-- event: PlotStart_stand
+- event: PlotStart_stand_temp
   steps:
     - negate: PelvisCGPos_vel
     - lowpass:
@@ -37,6 +37,12 @@
     - eventMask: [$prev, BOF, COM_MIN]
     - import: $prev@1
     # - subtract: [$prev, 1]
+
+- event: PlotStart_stand
+  steps:
+    - if: empty(PlotStart_stand_temp)
+      then: BOF_fixed
+      else: PlotStart_stand_temp
 
 # Left
 - event: LFT_DistEndVel_max
@@ -53,24 +59,57 @@
     - min: LFT_DistEndVel.x
       frames: true
 
+- event: LFT_DistEndVel_first
+  where:
+    name: LL_L*
+  steps:
+    - if: LFT_DistEndVel_max < LFT_DistEndVel_min
+      then: LFT_DistEndVel_max
+      else: LFT_DistEndVel_min
+
+- event: LFT_DistEndVel_second
+  where:
+    name: LL_L*
+  steps:
+    - if: LFT_DistEndVel_max > LFT_DistEndVel_min
+      then: LFT_DistEndVel_max
+      else: LFT_DistEndVel_min
+
 - event: TouchDown_kinematics
   where:
     name: LL_L*
   steps:
-    - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_min, LFT_DistEndVel_max]
+    - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_first, LFT_DistEndVel_second]
     - max:
       frames: true
       output: temp_max
-    - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_min, temp_max]
+    - eventMask: [LFT_DistEndVel.z, LFT_DistEndVel_first, temp_max]
     - min:
+      frames: true
+
+# emptyEvent is a workaround to avoid `if` statement in TouchDown_prio to fail due to nonexistant TouchDown event
+# Needed for LL from stand where ThouchDown does not exist
+- event: emptyEvent
+  steps:
+    - import: [[-1]] #this creates empty signal
+
+- event: my_LON_force
+  where:
+    name: LL_L*
+    force: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force@1
+      else: emptyEvent
+    - eventMask: [$prev, LFT_DistEndVel_first, LFT_DistEndVel_second]
       frames: true
 
 - event: TouchDown
   where:
     name: LL_L*
   steps:
-    - if: exists(LON_force)
-      then: LON_force
+    - if: exists(my_LON_force)
+      then: my_LON_force
       else: TouchDown_kinematics
 
 - event: TouchDown_prio
@@ -91,26 +130,35 @@
   where:
     name: LL_L*
   steps:
-    - if: exists(LON_force)
-      then: LON_force@1
+    - if: exists(my_LON_force)
+      then: my_LON_force@1
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
   where:
     name: LL_L*
   steps:
-    - eventMask: [LFT_DistEndVel.x, TouchDown, LFT_DistEndVel_max]
+    - eventMask: [LFT_DistEndVel.x, TouchDown, LFT_DistEndVel_second]
     - threshold: $prev
       value: 1
       direction: up
     - import: $prev@-1
 
+- event: LOFF_force_ordered
+  where:
+    name: LL_L*
+    force: left
+  steps:
+    - import: LOFF_force
+    - concatenate: [$prev, []]
+      sort: asc
+
 - event: TakeOff
   where:
     name: LL_L*
   steps:
-    - if: exists(LOFF_force)
-      then: LOFF_force@-1
+    - if: exists(LOFF_force_ordered)
+      then: LOFF_force_ordered@-1
       else: TakeOff_kinematics
 
 - event: Landing_L
@@ -124,35 +172,72 @@
   where:
     name: LL_R*
   steps:
-    - max: RFT_DistEndVel.x
+    - negate: RFT_DistEndVel.x
+    - max: $prev
       frames: true
 
 - event: RFT_DistEndVel_min
   where:
     name: LL_R*
   steps:
-    - min: RFT_DistEndVel.x
+    - negate: RFT_DistEndVel.x
+    - min: $prev
       frames: true
+
+- event: RFT_DistEndVel_first
+  where:
+    name: LL_R*
+  steps:
+    - if: RFT_DistEndVel_max < RFT_DistEndVel_min
+      then: RFT_DistEndVel_max
+      else: RFT_DistEndVel_min
+
+- event: RFT_DistEndVel_second
+  where:
+    name: LL_R*
+  steps:
+    - if: RFT_DistEndVel_max > RFT_DistEndVel_min
+      then: RFT_DistEndVel_max
+      else: RFT_DistEndVel_min
 
 - event: TouchDown_kinematics
   where:
     name: LL_R*
   steps:
-    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_max, RFT_DistEndVel_min]
+    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_first, RFT_DistEndVel_second]
     - max:
       frames: true
       output: temp_max
-    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_max, temp_max]
+    - eventMask: [RFT_DistEndVel.z, RFT_DistEndVel_first, temp_max]
     - min: 
+      frames: true
+
+- event: my_RON_force
+  where:
+    name: LL_R*
+    force: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force@1
+      else: emptyEvent
+    - eventMask: [$prev, RFT_DistEndVel_first, RFT_DistEndVel_second]
       frames: true
 
 - event: TouchDown
   where:
     name: LL_R*
   steps:
-    - if: exists(RON_force)
-      then: RON_force
+    - if: exists(my_RON_force)
+      then: my_RON_force
       else: TouchDown_kinematics
+
+- parameter: PelvisCGPos
+  steps:
+    - vector: [Hips.x, Hips.y, Hips.z]
+      space: VirtualLab
+    - convert:
+      from: mm
+      to: m
 
 - event: TouchDown_prio
   where:
@@ -164,6 +249,7 @@
       export: first
     - import: PelvisCGPos.x@EOF
       export: last
+    # - if: (0.5 < 0 && 0 < -0.2) || (0.5 > 0 && 0 > -0.2)
     - if: (first < median && median < last) || (first > median && median > last)
       then: PlotStart_stand
       else: TouchDown
@@ -172,8 +258,8 @@
   where:
     name: LL_R*
   steps:
-    - if: exists(RON_force)
-      then: RON_force@1
+    - if: exists(my_RON_force)
+      then: my_RON_force@1
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
@@ -187,12 +273,21 @@
       direction: up
     - import: $prev@-1
 
+- event: ROFF_force_ordered
+  where:
+    name: LL_R*
+    force: right
+  steps:
+    - import: ROFF_force
+    - concatenate: [$prev, []]
+      sort: asc
+
 - event: TakeOff
   where:
     name: LL_R*
   steps:
-    - if: exists(ROFF_force)
-      then: ROFF_force@-1
+    - if: exists(ROFF_force_ordered)
+      then: ROFF_force_ordered@-1
       else: TakeOff_kinematics
 
 - event: Landing_R

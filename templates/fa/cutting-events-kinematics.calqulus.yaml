@@ -124,10 +124,10 @@
     name: (Cut|Cutting)_L*
   set: right
   steps:
-    - eventMask: [RFT_DistEndVel.z, temp_R1, temp_R2]
     - threshold: RFT_DistEndVel.z
       value: 0.2
       direction: up
+    - eventMask: [$prev, temp_R1, temp_R2]
     - import: $prev@1
 
 - event: Max_knee_flex
@@ -248,10 +248,10 @@
     name: (Cut|Cutting)_R*
   set: left
   steps:
-    - eventMask: [LFT_DistEndVel.z, temp_L1, temp_L2]
     - threshold: LFT_DistEndVel.z
       value: 0.2
       direction: up
+    - eventMask: [$prev, temp_L1, temp_L2]
     - import: $prev@1
 
 - event: Max_knee_flex
@@ -264,35 +264,27 @@
     - import: $prev@1
 
 # Time to complete the task
-# calculated as time between event at x distance for pelvis COG before touchdown to event at y distance for pelvis COG after touchdown. 
-# (default is pelvis COG 1 m before and 1 m after touchdown)
+# Calculated as time between moment when pelvis COM is 1 m distance before TouchDown to event at when pelvis COM is 1 m distance after TouchDown. 
 
-- parameter: Pelvis_Origin_Floor_mag_corr
+- parameter: Pelvis_Origin_cum_dist
   steps:
     - vector: [Hips.x, Hips.y, Hips.z]
+    - cumulativeDistance:
+      scalar: false
     - import: $prev@TouchDown
     - subtract: [$prev(2), $prev]
-    - multiply: [$prev, [1,1,0]]
-    - magnitude:
-    - convert:
-      from: mm
-      to: m
 
 - event: Virtual_gate_start
   steps:
-    - threshold: Pelvis_Origin_Floor_mag_corr
-      value: 1
-      direction: down
-    - eventMask: [$prev, BOF, TouchDown]
-    - import: $prev@1
+    - threshold: Pelvis_Origin_cum_dist
+      value: -1000
+      direction: up
 
 - event: Virtual_gate_end
   steps:
-    - threshold: Pelvis_Origin_Floor_mag_corr
-      value: 1
+    - threshold: Pelvis_Origin_cum_dist
+      value: 1000
       direction: up
-    - eventMask: [$prev, TouchDown, EOF]
-    - import: $prev@1
 
 # TouchDown+40ms
 - event: TouchDown40ms
