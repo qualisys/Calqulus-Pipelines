@@ -372,7 +372,7 @@
       replacement:
     - integral:
       scalar: true
-    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
     # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
     - power:
     - divide: [$prev, 19.62] #(2 * 9.81)
@@ -390,7 +390,7 @@
       replacement:
     - integral:
       scalar: true
-    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
     # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
     - power:
     - divide: [$prev, 19.62] #(2 * 9.81)
@@ -408,7 +408,7 @@
       replacement:
     - integral:
       scalar: true
-    - divide: [$prev, $bodyMass)] #this is takeoff velocity
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
     # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
     - power:
     - divide: [$prev, 19.62] #(2 * 9.81)
