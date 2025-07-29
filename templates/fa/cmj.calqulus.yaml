@@ -508,6 +508,24 @@
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_CMJ_R,FlightTime_CMJ_R]
 
+- parameter: Jump_height_flight_time_ratio_impulse_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_CMJ_B,FlightTime_CMJ_B]
+
+- parameter: Jump_height_flight_time_ratio_impulse_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_CMJ_L,FlightTime_CMJ_L]
+
+- parameter: Jump_height_flight_time_ratio_impulse_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_CMJ_R,FlightTime_CMJ_R]
+
 # COM distance to knee and ankle
 # @TouchDown
 - parameter: Left_Knee_COM_distance@TouchDown_CMJ_B
