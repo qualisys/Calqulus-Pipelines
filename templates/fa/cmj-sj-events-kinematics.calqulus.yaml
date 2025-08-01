@@ -129,7 +129,7 @@
 
 - event: TakeOff_zero # used for jump height
   where:
-    name: CMJ_B*
+    name: ^(CMJ_|SJ_)[B]*
     force: both
   steps:
     - threshold: Total GRF.z
@@ -140,7 +140,7 @@
 
 - event: TakeOff_zero # used for jump height
   where:
-    name: CMJ_L*
+    name: ^(CMJ_|SJ_)[L]*
     force: left
   steps:
     - threshold: Left GRF.z
@@ -151,7 +151,7 @@
 
 - event: TakeOff_zero # used for jump height
   where:
-    name: CMJ_R*
+    name: ^(CMJ_|SJ_)[R]*
     force: right
   steps:
     - threshold: Right GRF.z
