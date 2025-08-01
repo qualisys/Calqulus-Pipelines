@@ -342,8 +342,8 @@
     - multiply: [$bodyMass, 9.81]
     - multiply: [Total GRF, $prev]
     - subtract: [$prev, $prev(2)]
-    - eventMask: [$prev.z, TouchDown, TakeOff]
-      replacement:
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
+      replacement: 
     - integral:
       scalar: true
     - divide: [$prev, $bodyMass] #this is takeoff velocity
@@ -358,7 +358,7 @@
     - multiply: [$bodyMass, 9.81]
     - multiply: [Left GRF, $prev]
     - subtract: [$prev, $prev(2)]
-    - eventMask: [$prev.z, TouchDown_L, TakeOff_L]
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
       replacement:
     - integral:
       scalar: true
@@ -374,7 +374,7 @@
     - multiply: [$bodyMass, 9.81]
     - multiply: [Right GRF, $prev]
     - subtract: [$prev, $prev(2)]
-    - eventMask: [$prev.z, TouchDown_R, TakeOff_R]
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
       replacement:
     - integral:
       scalar: true
