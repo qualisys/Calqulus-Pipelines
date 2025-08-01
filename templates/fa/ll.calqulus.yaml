@@ -665,14 +665,14 @@
   where:
     name: LL_L*
   steps:
-    - eventMask: [Left GRF, PlotStart, EOF]
+    - eventMask: [Left GRF, PlotStart, LeftPlotEnd]
     - max:
 
 - parameter: Left GRF_mean_landing_LL_L
   where:
     name: LL_L*
   steps:
-    - eventMask: [Left GRF, PlotStart, EOF]
+    - eventMask: [Left GRF, PlotStart, LeftPlotEnd]
     - mean:
 
 - parameter: Left GRF_max_concentric_LL_L
@@ -740,14 +740,14 @@
   where:
     name: LL_R*
   steps:
-    - eventMask: [Right GRF, PlotStart, EOF]
+    - eventMask: [Right GRF, PlotStart, RightPlotEnd]
     - max:
 
 - parameter: Right GRF_mean_landing_LL_R
   where:
     name: LL_R*
   steps:
-    - eventMask: [Right GRF, PlotStart, EOF]
+    - eventMask: [Right GRF, PlotStart, RightPlotEnd]
     - mean:
 
 - parameter: Right GRF_max_concentric_LL_R
