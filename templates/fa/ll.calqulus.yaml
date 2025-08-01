@@ -689,14 +689,14 @@
     - eventMask: [Left GRF, pelvis_lowest, LeftPlotEnd]
     - mean:
 
-- parameter: Left GRF_max_ecccentric_LL_L
+- parameter: Left GRF_max_eccentric_LL_L
   where:
     name: LL_L*
   steps:
     - eventMask: [Left GRF, LeftPlotStart, pelvis_lowest]
     - max:
 
-- parameter: Left GRF_mean_ecccentric_LL_L
+- parameter: Left GRF_mean_eccentric_LL_L
   where:
     name: LL_L*
   steps:
@@ -764,14 +764,14 @@
     - eventMask: [Right GRF, pelvis_lowest, RightPlotEnd]
     - mean:
 
-- parameter: Right GRF_max_ecccentric_LL_R
+- parameter: Right GRF_max_eccentric_LL_R
   where:
     name: LL_R*
   steps:
     - eventMask: [Right GRF, RightPlotStart, pelvis_lowest]
     - max:
 
-- parameter: Right GRF_mean_ecccentric_LL_R
+- parameter: Right GRF_mean_eccentric_LL_R
   where:
     name: LL_R*
   steps:
