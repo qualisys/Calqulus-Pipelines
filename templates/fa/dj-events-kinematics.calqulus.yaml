@@ -37,7 +37,7 @@
   set: left
   steps:
     - if: exists(LOFF_force)
-      then: LOFF_force
+      then: LOFF_force@1
       else: TakeOff_L_prio2
 
 - event: TakeOff_L
@@ -213,7 +213,7 @@
   set: right
   steps:
     - if: exists(ROFF_force)
-      then: ROFF_force
+      then: ROFF_force@1
       else: TakeOff_R_prio2
 
 - event: TakeOff_R
