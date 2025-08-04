@@ -48,6 +48,24 @@
     - max:
       frames: true
 
+- event: Max_knee_flex_init
+  where:
+    name: ^(SLJ_|SLL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles.x, BOF, TakeOff]
+    - max:
+      frames: true
+
+- event: Max_knee_flex_landing
+  where:
+    name: ^(SLJ_|SLL_)L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles.x, TouchDown, EOF]
+    - max:
+      frames: true
+
 - event: END_WA
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
@@ -89,6 +107,24 @@
 - event: Max_knee_flex
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles.x, TouchDown, EOF]
+    - max:
+      frames: true
+
+- event: Max_knee_flex_init
+  where:
+    name: ^(SLJ_|SLL_)R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles.x, BOF, TakeOff]
+    - max:
+      frames: true
+
+- event: Max_knee_flex_landing
+  where:
+    name: ^(SLJ_|SLL_)R*
   set: right
   steps:
     - eventMask: [Right Knee Angles.x, TouchDown, EOF]
