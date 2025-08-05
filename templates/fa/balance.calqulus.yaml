@@ -26,14 +26,14 @@
 - event: LeftPlotStart
   set: left
   where:
-    name: Double*
+    name: Balance_B*
   steps:
     - import: BOF
 
 - event: LeftPlotEnd
   set: left
   where:
-    name: Double*
+    name: Balance_B*
   steps:
     - import: EOF
 
@@ -73,7 +73,7 @@
 # it is assumed that only two FPs are connected to the system
 - parameter: COP_FP1
   where:
-    name: ^(Balance|Y)*
+    name: ^(Balance_|Y Balance_)[LR]*
   steps:
     - if: exists(ForcePlate1)
       then: ForcePlate1.fz
@@ -83,7 +83,7 @@
 
 - parameter: COP_FP2
   where:
-    name: ^(Balance|Y)*
+    name: ^(Balance_|Y Balance_)[LR]*
   steps:
     - if: exists(ForcePlate2)
       then: ForcePlate2.fz
@@ -93,7 +93,7 @@
 
 - parameter: COP_direct
   where:
-    name: ^(Balance|Y)*
+    name: ^(Balance_|Y Balance_)[LR]*
   steps:
     - if: (COP_FP1 > COP_FP2)
       then: ForcePlate1
@@ -106,7 +106,7 @@
 # Calculate combined COP for double leg balance (it is assumed that both FPs are loaded)
 - parameter: COP_direct
   where: 
-    name: ^(Double)*
+    name: Balance_B*
   steps:
     - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
     - magnitude:
@@ -193,7 +193,7 @@
 # find out which plate is loaded
 - parameter: loaded_FP
   where:
-    name: ^(Balance|Y)*
+    name: ^(Balance_|Y Balance_)[LR]*
   steps:
     - if: (COP_FP1 > COP_FP2)
       then: ForcePlate1
@@ -203,7 +203,7 @@
 
 - parameter: loaded_FP
   where:
-    name: ^(Double)*
+    name: Balance_B*
   steps:
     - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
     - vector: [ForcePlate2.fx, ForcePlate2.fy, ForcePlate2.fz]
