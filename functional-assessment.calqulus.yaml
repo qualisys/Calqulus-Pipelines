@@ -61,7 +61,7 @@
 
 - template: templates/fa/balance.calqulus.yaml
   where:
-    name: Balance*
+    name: ^(Balance|Double-Leg Balance|Y Balance)*
     # force: any # Balance session requires force plates presence
 
 # Body weight (applies to all tasks)

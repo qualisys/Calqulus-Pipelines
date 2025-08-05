@@ -26,28 +26,42 @@
 - event: LeftPlotStart
   set: left
   where:
-    name: Balance_L*
+    name: Double*
   steps:
     - import: BOF
 
 - event: LeftPlotEnd
   set: left
   where:
-    name: Balance_L*
+    name: Double*
+  steps:
+    - import: EOF
+
+- event: LeftPlotStart
+  set: left
+  where:
+    name: ^(Balance|Y Balance)_L*
+  steps:
+    - import: BOF
+
+- event: LeftPlotEnd
+  set: left
+  where:
+    name: ^(Balance|Y Balance)_L*
   steps:
     - import: EOF
 
 - event: RightPlotStart
   set: right
   where:
-    name: Balance_R*
+    name: ^(Balance|Y Balance)_R*
   steps:
     - import: BOF
 
 - event: RightPlotEnd
   set: right
   where:
-    name: Balance_R*
+    name: ^(Balance|Y Balance)_R*
   steps:
     - import: EOF
 
@@ -58,6 +72,8 @@
 # find out which FP is loaded
 # it is assumed that only two FPs are connected to the system
 - parameter: COP_FP1
+  where:
+    name: ^(Balance|Y)*
   steps:
     - if: exists(ForcePlate1)
       then: ForcePlate1.fz
@@ -66,6 +82,8 @@
     - abs:
 
 - parameter: COP_FP2
+  where:
+    name: ^(Balance|Y)*
   steps:
     - if: exists(ForcePlate2)
       then: ForcePlate2.fz
@@ -74,11 +92,41 @@
     - abs:
 
 - parameter: COP_direct
+  where:
+    name: ^(Balance|Y)*
   steps:
     - if: (COP_FP1 > COP_FP2)
       then: ForcePlate1
       else: ForcePlate2
     - vector: [$prev.x, $prev.y, $prev.z]
+    - lowpass:
+      cutoff: 10
+      extrapolate: 75
+
+# Calculate combined COP for double leg balance (it is assumed that both FPs are loaded)
+- parameter: COP_direct
+  where: 
+    name: ^(Double)*
+  steps:
+    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
+    - magnitude:
+      output: fp1_mag
+    - vector: [ForcePlate2.fx, ForcePlate2.fy, ForcePlate2.fz]
+    - magnitude:
+      output: fp2_mag
+
+    - vector: [ForcePlate1.x, ForcePlate1.y, ForcePlate1.z]
+    - multiply: [$prev, [fp1_mag, fp1_mag, fp1_mag]]
+      output: l_temp
+    - vector: [ForcePlate2.x, ForcePlate2.y, ForcePlate2.z]
+    - multiply: [$prev, [fp2_mag, fp2_mag, fp2_mag]]
+      output: r_temp
+
+    - add: [l_temp, r_temp]
+      output: temp_sum
+    - add: [fp1_mag, fp2_mag]
+      output: grf_sum
+    - divide: [temp_sum, [grf_sum, grf_sum, grf_sum]]
     - lowpass:
       cutoff: 10
       extrapolate: 75
@@ -144,18 +192,30 @@
 
 # find out which plate is loaded
 - parameter: loaded_FP
+  where:
+    name: ^(Balance|Y)*
   steps:
     - if: (COP_FP1 > COP_FP2)
       then: ForcePlate1
       else: ForcePlate2
     - lowpass:
+    - vector: [$prev.fx, $prev.fy, $prev.fz]
 
+- parameter: loaded_FP
+  where:
+    name: ^(Double)*
+  steps:
+    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
+    - vector: [ForcePlate2.fx, ForcePlate2.fy, ForcePlate2.fz]
+    - add: [$prev, $prev(2)]
+    - lowpass:
+    
 - parameter: DPSI
   steps:
     - multiply: [$bodyMass, 9.81]
       output: bw
 
-    - vector: [loaded_FP.fx, loaded_FP.fy, loaded_FP.fz]
+    - vector: [loaded_FP.x, loaded_FP.y, loaded_FP.z]
     - negate:
       output: my_force
 
