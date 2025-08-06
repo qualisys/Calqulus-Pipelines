@@ -22,64 +22,116 @@
   steps:
     - subtract: [$length, 1]
 
-# it is assumed that LON,LOFF,RON,ROFF were manually entered in QTM
+# We try to defect ON and OFF events from force data.
+# If force based events are not found, we look for manual events as entered to QTM timeline (LON, LOFF, RON, ROFF).
+# If manual events are not found we set kinetics events to BOF and EOF.
 
-# Unified event names for web
-- event: LeftPlotStart
+- event: LON_prio
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: LON_prio2
+
+- event: LON_prio2
   set: left
   steps:
     - if: exists(LON)
       then: LON
       else: BOF
 
-- event: LeftPlotEnd
+- event: LOFF_prio
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: LOFF_prio2
+
+- event: LOFF_prio2
   set: left
   steps:
     - if: exists(LOFF)
       then: LOFF
       else: EOF
 
-- event: RightPlotStart
+- event: RON_prio
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: RON_prio2
+
+- event: RON_prio2
   set: right
   steps:
     - if: exists(RON)
       then: RON
       else: BOF
 
-- event: RightPlotEnd
+- event: ROFF_prio
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: ROFF_prio2
+
+- event: ROFF_prio2
   set: right
   steps:
     - if: exists(ROFF)
       then: ROFF
       else: EOF
 
+# Unified event names for web
+# Use kinematics events (Lstart, Lend, Rstart, Rend) if entered to QTM timeline, else use BOF and EOF
+
+- event: LeftPlotStart
+  set: left
+  steps:
+    - if: exists(Lstart)
+      then: Lstart
+      else: BOF
+
+- event: LeftPlotEnd
+  set: left
+  steps:
+    - if: exists(Lend)
+      then: Lend
+      else: EOF
+
+- event: RightPlotStart
+  set: right
+  steps:
+    - if: exists(Rstart)
+      then: Rstart
+      else: BOF
+
+- event: RightPlotEnd
+  set: right
+  steps:
+    - if: exists(Rend)
+      then: Rend
+      else: EOF
+
 - event: LeftPlotStartForce
   set: left
   steps:
-    - if: exists(LON_force)
-      then: LON_force
-      else: BOF
+    - import: LON_prio
 
 - event: LeftPlotEndForce
   set: left
   steps:
-    - if: exists(LOFF_force)
-      then: LOFF_force
-      else: EOF
+    - import: LOFF_prio
 
 - event: RightPlotStartForce
   set: right
   steps:
-    - if: exists(RON_force)
-      then: RON_force
-      else: BOF
+    - import: RON_prio
 
 - event: RightPlotEndForce
   set: right
   steps:
-    - if: exists(ROFF_force)
-      then: ROFF_force
-      else: EOF
+    - import: ROFF_prio
 
 ############
 ## SERIES ##
