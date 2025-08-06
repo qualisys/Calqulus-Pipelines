@@ -22,64 +22,64 @@
   steps:
     - subtract: [$length, 1]
 
-# We try to defect ON and OFF events from force data.
-# If force based events are not found, we look for manual events as entered to QTM timeline (LON, LOFF, RON, ROFF).
-# If manual events are not found we set kinetics events to BOF and EOF.
+# We try to defect manual  (LON, LOFF, RON, ROFF) events from QTM timeline.
+# If manual events are not found, we look for automatic kinetics events.
+# If automatic kinetics events are not found we set kinetics events to BOF and EOF.
 
 - event: LON_prio
   set: left
   steps:
-    - if: exists(LON_force)
-      then: LON_force
+    - if: exists(LON)
+      then: LON
       else: LON_prio2
 
 - event: LON_prio2
   set: left
   steps:
-    - if: exists(LON)
-      then: LON
+    - if: exists(LON_force)
+      then: LON_force
       else: BOF
 
 - event: LOFF_prio
   set: left
   steps:
-    - if: exists(LOFF_force)
-      then: LOFF_force
+    - if: exists(LOFF)
+      then: LOFF
       else: LOFF_prio2
 
 - event: LOFF_prio2
   set: left
   steps:
-    - if: exists(LOFF)
-      then: LOFF
+    - if: exists(LOFF_force)
+      then: LOFF_force
       else: EOF
 
 - event: RON_prio
   set: right
   steps:
-    - if: exists(RON_force)
-      then: RON_force
+    - if: exists(RON)
+      then: RON
       else: RON_prio2
 
 - event: RON_prio2
   set: right
   steps:
-    - if: exists(RON)
-      then: RON
+    - if: exists(RON_force)
+      then: RON_force
       else: BOF
 
 - event: ROFF_prio
   set: right
   steps:
-    - if: exists(ROFF_force)
-      then: ROFF_force
+    - if: exists(ROFF)
+      then: ROFF
       else: ROFF_prio2
 
 - event: ROFF_prio2
   set: right
   steps:
-    - if: exists(ROFF)
-      then: ROFF
+    - if: exists(ROFF_force)
+      then: ROFF_force
       else: EOF
 
 # Unified event names for web
