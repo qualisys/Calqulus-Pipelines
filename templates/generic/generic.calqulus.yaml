@@ -22,116 +22,218 @@
   steps:
     - subtract: [$length, 1]
 
-# We try to defect manual  (LON, LOFF, RON, ROFF) events from QTM timeline.
-# If manual events are not found, we look for automatic kinetics events.
-# If automatic kinetics events are not found we set kinetics events to BOF and EOF.
+# `Graph event mode`:
+#     No events (Default) [Full measurement]:
+#         BOF and EOF for all graph types
+#     Forceplate events [From forceplates]:
+#         Same events for all graphs based on forceplates data (RON_force, ROFF_force, LON_force and LOFF_force)
+#     Manual events [Manual]:
+#         Same manual events for all graph types (Rstart, Rend, Lstart, Lend)
+#         Different manual events for all graph types (Rstart, RON, Rend, ROFF, Lstart, LON, Lend, LOFF)
 
-- event: LON_prio
-  set: left
-  steps:
-    - if: exists(LON)
-      then: LON
-      else: LON_prio2
-
-- event: LON_prio2
-  set: left
-  steps:
-    - if: exists(LON_force)
-      then: LON_force
-      else: BOF
-
-- event: LOFF_prio
-  set: left
-  steps:
-    - if: exists(LOFF)
-      then: LOFF
-      else: LOFF_prio2
-
-- event: LOFF_prio2
-  set: left
-  steps:
-    - if: exists(LOFF_force)
-      then: LOFF_force
-      else: EOF
-
-- event: RON_prio
-  set: right
-  steps:
-    - if: exists(RON)
-      then: RON
-      else: RON_prio2
-
-- event: RON_prio2
-  set: right
-  steps:
-    - if: exists(RON_force)
-      then: RON_force
-      else: BOF
-
-- event: ROFF_prio
-  set: right
-  steps:
-    - if: exists(ROFF)
-      then: ROFF
-      else: ROFF_prio2
-
-- event: ROFF_prio2
-  set: right
-  steps:
-    - if: exists(ROFF_force)
-      then: ROFF_force
-      else: EOF
-
-# Unified event names for web
-# Use kinematics events (Lstart, Lend, Rstart, Rend) if entered to QTM timeline, else use BOF and EOF
-
+# LeftPlotStart ------------
 - event: LeftPlotStart
   set: left
   steps:
-    - if: exists(Lstart)
-      then: Lstart
-      else: BOF
+    - if: $field(Graph event mode) == $"Full measurement"
+      then: BOF
+      else: LeftPlotStart_prio_1
 
+- event: LeftPlotStart_prio_1
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"From forceplates" && exists(LON_force)
+      then: LON_force
+      else: LeftPlotStart_prio_2
+
+- event: LeftPlotStart_prio_2
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(LON) && !exists(Lstart)
+      then: LON
+      else: LeftPlotStart_prio_3
+
+- event: LeftPlotStart_prio_3
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(Lstart)
+      then: Lstart
+      else: [[]]
+
+# LeftPlotForceStart ------------
+- event: LeftPlotForceStart
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"Full measurement"
+      then: BOF
+      else: LeftPlotForceStart_prio_1
+
+- event: LeftPlotForceStart_prio_1
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"From forceplates" && exists(LON_force)
+      then: LON_force
+      else: LeftPlotForceStart_prio_2
+
+- event: LeftPlotForceStart_prio_2
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(LON)
+      then: LON
+      else: [[]]
+
+# LeftPlotEnd ------------
 - event: LeftPlotEnd
   set: left
   steps:
-    - if: exists(Lend)
-      then: Lend
-      else: EOF
+    - if: $field(Graph event mode) == $"Full measurement"
+      then: EOF
+      else: LeftPlotEnd_prio_1
 
+- event: LeftPlotEnd_prio_1
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"From forceplates" && exists(LOFF_force)
+      then: LOFF_force
+      else: LeftPlotEnd_prio_2
+
+- event: LeftPlotEnd_prio_2
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(LOFF) && !exists(Lend)
+      then: LOFF
+      else: LeftPlotEnd_prio_3
+
+- event: LeftPlotEnd_prio_3
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(Lend)
+      then: Lend
+      else: [[]]
+
+# LeftPlotForceEnd ------------
+- event: LeftPlotForceEnd
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"Full measurement"
+      then: EOF
+      else: LeftPlotForceEnd_prio_1
+
+- event: LeftPlotForceEnd_prio_1
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"From forceplates" && exists(LOFF_force)
+      then: LOFF_force
+      else: LeftPlotForceEnd_prio_2
+
+- event: LeftPlotForceEnd_prio_2
+  set: left
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(LOFF)
+      then: LOFF
+      else: [[]]
+
+# RightPlotStart ------------
 - event: RightPlotStart
   set: right
   steps:
-    - if: exists(Rstart)
-      then: Rstart
-      else: BOF
+    - if: $field(Graph event mode) == $"Full measurement"
+      then: BOF
+      else: RightPlotStart_prio_1
 
+- event: RightPlotStart_prio_1
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"From forceplates" && exists(RON_force)
+      then: RON_force
+      else: RightPlotStart_prio_2
+
+- event: RightPlotStart_prio_2
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(RON) && !exists(Rstart)
+      then: RON
+      else: RightPlotStart_prio_3
+
+- event: RightPlotStart_prio_3
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(Rstart)
+      then: Rstart
+      else: [[]]
+
+# RightPlotForceStart ------------
+- event: RightPlotForceStart
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"Full measurement"
+      then: BOF
+      else: RightPlotForceStart_prio_1
+
+- event: RightPlotForceStart_prio_1
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"From forceplates" && exists(RON_force)
+      then: RON_force
+      else: RightPlotForceStart_prio_2
+
+- event: RightPlotForceStart_prio_2
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(RON)
+      then: RON
+      else: [[]]
+
+# RightPlotEnd ------------
 - event: RightPlotEnd
   set: right
   steps:
-    - if: exists(Rend)
+    - if: $field(Graph event mode) == $"Full measurement"
+      then: EOF
+      else: RightPlotEnd_prio_1
+
+- event: RightPlotEnd_prio_1
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"From forceplates" && exists(ROFF_force)
+      then: ROFF_force
+      else: RightPlotEnd_prio_2
+
+- event: RightPlotEnd_prio_2
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(ROFF) && !exists(Rend)
+      then: ROFF
+      else: RightPlotEnd_prio_3
+
+- event: RightPlotEnd_prio_3
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(Rend)
       then: Rend
-      else: EOF
+      else: [[]]
 
-- event: LeftPlotStartForce
-  set: left
-  steps:
-    - import: LON_prio
-
-- event: LeftPlotEndForce
-  set: left
-  steps:
-    - import: LOFF_prio
-
-- event: RightPlotStartForce
+# RightPlotForceEnd ------------
+- event: RightPlotForceEnd
   set: right
   steps:
-    - import: RON_prio
+    - if: $field(Graph event mode) == $"Full measurement"
+      then: EOF
+      else: RightPlotForceEnd_prio_1
 
-- event: RightPlotEndForce
+- event: RightPlotForceEnd_prio_1
   set: right
   steps:
-    - import: ROFF_prio
+    - if: $field(Graph event mode) == $"From forceplates" && exists(ROFF_force)
+      then: ROFF_force
+      else: RightPlotForceEnd_prio_2
+
+- event: RightPlotForceEnd_prio_2
+  set: right
+  steps:
+    - if: $field(Graph event mode) == $"Manual" && exists(ROFF)
+      then: ROFF
+      else: [[]]
 
 ############
 ## SERIES ##
