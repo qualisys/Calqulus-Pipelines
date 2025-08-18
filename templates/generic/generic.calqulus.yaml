@@ -35,28 +35,28 @@
 - event: LeftPlotStart
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Full measurement"
+    - if: $field(session/Graph event mode) == $"Full measurement" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Full measurement"
       then: BOF
       else: LeftPlotStart_prio_1
 
 - event: LeftPlotStart_prio_1
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"From forceplates" && exists(LON_force)
+    - if: ($field(session/Graph event mode) == $"From forceplates" || $field(functionalAssessmentSubsessions/Graph event mode) == $"From forceplates") && exists(LON_force)
       then: LON_force
       else: LeftPlotStart_prio_2
 
 - event: LeftPlotStart_prio_2
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(LON) && !exists(Lstart)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(LON) && !exists(Lstart)
       then: LON
       else: LeftPlotStart_prio_3
 
 - event: LeftPlotStart_prio_3
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(Lstart)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(Lstart)
       then: Lstart
       else: BOF
 
@@ -64,21 +64,21 @@
 - event: LeftPlotStartForce
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Full measurement"
+    - if: $field(session/Graph event mode) == $"Full measurement" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Full measurement"
       then: BOF
       else: LeftPlotStartForce_prio_1
 
 - event: LeftPlotStartForce_prio_1
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"From forceplates" && exists(LON_force)
+    - if: ($field(session/Graph event mode) == $"From forceplates" || $field(functionalAssessmentSubsessions/Graph event mode) == $"From forceplates") && exists(LON_force)
       then: LON_force
       else: LeftPlotStartForce_prio_2
 
 - event: LeftPlotStartForce_prio_2
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(LON)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(LON)
       then: LON
       else: BOF
 
@@ -86,28 +86,28 @@
 - event: LeftPlotEnd
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Full measurement"
+    - if: $field(session/Graph event mode) == $"Full measurement" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Full measurement"
       then: EOF
       else: LeftPlotEnd_prio_1
 
 - event: LeftPlotEnd_prio_1
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"From forceplates" && exists(LOFF_force)
+    - if: ($field(session/Graph event mode) == $"From forceplates" || $field(functionalAssessmentSubsessions/Graph event mode) == $"From forceplates") && exists(LOFF_force)
       then: LOFF_force
       else: LeftPlotEnd_prio_2
 
 - event: LeftPlotEnd_prio_2
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(LOFF) && !exists(Lend)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && !exists(Lend)
       then: LOFF
       else: LeftPlotEnd_prio_3
 
 - event: LeftPlotEnd_prio_3
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(Lend)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(Lend)
       then: Lend
       else: EOF
 
@@ -115,21 +115,21 @@
 - event: LeftPlotEndForce
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Full measurement"
+    - if: $field(session/Graph event mode) == $"Full measurement" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Full measurement"
       then: EOF
       else: LeftPlotEndForce_prio_1
 
 - event: LeftPlotEndForce_prio_1
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"From forceplates" && exists(LOFF_force)
+    - if: ($field(session/Graph event mode) == $"From forceplates" || $field(functionalAssessmentSubsessions/Graph event mode) == $"From forceplates") && exists(LOFF_force)
       then: LOFF_force
       else: LeftPlotEndForce_prio_2
 
 - event: LeftPlotEndForce_prio_2
   set: left
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(LOFF)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(LOFF)
       then: LOFF
       else: EOF
 
@@ -137,28 +137,28 @@
 - event: RightPlotStart
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Full measurement"
+    - if: $field(session/Graph event mode) == $"Full measurement" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Full measurement"
       then: BOF
       else: RightPlotStart_prio_1
 
 - event: RightPlotStart_prio_1
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"From forceplates" && exists(RON_force)
+    - if: ($field(session/Graph event mode) == $"From forceplates" || $field(functionalAssessmentSubsessions/Graph event mode) == $"From forceplates") && exists(RON_force)
       then: RON_force
       else: RightPlotStart_prio_2
 
 - event: RightPlotStart_prio_2
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(RON) && !exists(Rstart)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(RON) && !exists(Rstart)
       then: RON
       else: RightPlotStart_prio_3
 
 - event: RightPlotStart_prio_3
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(Rstart)
+    - if: ($field(session/Graph event mode) == $"Manual"  || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(Rstart)
       then: Rstart
       else: BOF
 
@@ -166,21 +166,21 @@
 - event: RightPlotStartForce
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Full measurement"
+    - if: $field(session/Graph event mode) == $"Full measurement" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Full measurement"
       then: BOF
       else: RightPlotStartForce_prio_1
 
 - event: RightPlotStartForce_prio_1
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"From forceplates" && exists(RON_force)
+    - if: ($field(session/Graph event mode) == $"From forceplates" || $field(functionalAssessmentSubsessions/Graph event mode) == $"From forceplates") && exists(RON_force)
       then: RON_force
       else: RightPlotStartForce_prio_2
 
 - event: RightPlotStartForce_prio_2
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(RON)
+    - if: ($field(session/Graph event mode) == $"Manual"  || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(RON) 
       then: RON
       else: BOF
 
@@ -188,28 +188,28 @@
 - event: RightPlotEnd
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Full measurement"
+    - if: $field(session/Graph event mode) == $"Full measurement" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Full measurement"
       then: EOF
       else: RightPlotEnd_prio_1
 
 - event: RightPlotEnd_prio_1
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"From forceplates" && exists(ROFF_force)
+    - if: ($field(session/Graph event mode) == $"From forceplates" || $field(functionalAssessmentSubsessions/Graph event mode) == $"From forceplates") && exists(ROFF_force)
       then: ROFF_force
       else: RightPlotEnd_prio_2
 
 - event: RightPlotEnd_prio_2
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(ROFF) && !exists(Rend)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(ROFF) && !exists(Rend)
       then: ROFF
       else: RightPlotEnd_prio_3
 
 - event: RightPlotEnd_prio_3
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(Rend)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(Rend)
       then: Rend
       else: EOF
 
@@ -217,21 +217,21 @@
 - event: RightPlotEndForce
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Full measurement"
+    - if: $field(session/Graph event mode) == $"Full measurement" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Full measurement"
       then: EOF
       else: RightPlotEndForce_prio_1
 
 - event: RightPlotEndForce_prio_1
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"From forceplates" && exists(ROFF_force)
+    - if: ($field(session/Graph event mode) == $"From forceplates" || $field(functionalAssessmentSubsessions/Graph event mode) == $"From forceplates") && exists(ROFF_force)
       then: ROFF_force
       else: RightPlotEndForce_prio_2
 
 - event: RightPlotEndForce_prio_2
   set: right
   steps:
-    - if: $field(session/Graph event mode) == $"Manual" && exists(ROFF)
+    - if: ($field(session/Graph event mode) == $"Manual" || $field(functionalAssessmentSubsessions/Graph event mode) == $"Manual") && exists(ROFF)
       then: ROFF
       else: EOF
 
