@@ -46,7 +46,7 @@
   where:
     name: Squat*
 
-- template: templates/generic/generic.calqulus.yaml
+- template: templates/fa/lunge.calqulus.yaml
   where:
     name: Lunge*
 

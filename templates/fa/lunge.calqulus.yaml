@@ -1,0 +1,1283 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# `Graph event mode`:
+#     No events (Default) [Full measurement]:
+#         BOF and EOF for all graph types
+#     Forceplate events [From forceplates]:
+#         Same events for all graphs based on forceplates data (RON_force, ROFF_force, LON_force and LOFF_force)
+#     Manual events [Manual]:
+#         Same manual events for all graph types (Rstart, Rend, Lstart, Lend)
+#         Different manual events for all graph types (Rstart, RON, Rend, ROFF, Lstart, LON, Lend, LOFF)
+
+# LeftPlotStart ------------
+- event: LeftPlotStart
+  set: left
+  steps:
+    - import: BOF
+
+# LeftPlotStartForce ------------
+- event: LeftPlotStartForce
+  set: left
+  steps:
+    - if: exists(LON_force)
+      then: LON_force
+      else: BOF
+
+# LeftPlotEnd ------------
+- event: LeftPlotEnd
+  set: left
+  steps:
+    - import: EOF
+
+# LeftPlotEndForce ------------
+- event: LeftPlotEndForce
+  set: left
+  steps:
+    - if: exists(LOFF_force)
+      then: LOFF_force
+      else: EOF
+
+# RightPlotStart ------------
+- event: RightPlotStart
+  set: right
+  steps:
+    - import: BOF
+
+# RightPlotStartForce ------------
+- event: RightPlotStartForce
+  set: right
+  steps:
+    - if: exists(RON_force)
+      then: RON_force
+      else: BOF
+
+# RightPlotEnd ------------
+- event: RightPlotEnd
+  set: right
+  steps:
+    - import: EOF
+
+# RightPlotEndForce ------------
+- event: RightPlotEndForce
+  set: right
+  steps:
+    - if: exists(ROFF_force)
+      then: ROFF_force
+      else: EOF
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+# Following pelvis and thorax are required by layout
+# --- Pelvis ---
+
+- parameter: Pelvic Angles
+  where:
+    name: '!Static*'
+  steps:
+    - angle: Hips # angle is calculated relative to axes of global coordinate system, if only single input exists
+      space: VirtualLab # calculate angle relative to virtual lab
+    - multiply: [$prev, [-1, 1, 1]] # invert first component of output
+
+# --- Thorax ---
+
+- parameter: Thorax Angles
+  where:
+    name: '!Static*'
+  steps:
+    - angle: [Hips, Spine2]
+    - multiply: [$prev, [-1, -1, 1]]
+
+#############
+## Metrics ##
+#############
+
+# Find global maximum/minimum/mean/range
+
+# Left ----
+# Pelvis
+- parameter: Left Pelvic Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Pelvic Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Pelvic Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Pelvic Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Pelvic Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Pelvic Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Pelvis Tilt max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Pelvic Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.x
+
+- parameter: Pelvis Tilt min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Pelvic Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.x
+
+- parameter: Pelvis Tilt range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Pelvis Tilt max, Pelvis Tilt min]
+
+# Hips
+- parameter: Left Hip Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Hip Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Hip Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Hip Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Hip Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Hip Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Hip Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Hip Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.x
+
+- parameter: Left Hip Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Hip Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.x
+
+- parameter: Left Hip Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Hip Flex max, Left Hip Flex min]
+
+# Knees
+- parameter: Left Knee Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Knee Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Knee Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Knee Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Knee Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.x
+
+- parameter: Left Knee Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Knee Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.x
+
+- parameter: Left Knee Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Knee Flex max, Left Knee Flex min]
+
+# Ankles
+- parameter: Left Ankle Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Ankle Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Ankle Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Ankle Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Ankle Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Ankle Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Ankle Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Ankle Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.x
+
+- parameter: Left Ankle Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Ankle Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.x
+
+- parameter: Left Ankle Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Ankle Flex max, Left Ankle Flex min]
+
+# Feet
+- parameter: Left Foot Pitch Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Foot Pitch Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Foot Pitch Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Foot Pitch Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Foot Pitch Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Foot Pitch Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+# Copy of previous signal for compatibility with report layout
+- parameter: Left Foot Progression_max
+  set: left
+  steps:
+    - import: Left Foot Pitch Angles_max
+
+- parameter: Left Foot Progression_min
+  set: left
+  steps:
+    - import: Left Foot Pitch Angles_min
+
+- parameter: Left Foot Progression_mean
+  set: left
+  steps:
+    - import: Left Foot Pitch Angles_mean
+
+# Shoulders
+- parameter: Left Shoulder Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Shoulder Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Shoulder Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Shoulder Ang Vel_max
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Ang Vel, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Shoulder Ang Vel_min
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Ang Vel, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Shoulder Ang Vel_mean
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Ang Vel, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Shoulder Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Shoulder Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.x
+
+- parameter: Left Shoulder Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Shoulder Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.x
+
+- parameter: Left Shoulder Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Shoulder Flex max, Left Shoulder Flex min]
+
+# Elbows
+- parameter: Left Elbow Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Elbow Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Elbow Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Elbow Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Elbow Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Elbow Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Elbow Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Elbow Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.x
+
+- parameter: Left Elbow Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Elbow Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.x
+
+- parameter: Left Elbow Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Elbow Flex max, Left Elbow Flex min]
+
+# Wrists
+- parameter: Left Wrist Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Wrist Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Wrist Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Wrist Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Wrist Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Wrist Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Wrist Flex max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Wrist Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.x
+
+- parameter: Left Wrist Flex min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Wrist Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.x
+
+- parameter: Left Wrist Flex range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Wrist Flex max, Left Wrist Flex min]
+
+# Thorax
+- parameter: Left Thorax Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Thorax Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Thorax Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Thorax Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Thorax Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Thorax Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Thorax_Lab Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Thorax_Lab Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Thorax_Lab Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Thorax_Lab Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Thorax_Lab Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Thorax_Lab Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Thorax Forward Tilt max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Thorax Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.x
+
+- parameter: Thorax Forward Tilt min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Thorax Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.x
+
+- parameter: Thorax Forward Tilt range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Thorax Forward Tilt max, Thorax Forward Tilt min]
+
+# Right ---
+# Pelvis
+- parameter: Right Pelvic Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Pelvic Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Pelvic Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Pelvic Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Pelvic Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Pelvic Angles, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+# Hips
+- parameter: Right Hip Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Hip Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Hip Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Hip Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Hip Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Hip Angles, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+- parameter: Right Hip Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Hip Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - max: $prev.x
+
+- parameter: Right Hip Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Hip Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - min: $prev.x
+
+- parameter: Right Hip Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Hip Flex max, Right Hip Flex min]
+
+# Knees
+- parameter: Right Knee Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Knee Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Knee Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+- parameter: Right Knee Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Knee Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - max: $prev.x
+
+- parameter: Right Knee Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Knee Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - min: $prev.x
+
+- parameter: Right Knee Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Knee Flex max, Right Knee Flex min]
+
+# Ankles
+- parameter: Right Ankle Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Ankle Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Ankle Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Ankle Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Ankle Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Ankle Angles, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+- parameter: Right Ankle Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Ankle Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - max: $prev.x
+
+- parameter: Right Ankle Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Ankle Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - min: $prev.x
+
+- parameter: Right Ankle Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Ankle Flex max, Right Ankle Flex min]
+
+# Feet
+- parameter: Right Foot Pitch Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Foot Pitch Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Foot Pitch Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Foot Pitch Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Foot Pitch Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Foot Pitch Angles, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+# Copy of previous signal for compatibility with report layout
+- parameter: Right Foot Progression_max
+  set: right
+  steps:
+    - import: Right Foot Pitch Angles_max
+
+- parameter: Right Foot Progression_min
+  set: right
+  steps:
+    - import: Right Foot Pitch Angles_min
+
+- parameter: Right Foot Progression_mean
+  set: right
+  steps:
+    - import: Right Foot Pitch Angles_mean
+
+# Shoulders
+- parameter: Right Shoulder Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Shoulder Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Shoulder Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Angles, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+- parameter: Right Shoulder Ang Vel_max
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Ang Vel, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Shoulder Ang Vel_min
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Ang Vel, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Shoulder Ang Vel_mean
+  set: right
+  steps:
+    - eventMask: [Right Shoulder Ang Vel, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+- parameter: Right Shoulder Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Shoulder Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - max: $prev.x
+
+- parameter: Right Shoulder Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Shoulder Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - min: $prev.x
+
+- parameter: Right Shoulder Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Shoulder Flex max, Right Shoulder Flex min]
+
+# Elbows
+- parameter: Right Elbow Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Elbow Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Elbow Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Elbow Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Elbow Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Elbow Angles, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+- parameter: Right Elbow Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Elbow Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - max: $prev.x
+
+- parameter: Right Elbow Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Elbow Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - min: $prev.x
+
+- parameter: Right Elbow Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Elbow Flex max, Right Elbow Flex min]
+
+# Wrists
+- parameter: Right Wrist Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Wrist Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Wrist Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Wrist Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Wrist Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Wrist Angles, RightPlotStart, RightPlotEnd]
+    - mean: 
+
+- parameter: Right Wrist Flex max
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Wrist Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - max: $prev.x
+
+- parameter: Right Wrist Flex min
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - import: Right Wrist Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - min: $prev.x
+
+- parameter: Right Wrist Flex range
+  where:
+    name: '!Static*'
+  set: right
+  steps:
+    - subtract: [Right Wrist Flex max, Right Wrist Flex min]
+
+# Thorax
+- parameter: Right Thorax Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Thorax Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Thorax Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Thorax Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Thorax Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Thorax Angles, RightPlotStart, RightPlotEnd]
+    - mean:
+
+- parameter: Right Thorax_Lab Angles_max
+  set: right
+  steps:
+    - eventMask: [Right Thorax_Lab Angles, RightPlotStart, RightPlotEnd]
+    - max: 
+
+- parameter: Right Thorax_Lab Angles_min
+  set: right
+  steps:
+    - eventMask: [Right Thorax_Lab Angles, RightPlotStart, RightPlotEnd]
+    - min: 
+
+- parameter: Right Thorax_Lab Angles_mean
+  set: right
+  steps:
+    - eventMask: [Right Thorax_Lab Angles, RightPlotStart, RightPlotEnd]
+    - mean:
+
+# Head
+- parameter: Head Forward Tilt max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Head Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - max: $prev.x
+
+- parameter: Head Forward Tilt min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Head Angles
+    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - min: $prev.x
+
+- parameter: Head Forward Tilt range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Head Forward Tilt max, Head Forward Tilt min]
+
+# Kinetics ---
+# Left
+- parameter: Left Hip Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Hip Moment
+
+- parameter: Left Knee Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Knee Moment
+
+- parameter: Left Ankle Moment_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Ankle Moment
+
+- parameter: Left Hip Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Hip Power
+
+- parameter: Left Knee Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Knee Moment
+
+- parameter: Left Ankle Power_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left Ankle Moment
+
+- parameter: Left GRF_max
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - max: Left GRF
+
+- parameter: Left Hip Moment_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Hip Moment
+
+- parameter: Left Knee Moment_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Knee Moment
+
+- parameter: Left Ankle Moment_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Ankle Moment
+
+- parameter: Left Hip Power_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Hip Power
+
+- parameter: Left Knee Power_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Knee Moment
+
+- parameter: Left Ankle Power_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left Ankle Moment
+
+- parameter: Left GRF_min
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - min: Left GRF
+
+- parameter: Left Hip Moment_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Hip Moment
+
+- parameter: Left Knee Moment_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Knee Moment
+
+- parameter: Left Ankle Moment_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Ankle Moment
+
+- parameter: Left Hip Power_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Hip Power
+
+- parameter: Left Knee Power_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Knee Moment
+
+- parameter: Left Ankle Power_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left Ankle Moment
+
+- parameter: Left GRF_mean
+  where:
+    name: '!Static*'
+    force: left
+  set: left
+  steps:
+   - mean: Left GRF
+
+# Right
+- parameter: Right Hip Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Hip Moment
+
+- parameter: Right Knee Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Knee Moment
+
+- parameter: Right Ankle Moment_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Ankle Moment
+
+- parameter: Right Hip Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Hip Power
+
+- parameter: Right Knee Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Knee Moment
+
+- parameter: Right Ankle Power_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right Ankle Moment
+
+- parameter: Right GRF_max
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - max: Right GRF
+
+- parameter: Right Hip Moment_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Hip Moment
+
+- parameter: Right Knee Moment_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Knee Moment
+
+- parameter: Right Ankle Moment_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Ankle Moment
+
+- parameter: Right Hip Power_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Hip Power
+
+- parameter: Right Knee Power_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Knee Moment
+
+- parameter: Right Ankle Power_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right Ankle Moment
+
+- parameter: Right GRF_min
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - min: Right GRF
+
+- parameter: Right Hip Moment_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Hip Moment
+
+- parameter: Right Knee Moment_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Knee Moment
+
+- parameter: Right Ankle Moment_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Ankle Moment
+
+- parameter: Right Hip Power_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Hip Power
+
+- parameter: Right Knee Power_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Knee Moment
+
+- parameter: Right Ankle Power_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right Ankle Moment
+
+- parameter: Right GRF_mean
+  where:
+    name: '!Static*'
+    force: right
+  set: right
+  steps:
+   - mean: Right GRF
