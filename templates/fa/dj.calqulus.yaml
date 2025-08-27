@@ -333,6 +333,55 @@
     - power:
     - divide: [$prev, 19.62] #(2 * 9.81)
 
+# Impulse (vel = impulse/m, h = vel@takeoff^2 /2g)
+- parameter: COM_displacement_MEAN_max_impulse_DVJ_B
+  where:
+    name: DJ_B*
+    force: both
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    - multiply: [Total GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
+      replacement: 
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_impulse_DVJ_L
+  where:
+    name: DJ_L*
+    force: left
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    - multiply: [Left GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
+      replacement:
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
+- parameter: COM_displacement_MEAN_max_impulse_DVJ_R
+  where:
+    name: DJ_R*
+    force: right
+  steps:
+    - multiply: [$bodyMass, 9.81]
+    - multiply: [Right GRF, $prev]
+    - subtract: [$prev, $prev(2)]
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
+      replacement:
+    - integral:
+      scalar: true
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
+    - power:
+    - divide: [$prev, 19.62] #(2 * 9.81)
+
 - parameter: COM_displacement_MEAN_min_DVJ_B
   where:
     name: DJ_B*
@@ -350,6 +399,7 @@
     name: DJ_R*
   steps:
     - subtract: [CenterOfMass\@Landing_end.z, CenterOfMass_MIN_DVJ_R]
+
 
 #COM peak eccentric velocity
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_B
@@ -428,6 +478,24 @@
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_R,FlightTime_DVJ_R]
 
+- parameter: Jump_height_flight_time_ratio_impulse_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_DVJ_B,FlightTime_DVJ_B]
+
+- parameter: Jump_height_flight_time_ratio_impulse_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_DVJ_L,FlightTime_DVJ_L]
+
+- parameter: Jump_height_flight_time_ratio_impulse_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_DVJ_R,FlightTime_DVJ_R]
+
 # Jump height to Contact Time Ratio
 - parameter: Jump_height_contact_time_ratio_DVJ_B
   where:
@@ -482,6 +550,24 @@
     name: DJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_R, ContactTime_DVJ_R]
+
+- parameter: Jump_height_contact_time_ratio_impulse_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_DVJ_B, ContactTime_DVJ_B]
+
+- parameter: Jump_height_contact_time_ratio_impulse_DVJ_L
+  where:
+    name: DJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_DVJ_L, ContactTime_DVJ_L]
+
+- parameter: Jump_height_contact_time_ratio_impulse_DVJ_R
+  where:
+    name: DJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_DVJ_R, ContactTime_DVJ_R]
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_DVJ_B
@@ -1258,6 +1344,13 @@
 
 # Kinetics ----------
 # Bilateral
+- parameter: Total GRF
+  where:
+    name: DJ_B*
+    force: both
+  steps:
+    - add: [Left GRF, Right GRF]
+
 - parameter: Left_RFD
   where:
     name: ^(DJ_L|DJ_B)*

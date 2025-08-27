@@ -347,15 +347,13 @@
     force: both
   steps:
     - multiply: [$bodyMass, 9.81]
-    # - multiply: [$field(Weight; measurement; numeric),9.81]
     - multiply: [Total GRF, $prev]
     - subtract: [$prev, $prev(2)]
-    - eventMask: [$prev.z, PlotStart, TakeOff]
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
       replacement:
     - integral:
       scalar: true
-    - divide: [$prev, $bodyMass)] #this is takeoff velocity
-    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
     - divide: [$prev, 19.62] #(2 * 9.81)
 
@@ -365,15 +363,13 @@
     force: left
   steps:
     - multiply: [$bodyMass, 9.81]
-    # - multiply: [$field(Weight; measurement; numeric),9.81]
     - multiply: [Left GRF, $prev]
     - subtract: [$prev, $prev(2)]
-    - eventMask: [$prev.z, PlotStart_L, TakeOff_L]
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
       replacement:
     - integral:
       scalar: true
-    - divide: [$prev, $bodyMass)] #this is takeoff velocity
-    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
     - divide: [$prev, 19.62] #(2 * 9.81)
 
@@ -383,15 +379,13 @@
     force: right
   steps:
     - multiply: [$bodyMass, 9.81]
-    # - multiply: [$field(Weight; measurement; numeric),9.81]
     - multiply: [Right GRF, $prev]
     - subtract: [$prev, $prev(2)]
-    - eventMask: [$prev.z, PlotStart_R, TakeOff_R]
+    - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
       replacement:
     - integral:
       scalar: true
-    - divide: [$prev, $bodyMass)] #this is takeoff velocity
-    # - divide: [$prev, $field(Weight; measurement; numeric)] #this is takeoff velocity
+    - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
     - divide: [$prev, 19.62] #(2 * 9.81)
 
@@ -467,6 +461,24 @@
     name: SJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_SJ_R,FlightTime_SJ_R]
+
+- parameter: Jump_height_flight_time_ratio_impulse_SJ_B
+  where:
+    name: SJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_SJ_B,FlightTime_SJ_B]
+
+- parameter: Jump_height_flight_time_ratio_impulse_SJ_L
+  where:
+    name: SJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_SJ_L,FlightTime_SJ_L]
+
+- parameter: Jump_height_flight_time_ratio_impulse_SJ_R
+  where:
+    name: SJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_impulse_SJ_R,FlightTime_SJ_R]
 
 # COM distance to knee and ankle
 # @TouchDown

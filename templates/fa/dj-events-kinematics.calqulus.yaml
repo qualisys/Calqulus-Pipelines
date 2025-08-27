@@ -37,7 +37,7 @@
   set: left
   steps:
     - if: exists(LOFF_force)
-      then: LOFF_force
+      then: LOFF_force@1
       else: TakeOff_L_prio2
 
 - event: TakeOff_L
@@ -213,7 +213,7 @@
   set: right
   steps:
     - if: exists(ROFF_force)
-      then: ROFF_force
+      then: ROFF_force@1
       else: TakeOff_R_prio2
 
 - event: TakeOff_R
@@ -339,6 +339,39 @@
     name: DJ_[RB]*
   steps:
     - import: Landing_R
+
+- event: TakeOff_zero # used for jump height
+  where:
+    name: DJ_B*
+    force: both
+  steps:
+    - threshold: Total GRF.z
+      value: 0.01
+      direction: down
+    - eventMask: [$prev, TouchDown, Landing]
+      keep: -1
+
+- event: TakeOff_zero # used for jump height
+  where:
+    name: DJ_L*
+    force: left
+  steps:
+    - threshold: Left GRF.z
+      value: 0.01
+      direction: down
+    - eventMask: [$prev, TouchDown_L, Landing_L]
+      keep: -1
+
+- event: TakeOff_zero # used for jump height
+  where:
+    name: DJ_R*
+    force: right
+  steps:
+    - threshold: Right GRF.z
+      value: 0.01
+      direction: down
+    - eventMask: [$prev, TouchDown_R, Landing_R]
+      keep: -1
 
 # Following events are needed for compatibility with force data event detection
 - event: RON

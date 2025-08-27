@@ -127,6 +127,39 @@
       then: LON_prio
       else: LON_kinematics
 
+- event: TakeOff_zero # used for jump height
+  where:
+    name: ^(CMJ_|SJ_)[B]*
+    force: both
+  steps:
+    - threshold: Total GRF.z
+      value: 0.01
+      direction: down
+    - eventMask: [$prev, PlotStart, TouchDown]
+      keep: -1
+
+- event: TakeOff_zero # used for jump height
+  where:
+    name: ^(CMJ_|SJ_)[L]*
+    force: left
+  steps:
+    - threshold: Left GRF.z
+      value: 0.01
+      direction: down
+    - eventMask: [$prev, PlotStart_L, TouchDown_L]
+      keep: -1
+
+- event: TakeOff_zero # used for jump height
+  where:
+    name: ^(CMJ_|SJ_)[R]*
+    force: right
+  steps:
+    - threshold: Right GRF.z
+      value: 0.01
+      direction: down
+    - eventMask: [$prev, PlotStart_R, TouchDown_R]
+      keep: -1
+
 # Plotstart
 - event: PlotStart_L_calqulus
   where:

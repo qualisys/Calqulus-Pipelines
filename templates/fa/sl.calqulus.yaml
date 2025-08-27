@@ -221,23 +221,40 @@
     - max: 
 
 # Calculate hop distance
+# - parameter: Left_hop_distance
+#   where:
+#     name: ^(SLJ_|SLL_)L*
+#   set: left
+#   steps:
+#     - vector: [LeftFoot.x, LeftFoot.y, LeftFoot.z]
+#       space: VirtualLab
+#       output: heel
+#     - convert:
+#       from: mm
+#       to: m
+#     - import: heel@TakeOff
+#       export: LFT_DistEndPos@TakeOff
+#     - import: heel@TouchDwon
+#       export: LFT_DistEndPos@TouchDown
+#     - subtract: [$prev(2).y, $prev.y]
+#     - abs:
+
 - parameter: Left_hop_distance
   where:
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - vector: [LeftFoot.x, LeftFoot.y, LeftFoot.z]
+    - vector: [LeftToeBase.x, LeftToeBase.y, LeftToeBase.z]
       space: VirtualLab
-      output: heel
+      output: toe
     - convert:
       from: mm
       to: m
-    - import: heel@TakeOff
-      export: LFT_DistEndPos@TakeOff
-    - import: heel@TouchDwon
-      export: LFT_DistEndPos@TouchDown
+    - import: toe@Max_knee_flex_init
+      export: LFT_DistEndPos@Max_knee_flex_init
+    - import: toe@Max_knee_flex_landing
+      export: LFT_DistEndPos@Max_knee_flex_landing
     - subtract: [$prev(2).y, $prev.y]
-    # - subtract: [LFT_DistEndPos\@TakeOff.y,LFT_DistEndPos\@TouchDown.y]
     - abs:
 
 # Right -------------
@@ -435,23 +452,40 @@
     - max: 
 
 # Calculate hop distance
+# - parameter: Right_hop_distance
+#   where:
+#     name: ^(SLJ_|SLL_)R*
+#   set: right
+#   steps:
+#     - vector: [RightFoot.x, RightFoot.y, RightFoot.z]
+#       space: VirtualLab
+#       output: heel
+#     - convert:
+#       from: mm
+#       to: m
+#     - import: heel@TakeOff
+#       export: RFT_DistEndPos@TakeOff
+#     - import: heel@TouchDwon
+#       export: RFT_DistEndPos@TouchDown
+#     - subtract: [$prev(2).y, $prev.y]
+#     - abs:
+
 - parameter: Right_hop_distance
   where:
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - vector: [RightFoot.x, RightFoot.y, RightFoot.z]
+    - vector: [RightToeBase.x, RightToeBase.y, RightToeBase.z]
       space: VirtualLab
-      output: heel
+      output: toe
     - convert:
       from: mm
       to: m
-    - import: heel@TakeOff
-      export: RFT_DistEndPos@TakeOff
-    - import: heel@TouchDwon
-      export: RFT_DistEndPos@TouchDown
+    - import: toe@Max_knee_flex_init
+      export: RFT_DistEndPos@Max_knee_flex_init
+    - import: toe@Max_knee_flex_landing
+      export: RFT_DistEndPos@Max_knee_flex_landing
     - subtract: [$prev(2).y, $prev.y]
-    # - subtract: [RFT_DistEndPos\@TakeOff.y,RFT_DistEndPos\@TouchDown.y]
     - abs:
 
 # Kinetics --------

@@ -167,6 +167,14 @@
     - max:
       frames: true
 
+- event: pelvis_lowest
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [PelvisCGPos.z, LeftPlotStart, LeftPlotEnd]
+    - min:
+      frames: true
+
 # Right
 - event: RFT_DistEndVel_max
   where:
@@ -294,6 +302,14 @@
   steps:
     - eventMask: [RFT_DistEndAcc.z, TakeOff, EOF]
     - max:
+      frames: true
+
+- event: pelvis_lowest
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [PelvisCGPos.z, RightPlotStart, RightPlotEnd]
+    - min:
       frames: true
 
 # Unified event names for web
@@ -649,8 +665,43 @@
   where:
     name: LL_L*
   steps:
-    - eventMask: [Left GRF, PlotStart, EOF]
+    - eventMask: [Left GRF, PlotStart, LeftPlotEnd]
     - max:
+
+- parameter: Left GRF_mean_landing_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, PlotStart, LeftPlotEnd]
+    - mean:
+
+- parameter: Left GRF_max_concentric_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, pelvis_lowest, LeftPlotEnd]
+    - max:
+
+- parameter: Left GRF_mean_concentric_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, pelvis_lowest, LeftPlotEnd]
+    - mean:
+
+- parameter: Left GRF_max_eccentric_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, LeftPlotStart, pelvis_lowest]
+    - max:
+
+- parameter: Left GRF_mean_eccentric_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventMask: [Left GRF, LeftPlotStart, pelvis_lowest]
+    - mean:
 
 - parameter: Left Knee Moment_max_LL_L
   where:
@@ -689,8 +740,43 @@
   where:
     name: LL_R*
   steps:
-    - eventMask: [Right GRF, PlotStart, EOF]
+    - eventMask: [Right GRF, PlotStart, RightPlotEnd]
     - max:
+
+- parameter: Right GRF_mean_landing_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, PlotStart, RightPlotEnd]
+    - mean:
+
+- parameter: Right GRF_max_concentric_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, pelvis_lowest, RightPlotEnd]
+    - max:
+
+- parameter: Right GRF_mean_concentric_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, pelvis_lowest, RightPlotEnd]
+    - mean:
+
+- parameter: Right GRF_max_eccentric_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, RightPlotStart, pelvis_lowest]
+    - max:
+
+- parameter: Right GRF_mean_eccentric_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventMask: [Right GRF, RightPlotStart, pelvis_lowest]
+    - mean:
 
 - parameter: Right Knee Moment_max_LL_R
   where:
