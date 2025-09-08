@@ -1157,7 +1157,8 @@
   steps:
     - import: Right Thorax Angles@COM_MIN
 
-#Maximum during takeoff
+# Maximum during takeoff ---
+# Bilateral
 - parameter: Left Hip Angles_max_DVJ_B
   where:
     name: DJ_B*
@@ -1214,10 +1215,10 @@
     - eventMask: [Right Foot Progression, TouchDown,TakeOff]
     - max:
 
+# Left
 - parameter: Left Hip Angles_max_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - eventMask: [Left Hip Angles, TouchDown,TakeOff]
     - max:
@@ -1225,7 +1226,6 @@
 - parameter: Right Hip Angles_max_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - eventMask: [Right Hip Angles, TouchDown,TakeOff]
     - max:
@@ -1233,7 +1233,6 @@
 - parameter: Left Knee Angles_max_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - eventMask: [Left Knee Angles, TouchDown,TakeOff]
     - max:
@@ -1241,7 +1240,6 @@
 - parameter: Right Knee Angles_max_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - eventMask: [Right Knee Angles, TouchDown,TakeOff]
     - max:
@@ -1249,7 +1247,6 @@
 - parameter: Left Ankle Angles_max_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - eventMask: [Left Ankle Angles, TouchDown,TakeOff]
     - max:
@@ -1257,7 +1254,6 @@
 - parameter: Right Ankle Angles_max_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - eventMask: [Right Ankle Angles, TouchDown,TakeOff]
     - max:
@@ -1265,7 +1261,6 @@
 - parameter: Left Foot Progression_max_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - eventMask: [Left Foot Progression, TouchDown,TakeOff]
     - max:
@@ -1273,15 +1268,14 @@
 - parameter: Right Foot Progression_max_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - eventMask: [Right Foot Progression, TouchDown,TakeOff]
     - max:
 
+# Right
 - parameter: Left Hip Angles_max_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - eventMask: [Left Hip Angles, TouchDown,TakeOff]
     - max:
@@ -1289,7 +1283,6 @@
 - parameter: Right Hip Angles_max_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - eventMask: [Right Hip Angles, TouchDown,TakeOff]
     - max:
@@ -1297,7 +1290,6 @@
 - parameter: Left Knee Angles_max_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - eventMask: [Left Knee Angles, TouchDown,TakeOff]
     - max:
@@ -1305,7 +1297,6 @@
 - parameter: Right Knee Angles_max_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - eventMask: [Right Knee Angles, TouchDown,TakeOff]
     - max:
@@ -1313,7 +1304,6 @@
 - parameter: Left Ankle Angles_max_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - eventMask: [Left Ankle Angles, TouchDown,TakeOff]
     - max:
@@ -1321,7 +1311,6 @@
 - parameter: Right Ankle Angles_max_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - eventMask: [Right Ankle Angles, TouchDown,TakeOff]
     - max:
@@ -1329,7 +1318,6 @@
 - parameter: Left Foot Progression_max_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - eventMask: [Left Foot Progression, TouchDown,TakeOff]
     - max:
@@ -1337,7 +1325,6 @@
 - parameter: Right Foot Progression_max_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - eventMask: [Right Foot Progression, TouchDown,TakeOff]
     - max:
