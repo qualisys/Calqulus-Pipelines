@@ -218,6 +218,40 @@
       from: mm
       to: m
 
+# Takeoff velocity
+- parameter: CenterOfMass_vel@TakeOff_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - import: Hips.z
+    - convert:
+      from: mm
+      to: m
+    - velocity:
+    - import: $prev@TakeOff
+
+- parameter: CenterOfMass_vel@TakeOff_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - import: Hips.z
+    - convert:
+      from: mm
+      to: m
+    - velocity:
+    - import: $prev@TakeOff
+
+- parameter: CenterOfMass_vel@TakeOff_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - import: Hips.z
+    - convert:
+      from: mm
+      to: m
+    - velocity:
+    - import: $prev@TakeOff
+
 #debugging signal, can be removed
 - parameter: Pelvis_COM
   steps:
