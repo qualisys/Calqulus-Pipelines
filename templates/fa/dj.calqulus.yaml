@@ -660,56 +660,48 @@
 - parameter: Left_Knee_COM_distance@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
@@ -741,56 +733,48 @@
 - parameter: Left_Knee_COM_distance@TakeOff_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
 - parameter: Left_Knee_COM_distance@TakeOff_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
@@ -822,56 +806,48 @@
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
@@ -915,84 +891,72 @@
 - parameter: Left Knee Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right Thorax Angles@TouchDown
 
@@ -1048,112 +1012,96 @@
 - parameter: Left Ankle Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_DVJ_L
   where:
     name: DJ_L*
-    force: left
   steps:
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_DVJ_R
   where:
     name: DJ_R*
-    force: right
   steps:
     - import: Right Thorax Angles@COM_MIN
 
