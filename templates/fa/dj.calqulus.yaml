@@ -1279,12 +1279,31 @@
 
 # Kinetics ----------
 # Bilateral
-- parameter: Total GRF
+- parameter: Total GRF_both
   where:
     name: DJ_B*
     force: both
   steps:
     - add: [Left GRF, Right GRF]
+
+- parameter: Total GRF_single
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
+    - if: "!empty(ForcePlate1.fx) && !exists(ForcePlate2.fx)"
+      then: $prev
+      else: [[]]
+
+- parameter: Total GRF
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - if: "!empty(Total GRF_both)"
+      then: Total GRF_both
+      else: Total GRF_single
 
 - parameter: Left_RFD
   where:
@@ -1318,7 +1337,7 @@
 - parameter: Bilateral Power_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: any
   steps:
     - eventMask: [Bilateral Power, Eccentric_end, TakeOff]
     - max:
@@ -1326,7 +1345,7 @@
 - parameter: Bilateral Power_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: any
   steps:
     - eventMask: [Bilateral Power, Eccentric_end, TakeOff]
     - mean:
@@ -1334,7 +1353,7 @@
 - parameter: Bilateral Power_min_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: any
   steps:
     - eventMask: [Bilateral Power, TouchDown, Eccentric_end]
     - min:
@@ -1342,7 +1361,7 @@
 - parameter: Bilateral Power_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: any
   steps:
     - eventMask: [Bilateral Power, TouchDown, Eccentric_end]
     - mean:
