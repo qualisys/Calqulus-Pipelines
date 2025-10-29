@@ -32,7 +32,7 @@
     - negate:
     - threshold: [$prev.z]
       value: 10
-      direction: down
+      direction: up
       output: 1fp
     - if: exists(ForcePlate2.fx)
       then: 2fps
@@ -49,7 +49,7 @@
     - negate:
     - threshold: [$prev.z]
       value: 10
-      direction: up
+      direction: down
       output: 1fp
     - if: exists(ForcePlate2.fx)
       then: 2fps
@@ -66,7 +66,7 @@
     - negate:
     - threshold: [$prev.z]
       value: 10
-      direction: down
+      direction: up
       output: 1fp
     - if: exists(ForcePlate2.fx)
       then: 2fps
@@ -83,7 +83,7 @@
     - negate:
     - threshold: [$prev.z]
       value: 10
-      direction: up
+      direction: down
       output: 1fp
     - if: exists(ForcePlate2.fx)
       then: 2fps
