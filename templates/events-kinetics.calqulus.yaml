@@ -27,16 +27,6 @@
   set: left
   steps:
     - import: LeftFootContact.events.on
-      output: 2fps
-    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
-    - negate:
-    - threshold: [$prev.z]
-      value: 10
-      direction: up
-      output: 1fp
-    - if: exists(ForcePlate2.fx)
-      then: 2fps
-      else: 1fp
 
 - event: LOFF_force
   where:
@@ -44,16 +34,6 @@
   set: left
   steps:
     - import: LeftFootContact.events.off
-      output: 2fps
-    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
-    - negate:
-    - threshold: [$prev.z]
-      value: 10
-      direction: down
-      output: 1fp
-    - if: exists(ForcePlate2.fx)
-      then: 2fps
-      else: 1fp
 
 - event: RON_force
   where:
@@ -61,16 +41,6 @@
   set: right
   steps:
     - import: RightFootContact.events.on
-      output: 2fps
-    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
-    - negate:
-    - threshold: [$prev.z]
-      value: 10
-      direction: up
-      output: 1fp
-    - if: exists(ForcePlate2.fx)
-      then: 2fps
-      else: 1fp
 
 - event: ROFF_force
   where:
@@ -78,16 +48,6 @@
   set: right
   steps:
     - import: RightFootContact.events.off
-      output: 2fps
-    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
-    - negate:
-    - threshold: [$prev.z]
-      value: 10
-      direction: down
-      output: 1fp
-    - if: exists(ForcePlate2.fx)
-      then: 2fps
-      else: 1fp
 
 # Threshold based ON/OFF events
 # - event: LOFF_force

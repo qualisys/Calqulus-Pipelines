@@ -13,6 +13,7 @@
 - template: /templates/events-kinetics.calqulus.yaml
   where:
     force: any
+    
 
 - template: cmj-sj-events-kinematics.calqulus.yaml
 
@@ -1374,6 +1375,9 @@
     force: left
   steps:
     - derivative: Left GRF
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Power
   where:
@@ -1381,6 +1385,9 @@
     force: left
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right_RFD
   where:
@@ -1388,6 +1395,9 @@
     force: right
   steps:
     - derivative: Right GRF
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Power
   where:
@@ -1395,24 +1405,71 @@
     force: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 # Total
+# find out which FP is loaded
+# it is assumed that only two FPs are connected to the system
+# It can be one or two loaded FPs
+- parameter: FP1_load
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - if: exists(ForcePlate1)
+      then: ForcePlate1.fz
+      else: [[0]]
+    - abs:
+    - mean:
+
+- parameter: FP2_load
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - if: exists(ForcePlate2)
+      then: ForcePlate2.fz
+      else: [[0]]
+    - abs:
+    - mean:
+
+- parameter: GRF_loaded_FP
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - if: (FP1_load > FP2_load)
+      then: ForcePlate1
+      else: ForcePlate2
+    - vector: [$prev.fx, $prev.fy, $prev.fz]
+      space: VirtualLab
+    - divide: [$prev, BodyWeightNewton]
+    - negate:
+    - lowpass:
+      cutoff: 10
+      extrapolate: 75
+
 - parameter: Total GRF_both
   where:
     name: CMJ_B*
     force: both
   steps:
     - add: [Left GRF, Right GRF]
+    - if: FP1_load > 20 && FP2_load > 20
+      then: $prev
+      else: [[]]
 
 - parameter: Total GRF_single
   where:
     name: CMJ_B*
     force: any
   steps:
-    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
-      space: VirtualLab
-    - divide: [$prev, BodyWeightNewton]
-    - negate:
+    - import: GRF_loaded_FP
+    - if: FP1_load < 20 || FP2_load < 20
+      then: $prev
+      else: [[]]
 
 - parameter: Total GRF
   where:
@@ -1558,6 +1615,9 @@
     force: left
   steps:
     - import: Left_RFD@TouchDown_100ms
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Power_max_concentric_CMJ_B
   where:
@@ -1566,6 +1626,9 @@
   steps:
     - eventMask: [Left Power, Eccentric_end, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Power_mean_concentric_CMJ_B
   where:
@@ -1574,6 +1637,9 @@
   steps:
     - eventMask: [Left Power, Eccentric_end, TakeOff]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
   
 - parameter: Left Power_min_eccentric_CMJ_B
   where:
@@ -1582,6 +1648,9 @@
   steps:
     - eventMask: [Left Power, PlotStart, Eccentric_end]
     - min:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Power_mean_eccentric_CMJ_B
   where:
@@ -1590,6 +1659,9 @@
   steps:
     - eventMask: [Left Power, PlotStart, Eccentric_end]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_impulse_concentric_CMJ_B
   where:
@@ -1599,6 +1671,9 @@
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - integral:
       scalar: true
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_impulse_eccentric_CMJ_B
   where:
@@ -1608,6 +1683,9 @@
     - eventMask: [Left GRF, PlotStart, Eccentric_end]
     - integral:
       scalar: true
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_max_concentric_CMJ_B
   where:
@@ -1616,6 +1694,9 @@
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_max_eccentric_CMJ_B
   where:
@@ -1624,6 +1705,9 @@
   steps:
     - eventMask: [Left GRF, PlotStart, Eccentric_end]
     - max:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_mean_concentric_CMJ_B
   where:
@@ -1632,6 +1716,9 @@
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_mean_eccentric_CMJ_B
   where:
@@ -1640,6 +1727,9 @@
   steps:
     - eventMask: [Left GRF, PlotStart, Eccentric_end]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_max_landing_CMJ_B
   where:
@@ -1648,6 +1738,9 @@
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - max:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_mean_landing_CMJ_B
   where:
@@ -1656,6 +1749,9 @@
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Hip Moment@COM_MIN_CMJ_B
   where:
@@ -1663,6 +1759,9 @@
     force: left
   steps:
     - import: Left Hip Moment@COM_MIN
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Knee Moment@COM_MIN_CMJ_B
   where:
@@ -1670,6 +1769,9 @@
     force: left
   steps:
     - import: Left Knee Moment@COM_MIN
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Ankle Moment@COM_MIN_CMJ_B
   where:
@@ -1677,6 +1779,9 @@
     force: left
   steps:
     - import: Left Ankle Moment@COM_MIN
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Knee Moment_max_CMJ_B
   where:
@@ -1685,6 +1790,9 @@
   steps:
     - eventMask: [Left Knee Moment, PlotStart, TakeOff]
     - max: 
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Knee Moment_max_landing_CMJ_B
   where:
@@ -1693,6 +1801,9 @@
   steps:
     - eventMask: [Left Knee Moment, TakeOff, EOF]
     - max: 
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 # Single leg - Left
 - parameter: Left_RFD@TouchDown_100ms_CMJ_L
@@ -1844,6 +1955,9 @@
     force: right
   steps:
     - import: Right_RFD@TouchDown_100ms
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Power_max_concentric_CMJ_B
   where:
@@ -1852,6 +1966,9 @@
   steps:
     - eventMask: [Right Power, Eccentric_end, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Power_mean_concentric_CMJ_B
   where:
@@ -1860,6 +1977,9 @@
   steps:
     - eventMask: [Right Power, Eccentric_end, TakeOff]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
   
 - parameter: Right Power_min_eccentric_CMJ_B
   where:
@@ -1868,6 +1988,9 @@
   steps:
     - eventMask: [Right Power, PlotStart, Eccentric_end]
     - min:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Power_mean_eccentric_CMJ_B
   where:
@@ -1876,6 +1999,9 @@
   steps:
     - eventMask: [Right Power, PlotStart, Eccentric_end]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_impulse_concentric_CMJ_B
   where:
@@ -1885,6 +2011,9 @@
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - integral:
       scalar: true
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_impulse_eccentric_CMJ_B
   where:
@@ -1894,6 +2023,9 @@
     - eventMask: [Right GRF, PlotStart, Eccentric_end]
     - integral:
       scalar: true
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_max_concentric_CMJ_B
   where:
@@ -1902,6 +2034,9 @@
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_max_eccentric_CMJ_B
   where:
@@ -1910,6 +2045,9 @@
   steps:
     - eventMask: [Right GRF, PlotStart, Eccentric_end]
     - max:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_mean_concentric_CMJ_B
   where:
@@ -1918,6 +2056,9 @@
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_mean_eccentric_CMJ_B
   where:
@@ -1926,6 +2067,9 @@
   steps:
     - eventMask: [Right GRF, PlotStart, Eccentric_end]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_max_landing_CMJ_B
   where:
@@ -1934,6 +2078,9 @@
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - max:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_mean_landing_CMJ_B
   where:
@@ -1942,6 +2089,9 @@
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - mean:
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Hip Moment@COM_MIN_CMJ_B
   where:
@@ -1949,6 +2099,9 @@
     force: right
   steps:
     - import: Right Hip Moment@COM_MIN
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Knee Moment@COM_MIN_CMJ_B
   where:
@@ -1956,6 +2109,9 @@
     force: right
   steps:
     - import: Right Knee Moment@COM_MIN
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Ankle Moment@COM_MIN_CMJ_B
   where:
@@ -1963,6 +2119,9 @@
     force: right
   steps:
     - import: Right Ankle Moment@COM_MIN
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Knee Moment_max_CMJ_B
   where:
@@ -1971,6 +2130,9 @@
   steps:
     - eventMask: [Right Knee Moment, PlotStart, TakeOff]
     - max: 
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Knee Moment_max_landing_CMJ_B
   where:
@@ -1979,6 +2141,9 @@
   steps:
     - eventMask: [Right Knee Moment, TakeOff, EOF]
     - max: 
+    - if: "!empty(Total GRF_both)"
+      then: $prev
+      else: [[]]
 
 # Single leg - Right
 - parameter: Right_RFD@TouchDown_100ms_CMJ_R
