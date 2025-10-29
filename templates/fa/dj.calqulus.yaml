@@ -1419,7 +1419,7 @@
     name: DJ_B*
     force: any
   steps:
-    - if: "!empty(Bilateral Power_both)"
+    - if: "!empty(Bilateral Power_both.x)"
       then: Bilateral Power_both
       else: Bilateral Power_single
 
