@@ -1459,7 +1459,7 @@
 - parameter: Left Hip Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - import: Left Hip Moment@COM_MIN
     - if: "!empty(Total GRF_both)"
@@ -1469,7 +1469,7 @@
 - parameter: Left Knee Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - import: Left Knee Moment@COM_MIN
     - if: "!empty(Total GRF_both)"
@@ -1479,7 +1479,7 @@
 - parameter: Left Ankle Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - import: Left Ankle Moment@COM_MIN
     - if: "!empty(Total GRF_both)"
@@ -1489,7 +1489,7 @@
 - parameter: Left GRF_max_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, TouchDown, TakeOff]
     - max:
@@ -1500,7 +1500,7 @@
 - parameter: Left GRF_max_landing_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Landing, EOF]
     - max:
@@ -1511,7 +1511,7 @@
 - parameter: Left GRF_mean_landing_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Landing, EOF]
     - mean:
@@ -1522,7 +1522,7 @@
 - parameter: Left GRF_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - max:
@@ -1533,7 +1533,7 @@
 - parameter: Left GRF_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - mean:
@@ -1544,7 +1544,7 @@
 - parameter: Left GRF_max_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, TouchDown, Eccentric_end]
     - max:
@@ -1555,7 +1555,7 @@
 - parameter: Left GRF_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, TouchDown, Eccentric_end]
     - mean:
@@ -1566,7 +1566,7 @@
 - parameter: Left_RFD@TouchDown_100ms_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - import: Left_RFD@TouchDown_100ms
     - if: "!empty(Total GRF_both)"
@@ -1576,7 +1576,7 @@
 - parameter: Left Power_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left Power, Eccentric_end, TakeOff]
     - max:
@@ -1587,7 +1587,7 @@
 - parameter: Left Power_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left Power, Eccentric_end, TakeOff]
     - mean:
@@ -1598,7 +1598,7 @@
 - parameter: Left Power_min_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left Power, LeftPlotStart, Eccentric_end]
     - min:
@@ -1609,7 +1609,7 @@
 - parameter: Left Power_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left Power, LeftPlotStart, Eccentric_end]
     - mean:
@@ -1620,7 +1620,7 @@
 - parameter: Left GRF_impulse_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - integral:
@@ -1632,7 +1632,7 @@
 - parameter: Left GRF_impulse_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, LeftPlotStart, Eccentric_end]
     - integral:
@@ -1645,7 +1645,7 @@
 - parameter: Right Hip Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - import: Right Hip Moment@COM_MIN
     - if: "!empty(Total GRF_both)"
@@ -1655,7 +1655,7 @@
 - parameter: Right Knee Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - import: Right Knee Moment@COM_MIN
     - if: "!empty(Total GRF_both)"
@@ -1665,7 +1665,7 @@
 - parameter: Right Ankle Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - import: Right Ankle Moment@COM_MIN
     - if: "!empty(Total GRF_both)"
@@ -1675,7 +1675,7 @@
 - parameter: Right GRF_max_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, TouchDown, TakeOff]
     - max:
@@ -1686,7 +1686,7 @@
 - parameter: Right GRF_max_landing_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Landing, EOF]
     - max:
@@ -1697,7 +1697,7 @@
 - parameter: Right GRF_mean_landing_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Landing, EOF]
     - mean:
@@ -1708,7 +1708,7 @@
 - parameter: Right GRF_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - max:
@@ -1719,7 +1719,7 @@
 - parameter: Right GRF_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - mean:
@@ -1730,7 +1730,7 @@
 - parameter: Right GRF_max_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, TouchDown, Eccentric_end]
     - max:
@@ -1741,7 +1741,7 @@
 - parameter: Right GRF_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, TouchDown, Eccentric_end]
     - mean:
@@ -1752,7 +1752,7 @@
 - parameter: Right_RFD@TouchDown_100ms_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - import: Right_RFD@TouchDown_100ms
     - if: "!empty(Total GRF_both)"
@@ -1762,7 +1762,7 @@
 - parameter: Right Power_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right Power, Eccentric_end, TakeOff]
     - max:
@@ -1773,7 +1773,7 @@
 - parameter: Right Power_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right Power, Eccentric_end, TakeOff]
     - mean:
@@ -1784,7 +1784,7 @@
 - parameter: Right Power_min_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right Power, RightPlotStart, Eccentric_end]
     - min:
@@ -1795,7 +1795,7 @@
 - parameter: Right Power_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right Power, RightPlotStart, Eccentric_end]
     - mean:
@@ -1806,7 +1806,7 @@
 - parameter: Right GRF_impulse_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - integral:
@@ -1818,7 +1818,7 @@
 - parameter: Right GRF_impulse_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, RightPlotStart, Eccentric_end]
     - integral:
