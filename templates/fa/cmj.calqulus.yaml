@@ -1410,10 +1410,9 @@
     force: any
   steps:
     - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
+      space: VirtualLab
+    - divide: [$prev, BodyWeightNewton]
     - negate:
-    - if: "!empty(ForcePlate1.fx) && !exists(ForcePlate2.fx)"
-      then: $prev
-      else: [[]]
 
 - parameter: Total GRF
   where:
