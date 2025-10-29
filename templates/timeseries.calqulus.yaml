@@ -372,6 +372,12 @@
     # - multiply: [$field(Weight; measurement; numeric), 9.81]
     - multiply: [$bodyMass, 9.81]
 
+- parameter: skip_kinetics_calculation
+  steps:
+    - if: "!exists(Total GRF_both)"
+      then: [1]
+      else: [0] #dummy value to skip kinetics calculation
+
 # Left
 - parameter: Left GRF
   where:
@@ -382,6 +388,9 @@
     - vector: [foot.fx, foot.fy, foot.fz]
       space: VirtualLab
     - divide: [$prev, BodyWeightNewton]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Left Hip Moment
   where:
@@ -391,6 +400,9 @@
     - vector: [LeftHip.mx, LeftHip.my, LeftHip.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,1,1]]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Left Hip Power
   where:
@@ -399,6 +411,9 @@
   steps:
     - vector: [LeftHip.p, LeftHip.p, LeftHip.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Left Knee Moment
   where:
@@ -407,6 +422,9 @@
   steps:
     - vector: [LeftKnee.mx, LeftKnee.my, LeftKnee.mz]
     - divide: [$prev, $bodyMass]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Left Knee Power
   where:
@@ -415,6 +433,9 @@
   steps:
     - vector: [LeftKnee.p, LeftKnee.p, LeftKnee.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Left Ankle Moment
   where:
@@ -424,6 +445,9 @@
     - vector: [LeftAnkle.mx, LeftAnkle.my, LeftAnkle.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,1,1]]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Left Ankle Power
   where:
@@ -432,6 +456,9 @@
   steps:
     - vector: [LeftAnkle.p, LeftAnkle.p, LeftAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Left_COP
   where:
@@ -443,6 +470,9 @@
     - convert:
       from: mm
       to: m
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Left_COP_COM_distance
   where:
@@ -452,6 +482,9 @@
     - import: Left_COP
       space: VirtualLab
     - subtract: [PelvisCGPos, $prev]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 # Right
 - parameter: Right GRF
@@ -464,6 +497,9 @@
       space: VirtualLab
     - divide: [$prev, BodyWeightNewton]
     - multiply: [$prev, [-1,1,1]]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Right Hip Moment
   where:
@@ -473,6 +509,9 @@
     - vector: [RightHip.mx, RightHip.my, RightHip.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,-1,-1]]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Right Hip Power
   where:
@@ -481,6 +520,9 @@
   steps:
     - vector: [RightHip.p, RightHip.p, RightHip.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Right Knee Moment
   where:
@@ -490,6 +532,9 @@
     - vector: [RightKnee.mx, RightKnee.my, RightKnee.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[1,-1,-1]]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Right Knee Power
   where:
@@ -498,6 +543,9 @@
   steps:
     - vector: [RightKnee.p, RightKnee.p, RightKnee.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Right Ankle Moment
   where:
@@ -507,6 +555,9 @@
     - vector: [RightAnkle.mx, RightAnkle.my, RightAnkle.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,-1,-1]]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Right Ankle Power
   where:
@@ -515,6 +566,9 @@
   steps:
     - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Right_COP
   where:
@@ -526,6 +580,9 @@
     - convert:
       from: mm
       to: m
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
 - parameter: Right_COP_COM_distance
   where:
@@ -536,4 +593,7 @@
       space: VirtualLab
     - subtract: [PelvisCGPos, $prev]
     - multiply: [$prev,[-1,1,1]]
+    - if: skip_kinetics_calculation = 0
+      then: $prev
+      else: [[]]
 
