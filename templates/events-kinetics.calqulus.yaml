@@ -50,6 +50,50 @@
     - import: RightFootContact.events.off
 
 # Threshold based ON/OFF events
+- event: OFF_force
+  where:
+    name: ^DJ_B*
+    force: any
+  set: left
+  steps:
+    - import: Total GRF.z
+    - threshold: $prev
+      value: 0.05
+      direction: down
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: force_1
+    - eventMask: [$prev, BOF, EOF]
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
+    - if: skip_kinetics_calculation == 0
+      then: $prev
+      else: [[]]
+
+- event: ON_force
+  where:
+    name: ^DJ_B*
+    force: left
+  set: left
+  steps:
+    - import: Total GRF.z
+    - threshold: $prev
+      value: 0.05
+      direction: up
+    - eventMask: [$prev, BOF_fixed, EOF]
+      output: force_1
+    - eventMask: [$prev, BOF, EOF]
+      output: force_2
+    - if: empty(force_1)
+      then: force_2
+      else: force_1
+    # - subtract: [$prev, 2] #do we want first nonzero value or last zero value?
+    - if: skip_kinetics_calculation == 0
+      then: $prev
+      else: [[]]
+
+# Threshold based ON/OFF events
 # - event: LOFF_force
 #   where:
 #     force: left

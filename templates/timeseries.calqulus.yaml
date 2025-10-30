@@ -369,14 +369,14 @@
 # ----
 - parameter: BodyWeightNewton
   steps:
-    # - multiply: [$field(Weight; measurement; numeric), 9.81]
     - multiply: [$bodyMass, 9.81]
 
+# dummy value to skip kinetics calculation
 - parameter: skip_kinetics_calculation
   steps:
-    - if: "!exists(Total GRF_both)"
+    - if: "!exists(Total GRF_both) || empty(Total GRF_both)" #exists only in CMJ and DJ and only if both FPs are loaded
       then: [1]
-      else: [0] #dummy value to skip kinetics calculation
+      else: [0] 
 
 # Left
 - parameter: Left GRF
@@ -388,7 +388,7 @@
     - vector: [foot.fx, foot.fy, foot.fz]
       space: VirtualLab
     - divide: [$prev, BodyWeightNewton]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -400,7 +400,7 @@
     - vector: [LeftHip.mx, LeftHip.my, LeftHip.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,1,1]]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -411,7 +411,7 @@
   steps:
     - vector: [LeftHip.p, LeftHip.p, LeftHip.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -422,7 +422,7 @@
   steps:
     - vector: [LeftKnee.mx, LeftKnee.my, LeftKnee.mz]
     - divide: [$prev, $bodyMass]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -433,7 +433,7 @@
   steps:
     - vector: [LeftKnee.p, LeftKnee.p, LeftKnee.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -445,7 +445,7 @@
     - vector: [LeftAnkle.mx, LeftAnkle.my, LeftAnkle.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,1,1]]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -456,7 +456,7 @@
   steps:
     - vector: [LeftAnkle.p, LeftAnkle.p, LeftAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -470,7 +470,7 @@
     - convert:
       from: mm
       to: m
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -482,7 +482,7 @@
     - import: Left_COP
       space: VirtualLab
     - subtract: [PelvisCGPos, $prev]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -497,7 +497,7 @@
       space: VirtualLab
     - divide: [$prev, BodyWeightNewton]
     - multiply: [$prev, [-1,1,1]]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -509,7 +509,7 @@
     - vector: [RightHip.mx, RightHip.my, RightHip.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,-1,-1]]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -520,7 +520,7 @@
   steps:
     - vector: [RightHip.p, RightHip.p, RightHip.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -532,7 +532,7 @@
     - vector: [RightKnee.mx, RightKnee.my, RightKnee.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[1,-1,-1]]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -543,7 +543,7 @@
   steps:
     - vector: [RightKnee.p, RightKnee.p, RightKnee.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -555,7 +555,7 @@
     - vector: [RightAnkle.mx, RightAnkle.my, RightAnkle.mz]
     - divide: [$prev, $bodyMass]
     - multiply: [$prev,[-1,-1,-1]]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -566,7 +566,7 @@
   steps:
     - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -580,7 +580,7 @@
     - convert:
       from: mm
       to: m
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
@@ -593,7 +593,7 @@
       space: VirtualLab
     - subtract: [PelvisCGPos, $prev]
     - multiply: [$prev,[-1,1,1]]
-    - if: skip_kinetics_calculation = 0
+    - if: skip_kinetics_calculation == 0
       then: $prev
       else: [[]]
 
