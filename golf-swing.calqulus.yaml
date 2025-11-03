@@ -1,0 +1,44 @@
+############
+## SPACES ##
+############
+
+# Calculated from respective position of feet at Release
+# Assuming Release is entered manually in QTM for now
+
+- parameter: Feet_unit_vector
+  where: 
+    name: Swing*
+  steps:
+    - subtract: [LeadForefoot2@Release, BackForefoot2@Release]
+    - convert:
+      from: mm
+      to: m
+    - unitVector:
+    - round:
+
+- space: VirtualLab
+  origin: [0,0,0]
+  primaryAxis: [Feet_unit_vector?name=Swing*]
+  secondaryAxis: [[0,0,0], [0,0,1]]
+  order: yz
+
+- parameter: VirtualLabOrigin
+  steps:
+    - segment: RightToeBase
+    - multiply: [$prev, 0]
+
+- segment: VirtualLabSegment
+  steps:
+    - segment:
+      origin: VirtualLabOrigin
+      primaryAxis: Feet_unit_vector?name=Swing*
+      secondaryAxis: [[0,0,0], [0,0,1]]
+      order: yz  
+
+############
+## EVENTS ##
+############
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
