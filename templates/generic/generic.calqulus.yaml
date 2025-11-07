@@ -507,6 +507,77 @@
   steps:
     - import: Left Foot Pitch Angles_mean
 
+# Shoulders Girdle
+- parameter: Left Shoulder Girdle Angles_max
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Girdle Angles, LeftPlotStart, LeftPlotEnd]
+    - max: 
+
+- parameter: Left Shoulder Girdle Angles_min
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Girdle Angles, LeftPlotStart, LeftPlotEnd]
+    - min: 
+
+- parameter: Left Shoulder Girdle Angles_mean
+  set: left
+  steps:
+    - eventMask: [Left Shoulder Girdle Angles, LeftPlotStart, LeftPlotEnd]
+    - mean: 
+
+- parameter: Left Shoulder Protraction max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Shoulder Girdle Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.z
+
+- parameter: Left Shoulder Girdle Protraction min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Shoulder Girdle Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.z
+
+- parameter: Left Shoulder Girdle Protraction range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Shoulder Girdle Protraction max, Left Shoulder Girdle Protraction min]
+
+- parameter: Left Shoulder Elevation max
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Shoulder Girdle Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - max: $prev.y
+    - negate: $prev
+
+- parameter: Left Shoulder Girdle Elevation min
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - import: Left Shoulder Girdle Angles
+    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - min: $prev.y
+    - negate: $prev
+
+- parameter: Left Shoulder Girdle Protraction range
+  where:
+    name: '!Static*'
+  set: left
+  steps:
+    - subtract: [Left Shoulder Girdle Elevation max, Left Shoulder Girdle Elevation min]
+
 # Shoulders
 - parameter: Left Shoulder Angles_max
   set: left
