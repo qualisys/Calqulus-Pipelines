@@ -9,7 +9,7 @@
   where: 
     name: Swing*
   steps:
-    - subtract: [LeadForefoot2@Release, BackForefoot2@Release]
+    - subtract: [LeftToeBase@Impact, RightToeBase@Impact] # todo: make it work for LH player (see Baseball)
     - convert:
       from: mm
       to: m
@@ -22,23 +22,243 @@
   secondaryAxis: [[0,0,0], [0,0,1]]
   order: yz
 
-- parameter: VirtualLabOrigin
-  steps:
-    - segment: RightToeBase
-    - multiply: [$prev, 0]
+# - parameter: VirtualLabOrigin
+#   steps:
+#     - segment: RightToeBase
+#     - multiply: [$prev, 0]
 
 - segment: VirtualLabSegment
   steps:
     - segment:
-      origin: VirtualLabOrigin
+      # origin: VirtualLabOrigin
+      origin: [0,0,0]
       primaryAxis: Feet_unit_vector?name=Swing*
       secondaryAxis: [[0,0,0], [0,0,1]]
       order: yz  
 
 ############
+## SHAFT ##
+############
+# TO DO: how to find club head without markers on it?
+
+# TO DO: define club head and its velocity from shaft markers (adding virtual markers to dynamic trial for now)
+# - segment: Club_shaft
+#   where:
+#     name: Club*
+#   steps:
+#     - marker: Shaft 1 => m1
+#     - marker: Shaft 2 => m2
+#     - marker: Shaft 4 => m4
+#     - segment:
+#       origin: Shaft_origin
+#       primaryAxis: [m1, m4]
+#       secondaryAxis: [m1, Clubface_dist]
+#       order: zx
+
+# define Shaft_dist and Shaft_prox landmarks
+- parameter: Shaft_center1
+  where:
+    name: Swing*
+  steps:
+    - add: [Shaft 1, Shaft 2]
+    - divide: [$prev, 2]
+    - lowpass:
+      cutoff: 15
+      extrapolate: 75
+    - convert:
+      from: mm
+      to: m
+
+- parameter: Shaft_center2
+  where:
+    name: Swing*
+  steps:
+    - add: [Shaft 2, Shaft 3]
+    - divide: [$prev, 2]
+    - lowpass:
+      cutoff: 15 
+      extrapolate: 75
+    - convert:
+      from: mm
+      to: m
+
+# TO DO: 
+# project Shaft1 marker onto line defined by Shaft_center1 and Shaft_center2
+# - parameter: Grip_base
+
+# create Shaft_origin (on line from Grip_base to Shaft_center2, at distance of -Grip_length)
+# Grip length = 0.2667 m (PGA standard)
+
+# Create Shaft_distal landmark
+#   Create a LCS (primary Club Head Heel to Club Head Toe, lateral is Grip_base)
+#   ML offset is 0.5*CLUBHEAD_HEIGHT (standard golf club head height = 0.0427 m) 0.05 in V3D
+#   AP offset is CLUBHEAD_OFFSET_BACK (standard golf club head offset = 0.0127 m) 0.02 in V3D
+#   Vertical offset is -0.02
+
+# Create Clubface_dist landmark
+#   Create a LCS (primary Club Head Toe to Club Head Heel, lateral is Grip_base)
+#   ML offset is -0.5*CLUBHEAD_HEIGHT (standard golf club head height = 0.0427 m) 0.05 in V3D
+#   AP offset is -CLUBHEAD_OFFSET_BACK 
+#   Vertical offset is -0.02
+
+# Create Club_shaft segment with origin at Shaft_origin, primary axis along shaft line towards Shaft_distal, Anterior is Clubface_dist
+
+# Create Shaft_dist landmark at distal end of Club_shaft segment
+
+# Create Shaft_prox landmark at proximal end of Club_shaft segment
+
+
+- parameter: Club_head
+  where:
+    name: Swing*
+  steps:
+    - marker: Club Head Heel
+    - convert:
+      from: mm
+      to: m
+
+- parameter: Club_head_vel
+  where:
+    name: Swing*
+  steps:
+    - velocity: Club_head
+    - lowpass:
+      cutoff: 15
+
+- parameter: Club_head_vel_mag
+  where:
+    name: Swing*
+  steps:
+    - magnitude: Club_head_vel
+
+# TO DO: shift club head position as in V3D golf analysis (+1 frame)
+# - parameter: Club_head_shifted
+#   where:
+#     name: Swing*
+#   steps:
+
+
+############
 ## EVENTS ##
 ############
 
-- template: /templates/events-kinetics.calqulus.yaml
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+# Impact event detection
+# Detect ball position. Use median of first 10 frames to get ball position.
+
+- event: 10th_frame
+  steps:
+    - import: [9]
+
+- parameter: ball_position
   where:
-    force: any
+    name: Swing*
+  steps:
+    - marker: Ball
+    - convert:
+      from: mm
+      to: m
+
+- parameter: ball_position_med
+  where:
+    name: Swing*
+  steps:
+    - import: ball_position
+    - eventMask: [$prev, BOF, 10th_frame]
+    - median: $prev
+
+# Detect Lead heel position. Use median of first 10 frames.
+- parameter: lead_heel_position
+  where:
+    name: Swing*
+  steps:
+    - vector: [LeftAnkle.x, LeftAnkle.y, LeftAnkle.z]
+    - eventMask: [$prev, BOF, 10th_frame]
+    - median: $prev
+    - convert:
+      from: mm
+      to: m
+
+# ball position relative to lead heel
+- parameter: ball_position wrt Lead Heel
+  where:
+    name: Swing*
+  steps:
+    - subtract: [ball_position, lead_heel_position]
+
+- event: tmp_takeaway
+  where:
+    name: Swing*
+  steps:
+    - threshold: Club_head_vel.x
+      direction: down
+      value: -0.5
+    - import: $prev@1
+
+- event: tmp_top_of_backswing
+  where:
+    name: Swing*
+  steps:
+    - threshold: Club_head_vel.x
+      direction: down
+      value: 0
+    - eventMask: [$prev, tmp_takeaway, EOF]
+    - import: $prev@1
+
+- event: Impact
+  where:
+    name: Swing*
+  steps:
+    - subtract: [ball_position_med, 0.021335] # radius of golf ball in meters
+    - threshold: Club_head.x
+      direction: up
+      value: $prev.x
+    - eventMask: [$prev, tmp_top_of_backswing, EOF]
+    - import: $prev@1
+    - subtract: [$prev, 1]
+
+
+# Backswing event
+# subtract Shaft_dist - Shaft_prox -> Club_diff
+# - parameter: Club_diff
+#   where:
+#     name: Swing*
+#   steps:
+#     - subtract: [Shaft_dist, Shaft_prox]
+    
+# - event: Backswing
+#   where:
+#     name: Swing*
+#   steps:
+#     - threshold: Club_diff.z
+#       direction: up
+#       value: 0
+#     - import: $prev@1
+
+# Takeaway event
+# - event: Takeaway
+#   where:
+#     name: Swing*
+#   steps:
+#     - threshold: Club_head_vel.x
+#       direction: up
+#       value: 0.1
+#     - eventMask: [$prev, BOF, Backswing]
+#     - import: $prev@-1
+
+
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+  where:
+    name: ^(Swing|Static)*
