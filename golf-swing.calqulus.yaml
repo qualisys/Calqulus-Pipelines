@@ -22,11 +22,6 @@
   secondaryAxis: [[0,0,0], [0,0,1]]
   order: yz
 
-# - parameter: VirtualLabOrigin
-#   steps:
-#     - segment: RightToeBase
-#     - multiply: [$prev, 0]
-
 - segment: VirtualLabSegment
   steps:
     - segment:
@@ -36,29 +31,17 @@
       secondaryAxis: [[0,0,0], [0,0,1]]
       order: yz  
 
-############
-## SHAFT ##
-############
-# TO DO: how to find club head without markers on it?
+####################
+## CLUB AND SHAFT ##
+####################
 
+# TO DO: how to find club head without markers on it?
 # TO DO: define club head and its velocity from shaft markers (adding virtual markers to dynamic trial for now)
-# - segment: Club_shaft
-#   where:
-#     name: Club*
-#   steps:
-#     - marker: Shaft 1 => m1
-#     - marker: Shaft 2 => m2
-#     - marker: Shaft 4 => m4
-#     - segment:
-#       origin: Shaft_origin
-#       primaryAxis: [m1, m4]
-#       secondaryAxis: [m1, Clubface_dist]
-#       order: zx
 
 # define Shaft_dist and Shaft_prox landmarks
 - parameter: Shaft_center1
   where:
-    name: Swing*
+    name: ^(Swing|Club)*
   steps:
     - add: [Shaft 1, Shaft 2]
     - divide: [$prev, 2]
@@ -71,7 +54,7 @@
 
 - parameter: Shaft_center2
   where:
-    name: Swing*
+    name: ^(Swing|Club)*
   steps:
     - add: [Shaft 2, Shaft 3]
     - divide: [$prev, 2]
@@ -83,30 +66,114 @@
       to: m
 
 # TO DO: 
-# project Shaft1 marker onto line defined by Shaft_center1 and Shaft_center2
-# - parameter: Grip_base
+# project Shaft 1 marker onto line defined by Shaft_center1 and Shaft_center2
+- parameter: ClubLine
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - plane: [Shaft 1, Shaft 3, Shaft 4]
+
+- parameter: Grip_base
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - project: [Shaft 1, ClubLine]
+    - convert:
+      from: mm
+      to: m
 
 # create Shaft_origin (on line from Grip_base to Shaft_center2, at distance of -Grip_length)
 # Grip length = 0.2667 m (PGA standard)
+- parameter: Shaft_direction
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - subtract: [Shaft_center2, Grip_base]
+    - unitVector:
+
+- parameter: Shaft_origin
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - import: Shaft_direction
+    - multiply: [$prev, -0.2667]
+    - add: [$prev, Grip_base]
+    - convert:
+      from: mm
+      to: m
 
 # Create Shaft_distal landmark
-#   Create a LCS (primary Club Head Heel to Club Head Toe, lateral is Grip_base)
+#   Create a LCS (primary axis Club Head Heel to Club Head Toe, lateral axis is Grip_base)
 #   ML offset is 0.5*CLUBHEAD_HEIGHT (standard golf club head height = 0.0427 m) 0.05 in V3D
 #   AP offset is CLUBHEAD_OFFSET_BACK (standard golf club head offset = 0.0127 m) 0.02 in V3D
 #   Vertical offset is -0.02
+- segment: Club_head_segment
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - segment:
+      origin: Club Head Heel
+      primaryAxis: [Club Head Heel, Club Head Toe]
+      secondaryAxis: [Club Head Heel, Grip_base]
+      order: zy
+
+- parameter: Shaft_distal
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - import: Club_head_segment
+    - add: [[-0.02, 0.2135, 0.0127], $prev]
+    - multiply: [$prev, 0.001]  # convert from mm to m
 
 # Create Clubface_dist landmark
 #   Create a LCS (primary Club Head Toe to Club Head Heel, lateral is Grip_base)
 #   ML offset is -0.5*CLUBHEAD_HEIGHT (standard golf club head height = 0.0427 m) 0.05 in V3D
 #   AP offset is -CLUBHEAD_OFFSET_BACK 
 #   Vertical offset is -0.02
+- segment: Clubface_segment
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - segment:
+      origin: Club Head Toe
+      primaryAxis: [Club Head Toe, Club Head Heel]
+      secondaryAxis: [Club Head Toe, Grip_base]
+      order: zy
+
+- parameter: Clubface_dist
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - import: Clubface_segment
+    - add: [[-0.02, -0.2135, -0.0127], $prev]
+    - multiply: [$prev, 0.001]  # convert from mm to m
 
 # Create Club_shaft segment with origin at Shaft_origin, primary axis along shaft line towards Shaft_distal, Anterior is Clubface_dist
-
-# Create Shaft_dist landmark at distal end of Club_shaft segment
+- segment: Club_shaft
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - segment:
+      origin: Shaft_origin
+      primaryAxis: [Shaft_origin, Shaft_distal]
+      secondaryAxis: [Shaft_origin, Clubface_dist]
+      order: zx
+      
+# Create Shaft_dist landmark at distal end of Club_shaft segment (at Shaft_distal landmark position)
+- parameter: Shaft_dist
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - import: Club_shaft
+    - add: [$prev, Shaft_distal]
 
 # Create Shaft_prox landmark at proximal end of Club_shaft segment
-
+- parameter: Shaft_prox
+  where:
+    name: ^(Swing|Club)*
+  steps:
+    - import: Club_shaft
+    - multiply: [$prev, 1000]  
 
 - parameter: Club_head
   where:
@@ -236,31 +303,31 @@
 
 # Backswing event
 # subtract Shaft_dist - Shaft_prox -> Club_diff
-# - parameter: Club_diff
-#   where:
-#     name: Swing*
-#   steps:
-#     - subtract: [Shaft_dist, Shaft_prox]
+- parameter: Club_diff
+  where:
+    name: Swing*
+  steps:
+    - subtract: [Shaft_dist, Shaft_prox]
     
-# - event: Backswing
-#   where:
-#     name: Swing*
-#   steps:
-#     - threshold: Club_diff.z
-#       direction: up
-#       value: 0
-#     - import: $prev@1
+- event: Backswing
+  where:
+    name: Swing*
+  steps:
+    - threshold: Club_diff.z
+      direction: up
+      value: 0
+    - import: $prev@1
 
 # Takeaway event
-# - event: Takeaway
-#   where:
-#     name: Swing*
-#   steps:
-#     - threshold: Club_head_vel.x
-#       direction: up
-#       value: 0.1
-#     - eventMask: [$prev, BOF, Backswing]
-#     - import: $prev@-1
+- event: Takeaway
+  where:
+    name: Swing*
+  steps:
+    - threshold: Club_head_vel_mag
+      direction: up
+      value: 0.1
+    - eventMask: [$prev, BOF_1f, Backswing]
+    - import: $prev@-1
 
 
 
