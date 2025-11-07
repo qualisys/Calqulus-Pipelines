@@ -994,7 +994,7 @@
     - eventMask: [Right Shoulder Girdle Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
-- parameter: Right Shoulder Protraction max
+- parameter: Right Shoulder Protraction_max
   where:
     name: '!Static*'
   set: right
@@ -1003,7 +1003,7 @@
     - eventMask: [$prev, RightPlotStart, RightPlotEnd]
     - max: $prev.z
 
-- parameter: Right Shoulder Girdle Protraction min
+- parameter: Right Shoulder Girdle Protraction_min
   where:
     name: '!Static*'
   set: right
@@ -1017,9 +1017,9 @@
     name: '!Static*'
   set: right
   steps:
-    - subtract: [Right Shoulder Girdle Protraction max, Right Shoulder Girdle Protraction min]
+    - subtract: [Right Shoulder Girdle Protraction_max, Right Shoulder Girdle Protraction_min]
 
-- parameter: Right Shoulder Elevation max
+- parameter: Right Shoulder Elevation_max
   where:
     name: '!Static*'
   set: right
@@ -1028,7 +1028,7 @@
     - eventMask: [$prev, RightPlotStart, RightPlotEnd]
     - max: $prev.y
 
-- parameter: Right Shoulder Girdle Elevation min
+- parameter: Right Shoulder Girdle Elevation_min
   where:
     name: '!Static*'
   set: right
@@ -1042,7 +1042,7 @@
     name: '!Static*'
   set: right
   steps:
-    - subtract: [Right Shoulder Girdle Elevation max, Right Shoulder Girdle Elevation min]
+    - subtract: [Right Shoulder Girdle Elevation_max, Right Shoulder Girdle Elevation_min]
 
 # Shoulders
 - parameter: Right Shoulder Angles_max
