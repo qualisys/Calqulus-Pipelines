@@ -131,12 +131,21 @@
   steps:
     - magnitude: Club_head_vel
 
-# TO DO: shift club head position as in V3D golf analysis (+1 frame)
-# - parameter: Club_head_shifted
-#   where:
-#     name: Swing*
-#   steps:
+# Shift club head position as in V3D golf analysis (+1 frame)
+- event: BOF_1f
+  where:
+    name: Swing*
+  steps:
+    - import: [1]
 
+- parameter: Club_head_shifted
+  where:
+    name: Swing*
+  steps:
+    - vector: [0,0,0]
+    - concatenate: [$prev, Club_head]
+    - eventMask: [$prev, BOF_1f, EOF]
+      replacement: 
 
 ############
 ## EVENTS ##
