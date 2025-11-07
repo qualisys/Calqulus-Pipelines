@@ -5,7 +5,7 @@
 # Parameters needed for kinematics event detection in FA
 - parameter: PelvisCGPos_vel
   steps:
-    - vector: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -16,7 +16,7 @@
 - parameter: LFT_DistEndAcc
   set: left
   steps:
-    - segment: LeftToeBase
+    - segment: LeftToeBase_model
       space: VirtualLab
     - convert:
       from: mm
@@ -35,7 +35,7 @@
 - parameter: RFT_DistEndAcc
   set: right
   steps:
-    - segment: RightToeBase
+    - segment: RightToeBase_model
       space: VirtualLab
     - convert:
       from: mm
@@ -71,7 +71,7 @@
 - parameter: Left Pelvic Angles
   set: left
   steps:
-    - jointAngle: Hips
+    - jointAngle: Hips_model
       space: VirtualLab
     - multiply: [$prev, [-1, 1, -1]]
     - lowpass:
@@ -81,7 +81,7 @@
 - parameter: Right Pelvic Angles
   set: right
   steps:
-    - jointAngle: Hips
+    - jointAngle: Hips_model
       space: VirtualLab
     - multiply: [$prev, [-1, -1, 1]]
     - lowpass:
@@ -93,7 +93,7 @@
 - parameter: Left Hip Angles
   set: left
   steps:
-    - jointAngle: [Hips, LeftUpLeg]
+    - jointAngle: [Hips_model, LeftUpLeg_model]
     - multiply: [$prev, [1, -1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -102,7 +102,7 @@
 - parameter: Right Hip Angles
   set: right
   steps:
-    - jointAngle: [Hips, RightUpLeg]
+    - jointAngle: [Hips_model, RightUpLeg_model]
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -113,7 +113,7 @@
 - parameter: Left Knee Angles
   set: left
   steps:
-    - jointAngle: [LeftUpLeg, LeftLeg]
+    - jointAngle: [LeftUpLeg_model, LeftLeg_model]
     - multiply: [$prev, [-1, -1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -122,7 +122,7 @@
 - parameter: Right Knee Angles
   set: right
   steps:
-    - jointAngle: [RightUpLeg, RightLeg]
+    - jointAngle: [RightUpLeg_model, RightLeg_model]
     - multiply: [$prev, [-1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -133,7 +133,7 @@
 - parameter: Left Ankle Angles
   set: left
   steps:
-    - jointAngle: [LeftLeg, LeftFoot]
+    - jointAngle: [LeftLeg_model, LeftFoot_model]
     - multiply: [$prev, [1, -1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -142,7 +142,7 @@
 - parameter: Right Ankle Angles
   set: right
   steps:
-    - jointAngle: [RightLeg, RightFoot]
+    - jointAngle: [RightLeg_model, RightFoot_model]
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -151,7 +151,7 @@
 - parameter: Left Foot Progression
   set: left
   steps:
-    - jointAngle: LeftFoot
+    - jointAngle: LeftFoot_model
       space: VirtualLab
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
@@ -161,7 +161,7 @@
 - parameter: Right Foot Progression
   set: right
   steps:
-    - jointAngle: RightFoot
+    - jointAngle: RightFoot_model
       space: VirtualLab
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
@@ -171,7 +171,7 @@
 - parameter: Left Foot Pitch Angles
   set: left
   steps:
-    - jointAngle: LeftFoot
+    - jointAngle: LeftFoot_model
       space: VirtualLab
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
@@ -181,7 +181,7 @@
 - parameter: Right Foot Pitch Angles
   set: right
   steps:
-    - jointAngle: RightFoot
+    - jointAngle: RightFoot_model
       space: VirtualLab
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
@@ -194,7 +194,7 @@
 - parameter: Left Thorax_Lab Angles
   set: left
   steps:
-    - jointAngle: Spine2
+    - jointAngle: Spine2_model
       space: VirtualLab
     - multiply: [$prev, [-1,1,-1]]
     - lowpass:
@@ -204,7 +204,7 @@
 - parameter: Right Thorax_Lab Angles
   set: right
   steps:
-    - jointAngle: Spine2
+    - jointAngle: Spine2_model
       space: VirtualLab
     - multiply: [$prev, [-1,-1,1]]
     - lowpass:
@@ -214,7 +214,7 @@
 - parameter: Left Thorax Angles
   set: left
   steps:
-    - jointAngle: [Hips, Spine2]
+    - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -223,7 +223,7 @@
 - parameter: Right Thorax Angles
   set: right
   steps:
-    - jointAngle: [Hips, Spine2]
+    - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, -1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -233,7 +233,7 @@
 - parameter: Left Shoulder Angles
   set: left
   steps:
-    - angle: [Spine2, LeftArm]
+    - angle: [Spine2_model, LeftArm_model]
       unwrap: true
       rotationOrder: YXZ #based on Vandana,P. at al. Comparison of Glenohumeral Motion Using Different Rotation Sequences, J Biomech. 2011 Feb 24; 44(4): 700–705. 
     - multiply: [$prev, [1, -1, -1]]
@@ -244,7 +244,7 @@
 - parameter: Right Shoulder Angles
   set: right
   steps:
-    - angle: [Spine2, RightArm]
+    - angle: [Spine2_model, RightArm_model]
       unwrap: true
       rotationOrder: YXZ
     - multiply: [$prev, [1, 1, 1]]
@@ -255,19 +255,19 @@
 - parameter: Left Shoulder Ang Vel
   set: left
   steps:
-    - angularVelocity: [LeftShoulder, LeftArm, LeftShoulder, LeftArm]
+    - angularVelocity: [LeftShoulder_model, LeftArm_model, LeftShoulder_model, LeftArm_model]
 
 - parameter: Right Shoulder Ang Vel
   set: right
   steps:
-    - angularVelocity: [RightShoulder, RightArm, RightShoulder, RightArm]
+    - angularVelocity: [RightShoulder_model, RightArm_model, RightShoulder_model, RightArm_model]
 
 # --- Arms ---
 
 - parameter: Left Elbow Angles
   set: left
   steps:
-    - angle: [LeftArm, LeftForearm]
+    - angle: [LeftArm_model, LeftForearm_model]
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -276,7 +276,7 @@
 - parameter: Right Elbow Angles
   set: right
   steps:
-    - angle: [RightArm, RightForearm]
+    - angle: [RightArm_model, RightForearm_model]
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -287,7 +287,7 @@
 - parameter: Left Wrist Angles
   set: left
   steps:
-    - angle: [LeftForeArm, LeftHand]
+    - angle: [LeftForearm_model, LeftHand_model]
     - multiply: [$prev, [1, -1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -296,7 +296,7 @@
 - parameter: Right Wrist Angles
   set: right
   steps:
-    - angle: [RightForeArm, RightHand]
+    - angle: [RightForearm_model, RightHand_model]
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -306,7 +306,7 @@
 
 - parameter: Head Angles
   steps:
-    - angle: [Head, Spine2]
+    - angle: [Head_model, Spine2_model]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
       extrapolate: KinematicsLowpassExtrapolate
@@ -317,9 +317,9 @@
 - parameter: Left_Knee_COM_distance
   set: left
   steps:
-    - segment: LeftLeg => knee
+    - segment: LeftLeg_model => knee
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [pelvis, knee]
     - convert: 
@@ -329,9 +329,9 @@
 - parameter: Right_Knee_COM_distance
   set: right
   steps:
-    - segment: RightLeg => knee
+    - segment: RightLeg_model => knee
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [pelvis, knee]
     - convert: 
@@ -342,9 +342,9 @@
 - parameter: Left_Ankle_COM_distance
   set: left
   steps:
-    - segment: LeftFoot => foot
+    - segment: LeftFoot_model => foot
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [pelvis, foot]
     - convert: 
@@ -354,9 +354,9 @@
 - parameter: Right_Ankle_COM_distance
   set: right
   steps:
-    - segment: RightFoot => foot
+    - segment: RightFoot_model => foot
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [pelvis, foot]
     - convert: 

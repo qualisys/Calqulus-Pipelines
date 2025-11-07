@@ -1,0 +1,188 @@
+# - space: VirtualLab
+#   alignWithSegment:
+#     segment: Hips_model
+
+- event: one
+  steps:
+    - import: [0]
+  
+- segment: Hips_model
+  steps:
+    - segment: Pelvis
+
+- segment: Spine2_model
+  steps:
+    - import: Thorax
+
+- segment: LeftToeBase_model
+  steps:
+    - segment: LeftForefoot
+
+- segment: RightToeBase_model
+  steps:
+    - segment: RightForefoot
+
+- segment: LeftUpLeg_model
+  steps:
+    - segment: LeftFemur
+
+- segment: RightUpLeg_model
+  steps:
+    - segment: RightFemur
+
+- segment: LeftLeg_model
+  steps:
+    - segment: LeftShank
+
+- segment: RightLeg_model
+  steps:
+    - segment: RightShank
+
+- segment: LeftFoot_model
+  steps:
+    - segment: LeftHindfoot
+
+- segment: RightFoot_model
+  steps:
+    - segment: RightHindfoot
+
+- segment: LeftArm_model
+  steps:
+    - segment: LeftHumerus
+
+- segment: RightArm_model
+  steps:
+    - segment: RightHumerus
+
+- segment: LeftForearm_model
+  steps:
+    - segment: LeftForearm
+
+- segment: RightForearm_model
+  steps:
+    - segment: RightForearm
+
+- segment: LeftHand_model
+  steps:
+    - segment: LeftMetacarpus
+
+- segment: RightHand_model
+  steps:
+    - segment: RightMetacarpus
+
+- segment: Head_model
+  steps:
+    - segment: Cranium
+
+- segment: LeftShoulder_model
+  steps:
+    - segment: LeftClavicle
+
+- segment: RightShoulder_model
+  steps:
+    - segment: RightClavicle
+
+# - segment: Pelvis
+#   steps:
+#     - if: exists(Hips)
+#       then: Hips
+#       else: Pelvis
+
+# - parameter: LeftToeBase_model
+#   steps:
+#     - if: exists(LeftToeBase)
+#       then: LeftToeBase
+#       else: LeftForefoot
+
+# - parameter: RightToeBase_model
+#   steps:
+#     - if: exists(RightToeBase)
+#       then: RightToeBase
+#       else: RightForefoot
+
+# - parameter: LeftUpLeg_model
+#   steps:
+#     - if: exists(LeftUpLeg)
+#       then: LeftUpLeg
+#       else: LeftFemur
+
+# - parameter: RightUpLeg_model
+#   steps:
+#     - if: exists(RightUpLeg)
+#       then: RightUpLeg
+#       else: RightFemur
+
+# - parameter: LeftLeg_model
+#   steps:
+#     - if: exists(LeftLeg)
+#       then: LeftLeg
+#       else: LeftShank
+
+# - parameter: RightLeg_model
+#   steps:
+#     - if: exists(RightLeg)
+#       then: RightLeg
+#       else: RightShank
+
+# - parameter: LeftFoot_model
+#   steps:
+#     - if: exists(LeftFoot)
+#       then: LeftFoot
+#       else: LeftHindfoot
+
+# - parameter: RightFoot_model
+#   steps:
+#     - if: exists(RightFoot)
+#       then: RightFoot
+#       else: RightHindfoot
+
+# - parameter: Spine2_model
+#   steps:
+#     - if: exists(Spine2)
+#       then: Spine2
+#       else: Thorax
+
+# - parameter: LeftArm_model
+#   steps:
+#     - if: exists(LeftArm)
+#       then: LeftArm
+#       else: LeftHumerus
+
+# - parameter: RightArm_model
+#   steps:
+#     - if: exists(RightArm)
+#       then: RightArm
+#       else: RightHumerus
+
+# - parameter: LeftForearm_model
+#   steps:
+#     - if: exists(LeftForearm)
+#       then: LeftForearm
+#       else: LeftForearm
+
+# - parameter: RightForearm_model
+#   steps:
+#     - if: exists(RightForearm)
+#       then: RightForearm
+#       else: RightForearm
+
+
+# - parameter: LeftHand_model
+#   steps:
+#     - if: exists(LeftHand)
+#       then: LeftHand
+#       else: LeftMetacarpus
+
+# - parameter: RightHand_model
+#   steps:
+#     - if: exists(RightHand)
+#       then: RightHand
+#       else: RightMetacarpus
+
+# - parameter: Head_model
+#   steps:
+#     - if: exists(Head)
+#       then: Head
+#       else: Cranium
+# # Head, forearm and hand have the same name
+

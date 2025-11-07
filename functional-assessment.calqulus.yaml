@@ -1,70 +1,83 @@
+
+# - template: templates/skeleton-mapping.calqulus.yaml
+
+# - space: VirtualLab
+#   alignWithSegment:
+#     segment: Hips_model
+
+
+# - template: /templates/timeseries.calqulus.yaml
+#   where:
+#     name: CMJ*
+
+
 - template: templates/fa/cmj.calqulus.yaml
   where:
     name: CMJ*
 
-- template: templates/fa/dj.calqulus.yaml
-  where:
-    name: DJ*
+# - template: templates/fa/dj.calqulus.yaml
+#   where:
+#     name: DJ*
 
-- template: templates/fa/cutting.calqulus.yaml
-  where:
-    name: Cut*
+# - template: templates/fa/cutting.calqulus.yaml
+#   where:
+#     name: Cut*
 
-- template: templates/fa/cod.calqulus.yaml
-  where:
-    name: COD*
+# - template: templates/fa/cod.calqulus.yaml
+#   where:
+#     name: COD*
 
-- template: templates/fa/sj.calqulus.yaml
-  where:
-    name: SJ*
+# - template: templates/fa/sj.calqulus.yaml
+#   where:
+#     name: SJ*
 
-- template: templates/fa/acc.calqulus.yaml
-  where:
-    name: Acc*
+# - template: templates/fa/acc.calqulus.yaml
+#   where:
+#     name: Acc*
 
-- template: templates/fa/sl.calqulus.yaml
-  where:
-    name: ^(SLCDL|SLJ|SLL)*
+# - template: templates/fa/sl.calqulus.yaml
+#   where:
+#     name: ^(SLCDL|SLJ|SLL)*
 
-- template: templates/fa/pj.calqulus.yaml
-  where:
-    name: PJ*
+# - template: templates/fa/pj.calqulus.yaml
+#   where:
+#     name: PJ*
 
-- template: templates/fa/sh.calqulus.yaml
-  where:
-    name: SH*
+# - template: templates/fa/sh.calqulus.yaml
+#   where:
+#     name: SH*
 
-- template: templates/fa/tapping.calqulus.yaml
-  where:
-    name: Tap*
+# - template: templates/fa/tapping.calqulus.yaml
+#   where:
+#     name: Tap*
 
-- template: templates/fa/ll.calqulus.yaml
-  where:
-    name: ^LL*
+# - template: templates/fa/ll.calqulus.yaml
+#   where:
+#     name: ^LL*
 
-- template: templates/fa/squatting.calqulus.yaml
-  where:
-    name: Squat*
+# - template: templates/fa/squatting.calqulus.yaml
+#   where:
+#     name: Squat*
 
-- template: templates/fa/lunge.calqulus.yaml
-  where:
-    name: Lunge*
+# - template: templates/fa/lunge.calqulus.yaml
+#   where:
+#     name: Lunge*
 
-- template: templates/generic/generic.calqulus.yaml
-  where:
-    fields: 
-      Session Type: Generic*
+# - template: templates/generic/generic.calqulus.yaml
+#   where:
+#     fields: 
+#       Session Type: Generic*
 
-- template: templates/running/running.calqulus.yaml
-  where:
-    name: ^(Gait|Run|Walk)*
+# - template: templates/running/running.calqulus.yaml
+#   where:
+#     name: ^(Gait|Run|Walk)*
 
-- template: templates/fa/balance.calqulus.yaml
-  where:
-    name: ^(Balance|Y Balance)*
-    # force: any # Balance session requires force plates presence
+# - template: templates/fa/balance.calqulus.yaml
+#   where:
+#     name: ^(Balance|Y Balance)*
+#     # force: any # Balance session requires force plates presence
 
-# Body weight (applies to all tasks)
-- parameter: MASS
-  steps:
-    - import: $bodyMass
+# # Body weight (applies to all tasks)
+# - parameter: MASS
+#   steps:
+#     - import: $bodyMass
