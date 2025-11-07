@@ -526,7 +526,7 @@
     - eventMask: [Left Shoulder Girdle Angles, LeftPlotStart, LeftPlotEnd]
     - mean: 
 
-- parameter: Left Shoulder Protraction_max
+- parameter: Left Shoulder Girdle Protraction_max
   where:
     name: '!Static*'
   set: left
@@ -1010,7 +1010,7 @@
     - eventMask: [Right Shoulder Girdle Angles, RightPlotStart, RightPlotEnd]
     - mean: 
 
-- parameter: Right Shoulder Protraction_max
+- parameter: Right Shoulder Girdle Protraction_max
   where:
     name: '!Static*'
   set: right
@@ -1043,7 +1043,7 @@
   steps:
     - subtract: [Right Shoulder Girdle Protraction_max, Right Shoulder Girdle Protraction_min]
 
-- parameter: Right Shoulder Elevation_max
+- parameter: Right Shoulder Girdle Elevation_max
   where:
     name: '!Static*'
   set: right
