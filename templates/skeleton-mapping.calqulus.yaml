@@ -1,18 +1,11 @@
-# - space: VirtualLab
-#   alignWithSegment:
-#     segment: Hips_model
 
-- event: one
-  steps:
-    - import: [0]
-  
 - segment: Hips_model
   steps:
     - segment: Pelvis
 
 - segment: Spine2_model
   steps:
-    - import: Thorax
+    - segment: Thorax
 
 - segment: LeftToeBase_model
   steps:
@@ -82,7 +75,8 @@
   steps:
     - segment: RightClavicle
 
-# - segment: Pelvis
+# ---------------
+# - segment: Hips_model
 #   steps:
 #     - if: exists(Hips)
 #       then: Hips
@@ -184,5 +178,5 @@
 #     - if: exists(Head)
 #       then: Head
 #       else: Cranium
-# # Head, forearm and hand have the same name
+
 

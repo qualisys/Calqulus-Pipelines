@@ -1,10 +1,12 @@
+- template: /templates/skeleton-mapping.calqulus.yaml
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -127,7 +129,7 @@
   where:
     name: DJ_B*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -136,7 +138,7 @@
   where:
     name: DJ_L*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -145,7 +147,7 @@
   where:
     name: DJ_R*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -154,7 +156,7 @@
   where:
     name: DJ_B*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -165,7 +167,7 @@
   where:
     name: DJ_L*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -176,7 +178,7 @@
   where:
     name: DJ_R*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -187,7 +189,7 @@
   where:
     name: DJ_B*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
@@ -196,7 +198,7 @@
   where:
     name: DJ_L*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
@@ -205,14 +207,14 @@
   where:
     name: DJ_R*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
 
 - parameter: CenterOfMass@Landing_end
   steps:
-    - import: Hips@Landing_end
+    - import: Hips_model@Landing_end
     - convert:
       from: mm
       to: m
@@ -220,7 +222,7 @@
 #debugging signal, can be removed
 - parameter: Pelvis_COM
   steps:
-    - import: Hips
+    - import: Hips_model
     - convert:
       from: mm
       to: m
@@ -233,8 +235,8 @@
   where:
     name: DJ_B*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,Landing]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,Landing]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -245,8 +247,8 @@
   where:
     name: DJ_L*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,Landing]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,Landing]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -257,8 +259,8 @@
   where:
     name: DJ_R*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,Landing]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,Landing]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -270,10 +272,10 @@
   where:
     name: DJ_B*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -284,10 +286,10 @@
   where:
     name: DJ_L*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -298,10 +300,10 @@
   where:
     name: DJ_R*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev

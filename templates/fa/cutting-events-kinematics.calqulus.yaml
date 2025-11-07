@@ -268,7 +268,7 @@
 
 - parameter: Pelvis_Origin_cum_dist
   steps:
-    - vector: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - cumulativeDistance:
       scalar: false
     - import: $prev@TouchDown
