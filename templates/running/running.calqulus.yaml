@@ -1,14 +1,16 @@
+- template: /templates/skeleton-mapping.calqulus.yaml
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 - parameter: VirtualLabOrigin
   steps:
-    - vector: [Hips.x, Hips.x, Hips.x]
+    - vector: [Hips_model.x, Hips_model.x, Hips_model.x]
     - multiply: [$prev, 0]
 
 - segment: VirtualLabSegment
@@ -41,7 +43,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot
+    - segment: LeftFoot_model
       space: VirtualLab
     - convert:
       from: mm
@@ -60,7 +62,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot
+    - segment: LeftFoot_model
       space: VirtualLab
     - convert:
       from: mm
@@ -78,7 +80,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - vector: [LeftAnkle.x, LeftAnkle.y, LeftAnkle.z]
+    - vector: [LeftAnkle_model.x, LeftAnkle_model.y, LeftAnkle_model.z]
 
 - parameter: LeftHeelBack
   set: left
@@ -102,7 +104,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot
+    - segment: RightFoot_model
       space: VirtualLab
     - convert:
       from: mm
@@ -121,7 +123,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot
+    - segment: RightFoot_model
       space: VirtualLab
     - convert:
       from: mm
@@ -139,7 +141,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - vector: [RightAnkle.x, RightAnkle.y, RightAnkle.z]
+    - vector: [RightAnkle_model.x, RightAnkle_model.y, RightAnkle_model.z]
 
 - parameter: RightHeelBack
   set: right
@@ -163,7 +165,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: Hips
+    - segment: Hips_model
       space: VirtualLab
     - convert:
       from: mm
@@ -175,10 +177,10 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - vector: [LeftToeBase.x, LeftToeBase.y, LeftToeBase.z]
+    - vector: [LeftToeBase_model.x, LeftToeBase_model.y, LeftToeBase_model.z]
       space: VirtualLab
       output: foot
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
   
@@ -189,7 +191,7 @@
   steps:
     - import: LeftHeelBack => heel
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [heel, pelvis]
   
@@ -198,10 +200,10 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - vector: [RightToeBase.x, RightToeBase.y, RightToeBase.z]
+    - vector: [RightToeBase_model.x, RightToeBase_model.y, RightToeBase_model.z]
       space: VirtualLab
       output: foot
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
   
@@ -212,7 +214,7 @@
   steps:
     - import: RightHeelBack => heel
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [heel, pelvis]
 
@@ -220,7 +222,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - import: Hips
+    - import: Hips_model
       space: VirtualLab
     - convert:
       from: mm
@@ -252,7 +254,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftLeg
+    - segment: LeftLeg_model
     - velocity: $prev
       space: VirtualLab
     - convert:
@@ -264,7 +266,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightLeg
+    - segment: RightLeg_model
     - velocity: $prev
       space: VirtualLab
     - convert:
@@ -278,9 +280,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftLeg => shank
+    - segment: LeftLeg_model => shank
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [pelvis, shank]
     - multiply: [$prev.y,-1]
@@ -293,9 +295,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightLeg
-    - segment: Hips
-    - subtract: [Hips, RightLeg]
+    - segment: RightLeg_model
+    - segment: Hips_model
+    - subtract: [Hips_model, RightLeg_model]
       space: VirtualLab
     - multiply: [$prev.y,-1]
     - convert:
@@ -309,7 +311,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftLeg => shank
+    - segment: LeftLeg_model => shank
       space: VirtualLab
     - convert: shank
       from: mm
@@ -320,7 +322,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightLeg => shank
+    - segment: RightLeg_model => shank
       space: VirtualLab
     - convert: shank
       from: mm
@@ -333,7 +335,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - jointAngle: [LeftFoot, LeftLeg]
+    - jointAngle: [LeftFoot_model, LeftLeg_model]
     - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Tibial Rotation
@@ -341,7 +343,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - jointAngle: [RightFoot, RightLeg]
+    - jointAngle: [RightFoot_model, RightLeg_model]
 
 # ---
 
@@ -382,7 +384,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - jointAngle: LeftFoot => footContactAngle
+    - jointAngle: LeftFoot_model => footContactAngle
       space: VirtualLab
       axis: ["X"]
 
@@ -391,7 +393,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - jointAngle: RightFoot => footContactAngle
+    - jointAngle: RightFoot_model => footContactAngle
       space: VirtualLab
       axis: ["X"]
 
@@ -402,9 +404,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => foot
+    - segment: LeftFoot_model => foot
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [pelvis, foot]
       output: ankle
@@ -424,7 +426,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - subtract: [Hips, RightFoot]
+    - subtract: [Hips_model, RightFoot_model]
       space: VirtualLab
       output: ankle
 
@@ -445,7 +447,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => ankle
+    - segment: LeftFoot_model => ankle
       space: VirtualLab
     - convert: ankle
       from: mm
@@ -456,7 +458,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot => ankle
+    - segment: RightFoot_model => ankle
       space: VirtualLab
     - convert: ankle
       from: mm
@@ -469,7 +471,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot
+    - segment: LeftFoot_model
       space: VirtualLab
     - velocity:
     - convert:
@@ -481,7 +483,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot
+    - segment: RightFoot_model
       space: VirtualLab
     - velocity:
     - convert:
@@ -494,7 +496,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - jointAngle: Spine2
+    - jointAngle: Spine2_model
       space: VirtualLab
     - multiply: [$prev, [-1,1,1]]
 
@@ -502,7 +504,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - jointAngle: [Hips, Spine2]
+    - jointAngle: [Hips_model, Spine2_model]
 
 # --- Arms ---
 
@@ -511,7 +513,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - subtract: [LeftForeArm, Hips]
+    - subtract: [LeftForearm_model, Hips_model]
       space: VirtualLab
       output: elbowPelvis
     - convert: elbowPelvis.y
@@ -534,7 +536,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - subtract: [RightForeArm, Hips]
+    - subtract: [RightForearm_model, Hips_model]
       space: VirtualLab
       output: elbowPelvis
     - convert: elbowPelvis.y
@@ -559,7 +561,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - subtract: [LeftHand, Hips]
+    - subtract: [LeftHand_model, Hips_model]
       space: VirtualLab
       output: wristPelvis
     - convert: wristPelvis.y
@@ -582,7 +584,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - subtract: [RightHand, Hips]
+    - subtract: [RightHand_model, Hips_model]
       space: VirtualLab
       output: wristPelvis
     - convert: wristPelvis.y
@@ -605,7 +607,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - convert: pelvis
       from: mm
@@ -617,7 +619,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
     - convert: pelvis
       from: mm
       to: m
@@ -634,7 +636,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
     - velocity: l_foot => l_foot_vel
     - multiply: [l_foot_vel.y, -1]
@@ -645,7 +647,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
     - velocity: r_foot => r_foot_vel
     - multiply: [r_foot_vel.y, -1]
@@ -666,7 +668,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - velocity: Hips => pelvis_vel
+    - velocity: Hips_model => pelvis_vel
       space: VirtualLab
     - convert: pelvis_vel
       from: mm/s
@@ -680,7 +682,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - velocity: Hips
+    - velocity: Hips_model
       space: VirtualLab
     - convert:
       from: mm/s
@@ -724,8 +726,8 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftUpLeg => l_thigh
-    - segment: RightUpLeg => r_thigh
+    - segment: LeftUpLeg_model => l_thigh
+    - segment: RightUpLeg_model => r_thigh
     - jointAngle: [l_thigh, r_thigh]
       export: Left Stride Angle
     - eventMask: [$prev, LFS, LFS]
@@ -736,8 +738,8 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftUpLeg => l_thigh
-    - segment: RightUpLeg => r_thigh
+    - segment: LeftUpLeg_model => l_thigh
+    - segment: RightUpLeg_model => r_thigh
     - jointAngle: [r_thigh, l_thigh]
       export: Right Stride Angle
     - eventMask: [$prev, RFS, RFS]
@@ -768,9 +770,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
     - subtract: [r_foot.y@RFS, l_foot.y@LFS]
       frameSequenceOrder: reverse
@@ -786,9 +788,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
     - subtract: [r_foot.y@RFS, l_foot.y@LFS]
       frameSequenceOrder: reverse
@@ -800,9 +802,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
     - subtract: [l_foot.y@LFS, r_foot.y@RFS]
       frameSequenceOrder: reverse
@@ -818,9 +820,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
     - subtract: [l_foot.y@LFS, r_foot.y@RFS]
       frameSequenceOrder: reverse
@@ -858,7 +860,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot => foot
+    - segment: RightFoot_model => foot
       space: VirtualLab
     - eventDuration: [RFS, RFS]
       export: right_stride_time
@@ -875,7 +877,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot => foot
+    - segment: RightFoot_model => foot
       space: VirtualLab
     - eventDuration: [RFS, RFS]
       export: right_stride_time
@@ -888,7 +890,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => foot
+    - segment: LeftFoot_model => foot
       space: VirtualLab
     - eventDuration: [LFS, LFS]
       export: left_stride_time
@@ -905,7 +907,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => foot
+    - segment: LeftFoot_model => foot
       space: VirtualLab
     - eventDuration: [LFS, LFS]
       export: left_stride_time
@@ -946,9 +948,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
     - subtract: [r_foot.x@RFS, l_foot.x@LFS]
       frameSequenceOrder: reverse
@@ -958,9 +960,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
     - subtract: [l_foot.x@LFS, r_foot.x@RFS]
       frameSequenceOrder: reverse
@@ -1035,7 +1037,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - eventMask: [Hips, LFS, RFS]
+    - eventMask: [Hips_model, LFS, RFS]
       output: mask
     - max: mask.z => max
     - min: mask.z => min
@@ -1097,9 +1099,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [l_foot.y, pelvis.y]
     - convert:
@@ -1115,9 +1117,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [r_foot.y, pelvis.y]
     - convert:
@@ -1577,7 +1579,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - jointAngle: [LeftUpLeg]
+    - jointAngle: [LeftUpLeg_model]
       space: VirtualLab
     - multiply: [$prev, [1, -1,-1]]
 
@@ -1585,7 +1587,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - jointAngle: [RightUpLeg]
+    - jointAngle: [RightUpLeg_model]
       space: VirtualLab
 
 - parameter: Left Thigh Angles@Left Stride Angle_max
@@ -1618,9 +1620,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftLeg => l_knee
+    - segment: LeftLeg_model => l_knee
       space: VirtualLab
-    - segment: RightLeg => r_knee
+    - segment: RightLeg_model => r_knee
       space: VirtualLab
     - subtract: [r_knee, l_knee]
     - convert:
@@ -1633,9 +1635,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftLeg => l_knee
+    - segment: LeftLeg_model => l_knee
       space: VirtualLab
-    - segment: RightLeg => r_knee
+    - segment: RightLeg_model => r_knee
       space: VirtualLab
     - subtract: [l_knee, r_knee]
     - convert:
@@ -1727,7 +1729,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - angularVelocity: [VirtualLabSegment, LeftLeg, VirtualLabSegment, LeftLeg]
+    - angularVelocity: [VirtualLabSegment, LeftLeg_model, VirtualLabSegment, LeftLeg_model]
     - lowpass:
       cutoff: 10
       extrapolate: 5
@@ -1739,7 +1741,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - angularVelocity: [VirtualLabSegment, RightLeg, VirtualLabSegment, RightLeg]
+    - angularVelocity: [VirtualLabSegment, RightLeg_model, VirtualLabSegment, RightLeg_model]
     - lowpass:
       cutoff: 10
       extrapolate: 5
@@ -1751,7 +1753,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - angularVelocity: [VirtualLabSegment, LeftLeg, VirtualLabSegment, LeftLeg]
+    - angularVelocity: [VirtualLabSegment, LeftLeg_model, VirtualLabSegment, LeftLeg_model]
     - lowpass:
       cutoff: 10
       extrapolate: 5
@@ -1763,7 +1765,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - angularVelocity: [VirtualLabSegment, RightLeg, VirtualLabSegment, RightLeg]
+    - angularVelocity: [VirtualLabSegment, RightLeg_model, VirtualLabSegment, RightLeg_model]
     - lowpass:
       cutoff: 10
       extrapolate: 5
@@ -1828,9 +1830,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => foot
+    - segment: LeftFoot_model => foot
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
     - convert:
@@ -1843,9 +1845,9 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot => foot
+    - segment: RightFoot_model => foot
       space: VirtualLab
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - subtract: [foot, pelvis]
     - convert:

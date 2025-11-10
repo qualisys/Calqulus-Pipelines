@@ -10,8 +10,8 @@
   where:
     name: Run*
   steps:
-    - segment: Hips => hipsDynamic
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model => hipsDynamic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic.z
     - subtract: [hipsDynamic.z, $prev]
     - convert:
@@ -26,7 +26,7 @@
     session: 
        FA session: "!true"
   steps:
-    - jointAngle: Hips
+    - jointAngle: Hips_model
       space: VirtualLab
     - multiply: [$prev, [-1, -1, -1]]
     - lowpass:
@@ -40,7 +40,7 @@
     fields: 
        FA session: "!true"
   steps:
-    - jointAngle: Hips
+    - jointAngle: Hips_model
       space: VirtualLab
     - multiply: [$prev, [-1, 1, 1]]
     - lowpass:
@@ -53,7 +53,7 @@
   where:
     name: Run*
   steps:
-    - angle: [LeftArm, LeftForeArm, LeftHand]
+    - angle: [LeftArm_model, LeftForeArm_model, LeftHand_model]
     - convert:
       from: radians
       to: degrees
@@ -66,7 +66,7 @@
   where:
     name: Run*
   steps:
-    - angle: [RightArm, RightForeArm, RightHand]
+    - angle: [RightArm_model, RightForeArm_model, RightHand_model]
     - convert:
       from: radians
       to: degrees

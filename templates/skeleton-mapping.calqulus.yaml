@@ -39,6 +39,14 @@
   steps:
     - segment: RightHindfoot
 
+- segment: LeftAnkle_model # used by Gait and running
+  steps:
+    - segment: LeftHindfoot
+
+- segment: RightAnkle_model # used by Gait and running
+  steps:
+    - segment: RightHindfoot
+  
 - segment: LeftArm_model
   steps:
     - segment: LeftHumerus
