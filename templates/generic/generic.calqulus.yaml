@@ -550,7 +550,7 @@
     - eventMask: [Left Shoulder Girdle Angles, LeftPlotStart, LeftPlotEnd]
     - mean: $prev.z
 
-- parameter: Left Shoulder Girdle Protraction range
+- parameter: Left Shoulder Girdle Protraction_range
   where:
     name: '!Static*'
   set: left
@@ -562,8 +562,7 @@
     name: '!Static*'
   set: left
   steps:
-    - import: Left Shoulder Girdle Angles
-    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - eventMask: [Left Shoulder Girdle Angles, LeftPlotStart, LeftPlotEnd]
     - max: $prev.y
 
 - parameter: Left Shoulder Girdle Elevation_min
@@ -571,8 +570,7 @@
     name: '!Static*'
   set: left
   steps:
-    - import: Left Shoulder Girdle Angles
-    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - eventMask: [Left Shoulder Girdle Angles, LeftPlotStart, LeftPlotEnd]
     - min: $prev.y
 
 - parameter: Left Shoulder Girdle Elevation_mean
@@ -580,11 +578,10 @@
     name: '!Static*'
   set: left
   steps:
-    - import: Left Shoulder Girdle Angles
-    - eventMask: [$prev, LeftPlotStart, LeftPlotEnd]
+    - eventMask: [Left Shoulder Girdle Angles, LeftPlotStart, LeftPlotEnd]
     - mean: $prev.y
 
-- parameter: Left Shoulder Girdle Elevation range
+- parameter: Left Shoulder Girdle Elevation_range
   where:
     name: '!Static*'
   set: left
@@ -1014,8 +1011,7 @@
     name: '!Static*'
   set: right
   steps:
-    - import: Right Shoulder Girdle Angles
-    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - eventMask: [Right Shoulder Girdle Angles, RightPlotStart, RightPlotEnd]
     - max: $prev.z
 
 - parameter: Right Shoulder Girdle Protraction_min
@@ -1023,8 +1019,7 @@
     name: '!Static*'
   set: right
   steps:
-    - import: Right Shoulder Girdle Angles
-    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - eventMask: [Right Shoulder Girdle Angles, RightPlotStart, RightPlotEnd]
     - min: $prev.z
 
 - parameter: Right Shoulder Girdle Protraction_mean
@@ -1032,11 +1027,10 @@
     name: '!Static*'
   set: right
   steps:
-    - import: Right Shoulder Girdle Angles
-    - eventMask: [$prev, RightPlotStart, RightPlotEnd]
+    - eventMask: [Right Shoulder Girdle Angles, RightPlotStart, RightPlotEnd]
     - mean: $prev.z
 
-- parameter: Right Shoulder Girdle Protraction range
+- parameter: Right Shoulder Girdle Protraction_range
   where:
     name: '!Static*'
   set: right
@@ -1067,7 +1061,7 @@
     - eventMask: [Right Shoulder Girdle Angles, RightPlotStart, RightPlotEnd]
     - mean: $prev.y
 
-- parameter: Right Shoulder Girdle Elevation range
+- parameter: Right Shoulder Girdle Elevation_range
   where:
     name: '!Static*'
   set: right
