@@ -1,10 +1,12 @@
+- template: /templates/skeleton-mapping.calqulus.yaml
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -24,7 +26,7 @@
 
 - event: COM_MIN
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
       frames: true
 
 - event: PlotStart_stand_temp
@@ -241,7 +243,7 @@
 
 - parameter: PelvisCGPos
   steps:
-    - vector: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -357,7 +359,7 @@
   where:
     name: LL_L*
   steps:
-    - vector: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - import: $prev@TakeOff
     - convert:
       from: mm
@@ -365,14 +367,14 @@
 
 - parameter: CenterOfMass_MIN
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
 
 - parameter: CenterOfMass@PlotStart
   steps:
-    - vector: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - import: $prev@PlotStart
     - convert:
       from: mm

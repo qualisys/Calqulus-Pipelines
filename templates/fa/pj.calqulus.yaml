@@ -1,10 +1,12 @@
+- template: /templates/skeleton-mapping.calqulus.yaml
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -73,7 +75,7 @@
   where:
     name: PJ_L*
   steps:
-    - eventMask: [Hips.z, TouchDown_L, TakeOff_full_cycle]
+    - eventMask: [Hips_model.z, TouchDown_L, TakeOff_full_cycle]
     - max:
       frames: true
 
@@ -136,7 +138,7 @@
   where:
     name: PJ_[RB]*
   steps:
-    - eventMask: [Hips.z, TouchDown_R, TakeOff_full_cycle]
+    - eventMask: [Hips_model.z, TouchDown_R, TakeOff_full_cycle]
     - max:
       frames: true
 
@@ -282,11 +284,11 @@
   where:
     name: PJ_B*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - eventMask: [$prev, TakeOff, TouchDown]
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -297,11 +299,11 @@
   where:
     name: PJ_L*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - eventMask: [$prev, TakeOff, TouchDown]
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -312,11 +314,11 @@
   where:
     name: PJ_R*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - eventMask: [$prev, TakeOff, TouchDown]
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev

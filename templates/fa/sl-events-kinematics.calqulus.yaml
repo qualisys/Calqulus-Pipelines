@@ -176,7 +176,7 @@
 
 - event: COM_MIN # using Pelvis for now
   steps:
-    - eventMask: [Hips.z, TouchDown, Max_knee_flex]
+    - eventMask: [Hips_model.z, TouchDown, Max_knee_flex]
     - min:
       frames: true
 

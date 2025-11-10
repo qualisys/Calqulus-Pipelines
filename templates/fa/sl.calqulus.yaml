@@ -1,10 +1,12 @@
+- template: /templates/skeleton-mapping.calqulus.yaml
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -47,7 +49,7 @@
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
   steps:
-    - eventMask: [Hips, TouchDown, Max_knee_flex]
+    - eventMask: [Hips_model, TouchDown, Max_knee_flex]
     - convert: 
       from: mm
       to: m
@@ -244,7 +246,7 @@
     name: ^(SLJ_|SLL_)L*
   set: left
   steps:
-    - vector: [LeftToeBase.x, LeftToeBase.y, LeftToeBase.z]
+    - vector: [LeftToeBase_model.x, LeftToeBase_model.y, LeftToeBase_model.z]
       space: VirtualLab
       output: toe
     - convert:
@@ -278,7 +280,7 @@
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
   steps:
-    - eventMask: [Hips, TouchDown, Max_knee_flex]
+    - eventMask: [Hips_model, TouchDown, Max_knee_flex]
     - convert: 
       from: mm
       to: m
@@ -475,7 +477,7 @@
     name: ^(SLJ_|SLL_)R*
   set: right
   steps:
-    - vector: [RightToeBase.x, RightToeBase.y, RightToeBase.z]
+    - vector: [RightToeBase_model.x, RightToeBase_model.y, RightToeBase_model.z]
       space: VirtualLab
       output: toe
     - convert:

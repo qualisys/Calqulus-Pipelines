@@ -1,10 +1,12 @@
+- template: /templates/skeleton-mapping.calqulus.yaml
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -89,7 +91,7 @@
   where:
     name: SJ_B*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -98,7 +100,7 @@
   where:
     name: SJ_L*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -107,7 +109,7 @@
   where:
     name: SJ_R*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -116,7 +118,7 @@
   where:
     name: SJ_B*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -127,7 +129,7 @@
   where:
     name: SJ_L*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -138,7 +140,7 @@
   where:
     name: SJ_R*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -149,7 +151,7 @@
   where:
     name: SJ_B*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
@@ -158,7 +160,7 @@
   where:
     name: SJ_L*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
@@ -167,7 +169,7 @@
   where:
     name: SJ_R*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
@@ -176,7 +178,7 @@
   where:
     name: SJ_B*
   steps:
-    - import: Hips.z@PlotStart
+    - import: Hips_model.z@PlotStart
     - convert:
       from: mm
       to: m
@@ -185,7 +187,7 @@
   where:
     name: SJ_L*
   steps:
-    - import: Hips.z@PlotStart
+    - import: Hips_model.z@PlotStart
     - convert:
       from: mm
       to: m
@@ -194,7 +196,7 @@
   where:
     name: SJ_R*
   steps:
-    - import: Hips.z@PlotStart
+    - import: Hips_model.z@PlotStart
     - convert:
       from: mm
       to: m
@@ -202,7 +204,7 @@
 #debugging signal, can be removed
 - parameter: Pelvis_COM
   steps:
-    - import: Hips
+    - import: Hips_model
     - convert:
       from: mm
       to: m
@@ -215,8 +217,8 @@
   where:
     name: SJ_B*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,TouchDown]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,TouchDown]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -227,8 +229,8 @@
   where:
     name: SJ_L*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,TouchDown]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,TouchDown]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -239,8 +241,8 @@
   where:
     name: SJ_R*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,TouchDown]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,TouchDown]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -252,10 +254,10 @@
   where:
     name: SJ_B*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -266,10 +268,10 @@
   where:
     name: SJ_L*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -280,10 +282,10 @@
   where:
     name: SJ_R*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev

@@ -1,10 +1,12 @@
+- template: /templates/skeleton-mapping.calqulus.yaml
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -20,7 +22,7 @@
 
 - parameter: PelvisCGPos_vel
   steps:
-    - segment: Hips
+    - segment: Hips_model
       space: VirtualLab
     - velocity:
     - convert: $prev
@@ -30,7 +32,7 @@
 - parameter: LFT_DistEndAcc
   set: left
   steps:
-    - segment: LeftToeBase
+    - segment: LeftToeBase_model
       space: VirtualLab
     - convert:
       from: mm
@@ -49,7 +51,7 @@
 - parameter: RFT_DistEndAcc
   set: right
   steps:
-    - segment: RightToeBase
+    - segment: RightToeBase_model
       space: VirtualLab
     - convert:
       from: mm
