@@ -229,14 +229,14 @@
       cutoff: KinematicsLowpassCutoffFq
       extrapolate: KinematicsLowpassExtrapolate
 
-# Shoulders
+# Shoulder girdles
 - parameter: Left Shoulder Girdle Angles
   set: left
   steps:
     - angle: [Spine2, LeftShoulder]
       unwrap: true
       rotationOrder: XYZ 
-    - multiply: [$prev, [1, -1, -1]]
+    - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
       extrapolate: KinematicsLowpassExtrapolate
@@ -247,11 +247,12 @@
     - angle: [Spine2, RightShoulder]
       unwrap: true
       rotationOrder: XYZ
-    - multiply: [$prev, [1, 1, 1]]
+    - multiply: [$prev, [1, -1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
       extrapolate: KinematicsLowpassExtrapolate      
 
+# Shoulders
 - parameter: Left Shoulder Angles
   set: left
   steps:
