@@ -113,22 +113,3 @@
     - if: exists(Head)
       then: Head
       else: Cranium
-
-# Used by Gait and Running
-- segment: LeftAnkle_model
-  where:
-    name: ^(Gait|Run|Walk)*
-  steps:
-    - if: exists(LEFT_ANKLE)
-      then: LEFT_ANKLE
-      else: LeftHindfoot
-
-- segment: RightAnkle_model
-  where:
-    name: ^(Gait|Run|Walk)*
-  steps:
-    - if: exists(RIGHT_ANKLE)
-      then: RIGHT_ANKLE
-      else: RightHindfoot
-
-

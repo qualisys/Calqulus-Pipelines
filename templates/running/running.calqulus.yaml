@@ -79,7 +79,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - vector: [LeftAnkle_model.x, LeftAnkle_model.y, LeftAnkle_model.z]
+    - vector: [LeftFoot_model.x, LeftFoot_model.y, LeftFoot_model.z]
 
 - parameter: LeftHeelBack
   set: left
@@ -140,7 +140,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - vector: [RightAnkle_model.x, RightAnkle_model.y, RightAnkle_model.z]
+    - vector: [RightFoot_model.x, RightFoot_model.y, RightFoot_model.z]
 
 - parameter: RightHeelBack
   set: right
