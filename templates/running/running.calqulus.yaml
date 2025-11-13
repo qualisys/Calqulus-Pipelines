@@ -512,7 +512,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - subtract: [LeftForearm_model, Hips_model]
+    - subtract: [LeftForeArm_model, Hips_model]
       space: VirtualLab
       output: elbowPelvis
     - convert: elbowPelvis.y
@@ -535,7 +535,7 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - subtract: [RightForearm_model, Hips_model]
+    - subtract: [RightForeArm_model, Hips_model]
       space: VirtualLab
       output: elbowPelvis
     - convert: elbowPelvis.y

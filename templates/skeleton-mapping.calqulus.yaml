@@ -42,18 +42,6 @@
       then: RightFoot
       else: RightHindfoot
 
-- segment: LeftAnkle_model # used by Gait and running
-  steps:
-    - if: exists(LeftAnkle)
-      then: LeftAnkle
-      else: LeftHindfoot
-
-- segment: RightAnkle_model # used by Gait and running
-  steps:
-    - if: exists(RightAnkle)
-      then: RightAnkle
-      else: RightHindfoot
-
 - segment: LeftToeBase_model
   steps:
     - if: exists(LeftToeBase)
@@ -96,13 +84,13 @@
       then: RightArm
       else: RightHumerus
 
-- segment: LeftForearm_model
+- segment: LeftForeArm_model
   steps:
     - if: exists(LeftForearm)
       then: LeftForearm
       else: LeftForearm
 
-- segment: RightForearm_model
+- segment: RightForeArm_model
   steps:
     - if: exists(RightForearm)
       then: RightForearm
@@ -125,5 +113,22 @@
     - if: exists(Head)
       then: Head
       else: Cranium
+
+# Used by Gait and Running
+- segment: LeftAnkle_model
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - if: exists(LEFT_ANKLE)
+      then: LEFT_ANKLE
+      else: LeftHindfoot
+
+- segment: RightAnkle_model
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - if: exists(RIGHT_ANKLE)
+      then: RIGHT_ANKLE
+      else: RightHindfoot
 
 

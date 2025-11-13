@@ -267,7 +267,7 @@
 - parameter: Left Elbow Angles
   set: left
   steps:
-    - angle: [LeftArm_model, LeftForearm_model]
+    - angle: [LeftArm_model, LeftForeArm_model]
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -276,7 +276,7 @@
 - parameter: Right Elbow Angles
   set: right
   steps:
-    - angle: [RightArm_model, RightForearm_model]
+    - angle: [RightArm_model, RightForeArm_model]
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -287,7 +287,7 @@
 - parameter: Left Wrist Angles
   set: left
   steps:
-    - angle: [LeftForearm_model, LeftHand_model]
+    - angle: [LeftForeArm_model, LeftHand_model]
     - multiply: [$prev, [1, -1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -296,7 +296,7 @@
 - parameter: Right Wrist Angles
   set: right
   steps:
-    - angle: [RightForearm_model, RightHand_model]
+    - angle: [RightForeArm_model, RightHand_model]
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
