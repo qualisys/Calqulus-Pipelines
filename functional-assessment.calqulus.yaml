@@ -1,5 +1,5 @@
 
-# - template: templates/skeleton-mapping.calqulus.yaml
+- template: templates/skeleton-mapping.calqulus.yaml
 
 - template: templates/fa/cmj.calqulus.yaml
   where:
