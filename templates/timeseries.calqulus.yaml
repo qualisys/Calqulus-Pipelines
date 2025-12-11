@@ -397,7 +397,7 @@
 # dummy value to skip kinetics calculation
 - parameter: skip_kinetics_calculation
   steps:
-    - if: "!exists(Total GRF_both) || empty(Total GRF_both)" #exists only in CMJ and DJ and only if both FPs are loaded
+    - if: "(!exists(LeftFootContact) && !exists(RightFootContact)) || (empty(LeftFootContact) && empty(RightFootContact))" #exists only in CMJ and DJ and only if both FPs are loaded
       then: [1]
       else: [0] 
 
