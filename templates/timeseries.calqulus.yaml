@@ -394,12 +394,22 @@
   steps:
     - multiply: [$bodyMass, 9.81]
 
-# dummy value to skip kinetics calculation
+# Dummy value to skip kinetics calculation
+# For CMJ/DJ: skip kinetics unless BOTH force plates exist
 - parameter: skip_kinetics_calculation
+  where:
+    name: ^(CMJ|DJ).*
   steps:
-    - if: "(!exists(LeftFootContact) && !exists(RightFootContact)) || (empty(LeftFootContact) && empty(RightFootContact))" #exists only in CMJ and DJ and only if both FPs are loaded
-      then: [1]
-      else: [0] 
+    - if: (exists(ForcePlate1) && exists(ForcePlate2))
+      then: [0]
+      else: [1]
+
+# For all other measurements: don't skip kinetics
+- parameter: skip_kinetics_calculation
+  where:
+    name: ^(?!(CMJ|DJ)).*
+  steps:
+    - import: [0]
 
 # Left
 - parameter: Left GRF
