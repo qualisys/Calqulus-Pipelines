@@ -475,28 +475,32 @@
     name: LL_L*
   set: left
   steps:
-    - max: Left Hip Angles
+    - eventMask: [Left Hip Angles, LeftPlotStart, LeftPlotEnd]
+    - max:
 
 - parameter: Left Knee Angles_max_LL_L
   where:
     name: LL_L*
   set: left
   steps:
-    - max: Left Knee Angles
+    - eventMask: [Left Knee Angles, LeftPlotStart, LeftPlotEnd]
+    - max:
 
 - parameter: Left Ankle Angles_max_LL_L
   where:
     name: LL_L*
   set: left
   steps:
-    - max: Left Ankle Angles
+    - eventMask: [Left Ankle Angles, LeftPlotStart, LeftPlotEnd]
+    - max:
 
 - parameter: Left Foot Progression_max_LL_L
   where:
     name: LL_L*
   set: left
   steps:
-    - max: Left Foot Progression
+    - eventMask: [Left Foot Progression, LeftPlotStart, LeftPlotEnd]
+    - max:
 
 # Right ------
 # @TouchDown
@@ -579,28 +583,32 @@
     name: LL_R*
   set: right
   steps:
-    - max: Right Hip Angles
+    - eventMask: [Right Hip Angles, RightPlotStart, RightPlotEnd]
+    - max:
 
 - parameter: Right Knee Angles_max_LL_R
   where:
     name: LL_R*
   set: right
   steps:
-    - max: Right Knee Angles
+    - eventMask: [Right Knee Angles, RightPlotStart, RightPlotEnd]
+    - max:
 
 - parameter: Right Ankle Angles_max_LL_R
   where:
     name: LL_R*
   set: right
   steps:
-    - max: Right Ankle Angles
+    - eventMask: [Right Ankle Angles, RightPlotStart, RightPlotEnd]
+    - max:
 
 - parameter: Right Foot Progression_max_LL_R
   where:
     name: LL_R*
   set: right
   steps:
-    - max: Right Foot Progression
+    - eventMask: [Right Foot Progression, RightPlotStart, RightPlotEnd]
+    - max:
 
 # Jump distance - calculated as distance traveled by proximal end of foot from TakeOff to Landing
 # Left
