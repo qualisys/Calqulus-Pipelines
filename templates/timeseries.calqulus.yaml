@@ -398,7 +398,7 @@
 # For CMJ_B/DJ_B (bilateral): skip kinetics unless BOTH force plates exist
 - parameter: skip_kinetics_calculation
   where:
-    name: ^(CMJ_B|DJ_B).*
+    name: ^(CMJ_B|DJ_B)*
   steps:
     - if: (exists(ForcePlate1) && exists(ForcePlate2))
       then: [0]
@@ -407,7 +407,7 @@
 # For all other measurements (including CMJ_L, CMJ_R, DJ_L, DJ_R): don't skip kinetics
 - parameter: skip_kinetics_calculation
   where:
-    name: ^(?!(CMJ_B|DJ_B)).*
+    name: ^(?!(CMJ_B|DJ_B))*
   steps:
     - import: [0]
 
