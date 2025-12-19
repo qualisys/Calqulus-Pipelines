@@ -1282,7 +1282,7 @@
 # Bilateral
 - parameter: Left_RFD
   where:
-    name: ^(DJ_L|DJ_B)*
+    name: DJ_B*
     force: left
   steps:
     - derivative: Left GRF
@@ -1290,9 +1290,16 @@
       then: $prev
       else: [[]]
 
+- parameter: Left_RFD
+  where:
+    name: DJ_L*
+    force: left
+  steps:
+    - derivative: Left GRF
+
 - parameter: Left Power
   where:
-    name: ^(DJ_L|DJ_B)*
+    name: DJ_B*
     force: left
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
@@ -1300,9 +1307,16 @@
       then: $prev
       else: [[]]
 
+- parameter: Left Power
+  where:
+    name: DJ_L*
+    force: left
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
 - parameter: Right_RFD
   where:
-    name: ^(DJ_R|DJ_B)*
+    name: DJ_B*
     force: right
   steps:
     - derivative: Right GRF
@@ -1310,15 +1324,29 @@
       then: $prev
       else: [[]]
 
+- parameter: Right_RFD
+  where:
+    name: DJ_R*
+    force: right
+  steps:
+    - derivative: Right GRF
+
 - parameter: Right Power
   where:
-    name: ^(DJ_R|DJ_B)*
+    name: DJ_B*
     force: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
     - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
+
+- parameter: Right Power
+  where:
+    name: DJ_R*
+    force: right
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
 
 # Total
 # find out which FP is loaded
@@ -1420,7 +1448,7 @@
     name: DJ_B*
     force: any
   steps:
-    - if: "!empty(Bilateral Power_both.x)"
+    - if: "!empty(Total GRF_both.x)"
       then: Bilateral Power_both
       else: Bilateral Power_single
 
