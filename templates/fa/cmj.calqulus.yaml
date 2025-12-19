@@ -1376,7 +1376,7 @@
     force: left
   steps:
     - derivative: Left GRF
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1386,7 +1386,7 @@
     force: left
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1396,7 +1396,7 @@
     force: right
   steps:
     - derivative: Right GRF
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1406,7 +1406,7 @@
     force: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1477,7 +1477,7 @@
     name: CMJ_B*
     force: any
   steps:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: Total GRF_both
       else: Total GRF_single
 
@@ -1616,7 +1616,7 @@
     force: left
   steps:
     - import: Left_RFD@TouchDown_100ms
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1627,7 +1627,7 @@
   steps:
     - eventMask: [Left Power, Eccentric_end, TakeOff]
     - max:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1638,7 +1638,7 @@
   steps:
     - eventMask: [Left Power, Eccentric_end, TakeOff]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
   
@@ -1649,7 +1649,7 @@
   steps:
     - eventMask: [Left Power, PlotStart, Eccentric_end]
     - min:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1660,7 +1660,7 @@
   steps:
     - eventMask: [Left Power, PlotStart, Eccentric_end]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1672,7 +1672,7 @@
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - integral:
       scalar: true
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1684,7 +1684,7 @@
     - eventMask: [Left GRF, PlotStart, Eccentric_end]
     - integral:
       scalar: true
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1695,7 +1695,7 @@
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - max:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1706,7 +1706,7 @@
   steps:
     - eventMask: [Left GRF, PlotStart, Eccentric_end]
     - max:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1717,7 +1717,7 @@
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1728,7 +1728,7 @@
   steps:
     - eventMask: [Left GRF, PlotStart, Eccentric_end]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1739,7 +1739,7 @@
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - max:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1750,7 +1750,7 @@
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1760,7 +1760,7 @@
     force: left
   steps:
     - import: Left Hip Moment@COM_MIN
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1770,7 +1770,7 @@
     force: left
   steps:
     - import: Left Knee Moment@COM_MIN
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1780,7 +1780,7 @@
     force: left
   steps:
     - import: Left Ankle Moment@COM_MIN
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1791,7 +1791,7 @@
   steps:
     - eventMask: [Left Knee Moment, PlotStart, TakeOff]
     - max: 
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1802,7 +1802,7 @@
   steps:
     - eventMask: [Left Knee Moment, TakeOff, EOF]
     - max: 
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1956,7 +1956,7 @@
     force: right
   steps:
     - import: Right_RFD@TouchDown_100ms
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1967,7 +1967,7 @@
   steps:
     - eventMask: [Right Power, Eccentric_end, TakeOff]
     - max:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -1978,7 +1978,7 @@
   steps:
     - eventMask: [Right Power, Eccentric_end, TakeOff]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
   
@@ -1989,7 +1989,7 @@
   steps:
     - eventMask: [Right Power, PlotStart, Eccentric_end]
     - min:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2000,7 +2000,7 @@
   steps:
     - eventMask: [Right Power, PlotStart, Eccentric_end]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2012,7 +2012,7 @@
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - integral:
       scalar: true
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2024,7 +2024,7 @@
     - eventMask: [Right GRF, PlotStart, Eccentric_end]
     - integral:
       scalar: true
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2035,7 +2035,7 @@
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - max:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2046,7 +2046,7 @@
   steps:
     - eventMask: [Right GRF, PlotStart, Eccentric_end]
     - max:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2057,7 +2057,7 @@
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2068,7 +2068,7 @@
   steps:
     - eventMask: [Right GRF, PlotStart, Eccentric_end]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2079,7 +2079,7 @@
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - max:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2090,7 +2090,7 @@
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - mean:
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2100,7 +2100,7 @@
     force: right
   steps:
     - import: Right Hip Moment@COM_MIN
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2110,7 +2110,7 @@
     force: right
   steps:
     - import: Right Knee Moment@COM_MIN
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2120,7 +2120,7 @@
     force: right
   steps:
     - import: Right Ankle Moment@COM_MIN
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2131,7 +2131,7 @@
   steps:
     - eventMask: [Right Knee Moment, PlotStart, TakeOff]
     - max: 
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
@@ -2142,7 +2142,7 @@
   steps:
     - eventMask: [Right Knee Moment, TakeOff, EOF]
     - max: 
-    - if: "!empty(Total GRF_both)"
+    - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
 
