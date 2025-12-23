@@ -1,10 +1,11 @@
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -127,7 +128,7 @@
   where:
     name: DJ_B*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -136,7 +137,7 @@
   where:
     name: DJ_L*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -145,7 +146,7 @@
   where:
     name: DJ_R*
   steps:
-    - import: Hips@TakeOff
+    - import: Hips_model@TakeOff
     - convert:
       from: mm
       to: m
@@ -154,7 +155,7 @@
   where:
     name: DJ_B*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -165,7 +166,7 @@
   where:
     name: DJ_L*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -176,7 +177,7 @@
   where:
     name: DJ_R*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -187,7 +188,7 @@
   where:
     name: DJ_B*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
@@ -196,7 +197,7 @@
   where:
     name: DJ_L*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
@@ -205,14 +206,14 @@
   where:
     name: DJ_R*
   steps:
-    - min: Hips.z
+    - min: Hips_model.z
     - convert:
       from: mm
       to: m
 
 - parameter: CenterOfMass@Landing_end
   steps:
-    - import: Hips@Landing_end
+    - import: Hips_model@Landing_end
     - convert:
       from: mm
       to: m
@@ -220,7 +221,7 @@
 #debugging signal, can be removed
 - parameter: Pelvis_COM
   steps:
-    - import: Hips
+    - import: Hips_model
     - convert:
       from: mm
       to: m
@@ -233,8 +234,8 @@
   where:
     name: DJ_B*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,Landing]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,Landing]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -245,8 +246,8 @@
   where:
     name: DJ_L*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,Landing]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,Landing]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -257,8 +258,8 @@
   where:
     name: DJ_R*
   steps:
-    - import: Hips.z@TakeOff => PelvisCGPos@TakeOff
-    - eventMask: [Hips.z,TakeOff,Landing]
+    - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
+    - eventMask: [Hips_model.z,TakeOff,Landing]
     - max: $prev
     - subtract: [$prev,$prev(3)]
     - convert:
@@ -270,10 +271,10 @@
   where:
     name: DJ_B*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -284,10 +285,10 @@
   where:
     name: DJ_L*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -298,10 +299,10 @@
   where:
     name: DJ_R*
   steps:
-    - segment: Hips.z
+    - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -1279,46 +1280,182 @@
 
 # Kinetics ----------
 # Bilateral
-- parameter: Total GRF
+- parameter: Left_RFD
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
-    - add: [Left GRF, Right GRF]
+    - derivative: Left GRF
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left_RFD
   where:
-    name: ^(DJ_L|DJ_B)*
+    name: DJ_L*
     force: left
   steps:
     - derivative: Left GRF
 
 - parameter: Left Power
   where:
-    name: ^(DJ_L|DJ_B)*
+    name: DJ_B*
+    force: left
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
+
+- parameter: Left Power
+  where:
+    name: DJ_L*
     force: left
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Right_RFD
   where:
-    name: ^(DJ_R|DJ_B)*
+    name: DJ_B*
+    force: right
+  steps:
+    - derivative: Right GRF
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
+
+- parameter: Right_RFD
+  where:
+    name: DJ_R*
     force: right
   steps:
     - derivative: Right GRF
 
 - parameter: Right Power
   where:
-    name: ^(DJ_R|DJ_B)*
+    name: DJ_B*
+    force: right
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
+
+- parameter: Right Power
+  where:
+    name: DJ_R*
     force: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
 
-# Bilateral Power
-- parameter: Bilateral Power_max_concentric_DVJ_B
+# Total
+# find out which FP is loaded
+# it is assumed that only two FPs are connected to the system
+# It can be one or two loaded FPs
+- parameter: FP1_load
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - if: exists(ForcePlate1)
+      then: ForcePlate1.fz
+      else: [[0]]
+    - abs:
+    - mean:
+
+- parameter: FP2_load
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - if: exists(ForcePlate2)
+      then: ForcePlate2.fz
+      else: [[0]]
+    - abs:
+    - mean:
+
+- parameter: GRF_loaded_FP
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - if: (FP1_load > FP2_load)
+      then: ForcePlate1
+      else: ForcePlate2
+    - vector: [$prev.fx, $prev.fy, $prev.fz]
+      space: VirtualLab
+    - divide: [$prev, BodyWeightNewton]
+    - negate:
+    - lowpass:
+      cutoff: 10
+      extrapolate: 75
+
+- parameter: Total GRF_both
   where:
     name: DJ_B*
     force: both
+  steps:
+    - add: [Left GRF, Right GRF]
+    - if: FP1_load > 20 && FP2_load > 20
+      then: $prev
+      else: [[]]
+
+- parameter: Total GRF_single
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - import: GRF_loaded_FP
+    - if: FP1_load < 20 || FP2_load < 20
+      then: $prev
+      else: [[]]
+
+- parameter: Total GRF
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - if: "!empty(Total GRF_both.x)"
+      then: Total GRF_both
+      else: Total GRF_single
+
+# Bilateral Power
+# Power = F * v
+- parameter: Bilateral Power_both
+  where:
+    name: DJ_B*
+    force: both
+  steps:
+    - add: [Left GRF, Right GRF]
+    - multiply: [$prev, PelvisCGPos_vel]
+    - if: FP1_load > 20 && FP2_load > 20
+      then: $prev
+      else: [[]]
+
+- parameter: Bilateral Power_single
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - vector: [ForcePlate1.fx, ForcePlate1.fy, ForcePlate1.fz]
+    - multiply: [$prev, PelvisCGPos_vel]
+    - if: FP1_load < 20 || FP2_load < 20
+      then: $prev
+      else: [[]]
+
+- parameter: Bilateral Power
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - if: "!empty(Total GRF_both.x)"
+      then: Bilateral Power_both
+      else: Bilateral Power_single
+
+- parameter: Bilateral Power_max_concentric_DVJ_B
+  where:
+    name: DJ_B*
+    force: any
   steps:
     - eventMask: [Bilateral Power, Eccentric_end, TakeOff]
     - max:
@@ -1326,7 +1463,7 @@
 - parameter: Bilateral Power_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: any
   steps:
     - eventMask: [Bilateral Power, Eccentric_end, TakeOff]
     - mean:
@@ -1334,7 +1471,7 @@
 - parameter: Bilateral Power_min_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: any
   steps:
     - eventMask: [Bilateral Power, TouchDown, Eccentric_end]
     - min:
@@ -1342,7 +1479,7 @@
 - parameter: Bilateral Power_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: any
   steps:
     - eventMask: [Bilateral Power, TouchDown, Eccentric_end]
     - mean:
@@ -1351,271 +1488,373 @@
 - parameter: Left Hip Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - import: Left Hip Moment@COM_MIN
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Knee Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - import: Left Knee Moment@COM_MIN
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Ankle Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - import: Left Ankle Moment@COM_MIN
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_max_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, TouchDown, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_max_landing_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Landing, EOF]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_mean_landing_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Landing, EOF]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_max_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, TouchDown, Eccentric_end]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, TouchDown, Eccentric_end]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left_RFD@TouchDown_100ms_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - import: Left_RFD@TouchDown_100ms
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Power_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left Power, Eccentric_end, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Power_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left Power, Eccentric_end, TakeOff]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
   
 - parameter: Left Power_min_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left Power, LeftPlotStart, Eccentric_end]
     - min:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left Power_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left Power, LeftPlotStart, Eccentric_end]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_impulse_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, Eccentric_end, TakeOff]
     - integral:
       scalar: true
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Left GRF_impulse_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: left
   steps:
     - eventMask: [Left GRF, LeftPlotStart, Eccentric_end]
     - integral:
       scalar: true
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 # Bilateral - right
 - parameter: Right Hip Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - import: Right Hip Moment@COM_MIN
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Knee Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - import: Right Knee Moment@COM_MIN
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Ankle Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - import: Right Ankle Moment@COM_MIN
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_max_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, TouchDown, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_max_landing_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Landing, EOF]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_mean_landing_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Landing, EOF]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_max_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, TouchDown, Eccentric_end]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, TouchDown, Eccentric_end]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right_RFD@TouchDown_100ms_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - import: Right_RFD@TouchDown_100ms
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Power_max_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right Power, Eccentric_end, TakeOff]
     - max:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Power_mean_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right Power, Eccentric_end, TakeOff]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
   
 - parameter: Right Power_min_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right Power, RightPlotStart, Eccentric_end]
     - min:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right Power_mean_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right Power, RightPlotStart, Eccentric_end]
     - mean:
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_impulse_concentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, Eccentric_end, TakeOff]
     - integral:
       scalar: true
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 - parameter: Right GRF_impulse_eccentric_DVJ_B
   where:
     name: DJ_B*
-    force: both
+    force: right
   steps:
     - eventMask: [Right GRF, RightPlotStart, Eccentric_end]
     - integral:
       scalar: true
+    - if: "!empty(Total GRF_both.x)"
+      then: $prev
+      else: [[]]
 
 # Single leg - left
 - parameter: Left Hip Moment@COM_MIN_DVJ_L

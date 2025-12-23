@@ -1,0 +1,115 @@
+# This template makes pipelines work with both skeleton models
+
+- segment: Hips_model
+  steps:
+    - if: exists(Hips)
+      then: Hips
+      else: Pelvis
+
+- segment: LeftUpLeg_model
+  steps:
+    - if: exists(LeftUpLeg)
+      then: LeftUpLeg
+      else: LeftFemur
+
+- segment: RightUpLeg_model
+  steps:
+    - if: exists(RightUpLeg)
+      then: RightUpLeg
+      else: RightFemur
+
+- segment: LeftLeg_model
+  steps:
+    - if: exists(LeftLeg)
+      then: LeftLeg
+      else: LeftShank
+
+- segment: RightLeg_model
+  steps:
+    - if: exists(RightLeg)
+      then: RightLeg
+      else: RightShank
+
+- segment: LeftFoot_model
+  steps:
+    - if: exists(LeftFoot)
+      then: LeftFoot
+      else: LeftHindfoot
+
+- segment: RightFoot_model
+  steps:
+    - if: exists(RightFoot)
+      then: RightFoot
+      else: RightHindfoot
+
+- segment: LeftToeBase_model
+  steps:
+    - if: exists(LeftToeBase)
+      then: LeftToeBase
+      else: LeftForefoot
+
+- segment: RightToeBase_model
+  steps:
+    - if: exists(RightToeBase)
+      then: RightToeBase
+      else: RightForefoot
+
+- segment: Spine2_model
+  steps:
+    - if: exists(Spine2)
+      then: Spine2
+      else: Thorax
+
+- segment: LeftShoulder_model
+  steps:
+    - if: exists(LeftShoulder)
+      then: LeftShoulder
+      else: LeftClavicle
+
+- segment: RightShoulder_model
+  steps:
+    - if: exists(RightShoulder)
+      then: RightShoulder
+      else: RightClavicle
+
+- segment: LeftArm_model
+  steps:
+    - if: exists(LeftArm)
+      then: LeftArm
+      else: LeftHumerus
+
+- segment: RightArm_model
+  steps:
+    - if: exists(RightArm)
+      then: RightArm
+      else: RightHumerus
+
+- segment: LeftForeArm_model
+  steps:
+    - if: exists(LeftForearm)
+      then: LeftForearm
+      else: LeftForearm
+
+- segment: RightForeArm_model
+  steps:
+    - if: exists(RightForearm)
+      then: RightForearm
+      else: RightForearm
+
+- segment: LeftHand_model
+  steps:
+    - if: exists(LeftHand)
+      then: LeftHand
+      else: LeftMetacarpus
+
+- segment: RightHand_model
+  steps:
+    - if: exists(RightHand)
+      then: RightHand
+      else: RightMetacarpus
+
+- segment: Head_model
+  steps:
+    - if: exists(Head)
+      then: Head
+      else: Cranium

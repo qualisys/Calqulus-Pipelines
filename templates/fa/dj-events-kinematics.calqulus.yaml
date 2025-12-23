@@ -397,14 +397,14 @@
 
 - event: Pelvis_lowest
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - eventMask: [$prev, TouchDown, TakeOff]
     - min:
       frames: true
 
 - event: COM_MIN # we do not have body COM so we use pelvis COM instead
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - eventMask: [$prev, TouchDown, TakeOff]
     - min:
       frames: true

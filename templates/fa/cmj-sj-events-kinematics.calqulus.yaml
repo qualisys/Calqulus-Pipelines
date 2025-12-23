@@ -17,7 +17,7 @@
 # used by CMJ and SJ
 - parameter: RPV_CGVel
   steps:
-    - segment: Hips
+    - segment: Hips_model
       space: VirtualLab
     - velocity:
     - convert: $prev
@@ -203,7 +203,7 @@
   where:
     name: ^(CMJ_|SJ_)[LB]*
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - eventMask: [$prev, PlotStart_L, TakeOff_L]
     - min:
       frames: true
@@ -212,7 +212,7 @@
   where:
     name: ^(CMJ_|SJ_)[LB]*
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - eventMask: [$prev, PlotStart_L, TakeOff_L]
     - min:
       frames: true
@@ -221,14 +221,14 @@
   where:
     name: ^(CMJ_|SJ_)[LB]*
   steps:
-    - max: Hips.z
+    - max: Hips_model.z
       frames: true
 
 - event: COM_MIN_first # we do not have body COM so we use pelvis COM instead
   where:
     name: ^(CMJ_|SJ_)[LB]*
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - eventMask: [$prev, BOF_fixed, COM_max]
     - min:
       frames: true
@@ -395,7 +395,7 @@
   where:
     name: ^(CMJ_|SJ_)[RB]*
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - eventMask: [$prev, PlotStart_R, TakeOff_R]
     - min:
       frames: true
@@ -404,7 +404,7 @@
   where:
     name: ^(CMJ_|SJ_)[RB]*
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - eventMask: [$prev, PlotStart_R, TakeOff_R]
     - min:
       frames: true
@@ -413,7 +413,7 @@
   where:
     name: ^(CMJ_|SJ_)[RB]*
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - max:
       frames: true
 
@@ -421,7 +421,7 @@
   where:
     name: ^(CMJ_|SJ_)[RB]*
   steps:
-    - import: Hips.z
+    - import: Hips_model.z
     - eventMask: [$prev, BOF_fixed, COM_max]
     - min:
       frames: true

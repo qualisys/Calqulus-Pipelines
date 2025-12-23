@@ -308,7 +308,7 @@
       frames: true
       output: temp2
 
-    - import: LeftToeBase
+    - import: LeftToeBase_model
     - convert:
       from: mm
       to: m
@@ -349,7 +349,7 @@
       frames: true
       output: temp2
 
-    - import: RightToeBase
+    - import: RightToeBase_model
     - convert:
       from: mm
       to: m
@@ -561,19 +561,19 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: LeftFoot => l_foot
+    - segment: LeftFoot_model => l_foot
       space: VirtualLab
     - lowpass: l_foot.y => heel
       extrapolate: 100
       order: 6
       cutoff: 20
-    - segment: LeftToeBase => l_toe
+    - segment: LeftToeBase_model => l_toe
       space: VirtualLab
     - lowpass: l_toe.y => toe
       extrapolate: 100
       order: 6
       cutoff: 20
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - lowpass: pelvis.y => sacrum
       extrapolate: 100
@@ -645,19 +645,19 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
-    - segment: RightFoot => r_foot
+    - segment: RightFoot_model => r_foot
       space: VirtualLab
     - lowpass: r_foot.y => heel
       extrapolate: 100
       order: 6
       cutoff: 20
-    - segment: RightToeBase => r_toe
+    - segment: RightToeBase_model => r_toe
       space: VirtualLab
     - lowpass: r_toe.y => toe
       extrapolate: 100
       order: 6
       cutoff: 20
-    - segment: Hips => pelvis
+    - segment: Hips_model => pelvis
       space: VirtualLab
     - lowpass: pelvis.y => sacrum
       extrapolate: 100

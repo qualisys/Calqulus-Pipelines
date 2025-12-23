@@ -1,9 +1,10 @@
+
 ############
 ## SPACES ##
 ############
 - parameter: HipsStart
   steps:
-    - eventMask: [Hips, BOF, BOF_10fr]
+    - eventMask: [Hips_model, BOF, BOF_10fr]
       truncate: true
 
 - space: VirtualLab
@@ -143,7 +144,7 @@
     name: (Cut|Cutting)_L*
   set: left
   steps:
-    - eventMask: [Hips, TouchDown, TakeOff]
+    - eventMask: [Hips_model, TouchDown, TakeOff]
     - convert: 
       from: mm
       to: m
@@ -347,7 +348,7 @@
     name: (Cut|Cutting)_R*
   set: right
   steps:
-    - eventMask: [Hips, TouchDown, TakeOff]
+    - eventMask: [Hips_model, TouchDown, TakeOff]
     - convert: 
       from: mm
       to: m

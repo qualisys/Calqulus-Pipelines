@@ -1,10 +1,11 @@
+
 ############
 ## SPACES ##
 ############
 
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -100,7 +101,7 @@
   where:
     name: '!Static*'
   steps:
-    - angle: Hips # angle is calculated relative to axes of global coordinate system, if only single input exists
+    - angle: Hips_model # angle is calculated relative to axes of global coordinate system, if only single input exists
       space: VirtualLab # calculate angle relative to virtual lab
     - multiply: [$prev, [-1, 1, 1]] # invert first component of output
 
@@ -110,7 +111,7 @@
   where:
     name: '!Static*'
   steps:
-    - angle: [Hips, Spine2]
+    - angle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, -1, 1]]
 
 #############
