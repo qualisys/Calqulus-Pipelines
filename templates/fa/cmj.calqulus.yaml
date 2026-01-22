@@ -18,6 +18,28 @@
 
 - template: cmj-sj-events-kinematics.calqulus.yaml
 
+#############
+## Phases ##
+#############
+
+- phase: Flight
+  description: "Time in flight"
+  displayName: "Flight phase"
+  start: TakeOff
+  end: TouchDown
+
+- phase: Eccentric
+  description: "Time in eccentric phase"
+  displayName: "Eccentric phase"
+  start: PlotStart
+  end: Eccentric_end
+
+- phase: Concentric
+  description: "Time in concentric phase"
+  displayName: "Concentric phase"
+  start: Eccentric_end
+  end: TakeOff
+
 ############
 ## SERIES ##
 ############
@@ -2315,5 +2337,4 @@
     force: right
   steps:
     - eventMask: [Right Knee Moment, TakeOff, EOF]
-    - max: 
-
+    - max:
