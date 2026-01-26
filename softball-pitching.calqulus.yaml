@@ -180,7 +180,7 @@
     - divide: [$framerate, 10] 
     - add: [Release, $prev] # use '0.1s' after available
 
-- event: Max_Pelvis_Ang_Vel
+- event: Max_Pelvis_Ang_Vel_ev
   where: 
     name: Pitching*
   steps:
@@ -189,7 +189,7 @@
     - max: $prev
       frames: true
 
-- event: Max_Thorax_Ang_Vel
+- event: Max_Thorax_Ang_Vel_ev
   where: 
     name: Pitching*
   steps:
@@ -198,7 +198,7 @@
     - max: $prev
       frames: true
 
-- event: Max_Pitching_Elbow_Ang_Vel
+- event: Max_Pitching_Elbow_Ang_Vel_ev
   where: 
     name: Pitching*
   steps:
@@ -207,7 +207,7 @@
     - max: $prev
       frames: true
 
-- event: Max_Pitching_Hand_Ang_Vel
+- event: Max_Pitching_Hand_Ang_Vel_ev
   where: 
     name: Pitching*
   steps:
@@ -1451,29 +1451,61 @@
       from: mm
       to: m
 
+- parameter: Max_Pelvis_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pelvis_Ang_Vel
+    - eventMask: [$prev.z, Setup, Release100msAfter]
+    - max: $prev
+
+- parameter: Max_Thorax_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Thorax_Ang_Vel
+    - eventMask: [$prev.z, Setup, Release100msAfter]
+    - max: $prev
+
+- parameter: Max_Pitching_Elbow_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel
+    - eventMask: [$prev.x, Setup, Release100msAfter]
+    - max: $prev
+
+- parameter: Max_Pitching_Hand_Ang_Vel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Ang_Vel
+    - eventMask: [$prev.y, Setup, Release100msAfter]
+    - max: $prev
+
 - parameter: Max_Pitching_Hand_Ang_VelTime
   where:
     name: Pitching*
   steps:
-    - eventDuration: [Setup,Max_Pitching_Hand_Ang_Vel]
+    - eventDuration: [Setup,Max_Pitching_Hand_Ang_Vel_ev]
 
 - parameter: Max_Pelvis_Ang_VelTime
   where:
     name: Pitching*
   steps:
-    - eventDuration: [Setup,Max_Pelvis_Ang_Vel]
+    - eventDuration: [Setup,Max_Pelvis_Ang_Vel_ev]
 
 - parameter: Max_Thorax_Ang_VelTime
   where:
     name: Pitching*
   steps:
-    - eventDuration: [Setup,Max_Pitching_Elbow_Ang_Vel]
+    - eventDuration: [Setup,Max_Pitching_Elbow_Ang_Vel_ev]
 
 - parameter: Max_Pitching_Elbow_Ang_VelTime
   where:
     name: Pitching*
   steps:
-    - eventDuration: [Setup, Max_Pitching_Elbow_Ang_Vel]
+    - eventDuration: [Setup, Max_Pitching_Elbow_Ang_Vel_ev]
 
 # Pitching Shoulder metrics
 - parameter: Pitching_Shoulder_Angle@Setup
