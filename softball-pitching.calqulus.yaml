@@ -961,7 +961,7 @@
       from: mm
       to: m
 
-- parameter: Max_RPV_CGPos_VLab_Linear_Velocity
+- parameter: Max_RPV_CGPos_VLab_Linear_Vel
   where: 
     name: Pitching*
   steps:
@@ -1822,7 +1822,7 @@
     name: Pitching*
   steps:
     - import: Hip Shoulders Sep
-    - eventMask: [$prev, Setup, Release]
+    - eventMask: [$prev.z, Setup, Release]
     - max: 
 
 # Ranking - Kinematics Chain Sequencing
