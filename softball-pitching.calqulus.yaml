@@ -1648,35 +1648,35 @@
     - import: Pelvis_Angle@Release
 
 # Thorax metrics
-- parameter: Thorax_Angle@Setup
+- parameter: Trunk_Angle@Setup
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Angle@Setup
+    - import: Trunk_Angle@Setup
 
-- parameter: Thorax_Angle@Back_Leg_Footoff
+- parameter: Trunk_Angle@Back_Leg_Footoff
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Angle@Back_Leg_Footoff
+    - import: Trunk_Angle@Back_Leg_Footoff
 
-- parameter: Thorax_Angle@Backswing_Top
+- parameter: Trunk_Angle@Backswing_Top
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Angle@Backswing_Top
+    - import: Trunk_Angle@Backswing_Top
 
-- parameter: Thorax_Angle@Lead_Leg_Footstrike
+- parameter: Trunk_Angle@Lead_Leg_Footstrike
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Angle@Lead_Leg_Footstrike
+    - import: Trunk_Angle@Lead_Leg_Footstrike
 
-- parameter: Thorax_Angle@Release
+- parameter: Trunk_Angle@Release
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Angle@Release
+    - import: Trunk_Angle@Release
     
 # Hip metrics
 - parameter: Lead_Hip_Angle@Setup
@@ -1772,35 +1772,35 @@
     - import: Lead_Ankle_Angle@Release
     
 # Foot metrics
-- parameter: Lead_Foot_Angle@Setup
+- parameter: Lead_Foot_wrt_Lab@Setup
   where:
     name: Pitching*
   steps:
-    - import: Lead_Foot_Angle@Setup
+    - import: Lead_Foot_wrt_Lab@Setup
 
-- parameter: Lead_Foot_Angle@Back_Leg_Footoff
+- parameter: Lead_Foot_wrt_Lab@Back_Leg_Footoff
   where:
     name: Pitching*
   steps:
-    - import: Lead_Foot_Angle@Back_Leg_Footoff
+    - import: Lead_Foot_wrt_Lab@Back_Leg_Footoff
 
-- parameter: Lead_Foot_Angle@Backswing_Top
+- parameter: Lead_Foot_wrt_Lab@Backswing_Top
   where:
     name: Pitching*
   steps:
-    - import: Lead_Foot_Angle@Backswing_Top
+    - import: Lead_Foot_wrt_Lab@Backswing_Top
 
-- parameter: Lead_Foot_Angle@Lead_Leg_Footstrike
+- parameter: Lead_Foot_wrt_Lab@Lead_Leg_Footstrike
   where:
     name: Pitching*
   steps:
-    - import: Lead_Foot_Angle@Lead_Leg_Footstrike
+    - import: Lead_Foot_wrt_Lab@Lead_Leg_Footstrike
 
-- parameter: Lead_Foot_Angle@Release
+- parameter: Lead_Foot_wrt_Lab@Release
   where:
     name: Pitching*
   steps:
-    - import: Lead_Foot_Angle@Release
+    - import: Lead_Foot_wrt_Lab@Release
     
 # Ranking - Kinematics Chain Sequencing
 # Calculate rank based on timing of angular velocity peaks
