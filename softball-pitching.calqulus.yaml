@@ -1472,7 +1472,7 @@
   where:
     name: Pitching*
   steps:
-    - divide: [FeetDist@Release, $field(Height; measurement; numeric)]
+    - divide: [FeetDist\@Release, $field(Height; measurement; numeric)]
 
 - parameter: Max_Pelvis_Ang_Vel
   where: 
