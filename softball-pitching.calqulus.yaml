@@ -961,6 +961,14 @@
       from: mm
       to: m
 
+- parameter: Max_RPV_CGPos_VLab_Linear_Velocity
+  where: 
+    name: Pitching*
+  steps:
+    - magnitude: PelvisCGPos_vel
+    - eventMask: [$prev, Setup, Release100msAfter]
+    - max:
+
 # Kinetics ----------------
 # GRF
 - parameter: Lead GRF_BW
@@ -1460,6 +1468,12 @@
       from: mm
       to: m
 
+- parameter: FeetDist@Release_MEAN_PERCENT
+  where:
+    name: Pitching*
+  steps:
+    - divide: [FeetDist@Release, $field(Height; measurement; numeric)]
+
 - parameter: Max_Pelvis_Ang_Vel
   where: 
     name: Pitching*
@@ -1801,7 +1815,16 @@
     name: Pitching*
   steps:
     - import: Lead_Foot_wrt_Lab@Release
-    
+
+# Hip Shoulder Sep
+- parameter: Max Hip Shoulder Sep
+  where:
+    name: Pitching*
+  steps:
+    - import: Hip Shoulders Sep
+    - eventMask: [$prev, Setup, Release]
+    - max: 
+
 # Ranking - Kinematics Chain Sequencing
 # Calculate rank based on timing of angular velocity peaks
 # Rank = 1 + count of other metrics this timing is greater than
