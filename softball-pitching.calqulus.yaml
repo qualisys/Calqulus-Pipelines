@@ -447,7 +447,7 @@
       then: [[-1, -1, 1]]
       else: [[-1, 1, 1]]
 
-- parameter: Back_Foot_wrt_Lab_Convention
+- parameter: Foot_wrt_Lab_Convention
   where: 
     name: Pitching*
   steps:
@@ -832,6 +832,15 @@
       extrapolate: 5
     - multiply: [$prev, Pelvis_Ang_Vel_Convention]
 
+# Lead Foot wrt lab
+- parameter: Lead_Foot_wrt_Lab
+  where: 
+    name: Pitching*
+  steps:
+    - angle: [LeadFoot]
+      space: VirtualLab
+    - multiply: [$prev, Foot_wrt_Lab_Convention]
+
 # Back Foot wrt lab
 - parameter: Back_Foot_wrt_Lab
   where: 
@@ -839,7 +848,7 @@
   steps:
     - angle: [BackFoot]
       space: VirtualLab
-    - multiply: [$prev, Back_Foot_wrt_Lab_Convention]
+    - multiply: [$prev, Foot_wrt_Lab_Convention]
 
 # Pitching humerus ang vel
 - parameter: Pitching_Humerus_Ang_Vel
@@ -1483,12 +1492,6 @@
     - eventMask: [$prev.y, Setup, Release100msAfter]
     - max: $prev
 
-- parameter: Max_Pitching_Hand_Ang_VelTime
-  where:
-    name: Pitching*
-  steps:
-    - eventDuration: [Setup,Max_Pitching_Hand_Ang_Vel_ev]
-
 - parameter: Max_Pelvis_Ang_VelTime
   where:
     name: Pitching*
@@ -1506,6 +1509,12 @@
     name: Pitching*
   steps:
     - eventDuration: [Setup, Max_Pitching_Elbow_Ang_Vel_ev]
+
+- parameter: Max_Pitching_Hand_Ang_VelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [Setup,Max_Pitching_Hand_Ang_Vel_ev]
 
 # Pitching Shoulder metrics
 - parameter: Pitching_Shoulder_Angle@Setup
@@ -1607,6 +1616,192 @@
     - eventMask: [$prev, Back_Leg_Footoff, Release]
     - max:
 
+# Pelvis metrics
+- parameter: Pelvis_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Setup
+
+- parameter: Pelvis_Angle@Back_Leg_Footoff
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Back_Leg_Footoff
+
+- parameter: Pelvis_Angle@Backswing_Top
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Backswing_Top
+
+- parameter: Pelvis_Angle@Lead_Leg_Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Lead_Leg_Footstrike
+
+- parameter: Pelvis_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Release
+
+# Thorax metrics
+- parameter: Thorax_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Angle@Setup
+
+- parameter: Thorax_Angle@Back_Leg_Footoff
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Angle@Back_Leg_Footoff
+
+- parameter: Thorax_Angle@Backswing_Top
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Angle@Backswing_Top
+
+- parameter: Thorax_Angle@Lead_Leg_Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Angle@Lead_Leg_Footstrike
+
+- parameter: Thorax_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Thorax_Angle@Release
+    
+# Hip metrics
+- parameter: Lead_Hip_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Setup
+
+- parameter: Lead_Hip_Angle@Back_Leg_Footoff
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Back_Leg_Footoff
+
+- parameter: Lead_Hip_Angle@Backswing_Top
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Backswing_Top
+
+- parameter: Lead_Hip_Angle@Lead_Leg_Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Lead_Leg_Footstrike
+
+- parameter: Lead_Hip_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Release
+    
+# Knee metrics
+- parameter: Lead_Knee_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Setup
+
+- parameter: Lead_Knee_Angle@Back_Leg_Footoff
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Back_Leg_Footoff
+
+- parameter: Lead_Knee_Angle@Backswing_Top
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Backswing_Top
+
+- parameter: Lead_Knee_Angle@Lead_Leg_Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Lead_Leg_Footstrike
+
+- parameter: Lead_Knee_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Knee_Angle@Release
+    
+# Ankle metrics
+- parameter: Lead_Ankle_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Setup
+
+- parameter: Lead_Ankle_Angle@Back_Leg_Footoff
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Back_Leg_Footoff
+
+- parameter: Lead_Ankle_Angle@Backswing_Top
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Backswing_Top
+
+- parameter: Lead_Ankle_Angle@Lead_Leg_Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Lead_Leg_Footstrike
+
+- parameter: Lead_Ankle_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Release
+    
+# Foot metrics
+- parameter: Lead_Foot_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Foot_Angle@Setup
+
+- parameter: Lead_Foot_Angle@Back_Leg_Footoff
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Foot_Angle@Back_Leg_Footoff
+
+- parameter: Lead_Foot_Angle@Backswing_Top
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Foot_Angle@Backswing_Top
+
+- parameter: Lead_Foot_Angle@Lead_Leg_Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Foot_Angle@Lead_Leg_Footstrike
+
+- parameter: Lead_Foot_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Foot_Angle@Release
+    
 # Ranking - Kinematics Chain Sequencing
 # Calculate rank based on timing of angular velocity peaks
 # Rank = 1 + count of other metrics this timing is greater than
