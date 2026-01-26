@@ -1467,12 +1467,14 @@
     - convert:
       from: mm
       to: m
+    - divide: [$prev, $field(Height; measurement; numeric)]
+    - export: FeetDist@Release_MEAN_PERCENT
 
-- parameter: FeetDist@Release_MEAN_PERCENT
-  where:
-    name: Pitching*
-  steps:
-    - divide: [FeetDist\@Release, $field(Height; measurement; numeric)]
+# - parameter: FeetDist@Release_MEAN_PERCENT
+#   where:
+#     name: Pitching*
+#   steps:
+#     - divide: [FeetDist\@Release, $field(Height; measurement; numeric)]
 
 - parameter: Max_Pelvis_Ang_Vel
   where: 
