@@ -975,7 +975,7 @@
 
 # Kinetics ----------------
 # GRF
-- parameter: Lead GRF_BW
+- parameter: Lead_Leg_GRF_BW
   where: 
     name: Pitching*
     force: any
@@ -984,7 +984,7 @@
       then: Left GRF
       else: Right GRF
 
-- parameter: Trail GRF_BW
+- parameter: Back_Leg_GRF_BW
   where: 
     name: Pitching*
     force: any
@@ -998,21 +998,21 @@
     name: Pitching*
     force: both
   steps:
-    - add: [Lead GRF_BW, Trail GRF_BW]
+    - add: [Lead_Leg_GRF_BW, Back_Leg_GRF_BW]
 
 - parameter: Lead_Leg_GRF_mag
   where: 
     name: Pitching*
     force: any
   steps:
-    - magnitude: Lead GRF_BW
+    - magnitude: Lead_Leg_GRF_BW
 
 - parameter: Back_Leg_GRF_mag
   where: 
     name: Pitching*
     force: any
   steps:
-    - magnitude: Trail GRF_BW
+    - magnitude: Back_Leg_GRF_BW
 
 # COM/COP
 - parameter: LeadHeel
