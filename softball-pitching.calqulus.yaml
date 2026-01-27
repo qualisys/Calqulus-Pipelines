@@ -94,7 +94,9 @@
     name: Pitching*
   steps:
     - velocity: PitchingHand.z
-    - subtract: [$prev, $prev@2]
+    - convert:
+      from: mm/s
+      to: m/s
     - threshold:
       value: -0.2
       direction: down
