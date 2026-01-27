@@ -168,6 +168,17 @@
     - multiply: [$framerate, 0.2]
     - subtract: [$prev(2), $prev]
 
+- event:  Back_Leg_Footstrike
+  where: 
+    name: Pitching*
+    force: any
+  steps:
+    - import: Back_Leg_GRF_BW.z
+    - threshold:
+      value: 0.08
+      direction: up
+    - eventMask: [$prev, Setup, MaxKneeHeight]
+
 - event: Backswing_Top
   where: 
     name: Pitching*
@@ -218,6 +229,42 @@
     - import: Pitching_Hand_Ang_Vel
     - eventMask: [$prev.y, Setup, Release100msAfter]
     - max: $prev
+      frames: true
+
+- event: Back_Leg_GRF_Vert_Max_ev
+  where: 
+    name: Pitching*
+    force: any
+  steps:
+    - eventMask: [Back_Leg_GRF_BW.z, Back_Leg_Footstrike, Back_Leg_Footoff]
+    - max:
+      frames: true
+
+- event: Back_Leg_GRF_AP_Max_ev
+  where: 
+    name: Pitching*
+    force: any
+  steps:
+    - eventMask: [Back_Leg_GRF_BW.y, Back_Leg_Footstrike, Back_Leg_Footoff]
+    - max:
+      frames: true
+
+- event: Lead_Leg_GRF_Vert_Max_ev
+  where: 
+    name: Pitching*
+    force: any
+  steps:
+    - eventMask: [Lead_Leg_GRF_BW.z, Lead_Leg_Footstrike, Release100msAfter]
+    - max:
+      frames: true
+
+- event: Lead_Leg_GRF_AP_Max_ev
+  where: 
+    name: Pitching*
+    force: any
+  steps:
+    - eventMask: [Lead_Leg_GRF_BW.y, Lead_Leg_Footstrike, Release100msAfter]
+    - max:
       frames: true
 
 ############
@@ -1436,7 +1483,7 @@
 #############
 ## METRICS ##
 #############
-
+# Kinematics Metrics
 - parameter: STRIDE_LENGTH
   where:
     name: Pitching*
@@ -1939,5 +1986,95 @@
       output: comp3
     - add: [1, comp1, comp2, comp3]
 
+# Kinetics Metrics ----
+# Back leg
+- parameter: Back_Leg_GRF_Vert_Max
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - eventMask: [Back_Leg_GRF_BW.z, Back_Leg_Footstrike, Back_Leg_Footoff]
+    - max:
 
+- parameter: Back_Leg_GRF_AP_Max
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - eventMask: [Back_Leg_GRF_BW.y, Back_Leg_Footstrike, Back_Leg_Footoff]
+    - max:
+
+- parameter: Back_Leg_Vert_RFD
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - subtract: [Back_Leg_GRF_Vert_Max, Back_Leg_GRF_BW.z@Back_Leg_Footstrike]
+    - eventDuration: [Back_Leg_Footstrike, Back_Leg_GRF_Vert_Max_ev]
+    - divide: [$prev(2), $prev]
+
+- parameter: Back_Leg_AP_RFD
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - subtract: [Back_Leg_GRF_AP_Max, Back_Leg_GRF_BW.y@Back_Leg_Footstrike]
+    - eventDuration: [Back_Leg_Footstrike, Back_Leg_GRF_AP_Max_ev]
+    - divide: [$prev(2), $prev]
+# Impulse of back leg
+- parameter: Back_Leg_GRF_BW_Impulse
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - import: Back_Leg_GRF_BW
+    - eventMask: [$prev, Back_Leg_Footstrike, Back_Leg_Footoff]
+    - integral:
+      scalar: true
+
+# Lead leg
+- parameter: Lead_Leg_GRF_Vert_Max
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - eventMask: [Lead_Leg_GRF_BW.z, Lead_Leg_Footstrike, Release100msAfter]
+    - max:
+
+- parameter: Lead_Leg_GRF_AP_Max
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - eventMask: [Lead_Leg_GRF_BW.y, Lead_Leg_Footstrike, Release100msAfter]
+    - max:
+
+- parameter: Lead_Leg_Vert_RFD
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - subtract: [Lead_Leg_GRF_Vert_Max, Lead_Leg_GRF_BW.z@Lead_Leg_Footstrike]
+    - eventDuration: [Lead_Leg_Footstrike, Lead_Leg_GRF_Vert_Max_ev]
+    - divide: [$prev(2), $prev]
+
+- parameter: Lead_Leg_AP_RFD
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - subtract: [Lead_Leg_GRF_AP_Max, Lead_Leg_GRF_BW.y@Lead_Leg_Footstrike]
+    - eventDuration: [Lead_Leg_Footstrike, Lead_Leg_GRF_AP_Max_ev]
+    - divide: [$prev(2), $prev]
+
+# Impulse of lead leg
+- parameter: Lead_Leg_GRF_BW_Impulse
+  where:
+    name: Pitching*
+    force: any
+  steps:
+    - import: Lead_Leg_GRF_BW
+    - eventMask: [$prev, Lead_Leg_Footstrike, Release100msAfter]
+    - integral:
+      scalar: true
 
