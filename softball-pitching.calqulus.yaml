@@ -132,8 +132,8 @@
     force: any
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LON_force
-      else: RON_force
+      then: LON_force@1
+      else: RON_force@1
 
 - event:  Back_Leg_Footoff_kinetics
   where: 
