@@ -520,6 +520,14 @@
       then: [[-1, 1, 1]]
       else: [[1, -1, -1]]
 
+- parameter: Glove_Shoulder_XYZ_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, -1, -1]]
+
 - parameter: Hand_Convention
   where: 
     name: Pitching*
@@ -760,7 +768,7 @@
   steps:
     - angle: [Spine2, GloveArm]
       rotationOrder: XYZ
-    - multiply: [$prev, Glove_Shoulder_Convention]
+    - multiply: [$prev, Glove_Shoulder_XYZ_Convention]
 
 # Glove Elbow Angle
 - parameter: Glove_Elbow_Angle
