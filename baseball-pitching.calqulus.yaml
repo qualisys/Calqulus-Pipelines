@@ -528,15 +528,23 @@
       then: [[1, -1, 1]]
       else: [[1, -1, 1]]
 
-- parameter: Knee_Convention
+- parameter: Lead_Knee_Convention
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, 1]]
+      then: [[-1, -1, -1]]
       else: [[-1, 1, 1]]
 
-- parameter: Back_Foot_wrt_Lab_Convention
+- parameter: Back_Knee_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, 1, 1]]
+      else: [[-1, 1, 1]]
+
+- parameter: Foot_wrt_Lab_Convention
   where: 
     name: Pitching*
   steps:
@@ -544,12 +552,20 @@
       then: [[1, 1, 1]]
       else: [[1, 1, -1]]
 
-- parameter: Hip_Convention
+- parameter: Lead_Hip_Convention
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, -1, -1]]
+      else: [[1, -1, -1]]
+
+- parameter: Back_Hip_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
       else: [[1, -1, -1]]
 
 - parameter: Hip_Shoulder_Sep_Convention
@@ -573,7 +589,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, 1]]
+      then: [[-1, -1, -1]]
       else: [[-1, -1, -1]]
   
 - parameter: Trunk_wrt_Pelvis_Convention
@@ -597,15 +613,23 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, 1]]
+      then: [[-1, -1, -1]]
       else: [[-1, 1, -1]]
   
-- parameter: Ankle_Convention
+- parameter: Lead_Ankle_Convention
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, -1, -1]]
+      else: [[1, -1, -1]]
+
+- parameter: Back_Ankle_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
       else: [[1, -1, -1]]
 
 - parameter: Elbow_Convention
@@ -637,7 +661,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, 1, -1]]
+      then: [[-1, -1, -1]]
       else: [[1, 1, 1]]
 
 - parameter: Head_Ang_Vel_Convention
@@ -645,7 +669,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, 1]]
+      then: [[-1, 1, 1]]
       else: [[1, -1, -1]]
   
 # Pitching Hand Angle
@@ -765,7 +789,7 @@
     name: Pitching*
   steps:
     - angle: [Hips, LeadThigh]
-    - multiply: [$prev, Hip_Convention]
+    - multiply: [$prev, Lead_Hip_Convention]
 
 # Lead Hip Ang Vel
 - parameter: Lead_Hip_Ang_Vel
@@ -776,7 +800,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Hip_Convention]
+    - multiply: [$prev, Lead_Hip_Convention]
 
 # Lead Knee Angle
 - parameter: Lead_Knee_Angle
@@ -784,7 +808,7 @@
     name: Pitching*
   steps:
     - angle: [LeadThigh, LeadShank]
-    - multiply: [$prev, Knee_Convention]
+    - multiply: [$prev, Lead_Knee_Convention]
 
 # Lead Knee Ang Vel
 - parameter: Lead_Knee_Ang_Vel
@@ -795,7 +819,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Knee_Convention]
+    - multiply: [$prev, Lead_Knee_Convention]
 
 # Lead Ankle Angle
 - parameter: Lead_Ankle_Angle
@@ -803,7 +827,7 @@
     name: Pitching*
   steps:
     - angle: [LeadShank, LeadFoot]
-    - multiply: [$prev, Ankle_Convention]
+    - multiply: [$prev, Lead_Ankle_Convention]
 
 # Lead Ankle Ang Vel
 - parameter: Lead_Ankle_Ang_Vel
@@ -814,7 +838,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Ankle_Convention]
+    - multiply: [$prev, Lead_Ankle_Convention]
 
 # Back Hip Angle
 - parameter: Back_Hip_Angle
@@ -822,7 +846,7 @@
     name: Pitching*
   steps:
     - angle: [Hips, BackThigh]
-    - multiply: [$prev, Hip_Convention]
+    - multiply: [$prev, Back_Hip_Convention]
 
 # Back Hip Ang Vel
 - parameter: Back_Hip_Ang_Vel
@@ -833,7 +857,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Hip_Convention]
+    - multiply: [$prev, Back_Hip_Convention]
 
 # Back Knee Angle
 - parameter: Back_Knee_Angle
@@ -841,7 +865,7 @@
     name: Pitching*
   steps:
     - angle: [BackThigh, BackShank]
-    - multiply: [$prev, Knee_Convention]
+    - multiply: [$prev, Back_Knee_Convention]
 
 # Back Knee Ang Vel
 - parameter: Back_Knee_Ang_Vel
@@ -852,7 +876,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Knee_Convention]
+    - multiply: [$prev, Back_Knee_Convention]
 
 # Back Ankle Angle
 - parameter: Back_Ankle_Angle
@@ -860,7 +884,7 @@
     name: Pitching*
   steps:
     - angle: [BackShank, BackFoot]
-    - multiply: [$prev, Ankle_Convention]
+    - multiply: [$prev, Back_Ankle_Convention]
 
 # Back Ankle Ang Vel
 - parameter: Back_Ankle_Ang_Vel
@@ -871,7 +895,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Ankle_Convention]
+    - multiply: [$prev, Back_Ankle_Convention]
 
 # Trunk wrt Pelvis Angle
 - parameter: Trunk_wrt_Pelvis_Angle
@@ -928,7 +952,7 @@
   steps:
     - angle: [BackFoot]
       space: VirtualLab
-    - multiply: [$prev, Back_Foot_wrt_Lab_Convention]
+    - multiply: [$prev, Foot_wrt_Lab_Convention]
 
 # Pitching humerus ang vel
 - parameter: Pitching_Humerus_Ang_Vel
