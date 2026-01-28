@@ -264,7 +264,7 @@
     force: any
   steps:
     - eventMask: [Lead_Leg_GRF_BW.y, Lead_Leg_Footstrike, Release100msAfter]
-    - max:
+    - min:
       frames: true
 
 ############
