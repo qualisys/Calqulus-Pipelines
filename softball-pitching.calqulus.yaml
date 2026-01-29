@@ -1908,9 +1908,9 @@
   where:
     name: Pitching*
   steps:
-    - import: Hip Shoulders Sep
-    - eventMask: [$prev.z, Setup, Release]
-    - max: 
+    - import: Hip Shoulders Sep.z
+    - eventMask: [$prev, Setup, Release]
+    - min:
 
 # Ranking - Kinematics Chain Sequencing
 # Calculate rank based on timing of angular velocity peaks
