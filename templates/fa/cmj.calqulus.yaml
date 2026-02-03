@@ -323,7 +323,7 @@
     - segment: Hips_model.z
     - max:
       output: hipMax
-    - segment: Hips?name=Static* => hipsStatic
+    - segment: Hips_model?name=Static* => hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
