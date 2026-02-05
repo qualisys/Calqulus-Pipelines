@@ -224,6 +224,24 @@
     - max: $prev.z
       frames: true
 
+- event: MaxShoulderVel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Ang_Vel
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.z
+      frames: true
+
+- event: MaxElbowVel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.y
+      frames: true
+
 - event: MaxHumerusVel
   where: 
     name: Pitching*
@@ -1905,6 +1923,18 @@
   steps:
     - max: Thorax_Ang_Vel.z
 
+- parameter: Pitching_Shoulder_Ang_Vel_max
+  where:
+    name: Pitching*
+  steps:
+    - max: Pitching_Shoulder_Ang_Vel.z
+
+- parameter: Pitching_Elbow_Ang_Vel_max
+  where:
+    name: Pitching*
+  steps:
+    - max: Pitching_Elbow_Ang_Vel.y
+
 - parameter: Pitching_Humerus_Ang_Vel_max
   where:
     name: Pitching*
@@ -1992,6 +2022,18 @@
   steps:
     - eventDuration: [SETUP, MaxThoraxVel]
 
+- parameter: MaxShoulderVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxShoulderVel]
+    
+- parameter: MaxElbowVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxElbowVel]
+    
 - parameter: MaxHumerusVelTime
   where:
     name: Pitching*
@@ -2351,6 +2393,30 @@
     name: Pitching*
   steps:
     - import: Back_Knee_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Back_Knee_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Ang_Vel@Footstrike
+
+- parameter: Back_Knee_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Ang_Vel@Max_Shoulder_Rot
+
+- parameter: Back_Knee_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Back_Knee_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Ang_Vel@Release
 
 - parameter: Back_Ankle_Angle@Setup
   where:
