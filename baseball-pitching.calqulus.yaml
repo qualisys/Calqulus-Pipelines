@@ -103,6 +103,8 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: LON_force
       else: RON_force
+    - eventMask: [$prev, MaxKneeHeight, Release]
+    - import: $prev@-1
 
 - event: Footstrike
   where: 
