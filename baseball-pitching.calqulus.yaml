@@ -684,6 +684,12 @@
       extrapolate: 5
     - multiply: [$prev, Elbow_Convention]
 
+- parameter: Pitching_Elbow_Ang_Vel_plot_neg # to make peaks positive
+  where: 
+    name: Pitching*
+  steps:
+    - negate: Pitching_Elbow_Ang_Vel.y 
+
 # Pitching Shoulder angle
 - parameter: Pitching_Shoulder_Angle
   where: 
@@ -713,6 +719,12 @@
       cutoff: 24
       extrapolate: 5
     - multiply: [$prev, Pitching_Shoulder_Convention]
+
+- parameter: Pitching_Shoulder_Ang_Vel_plot_neg # to make peaks positive
+  where: 
+    name: Pitching*
+  steps:
+    - negate: Pitching_Shoulder_Ang_Vel.z 
 
 # Pitching Shoulder Ang Vel Horizontal Shoulder Abduction
 - parameter: Pitching_Shoulder_AngVel_HzShldAbd
