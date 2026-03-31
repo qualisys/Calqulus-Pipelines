@@ -208,3 +208,16 @@
 ## Metrics ##
 #############
 
+- parameter: Pelvis_vel_max
+  steps:
+    - segment: Hips_model
+      space: VirtualLab
+    - velocity:
+    - magnitude:
+    - convert: $prev
+      from: mm/s
+      to: m/s
+    - lowpass:
+      extrapolate: 10
+      cutoff: 12
+    - max:
