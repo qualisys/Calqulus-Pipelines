@@ -382,6 +382,7 @@
 - parameter: COM_displacement_MEAN_min_LL_L 
   where:
     name: LL_L*
+  set: left
   steps:
     - subtract: [CenterOfMass\@PlotStart, CenterOfMass_MIN]
     - import: $prev.z
@@ -389,6 +390,7 @@
 - parameter: COM_displacement_MEAN_min_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - subtract: [CenterOfMass\@PlotStart, CenterOfMass_MIN]
     - import: $prev.z
