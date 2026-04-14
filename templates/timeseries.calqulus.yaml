@@ -134,10 +134,8 @@
   set: left
   steps:
     - jointAngle: [LeftLeg_model, LeftFoot]
-    - vector: [$prev.x, $prev.y, $prev.z]
       output: foot_vector
     - jointAngle: [LeftLeg_model, LeftFoot_model]
-    - vector: [$prev.x, $prev.y, $prev.z]
       output: hindfoot_vector
 
     - if: exists(LeftHindfoot)
@@ -153,10 +151,8 @@
   set: right
   steps:
     - jointAngle: [RightLeg_model, RightFoot]
-    - vector: [$prev.x, $prev.y, $prev.z]
       output: foot_vector
     - jointAngle: [RightLeg_model, RightFoot_model]
-    - vector: [$prev.x, $prev.y, $prev.z]
       output: hindfoot_vector
 
     - if: exists(RightHindfoot)
