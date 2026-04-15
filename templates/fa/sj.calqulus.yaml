@@ -606,7 +606,7 @@
   where:
     name: SJ_B*
   set: left
-  teps:
+  steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_SJ_B
