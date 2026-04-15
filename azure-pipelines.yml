@@ -17,13 +17,12 @@ resources:
     ref: refs/heads/main
   - repository: calqulus-ci
     type: git
-    name: app-calqulus-ci-templates
+    name: web-x-deprecated-calqulus-ci-templates
     ref: main
   - repository: toolbelt
     type: git
-    name: Dev/app-calqulus-toolbelt
+    name: Dev/web-x-deprecated-calqulus-toolbelt
     ref: refs/heads/main
 
 extends:
   template: base-pipelines.yml@calqulus-ci
-

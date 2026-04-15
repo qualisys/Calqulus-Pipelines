@@ -3,9 +3,18 @@
 ## SPACES ##
 ############
 
+# Look for pelvis orientation near touchdown to align the virtual lab with the pelvis
+# Assuming that maximum vertical velocity of pelvis occurs near touchdown
+# Mean orientation could be wrong if too much forward tilt
+- event: hips_max_vel
+  steps:
+    - velocity: Hips_model.z
+    - min:
+      frames: true
+
 - space: VirtualLab
   alignWithSegment:
-    segment: Hips_model
+    segment: Hips_model@hips_max_vel
 
 ############
 ## EVENTS ##
@@ -488,7 +497,6 @@
       export: RFT_DistEndPos@Max_knee_flex_landing
     - subtract: [$prev(2).y, $prev.y]
     - abs:
-
 # Kinetics --------
 # Left
 - parameter: Left Hip Moment_max_knee_flex

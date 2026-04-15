@@ -13,7 +13,7 @@
 			"cricketBowling": null,
 			"cycling": null,
 			"default": "release/2.1.0",
-      "functionalAssessment": null,
+            "functionalAssessment": "cbed55bd40693c0654bb98ed5f47a479415ab55b",
 			"generic": null,
 			"running": null
 		},
