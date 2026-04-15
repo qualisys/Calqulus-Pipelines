@@ -37,12 +37,14 @@
 - parameter: FlightTime_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventDuration: [TakeOff,TouchDown]
 
 - parameter: FlightTime_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventDuration: [TakeOff,TouchDown]
 
@@ -56,12 +58,14 @@
 - parameter: ConcentricTime_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventDuration: [COM_MIN,TakeOff]
 
 - parameter: ConcentricTime_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventDuration: [COM_MIN,TakeOff]
 
@@ -75,12 +79,14 @@
 - parameter: Flight_Contraction_time_ratio_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - divide: [FlightTime_SJ_L,ConcentricTime_SJ_L]
 
 - parameter: Flight_Contraction_time_ratio_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - divide: [FlightTime_SJ_R,ConcentricTime_SJ_R]
 
@@ -98,6 +104,7 @@
 - parameter: COM_Z_TO_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Hips_model@TakeOff
     - convert:
@@ -107,6 +114,7 @@
 - parameter: COM_Z_TO_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Hips_model@TakeOff
     - convert:
@@ -127,6 +135,7 @@
 - parameter: CenterOfMass_MAX_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
@@ -138,6 +147,7 @@
 - parameter: CenterOfMass_MAX_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Hips_model
     - eventMask: [$prev,TakeOff,TouchDown]
@@ -158,6 +168,7 @@
 - parameter: CenterOfMass_MIN_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - min: Hips_model.z
     - convert:
@@ -167,6 +178,7 @@
 - parameter: CenterOfMass_MIN_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - min: Hips_model.z
     - convert:
@@ -185,6 +197,7 @@
 - parameter: CenterOfMass@PlotStart_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Hips_model.z@PlotStart
     - convert:
@@ -194,6 +207,7 @@
 - parameter: CenterOfMass@PlotStart_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Hips_model.z@PlotStart
     - convert:
@@ -227,6 +241,7 @@
 - parameter: COM_displacement_MEAN_max_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
     - eventMask: [Hips_model.z,TakeOff,TouchDown]
@@ -239,6 +254,7 @@
 - parameter: COM_displacement_MEAN_max_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Hips_model.z@TakeOff => PelvisCGPos@TakeOff
     - eventMask: [Hips_model.z,TakeOff,TouchDown]
@@ -266,6 +282,7 @@
 - parameter: COM_displacement_MEAN_max_static_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - segment: Hips_model.z
     - max:
@@ -280,6 +297,7 @@
 - parameter: COM_displacement_MEAN_max_static_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - segment: Hips_model.z
     - max:
@@ -303,6 +321,7 @@
 - parameter: COM_displacement_MEAN_max_takeoff_vel_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
@@ -311,6 +330,7 @@
 - parameter: COM_displacement_MEAN_max_takeoff_vel_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
@@ -328,6 +348,7 @@
 - parameter: COM_displacement_MEAN_max_flight_time_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - divide: [FlightTime_SJ_L, 2]
     - power:
@@ -336,6 +357,7 @@
 - parameter: COM_displacement_MEAN_max_flight_time_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - divide: [FlightTime_SJ_R, 2]
     - power:
@@ -362,6 +384,7 @@
   where:
     name: SJ_L*
     force: left
+  set: left
   steps:
     - multiply: [$bodyMass, 9.81]
     - multiply: [Left GRF, $prev]
@@ -378,6 +401,7 @@
   where:
     name: SJ_R*
     force: right
+  set: right
   steps:
     - multiply: [$bodyMass, 9.81]
     - multiply: [Right GRF, $prev]
@@ -399,12 +423,14 @@
 - parameter: COM_displacement_MEAN_min_SJ_L 
   where:
     name: SJ_L*
+  set: left
   steps:
     - subtract: [CenterOfMass\@PlotStart_SJ_L, CenterOfMass_MIN_SJ_L]
 
 - parameter: COM_displacement_MEAN_min_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - subtract: [CenterOfMass\@PlotStart_SJ_R, CenterOfMass_MIN_SJ_R]
 
@@ -418,12 +444,14 @@
 - parameter: Jump_height_flight_time_ratio_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - divide: [COM_displacement_MEAN_max_SJ_L,FlightTime_SJ_L]
 
 - parameter: Jump_height_flight_time_ratio_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - divide: [COM_displacement_MEAN_max_SJ_R,FlightTime_SJ_R]
 
@@ -436,12 +464,14 @@
 - parameter: Jump_height_flight_time_ratio_static_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - divide: [COM_displacement_MEAN_max_static_SJ_L,FlightTime_SJ_L]
 
 - parameter: Jump_height_flight_time_ratio_static_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - divide: [COM_displacement_MEAN_max_static_SJ_R,FlightTime_SJ_R]
 
@@ -454,12 +484,14 @@
 - parameter: Jump_height_flight_time_ratio_takeoff_vel_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_SJ_L,FlightTime_SJ_L]
 
 - parameter: Jump_height_flight_time_ratio_takeoff_vel_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_SJ_R,FlightTime_SJ_R]
 
@@ -472,12 +504,14 @@
 - parameter: Jump_height_flight_time_ratio_impulse_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - divide: [COM_displacement_MEAN_max_impulse_SJ_L,FlightTime_SJ_L]
 
 - parameter: Jump_height_flight_time_ratio_impulse_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - divide: [COM_displacement_MEAN_max_impulse_SJ_R,FlightTime_SJ_R]
 
@@ -486,72 +520,84 @@
 - parameter: Left_Knee_COM_distance@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
@@ -559,18 +605,21 @@
 - parameter: Left_Knee_COM_distance@TakeOff_SJ_B
   where:
     name: SJ_B*
-  steps:
+  set: left
+  teps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
@@ -583,48 +632,56 @@
 - parameter: Left_Knee_COM_distance@TakeOff_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
 - parameter: Left_Knee_COM_distance@TakeOff_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
@@ -632,72 +689,84 @@
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
@@ -705,108 +774,126 @@
 - parameter: Left Knee Angles@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right Thorax Angles@TouchDown
 
@@ -814,144 +901,168 @@
 - parameter: Left Ankle Angles@COM_MIN_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - import: Right Thorax Angles@COM_MIN
 
@@ -959,6 +1070,7 @@
 - parameter: Left Hip Angles_max_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - eventMask: [Left Hip Angles, PlotStart,TakeOff]
     - max:
@@ -966,6 +1078,7 @@
 - parameter: Right Hip Angles_max_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - eventMask: [Right Hip Angles, PlotStart,TakeOff]
     - max:
@@ -973,6 +1086,7 @@
 - parameter: Left Knee Angles_max_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - eventMask: [Left Knee Angles, PlotStart,TakeOff]
     - max:
@@ -980,6 +1094,7 @@
 - parameter: Right Knee Angles_max_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - eventMask: [Right Knee Angles, PlotStart,TakeOff]
     - max:
@@ -987,6 +1102,7 @@
 - parameter: Left Ankle Angles_max_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, PlotStart,TakeOff]
     - max:
@@ -994,6 +1110,7 @@
 - parameter: Right Ankle Angles_max_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, PlotStart,TakeOff]
     - max:
@@ -1001,6 +1118,7 @@
 - parameter: Left Foot Progression_max_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - eventMask: [Left Foot Progression, PlotStart,TakeOff]
     - max:
@@ -1008,6 +1126,7 @@
 - parameter: Right Foot Progression_max_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - eventMask: [Right Foot Progression, PlotStart,TakeOff]
     - max:
@@ -1015,6 +1134,7 @@
 - parameter: Left Hip Angles_max_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventMask: [Left Hip Angles, PlotStart,TakeOff]
     - max:
@@ -1022,6 +1142,7 @@
 - parameter: Right Hip Angles_max_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - eventMask: [Right Hip Angles, PlotStart,TakeOff]
     - max:
@@ -1029,6 +1150,7 @@
 - parameter: Left Knee Angles_max_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventMask: [Left Knee Angles, PlotStart,TakeOff]
     - max:
@@ -1036,6 +1158,7 @@
 - parameter: Right Knee Angles_max_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - eventMask: [Right Knee Angles, PlotStart,TakeOff]
     - max:
@@ -1043,6 +1166,7 @@
 - parameter: Left Ankle Angles_max_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, PlotStart,TakeOff]
     - max:
@@ -1050,6 +1174,7 @@
 - parameter: Right Ankle Angles_max_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, PlotStart,TakeOff]
     - max:
@@ -1057,6 +1182,7 @@
 - parameter: Left Foot Progression_max_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventMask: [Left Foot Progression, PlotStart,TakeOff]
     - max:
@@ -1064,6 +1190,7 @@
 - parameter: Right Foot Progression_max_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - eventMask: [Right Foot Progression, PlotStart,TakeOff]
     - max:
@@ -1071,6 +1198,7 @@
 - parameter: Left Hip Angles_max_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - eventMask: [Left Hip Angles, PlotStart,TakeOff]
     - max:
@@ -1078,6 +1206,7 @@
 - parameter: Right Hip Angles_max_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventMask: [Right Hip Angles, PlotStart,TakeOff]
     - max:
@@ -1085,6 +1214,7 @@
 - parameter: Left Knee Angles_max_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - eventMask: [Left Knee Angles, PlotStart,TakeOff]
     - max:
@@ -1092,6 +1222,7 @@
 - parameter: Right Knee Angles_max_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventMask: [Right Knee Angles, PlotStart,TakeOff]
     - max:
@@ -1099,6 +1230,7 @@
 - parameter: Left Ankle Angles_max_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, PlotStart,TakeOff]
     - max:
@@ -1106,6 +1238,7 @@
 - parameter: Right Ankle Angles_max_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, PlotStart,TakeOff]
     - max:
@@ -1113,6 +1246,7 @@
 - parameter: Left Foot Progression_max_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - eventMask: [Left Foot Progression, PlotStart,TakeOff]
     - max:
@@ -1120,6 +1254,7 @@
 - parameter: Right Foot Progression_max_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventMask: [Right Foot Progression, PlotStart,TakeOff]
     - max:
@@ -1128,6 +1263,7 @@
 - parameter: Left Hip Angles_max_landing_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - eventMask: [Left Hip Angles, TouchDown,EOF]
     - max:
@@ -1135,6 +1271,7 @@
 - parameter: Right Hip Angles_max_landing_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - eventMask: [Right Hip Angles, TouchDown,EOF]
     - max:
@@ -1142,6 +1279,7 @@
 - parameter: Left Knee Angles_max_landing_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - eventMask: [Left Knee Angles, TouchDown,EOF]
     - max:
@@ -1149,6 +1287,7 @@
 - parameter: Right Knee Angles_max_landing_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - eventMask: [Right Knee Angles, TouchDown,EOF]
     - max:
@@ -1156,6 +1295,7 @@
 - parameter: Left Ankle Angles_max_landing_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, TouchDown,EOF]
     - max:
@@ -1163,6 +1303,7 @@
 - parameter: Right Ankle Angles_max_landing_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, TouchDown,EOF]
     - max:
@@ -1170,6 +1311,7 @@
 - parameter: Left Foot Progression_max_landing_SJ_B
   where:
     name: SJ_B*
+  set: left
   steps:
     - eventMask: [Left Foot Progression, TouchDown,EOF]
     - max:
@@ -1177,6 +1319,7 @@
 - parameter: Right Foot Progression_max_landing_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - eventMask: [Right Foot Progression, TouchDown,EOF]
     - max:
@@ -1184,6 +1327,7 @@
 - parameter: Left Hip Angles_max_landing_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventMask: [Left Hip Angles, TouchDown,EOF]
     - max:
@@ -1191,6 +1335,7 @@
 - parameter: Right Hip Angles_max_landing_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - eventMask: [Right Hip Angles, TouchDown,EOF]
     - max:
@@ -1198,6 +1343,7 @@
 - parameter: Left Knee Angles_max_landing_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventMask: [Left Knee Angles, TouchDown,EOF]
     - max:
@@ -1205,6 +1351,7 @@
 - parameter: Right Knee Angles_max_landing_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - eventMask: [Right Knee Angles, TouchDown,EOF]
     - max:
@@ -1212,6 +1359,7 @@
 - parameter: Left Ankle Angles_max_landing_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, TouchDown,EOF]
     - max:
@@ -1219,6 +1367,7 @@
 - parameter: Right Ankle Angles_max_landing_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, TouchDown,EOF]
     - max:
@@ -1226,6 +1375,7 @@
 - parameter: Left Foot Progression_max_landing_SJ_L
   where:
     name: SJ_L*
+  set: left
   steps:
     - eventMask: [Left Foot Progression, TouchDown,EOF]
     - max:
@@ -1233,6 +1383,7 @@
 - parameter: Right Foot Progression_max_landing_SJ_L
   where:
     name: SJ_L*
+  set: right
   steps:
     - eventMask: [Right Foot Progression, TouchDown,EOF]
     - max:
@@ -1240,6 +1391,7 @@
 - parameter: Left Hip Angles_max_landing_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - eventMask: [Left Hip Angles, TouchDown,EOF]
     - max:
@@ -1247,6 +1399,7 @@
 - parameter: Right Hip Angles_max_landing_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventMask: [Right Hip Angles, TouchDown,EOF]
     - max:
@@ -1254,6 +1407,7 @@
 - parameter: Left Knee Angles_max_landing_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - eventMask: [Left Knee Angles, TouchDown,EOF]
     - max:
@@ -1261,6 +1415,7 @@
 - parameter: Right Knee Angles_max_landing_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventMask: [Right Knee Angles, TouchDown,EOF]
     - max:
@@ -1268,6 +1423,7 @@
 - parameter: Left Ankle Angles_max_landing_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, TouchDown,EOF]
     - max:
@@ -1275,6 +1431,7 @@
 - parameter: Right Ankle Angles_max_landing_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, TouchDown,EOF]
     - max:
@@ -1282,6 +1439,7 @@
 - parameter: Left Foot Progression_max_landing_SJ_R
   where:
     name: SJ_R*
+  set: left
   steps:
     - eventMask: [Left Foot Progression, TouchDown,EOF]
     - max:
@@ -1289,6 +1447,7 @@
 - parameter: Right Foot Progression_max_landing_SJ_R
   where:
     name: SJ_R*
+  set: right
   steps:
     - eventMask: [Right Foot Progression, TouchDown,EOF]
     - max:
@@ -1298,12 +1457,14 @@
   where:
     name: ^SJ_[BL]*
     force: left
+  set: left
   steps:
     - derivative: Left GRF
 
 - parameter: Left Power
   where:
     name: ^SJ_[BL]*
+  set: left
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
 
@@ -1311,12 +1472,14 @@
   where:
     name: ^SJ_[BR]*
     force: right
+  set: right
   steps:
     - derivative: Right GRF
 
 - parameter: Right Power
   where:
     name: ^SJ_[BR]*
+  set: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
 
@@ -1339,6 +1502,7 @@
     name: SJ_B*
   steps:
     - multiply: [Total GRF, PelvisCGPos_vel]
+
 - parameter: Total Power_max_concentric_SJ_B
   where:
     name: SJ_B*
@@ -1394,12 +1558,14 @@
   where:
     name: ^SJ_B*
     force: both
+  set: left
   steps:
     - import: Left_RFD@TouchDown_100ms
 
 - parameter: Left Power_max_concentric_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - max:
@@ -1407,6 +1573,7 @@
 - parameter: Left Power_mean_concentric_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - mean:
@@ -1414,6 +1581,7 @@
 - parameter: Left GRF_impulse_concentric_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - integral:
@@ -1422,6 +1590,7 @@
 - parameter: Left GRF_max_concentric_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - eventMask: [Left GRF, COM_MIN, TakeOff]
     - max:
@@ -1429,6 +1598,7 @@
 - parameter: Left GRF_max_landing_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - max:
@@ -1436,6 +1606,7 @@
 - parameter: Left GRF_mean_landing_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - mean:
@@ -1443,24 +1614,28 @@
 - parameter: Left Hip Moment@COM_MIN_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - import: Left Hip Moment@COM_MIN
 
 - parameter: Left Knee Moment@COM_MIN_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - import: Left Knee Moment@COM_MIN
 
 - parameter: Left Ankle Moment@COM_MIN_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left Knee Moment_max_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - eventMask: [Left Knee Moment, COM_MIN, TakeOff]
     - max:
@@ -1468,6 +1643,7 @@
 - parameter: Left Knee Moment_max_landing_SJ_B
   where:
     name: ^SJ_B*
+  set: left
   steps:
     - eventMask: [Left Knee Moment, TakeOff, EOF]
     - max:
@@ -1477,12 +1653,14 @@
   where:
     name: SJ_B*
     force: both
+  set: right
   steps:
     - import: Right_RFD@TouchDown_100ms
 
 - parameter: Right Power_max_concentric_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - max:
@@ -1490,6 +1668,7 @@
 - parameter: Right Power_mean_concentric_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - mean:
@@ -1497,6 +1676,7 @@
 - parameter: Right GRF_impulse_concentric_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - integral:
@@ -1505,6 +1685,7 @@
 - parameter: Right GRF_max_concentric_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - eventMask: [Right GRF, COM_MIN, TakeOff]
     - max:
@@ -1512,6 +1693,7 @@
 - parameter: Right GRF_max_landing_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - max:
@@ -1519,6 +1701,7 @@
 - parameter: Right GRF_mean_landing_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - mean:
@@ -1526,24 +1709,28 @@
 - parameter: Right Hip Moment@COM_MIN_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - import: Right Hip Moment@COM_MIN
 
 - parameter: Right Knee Moment@COM_MIN_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - import: Right Knee Moment@COM_MIN
 
 - parameter: Right Ankle Moment@COM_MIN_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right Knee Moment_max_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - eventMask: [Right Knee Moment, COM_MIN, TakeOff]
     - max:
@@ -1551,6 +1738,7 @@
 - parameter: Right Knee Moment_max_landing_SJ_B
   where:
     name: ^SJ_B*
+  set: right
   steps:
     - eventMask: [Right Knee Moment, TakeOff, EOF]
     - max:
@@ -1560,12 +1748,14 @@
   where:
     name: ^SJ_L*
     force: left
+  set: left
   steps:
     - import: Left_RFD@TouchDown_100ms
 
 - parameter: Left Power_max_concentric_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - max:
@@ -1573,6 +1763,7 @@
 - parameter: Left Power_mean_concentric_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - mean:
@@ -1580,6 +1771,7 @@
 - parameter: Left GRF_impulse_concentric_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - eventMask: [Left Power, COM_MIN, TakeOff]
     - integral:
@@ -1588,6 +1780,7 @@
 - parameter: Left GRF_max_concentric_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - eventMask: [Left GRF, COM_MIN, TakeOff]
     - max:
@@ -1595,6 +1788,7 @@
 - parameter: Left GRF_max_landing_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - max:
@@ -1602,6 +1796,7 @@
 - parameter: Left GRF_mean_landing_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - eventMask: [Left GRF, TouchDown, EOF]
     - mean:
@@ -1609,24 +1804,28 @@
 - parameter: Left Hip Moment@COM_MIN_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - import: Left Hip Moment@COM_MIN
 
 - parameter: Left Knee Moment@COM_MIN_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - import: Left Knee Moment@COM_MIN
 
 - parameter: Left Ankle Moment@COM_MIN_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left Knee Moment_max_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - eventMask: [Left Knee Moment, COM_MIN, TakeOff]
     - max:
@@ -1634,6 +1833,7 @@
 - parameter: Left Knee Moment_max_landing_SJ_L
   where:
     name: ^SJ_L*
+  set: left
   steps:
     - eventMask: [Left Knee Moment, TakeOff, EOF]
     - max:
@@ -1643,12 +1843,14 @@
   where:
     name: SJ_R*
     force: right
+  set: right
   steps:
     - import: Right_RFD@TouchDown_100ms
 
 - parameter: Right Power_max_concentric_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - max:
@@ -1656,6 +1858,7 @@
 - parameter: Right Power_mean_concentric_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - mean:
@@ -1663,6 +1866,7 @@
 - parameter: Right GRF_impulse_concentric_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - eventMask: [Right Power, COM_MIN, TakeOff]
     - integral:
@@ -1671,6 +1875,7 @@
 - parameter: Right GRF_max_concentric_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - eventMask: [Right GRF, COM_MIN, TakeOff]
     - max:
@@ -1678,6 +1883,7 @@
 - parameter: Right GRF_max_landing_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - max:
@@ -1685,6 +1891,7 @@
 - parameter: Right GRF_mean_landing_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - eventMask: [Right GRF, TouchDown, EOF]
     - mean:
@@ -1692,24 +1899,28 @@
 - parameter: Right Hip Moment@COM_MIN_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - import: Right Hip Moment@COM_MIN
 
 - parameter: Right Knee Moment@COM_MIN_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - import: Right Knee Moment@COM_MIN
 
 - parameter: Right Ankle Moment@COM_MIN_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right Knee Moment_max_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - eventMask: [Right Knee Moment, COM_MIN, TakeOff]
     - max:
@@ -1717,6 +1928,7 @@
 - parameter: Right Knee Moment_max_landing_SJ_R
   where:
     name: ^SJ_R*
+  set: right
   steps:
     - eventMask: [Right Knee Moment, TakeOff, EOF]
     - max:

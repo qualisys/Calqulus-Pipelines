@@ -382,6 +382,7 @@
 - parameter: COM_displacement_MEAN_min_LL_L 
   where:
     name: LL_L*
+  set: left
   steps:
     - subtract: [CenterOfMass\@PlotStart, CenterOfMass_MIN]
     - import: $prev.z
@@ -389,6 +390,7 @@
 - parameter: COM_displacement_MEAN_min_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - subtract: [CenterOfMass\@PlotStart, CenterOfMass_MIN]
     - import: $prev.z
@@ -613,16 +615,19 @@
 # Jump distance - calculated as distance traveled by proximal end of foot from TakeOff to Landing
 # Left
 - parameter: LFT_DistEndPos@TakeOff
+  set: left
   steps:
     - import: LFT_DistEndPos@TakeOff
 
 - parameter: RFT_DistEndPos@Landing_R
+  set: right
   steps:
     - import: RFT_DistEndPos@Landing_R
 
 - parameter: Left_jump_distance
   where:
     name: LL_L*
+  set: left
   steps:
     - subtract: [LFT_DistEndPos@TakeOff, RFT_DistEndPos@Landing_R]
     - abs:
@@ -639,6 +644,7 @@
 - parameter: Right_jump_distance
   where:
     name: LL_R*
+  set: right
   steps:
     - subtract: [RFT_DistEndPos@TakeOff, LFT_DistEndPos@Landing_L]
     - abs:
@@ -648,24 +654,28 @@
 - parameter: Left Hip Moment@COM_MIN_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Hip Moment@COM_MIN
 
 - parameter: Left Knee Moment@COM_MIN_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Knee Moment@COM_MIN
 
 - parameter: Left Ankle Moment@COM_MIN_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left GRF_max_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - eventMask: [Left GRF, PlotStart, TakeOff]
     - max:
@@ -673,6 +683,7 @@
 - parameter: Left GRF_max_landing_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - eventMask: [Left GRF, PlotStart, LeftPlotEnd]
     - max:
@@ -680,6 +691,7 @@
 - parameter: Left GRF_mean_landing_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - eventMask: [Left GRF, PlotStart, LeftPlotEnd]
     - mean:
@@ -687,6 +699,7 @@
 - parameter: Left GRF_max_concentric_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - eventMask: [Left GRF, pelvis_lowest, LeftPlotEnd]
     - max:
@@ -694,6 +707,7 @@
 - parameter: Left GRF_mean_concentric_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - eventMask: [Left GRF, pelvis_lowest, LeftPlotEnd]
     - mean:
@@ -701,6 +715,7 @@
 - parameter: Left GRF_max_eccentric_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - eventMask: [Left GRF, LeftPlotStart, pelvis_lowest]
     - max:
@@ -708,6 +723,7 @@
 - parameter: Left GRF_mean_eccentric_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - eventMask: [Left GRF, LeftPlotStart, pelvis_lowest]
     - mean:
@@ -715,6 +731,7 @@
 - parameter: Left Knee Moment_max_LL_L
   where:
     name: LL_L*
+  set: left
   steps:
     - eventMask: [Left Knee Moment, PlotStart, TakeOff]
     - max:
@@ -723,24 +740,28 @@
 - parameter: Right Hip Moment@COM_MIN_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Hip Moment@COM_MIN
 
 - parameter: Right Knee Moment@COM_MIN_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Knee Moment@COM_MIN
 
 - parameter: Right Ankle Moment@COM_MIN_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right GRF_max_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - eventMask: [Right GRF, PlotStart, TakeOff]
     - max:
@@ -748,6 +769,7 @@
 - parameter: Right GRF_max_landing_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - eventMask: [Right GRF, PlotStart, RightPlotEnd]
     - max:
@@ -755,6 +777,7 @@
 - parameter: Right GRF_mean_landing_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - eventMask: [Right GRF, PlotStart, RightPlotEnd]
     - mean:
@@ -762,6 +785,7 @@
 - parameter: Right GRF_max_concentric_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - eventMask: [Right GRF, pelvis_lowest, RightPlotEnd]
     - max:
@@ -769,6 +793,7 @@
 - parameter: Right GRF_mean_concentric_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - eventMask: [Right GRF, pelvis_lowest, RightPlotEnd]
     - mean:
@@ -776,6 +801,7 @@
 - parameter: Right GRF_max_eccentric_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - eventMask: [Right GRF, RightPlotStart, pelvis_lowest]
     - max:
@@ -783,6 +809,7 @@
 - parameter: Right GRF_mean_eccentric_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - eventMask: [Right GRF, RightPlotStart, pelvis_lowest]
     - mean:
@@ -790,6 +817,7 @@
 - parameter: Right Knee Moment_max_LL_R
   where:
     name: LL_R*
+  set: right
   steps:
     - eventMask: [Right Knee Moment, PlotStart, TakeOff]
     - max:

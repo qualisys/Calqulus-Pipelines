@@ -71,3 +71,7 @@
 - parameter: MASS
   steps:
     - import: $bodyMass
+
+- parameter: Measurement_Duration
+  steps:
+    - divide: [$length, $framerate]

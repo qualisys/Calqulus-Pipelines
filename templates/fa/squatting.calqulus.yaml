@@ -243,6 +243,7 @@
 - parameter: Squatting_depth_Squat_L
   where:
     name: (Squat|Squatting)_L*
+  set: left
   steps:
     - refineEvent: TOP
       sequence: [TOP, Pelvis_lowest]
@@ -259,6 +260,7 @@
 - parameter: Squatting_depth_Squat_R
   where:
     name: (Squat|Squatting)_R*
+  set: right
   steps:
     - refineEvent: TOP
       sequence: [TOP, Pelvis_lowest]
@@ -277,6 +279,7 @@
 - parameter: Left Hip Angles_max_Squat_B
   where:
     name: (Squat|Squatting)_B*
+  set: left
   steps:
     - eventMask: [Left Hip Angles, TOP, TOP]
     - max:
@@ -284,6 +287,7 @@
 - parameter: Left Knee Angles_max_Squat_B
   where:
     name: (Squat|Squatting)_B*
+  set: left
   steps:
     - eventMask: [Left Knee Angles, TOP, TOP]
     - max:
@@ -291,6 +295,7 @@
 - parameter: Left Ankle Angles_max_Squat_B
   where:
     name: (Squat|Squatting)_B*
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, TOP, TOP]
     - max:
@@ -298,6 +303,7 @@
 - parameter: Right Hip Angles_max_Squat_B
   where:
     name: (Squat|Squatting)_B*
+  set: right
   steps:
     - eventMask: [Right Hip Angles, TOP, TOP]
     - max:
@@ -305,6 +311,7 @@
 - parameter: Right Knee Angles_max_Squat_B
   where:
     name: (Squat|Squatting)_B*
+  set: right
   steps:
     - eventMask: [Right Knee Angles, TOP, TOP]
     - max:
@@ -312,6 +319,7 @@
 - parameter: Right Ankle Angles_max_Squat_B
   where:
     name: (Squat|Squatting)_B*
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, TOP, TOP]
     - max:
@@ -320,6 +328,7 @@
 - parameter: Left Hip Angles_max_Squat_L
   where:
     name: (Squat|Squatting)_L*
+  set: left
   steps:
     - eventMask: [Left Hip Angles, TOP, TOP]
     - max:
@@ -327,6 +336,7 @@
 - parameter: Left Knee Angles_max_Squat_L
   where:
     name: (Squat|Squatting)_L*
+  set: left
   steps:
     - eventMask: [Left Knee Angles, TOP, TOP]
     - max:
@@ -334,6 +344,7 @@
 - parameter: Left Ankle Angles_max_Squat_L
   where:
     name: (Squat|Squatting)_L*
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, TOP, TOP]
     - max:
@@ -342,6 +353,7 @@
 - parameter: Right Hip Angles_max_Squat_R
   where:
     name: (Squat|Squatting)_R*
+  set: right
   steps:
     - eventMask: [Right Hip Angles, TOP, TOP]
     - max:
@@ -349,6 +361,7 @@
 - parameter: Right Knee Angles_max_Squat_R
   where:
     name: (Squat|Squatting)_R*
+  set: right
   steps:
     - eventMask: [Right Knee Angles, TOP, TOP]
     - max:
@@ -356,6 +369,7 @@
 - parameter: Right Ankle Angles_max_Squat_R
   where:
     name: (Squat|Squatting)_R*
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, TOP, TOP]
     - max:
@@ -406,6 +420,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: left
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - max:
@@ -414,6 +429,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: left
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - mean:
@@ -422,6 +438,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: left
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - max:
@@ -430,6 +447,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: left
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - mean:
@@ -438,6 +456,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: left
   steps:
     - eventMask: [Left GRF, TOP, TOP]
     - max:
@@ -447,6 +466,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: right
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - max:
@@ -455,6 +475,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: right
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - mean:
@@ -463,6 +484,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: right
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - max:
@@ -471,6 +493,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: right
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - mean:
@@ -479,6 +502,7 @@
   where:
     name: (Squat|Squatting)_B*
     force: both
+  set: right
   steps:
     - eventMask: [Right GRF, TOP, TOP]
     - max:
@@ -488,6 +512,7 @@
   where:
     name: (Squat|Squatting)_L*
     force: left
+  set: left
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - max:
@@ -496,6 +521,7 @@
   where:
     name: (Squat|Squatting)_L*
     force: left
+  set: left
   steps:
     - eventMask: [Left GRF, Pelvis_lowest, TOP]
     - mean:
@@ -504,6 +530,7 @@
   where:
     name: (Squat|Squatting)_L*
     force: left
+  set: left
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - max:
@@ -512,6 +539,7 @@
   where:
     name: (Squat|Squatting)_L*
     force: left
+  set: left
   steps:
     - eventMask: [Left GRF, TOP, Pelvis_lowest]
     - mean:
@@ -520,6 +548,7 @@
   where:
     name: (Squat|Squatting)_L*
     force: left
+  set: left
   steps:
     - eventMask: [Left GRF, TOP, TOP]
     - max:
@@ -529,6 +558,7 @@
   where:
     name: (Squat|Squatting)_R*
     force: right
+  set: right
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - max:
@@ -537,6 +567,7 @@
   where:
     name: (Squat|Squatting)_R*
     force: right
+  set: right
   steps:
     - eventMask: [Right GRF, Pelvis_lowest, TOP]
     - mean:
@@ -545,6 +576,7 @@
   where:
     name: (Squat|Squatting)_R*
     force: right
+  set: right
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - max:
@@ -553,6 +585,7 @@
   where:
     name: (Squat|Squatting)_R*
     force: right
+  set: right
   steps:
     - eventMask: [Right GRF, TOP, Pelvis_lowest]
     - mean:
@@ -561,6 +594,7 @@
   where:
     name: (Squat|Squatting)_R*
     force: right
+  set: right
   steps:
     - eventMask: [Right GRF, TOP, TOP]
     - max:
