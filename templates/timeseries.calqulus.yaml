@@ -133,7 +133,7 @@
 - parameter: Left Ankle Angles
   set: left
   steps:
-    - jointAngle: [LeftLeg_model, LeftFoot]
+    - jointAngle: [LeftLeg_model, LeftFoot_model]
       output: foot_vector
     - jointAngle: [LeftLeg_model, LeftFoot_model_hindfoot]
     - vector: [foot_vector.x, $prev.y, foot_vector.z]
@@ -151,7 +151,7 @@
 - parameter: Right Ankle Angles
   set: right
   steps:
-    - jointAngle: [RightLeg_model, RightFoot]
+    - jointAngle: [RightLeg_model, RightFoot_model]
       output: foot_vector
     - jointAngle: [RightLeg_model, RightFoot_model_hindfoot]
     - vector: [foot_vector.x, $prev.y, foot_vector.z]
