@@ -12,8 +12,8 @@
 			"cricketBatting": null,
 			"cricketBowling": null,
 			"cycling": null,
-			"default": "release/2.1.0",
-            "functionalAssessment": "cbed55bd40693c0654bb98ed5f47a479415ab55b",
+			"default": "release/2.2.1",
+            "functionalAssessment": null,
 			"generic": null,
 			"running": null
 		},
