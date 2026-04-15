@@ -36,11 +36,23 @@
       then: LeftFoot
       else: LeftHindfoot
 
+- segment: LeftFoot_model_hindfoot
+  steps:
+    - if: exists(LeftHindfoot)
+      then: LeftHindfoot
+      else: LeftFoot
+
 - segment: RightFoot_model
   steps:
     - if: exists(RightFoot)
       then: RightFoot
       else: RightHindfoot
+
+- segment: RightFoot_model_hindfoot
+  steps:
+    - if: exists(RightHindfoot)
+      then: RightHindfoot
+      else: RightFoot
 
 - segment: LeftToeBase_model
   steps:
