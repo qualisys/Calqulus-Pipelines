@@ -555,7 +555,7 @@
 - parameter: Right_Knee_COM_distance@TouchDown_SJ_L
   where:
     name: SJ_L*
-  set: left
+  set: right
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
@@ -569,14 +569,14 @@
 - parameter: Right_Ankle_COM_distance@TouchDown_SJ_L
   where:
     name: SJ_L*
-  set: left
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_SJ_R
   where:
     name: SJ_R*
-  set: right
+  set: left
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
@@ -590,7 +590,7 @@
 - parameter: Left_Ankle_COM_distance@TouchDown_SJ_R
   where:
     name: SJ_R*
-  set: right
+  set: left
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
@@ -626,6 +626,7 @@
 - parameter: Right_Ankle_COM_distance@TakeOff_SJ_B
   where:
     name: SJ_B*
+  set: right
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
@@ -639,7 +640,7 @@
 - parameter: Right_Knee_COM_distance@TakeOff_SJ_L
   where:
     name: SJ_L*
-  set: left
+  set: right
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 

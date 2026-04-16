@@ -1284,28 +1284,28 @@
 - parameter: Right Hip Angles@R_TDC
   where:
     name: Cycling*
-  set: left
+  set: right
   steps:
     - import: Right Hip Angles@R_TDC
 
 - parameter: Right Hip Angles@R_BDC
   where:
     name: Cycling*
-  set: left
+  set: right
   steps:
     - import: Right Hip Angles@R_BDC
 
 - parameter: Right Hip Angles@R_PP
   where:
     name: Cycling*
-  set: left
+  set: right
   steps:
     - import: Right Hip Angles@R_PP
 
 - parameter: Right Hip Angles@R_RP
   where:
     name: Cycling*
-  set: left
+  set: right
   steps:
     - import: Right Hip Angles@R_RP
 
