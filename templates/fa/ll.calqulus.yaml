@@ -108,6 +108,7 @@
 - event: TouchDown
   where:
     name: LL_L*
+  summarize: true
   steps:
     - if: exists(my_LON_force)
       then: my_LON_force
@@ -157,6 +158,7 @@
 - event: TakeOff
   where:
     name: LL_L*
+  summarize: true
   steps:
     - if: exists(LOFF_force_ordered)
       then: LOFF_force_ordered@-1
@@ -171,6 +173,7 @@
 - event: pelvis_lowest
   where:
     name: LL_L*
+  summarize: true
   steps:
     - eventMask: [PelvisCGPos.z, LeftPlotStart, LeftPlotEnd]
     - min:
@@ -235,6 +238,7 @@
 - event: TouchDown
   where:
     name: LL_R*
+  summarize: true
   steps:
     - if: exists(my_RON_force)
       then: my_RON_force
@@ -294,6 +298,7 @@
 - event: TakeOff
   where:
     name: LL_R*
+  summarize: true
   steps:
     - if: exists(ROFF_force_ordered)
       then: ROFF_force_ordered@-1
@@ -308,6 +313,7 @@
 - event: pelvis_lowest
   where:
     name: LL_R*
+  summarize: true
   steps:
     - eventMask: [PelvisCGPos.z, RightPlotStart, RightPlotEnd]
     - min:
@@ -341,6 +347,22 @@
   set: right
   steps:
     - import: TakeOff
+
+#############
+## Phases ##
+#############
+
+- phase: EccentricPhase
+  description: "Time from TouchDown till the lowest position of pelvis"
+  displayName: "Eccentric phase"
+  start: TouchDown
+  end: pelvis_lowest
+
+- phase: ConcentricPhase
+  description: "Time from the lowest position of pelvis to take-off"
+  displayName: "Concentric phase"
+  start: pelvis_lowest
+  end: TakeOff
 
 ############
 ## SERIES ##
