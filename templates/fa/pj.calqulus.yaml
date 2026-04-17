@@ -58,6 +58,7 @@
 - event: Max_knee_flex
   where:
     name: PJ_[LB]*
+  summarize: true
   steps:
     - eventMask: [Left Knee Angles.x, TouchDown_L, TakeOff_L]
     - max:
@@ -144,24 +145,28 @@
 - event: TakeOff
   where:
     name: PJ_L*
+  summarize: true
   steps:
     - import: TakeOff_L
 
 - event: TouchDown
   where:
     name: PJ_L*
+  summarize: true
   steps:
     - import: TouchDown_L
 
 - event: TakeOff
   where:
     name: PJ_[RB]*
+  summarize: true
   steps:
     - import: TakeOff_R
 
 - event: TouchDown
   where:
     name: PJ_[RB]*
+  summarize: true
   steps:
     - import: TouchDown_R
 
@@ -193,6 +198,29 @@
   set: right
   steps:
     - import: TakeOff_R
+
+#############
+## Phases ##
+#############
+
+- phase: ContactPhase
+  description: "Time from touch-down to take-off"  
+  displayName: "Contact phase"
+  start: TouchDown
+  end: TakeOff
+
+- phase: EccentricPhase
+  description: "Time from touch-down to the max knee flexion"
+  displayName: "Eccentric phase"
+  start: TouchDown
+  end: Max_knee_flex
+
+- phase: ConcentricPhase
+  description: "Time from max knee flexion to take-off"
+  displayName: "Concentric phase"
+  start: Max_knee_flex
+  end: TakeOff
+
 
 ############
 ## SERIES ##
