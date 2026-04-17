@@ -149,18 +149,21 @@
 - event: TakeOff
   where:
     name: DJ_[LB]*
+  summarize: true
   steps:
     - import: TakeOff_L
 
 - event: TouchDown
   where:
     name: DJ_[LB]*
+  summarize: true
   steps:
     - import: TouchDown_L
 
 - event: Landing
   where:
     name: DJ_[LB]*
+  summarize: true
   steps:
     - import: Landing_L
 
@@ -325,18 +328,21 @@
 - event: TakeOff
   where:
     name: DJ_[RB]*
+  summarize: true
   steps:
     - import: TakeOff_R
 
 - event: TouchDown
   where:
     name: DJ_[RB]*
+  summarize: true
   steps:
     - import: TouchDown_R
 
 - event: Landing
   where:
     name: DJ_[RB]*
+  summarize: true
   steps:
     - import: Landing_R
 
@@ -411,37 +417,29 @@
 
 # Landing end 
 # Place Landing_end at EOF if Landing_end cannot be created because there is no descending zero crossing of PelvisCGPos_vel after landing.
-# - event: Landing_end_temp
-#   steps:
-#     - threshold: PelvisCGPos_vel.z
-#       value: 0
-#       direction: down
-#     - eventMask: [$prev, Landing, EOF]
-#       keep: 1
-
-# - event: EOF-1
-#   steps:
-#     - import: EOF
-#       frames: true
-#     - subtract: [$length,2]
-
-- event: Landing_end
+- event: Landing_end_temp
   steps:
     - threshold: PelvisCGPos_vel.z
       value: 0
       direction: down
     - eventMask: [$prev, Landing, EOF]
       keep: 1
-      export: Landing_end_temp
 
+- event: EOF-1
+  steps:
+    - import: EOF
+      frames: true
     - subtract: [$length,2]
-      export: EOF-1
 
-    - if: Landing_end_temp
+- event: Landing_end
+  summarize: true
+  steps:
+    - if: "!empty(Landing_end_temp)"
       then: Landing_end_temp
       else: EOF-1
-
+    
 - event: Eccentric_end
+  summarize: true
   steps:
     - threshold: PelvisCGPos_vel.z
       value: 0
@@ -482,3 +480,26 @@
   set: right
   steps:
     - import: TakeOff_R
+
+#############
+## Phases ##
+#############
+
+- phase: EccentricPhase
+  description: "Time from TouchDown till the lowest position of pelvis"
+  displayName: "Eccentric phase"
+  start: TouchDown
+  end: Eccentric_end
+
+- phase: ConcentricPhase
+  description: "Time from the lowest position of pelvis to take-off"
+  displayName: "Concentric phase"
+  start: Eccentric_end
+  end: TakeOff
+
+- phase: LandingPhase
+  description: "Time from the landing till end of measurement"
+  displayName: "Landing phase"
+  start: Landing
+  end: Landing_end
+
