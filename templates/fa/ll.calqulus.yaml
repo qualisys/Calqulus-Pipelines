@@ -355,7 +355,7 @@
 - phase: EccentricPhase
   description: "Time from TouchDown till the lowest position of pelvis"
   displayName: "Eccentric phase"
-  start: TouchDown
+  start: PlotStart
   end: pelvis_lowest
 
 - phase: ConcentricPhase

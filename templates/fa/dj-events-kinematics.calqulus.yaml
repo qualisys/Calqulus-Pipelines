@@ -427,8 +427,6 @@
 
 - event: EOF-1
   steps:
-    - import: EOF
-      frames: true
     - subtract: [$length,2]
 
 - event: Landing_end
