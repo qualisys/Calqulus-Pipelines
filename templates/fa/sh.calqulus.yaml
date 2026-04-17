@@ -39,6 +39,7 @@
   where:
     name: SH_L*
   set: left
+  summarize: true
   steps:
     - if: exists(LON_force)
       then: LON_force
@@ -67,6 +68,7 @@
   where:
     name: SH_L*
   set: left
+  summarize: true
   steps:
     - if: exists(LOFF_force)
       then: LOFF_force
@@ -158,6 +160,7 @@
   where:
     name: SH_R*
   set: right
+  summarize: true
   steps:
     - if: exists(RON_force)
       then: RON_force
@@ -187,6 +190,7 @@
   where:
     name: SH_R*
   set: right
+  summarize: true
   steps:
     - if: exists(ROFF_force)
       then: ROFF_force
@@ -282,6 +286,26 @@
   set: right
   steps:
     - import: ROFF
+
+#############
+## Phases ##
+#############
+
+- phase: ContactPhase
+  where:
+    name: SH_L*
+  description: "Time from touch-down to take-off"  
+  displayName: "Contact phase"
+  start: LON
+  end: LOFF
+
+- phase: ContactPhase
+  where:
+    name: SH_R*
+  description: "Time from touch-down to take-off"  
+  displayName: "Contact phase"
+  start: RON
+  end: ROFF
 
 ############
 ## SERIES ##
