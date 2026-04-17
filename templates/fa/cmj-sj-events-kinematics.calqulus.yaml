@@ -608,9 +608,19 @@
   end: Eccentric_end
 
 - phase: ConcentricPhase
+  where:
+    name: ^(CMJ_)*
   description: "Time from the lowest position of pelvis to take-off"
   displayName: "Concentric phase"
   start: Eccentric_end
+  end: TakeOff
+
+- phase: ConcentricPhase
+  where:
+    name: ^(SJ_)*
+  description: "Time from the lowest position of pelvis to take-off"
+  displayName: "Concentric phase"
+  start: PlotStart
   end: TakeOff
 
 - phase: LandingPhase
