@@ -623,8 +623,15 @@
   start: PlotStart
   end: TakeOff
 
+- phase: FlightPhase
+  description: "Time from take-off till landing"
+  displayName: "Flight phase"
+  start: TakeOff
+  end: TouchDown
+
 - phase: LandingPhase
   description: "Time from the landing till 0.75 s after landing or till the end of recording if landing is less than 0.75 s before the end of recording"
   displayName: "Landing phase"
   start: TouchDown
   end: PlotEnd
+

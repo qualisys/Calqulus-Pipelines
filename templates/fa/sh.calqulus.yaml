@@ -294,18 +294,35 @@
 - phase: ContactPhase
   where:
     name: SH_L*
-  description: "Time from touch-down to take-off"  
+  description: "Time from touch-down till take-off"  
   displayName: "Contact phase"
   start: LON
   end: LOFF
 
+- phase: FlightPhase
+  where:
+    name: SH_L*
+  description: "Time from take-off till touch-down"
+  displayName: "Flight phase"
+  start: LOFF
+  end: LON
+
 - phase: ContactPhase
   where:
     name: SH_R*
-  description: "Time from touch-down to take-off"  
+  description: "Time from touch-down till take-off"  
   displayName: "Contact phase"
   start: RON
   end: ROFF
+
+- phase: FlightPhase
+  where:
+    name: SH_R*
+  description: "Time from take-off till touch-down"
+  displayName: "Flight phase"
+  start: ROFF
+  end: RON
+
 
 ############
 ## SERIES ##

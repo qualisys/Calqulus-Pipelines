@@ -221,6 +221,13 @@
   start: Max_knee_flex
   end: TakeOff
 
+- phase: FlightPhase
+  description: "Time from take-off till touch-down"
+  displayName: "Flight phase"
+  start: TakeOff
+  end: TouchDown
+
+
 
 ############
 ## SERIES ##
