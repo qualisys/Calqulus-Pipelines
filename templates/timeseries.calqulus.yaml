@@ -251,7 +251,7 @@
 - parameter: Left Shoulder Girdle Angles
   set: left
   steps:
-    - angle: [Spine2, LeftShoulder]
+    - angle: [Spine2_model, LeftShoulder_model]
       unwrap: true
       rotationOrder: XYZ 
     - multiply: [$prev, [1, 1, -1]]
@@ -262,7 +262,7 @@
 - parameter: Right Shoulder Girdle Angles
   set: right
   steps:
-    - angle: [Spine2, RightShoulder]
+    - angle: [Spine2_model, RightShoulder_model]
       unwrap: true
       rotationOrder: XYZ
     - multiply: [$prev, [1, -1, 1]]
