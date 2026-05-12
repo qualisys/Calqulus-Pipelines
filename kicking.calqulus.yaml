@@ -14,6 +14,43 @@
 ############
 
 # It is assumed that 'Kick' event is entered manually in QTM
+# Unified event names for web
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1]
+
+- event: LeftPlotStart
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - import: BOF
+
+- event: LeftPlotEnd
+  where:
+    name: COD_L*
+  set: left
+  steps:
+    - import: EOF
+
+- event: RightPlotStart
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - import: BOF
+
+- event: RightPlotEnd
+  where:
+    name: COD_R*
+  set: right
+  steps:
+    - import: EOF
 
 ############
 ## SERIES ##
