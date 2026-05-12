@@ -89,7 +89,7 @@
     - eventMask: [$prev, L_PEAK_MID_FOOT_VEL_z, L_PEAK_MID_FOOT_VEL_z]
       keep: -1
 
-- event: temp_event_1
+- event: left_temp_event_1
   set: left
   where:
     name: ^(Gait|Run|Walk)*
@@ -98,13 +98,13 @@
       value: 0
       direction: down
 
-- event: temp_event_2
+- event: left_temp_event_2
   set: left
   where:
     name: ^(Gait|Run|Walk)*
   steps:
     - peakFinder: Left_MID_FOOT_vel.y
-    - eventMask: [$prev, L_PEAK_MID_FOOT_VEL_z, temp_event_1]
+    - eventMask: [$prev, L_PEAK_MID_FOOT_VEL_z, left_temp_event_1]
       keep: -1
   
 - event: LFS_treadmill
@@ -139,7 +139,7 @@
     #   output: temp_event_2
 
     - peakFinder: Left_MID_FOOT_acc.z
-    - eventMask: [$prev, temp_event_2, L_MID_FOOT_vel_negative]
+    - eventMask: [$prev, left_temp_event_2, L_MID_FOOT_vel_negative]
       keep: -1
 
 - event: R_PEAK_MID_FOOT_VEL_z
@@ -164,7 +164,7 @@
     - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, R_PEAK_MID_FOOT_VEL_z]
       keep: -1
 
-- event: temp_event_1
+- event: right_temp_event_1
   set: right
   where:
     name: ^(Gait|Run|Walk)*
@@ -173,13 +173,13 @@
       value: 0
       direction: down
 
-- event: temp_event_2
+- event: right_temp_event_2
   set: right
   where:
     name: ^(Gait|Run|Walk)*
   steps:
     - peakFinder: Right_MID_FOOT_vel.y
-    - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, temp_event_1]
+    - eventMask: [$prev, R_PEAK_MID_FOOT_VEL_z, right_temp_event_1]
       keep: -1
 
 - event: RFS_treadmill
@@ -214,7 +214,7 @@
     #   output: temp_event_2
 
     - peakFinder: Right_MID_FOOT_acc.z
-    - eventMask: [$prev, temp_event_2, R_MID_FOOT_vel_negative]
+    - eventMask: [$prev, right_temp_event_2, R_MID_FOOT_vel_negative]
       keep: -1
 
 - event: L_MID_STANCE
