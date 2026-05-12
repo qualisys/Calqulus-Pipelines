@@ -44,38 +44,189 @@
   steps:
     - import: EOF
 
+- event: Kick_calqulus
+  steps:
+    - import: Kicking_foot_vel
+    - eventMask: [$prev, BOF, EOF]
+    - max:
+      frames: true
+
+- event: Impact
+  steps:
+    - if: exists(Kick)
+      then: Kick
+      else: Kick_calqulus
+
+# define backswing event as peak thigh flexion velocity before impact
+- event: Backswing
+  steps:
+    - import: Kicking_hip_ang_vel
+    - eventMask: [$prev, BOF, Impact]
+    - max: $prev.x
+      frames: true
+
+# define follow through event as peak thigh extension velocity after impact
+- event: FollowThrough
+  steps:
+    - import: Kicking_hip_ang_vel
+    - eventMask: [$prev, Impact, EOF]
+    - min: $prev.x
+      frames: true
+
 ############
 ## SERIES ##
 ############
 
 - template: /templates/timeseries.calqulus.yaml
 
-
 # Segment velocities
-
 # -Foot velocity at ball impact → most critical determinant of ball speed
+# Find kicking foot based on velocity magnitude and use it to determine which leg is kicking and which is support leg. This will allow us to create unified event names for web and to calculate other parameters such as hip and knee angular velocities for the kicking leg.
+- parameter: Right_foot_vel
+  steps:
+    - import: RightFoot_model
+    - velocity:
+    - magnitude:
+    - convert:
+      from: mm/s
+      to: m/s
+
+- parameter: Left_foot_vel
+  steps:
+    - import: LeftFoot_model
+    - velocity:
+    - magnitude:
+    - convert:
+      from: mm/s
+      to: m/s
+
+- parameter: Right_foot_vel_max
+  steps:
+    - max: Right_foot_vel
+
+- parameter: Left_foot_vel_max
+  steps:
+    - max: Left_foot_vel
+
+# Define kicking segments based on foot velocity and use them to calculate hip and knee angular velocities for the kicking leg
+- parameter: Kicking_foot
+  steps:
+    - if: Right_foot_vel_max > Left_foot_vel_max
+      then: RightFoot_model
+      else: LeftFoot_model
+  
+- parameter: Kicking_shank
+  steps:
+    - if: Right_foot_vel_max > Left_foot_vel_max
+      then: RightLeg_model
+      else: LeftLeg_model
+
+- parameter: Kicking_thigh
+  steps:
+    - if: Right_foot_vel_max > Left_foot_vel_max
+      then: RightUpLeg_model
+      else: LeftUpLeg_model
+
+- parameter: Kicking_hip_angles
+  steps:
+    - if: Right_foot_vel_max > Left_foot_vel_max
+      then: Right Hip Angles
+      else: Left Hip Angles
+
+- parameter: Kicking_knee_angles
+  steps:
+    - if: Right_foot_vel_max > Left_foot_vel_max
+      then: Right Knee Angles
+      else: Left Knee Angles
+
+- parameter: Kicking_ankle_angles
+  steps:
+    - if: Right_foot_vel_max > Left_foot_vel_max
+      then: Right Ankle Angles
+      else: Left Ankle Angles
+
 # Peak velocities of:
-
 # -Thigh
-# -Shank (lower leg)
+# -Shank 
 # -Foot
+# Use thigh, shank and foot vel to create kinematic sequence graph
+- parameter: Kicking_foot_vel
+  steps:
+    - if: Right_foot_vel_max > Left_foot_vel_max
+      then: Right_foot_vel
+      else: Left_foot_vel
 
+- parameter: Kicking_foot_vel_max
+  steps:
+    - max: Kicking_foot_vel
 
-# Effective kicks show a proximal-to-distal sequencing (hip → knee → ankle).
+- parameter: Kicking_thigh_vel
+  steps:
+    - velocity: Kicking_thigh
+    - lowpass:
+      cutoff: 6
+    - magnitude:
+    - convert:
+      from: mm/s
+      to: m/s
+
+- parameter: Kicking_shank_vel
+  steps:
+    - velocity: Kicking_shank
+    - lowpass:
+      cutoff: 6
+    - magnitude:
+    - convert:
+      from: mm/s
+      to: m/s
+
+- parameter: Kicking_thigh_vel_max
+  steps:
+    - max: Kicking_thigh_vel
+
+- parameter: Kicking_shank_vel_max
+  steps:
+    - max: Kicking_shank_vel
 
 # Joint angular velocities
-
 # -Hip flexion velocity
-# -Knee extension velocity (often the largest contributor)
+# -Knee extension velocity
 # -Ankle plantarflexion velocity just before impact
 
-# Joint angles (posture)
+- parameter: Kicking_hip_ang_vel
+  steps:
+    - angularVelocity: [Hips_model, Kicking_thigh, Hips_model, Kicking_thigh]
 
+- parameter: Kicking_knee_ang_vel
+  steps:
+    - angularVelocity: [Kicking_thigh, Kicking_shank, Kicking_thigh, Kicking_shank]
+
+- parameter: Kicking_ankle_ang_vel
+  steps:
+    - angularVelocity: [Kicking_shank, Kicking_foot, Kicking_shank, Kicking_foot]
+
+# Joint angles
 # -Hip angle at backswing and impact
 # -Knee flexion at backswing, rapid extension before impact
-# -Ankle angle (locked / plantarflexed for instep kicks)
+# -Ankle angle
 
 # Range of motion
+# calculate ROM for hip, knee and ankle between these events.
 
-# -Length of backswing (hip extension, knee flexion)
-# -Follow-through amplitude
+- parameter: Kicking_hip_ROM
+  steps:
+    - import: Kicking_hip_angles
+    - eventMask: [$prev, Backswing, FollowThrough]
+    - range: $prev
+
+- parameter: Kicking_knee_ROM
+  steps:
+    - import: Kicking_knee_angles
+    - eventMask: [$prev, Backswing, FollowThrough]
+    - range: $prev
+
+- parameter: Kicking_ankle_ROM
+  steps:
+    - import: Kicking_ankle_angles
+    - eventMask: [$prev, Backswing, FollowThrough]
+    - range: $prev
