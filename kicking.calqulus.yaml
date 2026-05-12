@@ -1,0 +1,52 @@
+- template: templates/skeleton-mapping.calqulus.yaml
+
+############
+## SPACES ##
+############
+- space: VirtualLab
+  where:
+    name: ^(Cycling|Static)*
+  alignWithSegment:
+    segment: Hips
+
+############
+## EVENTS ##
+############
+
+# It is assumed that 'Kick' event is entered manually in QTM
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+
+# Segment velocities
+
+# -Foot velocity at ball impact → most critical determinant of ball speed
+# Peak velocities of:
+
+# -Thigh
+# -Shank (lower leg)
+# -Foot
+
+
+# Effective kicks show a proximal-to-distal sequencing (hip → knee → ankle).
+
+# Joint angular velocities
+
+# -Hip flexion velocity
+# -Knee extension velocity (often the largest contributor)
+# -Ankle plantarflexion velocity just before impact
+
+# Joint angles (posture)
+
+# -Hip angle at backswing and impact
+# -Knee flexion at backswing, rapid extension before impact
+# -Ankle angle (locked / plantarflexed for instep kicks)
+
+# Range of motion
+
+# -Length of backswing (hip extension, knee flexion)
+# -Follow-through amplitude
