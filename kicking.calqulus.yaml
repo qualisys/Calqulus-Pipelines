@@ -4,10 +4,8 @@
 ## SPACES ##
 ############
 - space: VirtualLab
-  where:
-    name: ^(Cycling|Static)*
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 ############
 ## EVENTS ##
@@ -57,22 +55,23 @@
       then: Kick
       else: Kick_calqulus
 
-# define backswing event as peak thigh flexion velocity before impact
+# Backswing: kicking foot at maximum distance behind pelvis in VirtualLab (min y)
 - event: Backswing
   steps:
-    - import: Kicking_hip_ang_vel
+    - import: Kicking_foot_rel_pos
     - eventMask: [$prev, BOF, Impact]
-    - max: $prev.x
+    - min: $prev.y
       frames: true
 
-# define follow through event as peak thigh extension velocity after impact
+# FollowThrough: kicking foot at maximum distance in front of pelvis in VirtualLab (max y)
 - event: FollowThrough
   steps:
-    - import: Kicking_hip_ang_vel
+    - import: Kicking_foot_rel_pos
+    - peakFinder: $prev.y
+      height: 0
     - eventMask: [$prev, Impact, EOF]
-    - min: $prev.x
-      frames: true
-
+    - import: $prev@1
+      
 ############
 ## SERIES ##
 ############
@@ -144,6 +143,14 @@
       then: Right Ankle Angles
       else: Left Ankle Angles
 
+# Kicking foot position relative to pelvis in VirtualLab space (y = forward)
+- parameter: Kicking_foot_rel_pos
+  steps:
+    - vector: [Kicking_foot.x, Kicking_foot.y, Kicking_foot.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
+    - subtract: [$prev(2), $prev]
+      space: VirtualLab
+
 # Peak velocities of:
 # Foot velocity at ball impact
 # Thigh, shank and foot velocity during backswing and follow through
@@ -194,14 +201,23 @@
 - parameter: Kicking_hip_ang_vel
   steps:
     - angularVelocity: [Hips_model, Kicking_thigh, Hips_model, Kicking_thigh]
+    - lowpass:
+      cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Kicking_knee_ang_vel
   steps:
     - angularVelocity: [Kicking_thigh, Kicking_shank, Kicking_thigh, Kicking_shank]
+    - lowpass:
+      cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Kicking_ankle_ang_vel
   steps:
     - angularVelocity: [Kicking_shank, Kicking_foot, Kicking_shank, Kicking_foot]
+    - lowpass:
+      cutoff: KinematicsLowpassCutoffFq
+      extrapolate: KinematicsLowpassExtrapolate
 
 - parameter: Kicking_hip_ang_vel_max
   steps:
