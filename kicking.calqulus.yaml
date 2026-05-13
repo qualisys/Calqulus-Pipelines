@@ -80,7 +80,6 @@
 - template: /templates/timeseries.calqulus.yaml
 
 # Segment velocities
-# -Foot velocity at ball impact → most critical determinant of ball speed
 # Find kicking foot based on velocity magnitude and use it to determine which leg is kicking and which is support leg. This will allow us to create unified event names for web and to calculate other parameters such as hip and knee angular velocities for the kicking leg.
 - parameter: Right_foot_vel
   steps:
@@ -146,10 +145,9 @@
       else: Left Ankle Angles
 
 # Peak velocities of:
-# -Thigh
-# -Shank 
-# -Foot
-# Use thigh, shank and foot vel to create kinematic sequence graph
+# Foot velocity at ball impact
+# Thigh, shank and foot velocity during backswing and follow through
+# TO DO: Use thigh, shank and foot vel to create kinematic sequence graph
 - parameter: Kicking_foot_vel
   steps:
     - if: Right_foot_vel_max > Left_foot_vel_max
@@ -191,7 +189,7 @@
 # Joint angular velocities
 # -Hip flexion velocity
 # -Knee extension velocity
-# -Ankle plantarflexion velocity just before impact
+# -Ankle plantarflexion velocity
 
 - parameter: Kicking_hip_ang_vel
   steps:
@@ -205,13 +203,48 @@
   steps:
     - angularVelocity: [Kicking_shank, Kicking_foot, Kicking_shank, Kicking_foot]
 
+- parameter: Kicking_hip_ang_vel_max
+  steps:
+    - eventMask: [Kicking_hip_ang_vel, Backswing, FollowThrough]
+    - max:
+
+- parameter: Kicking_knee_ang_vel_max
+  steps:
+    - eventMask: [Kicking_knee_ang_vel, Backswing, FollowThrough]
+    - max:
+
+- parameter: Kicking_ankle_ang_vel_max
+  steps:
+    - eventMask: [Kicking_ankle_ang_vel, Backswing, FollowThrough]
+    - max:
+
 # Joint angles
 # -Hip angle at backswing and impact
 # -Knee flexion at backswing, rapid extension before impact
 # -Ankle angle
 
+- parameter: Kicking_hip_angles@Backswing
+  steps:
+    - import: Kicking_hip_angles@Backswing
+
+- parameter: Kicking_hip_angles@Impact
+  steps:
+    - import: Kicking_hip_angles@Impact
+
+- parameter: Kicking_knee_angles@Backswing
+  steps:
+    - import: Kicking_knee_angles@Backswing
+
+- parameter: Kicking_knee_angles@Impact
+  steps:
+    - import: Kicking_knee_angles@Impact
+
+- parameter: Kicking_ankle_angles@Impact
+  steps:
+    - import: Kicking_ankle_angles@Impact
+
 # Range of motion
-# calculate ROM for hip, knee and ankle between these events.
+# Calculate ROM for hip, knee and ankle between Backswing and FollowThrough events.
 
 - parameter: Kicking_hip_ROM
   steps:
