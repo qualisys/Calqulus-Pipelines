@@ -137,6 +137,12 @@
       then: Right Knee Angles
       else: Left Knee Angles
 
+- parameter: Support_knee_angles
+  steps:
+    - if: Right_foot_vel_max > Left_foot_vel_max
+      then: Left Knee Angles
+      else: Right Knee Angles
+
 - parameter: Kicking_ankle_angles
   steps:
     - if: Right_foot_vel_max > Left_foot_vel_max
