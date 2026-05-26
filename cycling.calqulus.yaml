@@ -7,13 +7,13 @@
   where:
     name: ^(Cycling|Static)*
   alignWithSegment:
-    segment: Hips
+    segment: Hips_model
 
 - parameter: seatTubeMoved
   where:
     name: Cycling*
   steps:
-    - import: Hips
+    - import: Hips_model
     - median:
     - convert:
       from: mm
@@ -458,7 +458,7 @@
   where:
     name: Cycling*
   steps:
-    - vector: [LeftToeBase.x,LeftToeBase.y,LeftToeBase.z]
+    - vector: [LeftToeBase_model.x,LeftToeBase_model.y,LeftToeBase_model.z]
       output: fottDistEnd
 
     - if: exists(L_crank)
@@ -477,7 +477,7 @@
   where:
     name: Cycling*
   steps:
-    - vector: [RightToeBase.x,RightToeBase.y,RightToeBase.z]
+    - vector: [LeftToeBase_model.x,LeftToeBase_model.y,LeftToeBase_model.z]
       output: fottDistEnd
 
     - if: exists(R_crank)
@@ -655,7 +655,7 @@
     name: Cycling*
   steps:
     - mean: Left_Crank_Vlab
-    - vector: [LeftToeBase.x,LeftToeBase.y,LeftToeBase.z]
+    - vector: [LeftToeBase_model.x,LeftToeBase_model.y,LeftToeBase_model.z]
     - distance: [$prev, $prev(2)]
     - mean:
 
@@ -921,7 +921,7 @@
     name: Cycling*
   set: left
   steps:
-    - segment: LeftUpLeg => Left_Hip
+    - segment: LeftUpLeg_model => Left_Hip
       space: VirtualLab
       export: Left_Hip
     - eventMask: [Left_Hip.z, L_BDC, L_BDC]
@@ -942,7 +942,7 @@
     name: Cycling*
   set: right
   steps:
-    - segment: RightUpLeg => Right_Hip
+    - segment: RightUpLeg_model => Right_Hip
       space: VirtualLab
       export: Right_Hip
     - eventMask: [Right_Hip.z, R_BDC, R_BDC]
@@ -988,14 +988,14 @@
   where:
     name: Cycling*
   steps:
-    - jointAngle: [Hips, Spine2]
+    - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, 1, -1]]
 
 - parameter: Trunk Angles_wrt_LAB
   where:
     name: Cycling*
   steps:
-    - jointAngle: Spine2
+    - jointAngle: Spine2_model
       space: VirtualLab
     - multiply: [$prev, [-1, 1, 1]]
 
@@ -1006,7 +1006,7 @@
     name: Cycling*
   set: left
   steps:
-    - jointAngle: [Hips, Spine2]
+    - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Shoulder_Pelvis Angle
@@ -1014,13 +1014,13 @@
     name: Cycling*
   set: right
   steps:
-    - jointAngle: [Hips, Spine2]
+    - jointAngle: [Hips_model, Spine2_model]
 
 - parameter: Shoulders_wrt_VLab
   where:
     name: Cycling*
   steps:
-    - jointAngle: Neck
+    - jointAngle: Neck_model
       space: VirtualLab
 
 - template: /templates/timeseries.calqulus.yaml
@@ -1094,7 +1094,7 @@
     name: Cycling*
   set: left
   steps:
-    - segment: LeftHand => wrist
+    - segment: LeftHand_model => wrist
       space: VirtualLab
     - subtract: [wrist, Left_Hip]
     - convert:
@@ -1106,7 +1106,7 @@
     name: Cycling*
   set: right
   steps:
-    - segment: RightHand => wrist
+    - segment: RightHand_model => wrist
       space: VirtualLab
     - subtract: [wrist, Right_Hip]
     - convert:
@@ -1243,7 +1243,7 @@
   where:
     name: Cycling*
   steps:
-    - eventMask: [Hips, L_TDC, L_TDC]
+    - eventMask: [Hips_model, L_TDC, L_TDC]
       output: mask
     - min: mask.z => min
     - max: mask.z => max
@@ -1588,9 +1588,9 @@
     name: Cycling*
   set: left
   steps:
-    - segment: LeftLeg
+    - segment: LeftLeg_model
       output: leg
-    - vector: [Hips.x,Hips.y,Hips.z]
+    - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
       output: pelvis
     - mean:
     - subtract: [leg, pelvis]
@@ -1631,9 +1631,9 @@
     name: Cycling*
   set: left
   steps:
-    - segment: LeftLeg
+    - segment: LeftLeg_model
       output: leg
-    - vector: [Hips.x,Hips.y,Hips.z]
+    - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
       output: pelvis
     - subtract: [leg, pelvis]
       space: VirtualLab
@@ -1673,9 +1673,9 @@
     name: Cycling*
   set: right
   steps:
-    - segment: RightLeg
+    - segment: RightLeg_model
       output: leg
-    - vector: [Hips.x,Hips.y,Hips.z]
+    - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
     - mean:
       output: pelvis
     - subtract: [leg, pelvis]
@@ -1716,9 +1716,9 @@
     name: Cycling*
   set: right
   steps:
-    - segment: RightLeg
+    - segment: RightLeg_model
       output: leg
-    - vector: [Hips.x,Hips.y,Hips.z]
+    - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
       output: pelvis
     - subtract: [leg, pelvis]
       space: VirtualLab
@@ -1759,8 +1759,8 @@
     name: Cycling*
   set: left
   steps:
-    - segment: LeftLeg => knee
-    - segment: LeftToeBase => foot_tip
+    - segment: LeftLeg_model => knee
+    - segment: LeftToeBase_model => foot_tip
     - subtract: [knee, foot_tip]
       space: VirtualLab
     - convert:
@@ -1830,8 +1830,8 @@
     name: Cycling*
   set: right
   steps:
-    - segment: RightLeg => knee
-    - segment: RightToeBase => foot_tip
+    - segment: RightLeg_model => knee
+    - segment: LeftToeBase_model => foot_tip
     - subtract: [knee, foot_tip]
       space: VirtualLab
     - convert:
@@ -2493,7 +2493,7 @@
   where:
     name: Cycling*
   steps:
-    - distance: [LeftForeArm, RightForeArm]
+    - distance: [LeftForeArm_model, RightForeArm_model]
     - mean: 
     - convert: 
       from: mm
@@ -2535,7 +2535,7 @@
     name: Cycling*
   set: left
   steps:
-    - subtract: [LeftHand, LeftUpLeg]
+    - subtract: [LeftHand_model, LeftUpLeg_model]
       space: VirtualLab
     - mean:
     - convert:
@@ -2576,7 +2576,7 @@
   where:
     name: Cycling*
   steps:
-    - distance: [LeftHand, RightHand]
+    - distance: [LeftHand_model, RightHand_model]
     - mean:
     - convert:
       from: mm
@@ -2587,7 +2587,7 @@
     name: Cycling*
   set: right
   steps:
-    - subtract: [RightHand, RightUpLeg]
+    - subtract: [RightHand_model, RightUpLeg_model]
       space: VirtualLab
     - mean:
     - convert:
@@ -2623,7 +2623,7 @@
     name: Cycling*
   set: left
   steps:
-    - angle: [LeftArm, LeftForeArm, LeftHand]
+    - angle: [LeftArm_model, LeftForeArm_model, LeftHand_model]
     - mean:
     - convert:
       from: radians
@@ -2634,7 +2634,7 @@
     name: Cycling*
   set: right
   steps:
-    - angle: [RightArm, RightForeArm, RightHand]
+    - angle: [RightArm_model, RightForeArm_model, RightHand_model]
     - mean:
     - convert:
       from: radians
@@ -2646,7 +2646,7 @@
     name: Cycling*
   set: left
   steps:
-    - angle: [LeftForeArm, LeftHand, [0,0,0], [1,0,0]]
+    - angle: [LeftForeArm_model, LeftHand_model, [0,0,0], [1,0,0]]
       project: xz
     - mean:
     - convert:
@@ -2658,7 +2658,7 @@
     name: Cycling*
   set: right
   steps:
-    - angle: [RightForeArm, RightHand, [0,0,0], [1,0,0]]
+    - angle: [RightForeArm_model, RightHand_model, [0,0,0], [1,0,0]]
       project: xz
     - mean:
     - convert:
@@ -2671,9 +2671,9 @@
     name: Cycling*
   set: left
   steps:
-    - segment: LeftToeBase
+    - segment: LeftToeBase_model
       output: foot
-    - vector: [Hips.x,Hips.y,Hips.z]
+    - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
     - mean:
       output: pelvis
     - subtract: [foot, pelvis]
@@ -2700,7 +2700,7 @@
   steps:
     - segment: LeftFoot
       output: foot
-    - vector: [Hips.x,Hips.y,Hips.z]
+    - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
     - mean:
       output: pelvis
     - subtract: [foot, pelvis]
@@ -2714,9 +2714,9 @@
     name: Cycling*
   set: right
   steps:
-    - segment: RightToeBase
+    - segment: LeftToeBase_model
       output: foot
-    - vector: [Hips.x,Hips.y,Hips.z]
+    - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
     - mean:
       output: pelvis
     - subtract: [foot, pelvis]
@@ -2743,7 +2743,7 @@
   steps:
     - segment: RightFoot
       output: foot
-    - vector: [Hips.x,Hips.y,Hips.z]
+    - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
     - mean:
       output: pelvis
     - subtract: [foot, pelvis]
