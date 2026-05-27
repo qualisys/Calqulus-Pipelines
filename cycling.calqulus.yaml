@@ -1020,7 +1020,7 @@
   where:
     name: Cycling*
   steps:
-    - jointAngle: Neck_model
+    - jointAngle: Spine2_model
       space: VirtualLab
 
 - template: /templates/timeseries.calqulus.yaml
