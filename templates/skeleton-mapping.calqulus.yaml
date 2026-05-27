@@ -125,9 +125,3 @@
     - if: exists(Head)
       then: Head
       else: Cranium
-
-- segment: Neck_model
-  steps:
-    - if: exists(Neck)
-      then: Neck
-      else: Thorax
