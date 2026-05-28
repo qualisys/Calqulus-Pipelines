@@ -1201,7 +1201,8 @@
   where: 
     name: Pitching*
   steps:
-    - vector: [Spine1.x, Spine1.y, Spine1.z]
+    - add: [Hips_model, Spine2_model]
+    - divide: [$prev, 2]
     - convert:
       from: mm
       to: m
