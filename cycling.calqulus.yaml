@@ -1831,7 +1831,7 @@
   set: right
   steps:
     - segment: RightLeg_model => knee
-    - segment: LeftToeBase_model => foot_tip
+    - segment: RightToeBase_model => foot_tip
     - subtract: [knee, foot_tip]
       space: VirtualLab
     - convert:
@@ -2714,7 +2714,7 @@
     name: Cycling*
   set: right
   steps:
-    - segment: LeftToeBase_model
+    - segment: RightToeBase_model
       output: foot
     - vector: [Hips_model.x,Hips_model.y,Hips_model.z]
     - mean:
