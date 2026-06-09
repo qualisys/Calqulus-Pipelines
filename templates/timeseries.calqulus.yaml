@@ -309,6 +309,7 @@
   set: left
   steps:
     - angle: [LeftArm_model, LeftForeArm_model]
+      unwrap: true
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -318,6 +319,7 @@
   set: right
   steps:
     - angle: [RightArm_model, RightForeArm_model]
+      unwrap: true
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
