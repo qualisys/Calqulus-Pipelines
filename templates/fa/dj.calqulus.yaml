@@ -34,6 +34,18 @@
   steps:
     - eventDuration: [TouchDown,TakeOff]
 
+- parameter: Left_ContactTime_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - eventDuration: [TouchDown_L,TakeOff_L]
+
+- parameter: Right_ContactTime_DVJ_B
+  where:
+    name: DJ_B*
+  steps:
+    - eventDuration: [TouchDown_R,TakeOff_R]
+
 - parameter: ContactTime_DVJ_L
   where:
     name: DJ_L*

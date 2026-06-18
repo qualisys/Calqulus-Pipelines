@@ -352,6 +352,20 @@
 ## Metrics ##
 #############
 
+# Contact time - calculated as time between TouchDown and TakeOff
+
+- parameter: Left_ContactTime_LL_L
+  where:
+    name: LL_L*
+  steps:
+    - eventDuration: [TouchDown,TakeOff]
+
+- parameter: Right_ContactTime_LL_R
+  where:
+    name: LL_R*
+  steps:
+    - eventDuration: [TouchDown,TakeOff]
+
 # COM @TakeOff, max, min
 # We use Pelvis COM for now
 - parameter: COM_Z_TO_LL_L
