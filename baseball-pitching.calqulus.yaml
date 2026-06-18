@@ -26,7 +26,7 @@
 
 - parameter: VirtualLabOrigin
   steps:
-    - segment: RightToeBase
+    - segment: RightToeBase_model
     - multiply: [$prev, 0]
 
 - segment: VirtualLabSegment
@@ -103,6 +103,8 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: LON_force
       else: RON_force
+    - eventMask: [$prev, MaxKneeHeight, Release]
+    - import: $prev@1
 
 - event: Footstrike
   where: 
@@ -224,6 +226,24 @@
     - max: $prev.z
       frames: true
 
+- event: MaxShoulderVel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Ang_Vel
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.z
+      frames: true
+
+- event: MaxElbowVel
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Elbow_Ang_Vel
+    - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.y
+      frames: true
+
 - event: MaxHumerusVel
   where: 
     name: Pitching*
@@ -318,7 +338,7 @@
   where: 
     name: Pitching*
   steps:
-    - velocity: LeftHand
+    - velocity: LeftHand_model
     - magnitude:
     - max:
 
@@ -326,7 +346,7 @@
   where: 
     name: Pitching*
   steps:
-    - velocity: RightHand
+    - velocity: RightHand_model
     - magnitude:
     - max:
 
@@ -336,16 +356,16 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightShoulder
-      else: LeftShoulder
+      then: RightShoulder_model
+      else: LeftShoulder_model
 
 - parameter: PitchingArm
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightArm
-      else: LeftArm
+      then: RightArm_model
+      else: LeftArm_model
 
 - parameter: PitchingForearm
   where: 
@@ -360,24 +380,24 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightHand
-      else: LeftHand
+      then: RightHand_model
+      else: LeftHand_model
 
 - parameter: GloveShoulder
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LeftShoulder
-      else: RightShoulder
+      then: LeftShoulder_model
+      else: RightShoulder_model
 
 - parameter: GloveArm
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LeftArm
-      else: RightArm
+      then: LeftArm_model
+      else: RightArm_model
 
 - parameter: GloveForearm
   where: 
@@ -392,73 +412,73 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LeftUpLeg
-      else: RightUpLeg
+      then: LeftUpLeg_model
+      else: RightUpLeg_model
 
 - parameter: LeadShank
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LeftLeg
-      else: RightLeg
+      then: LeftLeg_model
+      else: RightLeg_model
 
 - parameter: LeadFoot
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LeftFoot
-      else: RightFoot
+      then: LeftFoot_model
+      else: RightFoot_model
 
 - parameter: BackThigh
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightUpLeg
-      else: LeftUpLeg
+      then: RightUpLeg_model
+      else: LeftUpLeg_model
 
 - parameter: BackShank
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightLeg
-      else: LeftLeg
+      then: RightLeg_model
+      else: LeftLeg_model
 
 - parameter: BackFoot
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightFoot
-      else: LeftFoot
+      then: RightFoot_model
+      else: LeftFoot_model
 
 - parameter: BackToeBase
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightToeBase
-      else: LeftToeBase
+      then: RightToeBase_model
+      else: LeftToeBase_model
 
-- parameter: LeftForefoot
+- parameter: LForefoot
   where: 
     name: Pitching*
   steps:
     - if: exists(LForefoot2)
       then: LForefoot2
-      else: LeftToeBase
+      else: LeftToeBase_model
     - vector: [$prev.x, $prev.y, $prev.z]
       
-- parameter: RightForefoot
+- parameter: RForefoot
   where: 
     name: Pitching*
   steps:
     - if: exists(RForefoot2)
       then: RForefoot2
-      else: RightToeBase
+      else: RightToeBase_model
     - vector: [$prev.x, $prev.y, $prev.z]
       
 - parameter: LeadForefoot2
@@ -466,16 +486,16 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: LeftForefoot
-      else: RightForefoot
+      then: LForefoot
+      else: RForefoot
 
 - parameter: BackForefoot2
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightToeBase
-      else: LeftToeBase
+      then: RightToeBase_model
+      else: LeftToeBase_model
 
 - parameter: LeftHeelBack
   where: 
@@ -690,12 +710,13 @@
   steps:
     - negate: Pitching_Elbow_Ang_Vel.y 
 
+
 # Pitching Shoulder angle
 - parameter: Pitching_Shoulder_Angle
   where: 
     name: Pitching*
   steps:
-    - angle: [Spine2, PitchingArm]
+    - angle: [Spine2_model, PitchingArm]
       rotationOrder: ZYZ
       unwrap: true
     - multiply: [$prev, Pitching_Shoulder_Convention]
@@ -704,7 +725,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Spine2, PitchingArm]
+    - angle: [Spine2_model, PitchingArm]
     - multiply: [$prev, Pitching_Shoulder_Convention]
 
 # Pitching Shoulder angular velocity
@@ -712,13 +733,20 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [PitchingShoulder, PitchingArm, Spine2, PitchingArm]
+    - angularVelocity: [PitchingShoulder, PitchingArm, Spine2_model, PitchingArm]
       useRotationOrder: true
       rotationOrder: ZYZ
     - lowpass:
       cutoff: 24
       extrapolate: 5
     - multiply: [$prev, Pitching_Shoulder_Convention]
+
+- parameter: Pitching_Shoulder_Ang_Vel_plot_neg
+  where: 
+    name: Pitching*
+  steps:
+    - import: Pitching_Shoulder_Ang_Vel.z
+    - negate:
 
 - parameter: Pitching_Shoulder_Ang_Vel_plot_neg # to make peaks positive
   where: 
@@ -738,7 +766,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Spine2, GloveArm]
+    - angle: [Spine2_model, GloveArm]
       rotationOrder: ZYZ
     - multiply: [$prev, Glove_Shoulder_Convention]
 
@@ -746,7 +774,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Spine2, GloveArm]
+    - angle: [Spine2_model, GloveArm]
       rotationOrder: XYZ
     - multiply: [$prev, Glove_Shoulder_Convention]
 
@@ -763,7 +791,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [GloveShoulder, GloveArm, Spine2, GloveArm]
+    - angularVelocity: [GloveShoulder, GloveArm, Spine2_model, GloveArm]
       useRotationOrder: true
       rotationOrder: ZYZ
     - lowpass:
@@ -776,7 +804,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Hips, LeadThigh]
+    - angle: [Hips_model, LeadThigh]
     - multiply: [$prev, Hip_Convention]
 
 # Lead Hip Ang Vel
@@ -784,7 +812,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Hips, LeadThigh, Hips, LeadThigh]
+    - angularVelocity: [Hips_model, LeadThigh, Hips_model, LeadThigh]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -833,7 +861,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Hips, BackThigh]
+    - angle: [Hips_model, BackThigh]
     - multiply: [$prev, Hip_Convention]
 
 # Back Hip Ang Vel
@@ -841,7 +869,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Hips, BackThigh, Hips, BackThigh]
+    - angularVelocity: [Hips_model, BackThigh, Hips_model, BackThigh]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -890,7 +918,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Hips, Spine2]
+    - angle: [Hips_model, Spine2_model]
     - multiply: [$prev, Trunk_wrt_Pelvis_Convention]
 
 # Trunk angle
@@ -898,7 +926,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Spine2]
+    - angle: [Spine2_model]
       space: VirtualLab
     - multiply: [$prev, Trunk_Convention]
 
@@ -907,7 +935,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLabSegment, Spine2, VirtualLabSegment, Spine2]
+    - angularVelocity: [VirtualLabSegment, Spine2_model, VirtualLabSegment, Spine2_model]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -918,7 +946,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Hips]
+    - angle: [Hips_model]
       space: VirtualLab
     - multiply: [$prev, Pelvis_Convention]
 
@@ -927,7 +955,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLabSegment, Hips, VirtualLabSegment, Hips]
+    - angularVelocity: [VirtualLabSegment, Hips_model, VirtualLabSegment, Hips_model]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -958,7 +986,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [Hips, Spine2]
+    - angle: [Hips_model, Spine2_model]
       rotationOrder: ZYX
     - multiply: [$prev, Hip_Shoulder_Sep_Convention]
 
@@ -966,7 +994,7 @@
   where: 
     name: Pitching*
   steps:
-    - convert: Spine2
+    - convert: Spine2_model
       from: mm
       to: m
       space: VirtualLab
@@ -988,7 +1016,7 @@
   where: 
     name: Pitching*
   steps:
-    - convert: Hips
+    - convert: Hips_model
       from: mm
       to: m
       space: VirtualLab
@@ -1019,7 +1047,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: Head
+    - angle: Head_model
       space: VirtualLab
     - multiply: [$prev, Head_Convention]
  
@@ -1027,7 +1055,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLabSegment, Head, VirtualLabSegment, Head]
+    - angularVelocity: [VirtualLabSegment, Head_model, VirtualLabSegment, Head_model]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -1110,7 +1138,7 @@
   where: 
     name: Pitching*
   steps:
-    - vector: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - convert:
       from: mm
       to: m
@@ -1121,7 +1149,7 @@
   where: 
     name: Pitching*
   steps:
-    - vector: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - convert:
       from: mm
       to: m
@@ -1159,7 +1187,7 @@
   steps:
     - import: LeftHeelBack@Lead_Comm
       output: heel
-    - import: LeftForefoot@Lead_Comm
+    - import: LForefoot@Lead_Comm
       output: toe
     - concatenate: [heel, toe]
       output: foot
@@ -1176,7 +1204,7 @@
   steps:
     - import: RightHeelBack@Lead_Comm
       output: heel
-    - import: RightForefoot@Lead_Comm
+    - import: RForefoot@Lead_Comm
       output: toe
     - concatenate: [heel, toe]
       output: foot
@@ -1190,7 +1218,7 @@
   where: 
     name: Pitching*
   steps:
-    - vector: [Hips.x, Hips.y, Hips.z]
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - convert:
       from: mm
       to: m
@@ -1201,7 +1229,8 @@
   where: 
     name: Pitching*
   steps:
-    - vector: [Spine1.x, Spine1.y, Spine1.z]
+    - add: [Hips_model, Spine2_model]
+    - divide: [$prev, 2]
     - convert:
       from: mm
       to: m
@@ -1274,8 +1303,8 @@
 #     force: both
 #   steps:
 #     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-#       then: LeftArm.mz
-#       else: RightArm.mz
+#       then: LeftArm_model.mz
+#       else: RightArm_model.mz
 #     - divide: [$prev, $field(Weight; measurement; numeric)]
 
 # Horizontal
@@ -1301,7 +1330,7 @@
     force: left
   steps:
     - import: LeftFootContact.x
-    - subtract: [$prev, Hips.x]
+    - subtract: [$prev, Hips_model.x]
     - convert:
       from: mm
       to: m
@@ -1319,7 +1348,7 @@
     force: left
   steps:
     - import: LeftFootContact.y
-    - subtract: [$prev, Hips.y]
+    - subtract: [$prev, Hips_model.y]
     - convert:
       from: mm
       to: m
@@ -1337,7 +1366,7 @@
     force: right
   steps:
     - import: RightFootContact.x
-    - subtract: [$prev, Hips.x]
+    - subtract: [$prev, Hips_model.x]
     - convert:
       from: mm
       to: m
@@ -1355,7 +1384,7 @@
     force: right
   steps:
     - import: RightFootContact.y
-    - subtract: [$prev, Hips.y]
+    - subtract: [$prev, Hips_model.y]
     - convert:
       from: mm
       to: m
@@ -1414,14 +1443,14 @@
     name: Pitching*
     force: left
   steps:
-    - multiply: [LeftFootContact.fx, Hips.z]
+    - multiply: [LeftFootContact.fx, Hips_model.z]
     - multiply: [$prev, 100]
     - convert:
       from: mm
       to: m
       output: Left H Force Cont
 
-    - subtract: [LeftFootContact.x, Hips.x]
+    - subtract: [LeftFootContact.x, Hips_model.x]
     - convert:
       from: mm
       to: m
@@ -1438,14 +1467,14 @@
     name: Pitching*
     force: right
   steps:
-    - multiply: [RightFootContact.fx, Hips.z]
+    - multiply: [RightFootContact.fx, Hips_model.z]
     - multiply: [$prev, 100]
     - convert:
       from: mm
       to: m
       output: Right H Force Cont
 
-    - subtract: [RightFootContact.x, Hips.x]
+    - subtract: [RightFootContact.x, Hips_model.x]
     - convert:
       from: mm
       to: m
@@ -1885,6 +1914,18 @@
   steps:
     - max: Thorax_Ang_Vel.z
 
+- parameter: Pitching_Shoulder_Ang_Vel_max
+  where:
+    name: Pitching*
+  steps:
+    - max: Pitching_Shoulder_Ang_Vel.z
+
+- parameter: Pitching_Elbow_Ang_Vel_max
+  where:
+    name: Pitching*
+  steps:
+    - max: Pitching_Elbow_Ang_Vel.y
+
 - parameter: Pitching_Humerus_Ang_Vel_max
   where:
     name: Pitching*
@@ -1972,6 +2013,18 @@
   steps:
     - eventDuration: [SETUP, MaxThoraxVel]
 
+- parameter: MaxShoulderVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxShoulderVel]
+    
+- parameter: MaxElbowVelTime
+  where:
+    name: Pitching*
+  steps:
+    - eventDuration: [SETUP, MaxElbowVel]
+    
 - parameter: MaxHumerusVelTime
   where:
     name: Pitching*
@@ -2044,7 +2097,7 @@
   where:
     name: Pitching*
   steps:
-    - distance: [LeftArm, LeftForearm]
+    - distance: [LeftArm_model, LeftForearm]
     - convert:
       from: mm
       to: m
@@ -2053,7 +2106,7 @@
   where:
     name: Pitching*
   steps:
-    - distance: [RightArm, RightForearm]
+    - distance: [RightArm_model, RightForearm]
     - convert:
       from: mm
       to: m
@@ -2062,7 +2115,7 @@
   where:
     name: Pitching*
   steps:
-    - distance: [LeftUpLeg, LeftLeg]
+    - distance: [LeftUpLeg_model, LeftLeg_model]
     - convert:
       from: mm
       to: m
@@ -2071,7 +2124,7 @@
   where:
     name: Pitching*
   steps:
-    - distance: [RightUpLeg, RightLeg]
+    - distance: [RightUpLeg_model, RightLeg_model]
     - convert:
       from: mm
       to: m
@@ -2331,6 +2384,30 @@
     name: Pitching*
   steps:
     - import: Back_Knee_Angle@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Back_Knee_Ang_Vel@Footstrike
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Ang_Vel@Footstrike
+
+- parameter: Back_Knee_Ang_Vel@Max_Shoulder_Rot
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Ang_Vel@Max_Shoulder_Rot
+
+- parameter: Back_Knee_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Ang_Vel@Max_Shoulder_Int_Rot_FollowThru
+
+- parameter: Back_Knee_Ang_Vel@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Ang_Vel@Release
 
 - parameter: Back_Ankle_Angle@Setup
   where:

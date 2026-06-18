@@ -195,7 +195,7 @@
   where: 
     name: Bowling*
   steps:
-    - vector: [LeftToeBase.x, LeftToeBase.y, LeftToeBase.z]
+    - vector: [LeftToeBase_model.x, LeftToeBase_model.y, LeftToeBase_model.z]
       output: foot
     - if: "!empty(LForefoot2.x)"
       then: LForefoot2
@@ -206,7 +206,7 @@
   where: 
     name: Bowling*
   steps:
-    - vector: [RightToeBase.x, RightToeBase.y, RightToeBase.z]
+    - vector: [RightToeBase_model.x, RightToeBase_model.y, RightToeBase_model.z]
       output: foot
     - if: "!empty(RForefoot2.x)"
       then: RForefoot2
@@ -217,13 +217,13 @@
   where: 
     name: Bowling*
   steps:
-    - import: RightHand.z@Release
+    - import: RightHand_model.z@Release
 
 - parameter: Left_Hand@Release
   where: 
     name: Bowling*
   steps:
-    - import: LeftHand.z@Release
+    - import: LeftHand_model.z@Release
 
 # Define body side
 - parameter: Front_Forefoot2
@@ -255,32 +255,32 @@
     name: Bowling*
   steps:
     - if: Right_Hand\@Release > Left_Hand\@Release
-      then: RightUpLeg
-      else: LeftUpLeg
+      then: RightUpLeg_model
+      else: LeftUpLeg_model
 
 - parameter: FrontThigh
   where: 
     name: Bowling*
   steps:
     - if: Right_Hand\@Release > Left_Hand\@Release
-      then: LeftUpLeg
-      else: RightUpLeg
+      then: LeftUpLeg_model
+      else: RightUpLeg_model
 
 - parameter: BackShank
   where: 
     name: Bowling*
   steps:
     - if: Right_Hand\@Release > Left_Hand\@Release
-      then: RightLeg
-      else: LeftLeg
+      then: RightLeg_model
+      else: LeftLeg_model
 
 - parameter: FrontShank
   where: 
     name: Bowling*
   steps:
     - if: Right_Hand\@Release > Left_Hand\@Release
-      then: LeftLeg
-      else: RightLeg
+      then: LeftLeg_model
+      else: RightLeg_model
 
 - parameter: BackFoot
   where: 
@@ -303,24 +303,24 @@
     name: Bowling*
   steps:
     - if: Right_Hand\@Release > Left_Hand\@Release
-      then: RightArm
-      else: LeftArm
+      then: RightArm_model
+      else: LeftArm_model
 
-- parameter: BowlingForearm
+- parameter: BowlingForeArm
   where: 
     name: Bowling*
   steps:
     - if: Right_Hand\@Release > Left_Hand\@Release
-      then: RightForearm
-      else: LeftForearm
+      then: RightForeArm_model
+      else: LeftForeArm_model
 
 - parameter: BowlingHand
   where: 
     name: Bowling*
   steps:
     - if: Right_Hand\@Release > Left_Hand\@Release
-      then: RightHand
-      else: LeftHand
+      then: RightHand_model
+      else: LeftHand_model
 
 - parameter: Hip_Convention
   where: 
@@ -361,6 +361,14 @@
     - if: Right_Hand\@Release > Left_Hand\@Release
       then: [[1, 1, -1]]
       else: [[1, 1, 1]]
+
+- parameter: LeftLeg_model_VirtualLab_Convention
+  where: 
+    name: Bowling*
+  steps:
+    - if: Right_Hand\@Release > Left_Hand\@Release
+      then: [[-1, 1, -1]]
+      else: [[1, -1, 1]]
 
 - parameter: Hips_VirtualLab_Convention
   where: 
@@ -416,7 +424,7 @@
   where: 
     name: Bowling*
   steps:
-    - angle: [Hips, BackThigh]
+    - angle: [Hips_model, BackThigh]
     - multiply: [$prev, Hip_Convention]
 
 # Front hip angle
@@ -424,7 +432,7 @@
   where: 
     name: Bowling*
   steps:
-    - angle: [Hips, FrontThigh]
+    - angle: [Hips_model, FrontThigh]
     - multiply: [$prev, Hip_Convention]
 
 # Back knee angle
@@ -481,7 +489,7 @@
   where: 
     name: Bowling*
   steps:
-    - angle: [VirtualLabSegment, Hips]
+    - angle: [VirtualLabSegment, Hips_model]
       rotationOrder: ZYX
     - multiply: [$prev, Hips_VirtualLab_Convention]
 
@@ -491,7 +499,7 @@
   where: 
     name: Bowling*
   steps:
-    - angle: [VirtualLabSegment, Spine2]
+    - angle: [VirtualLabSegment, Spine2_model]
       rotationOrder: ZYX
     - multiply: [$prev, Spine2_VirtualLab_Convention]
 
@@ -500,7 +508,7 @@
   where: 
     name: Bowling*
   steps:
-    - angle: [Hips, Spine2]
+    - angle: [Hips_model, Spine2_model]
       rotationOrder: ZYX
     - multiply: [$prev, Hips_Shoulder_Convention]
 
@@ -509,7 +517,7 @@
   where: 
     name: Bowling*
   steps:
-    - angle: [Spine2, BowlingArm]
+    - angle: [Spine2_model, BowlingArm]
       unwrap: true
     - multiply: [$prev, Bowling_Shoulder_Convention]
 
@@ -518,7 +526,7 @@
   where: 
     name: Bowling*
   steps:
-    - angle: [BowlingArm, BowlingForearm]
+    - angle: [BowlingArm, BowlingForeArm]
     - multiply: [$prev, Bowling_Elbow_Convention]
 
 # Bowling Wrist angle
@@ -526,7 +534,7 @@
   where: 
     name: Bowling*
   steps:
-    - angle: [BowlingForearm, BowlingHand]
+    - angle: [BowlingForeArm, BowlingHand]
     - multiply: [$prev, Bowling_Wrist_Convention]
 
 ############
@@ -629,10 +637,10 @@
   where:
     name: Bowling*
   steps:
-    - import: Hips
+    - import: Hips_model
     - eventMask: [$prev.z, FrontFootPenultimateContact, BackFootContact]
     - max: $prev
-    - subtract: [$prev, Hips.z@BackFootContact]
+    - subtract: [$prev, Hips_model.z@BackFootContact]
     - convert:
       from: mm
       to: m
@@ -642,7 +650,7 @@
   where:
     name: Bowling*
   steps:
-    - import: Hips
+    - import: Hips_model
       space: VirtualLab
     - lowpass:
       order: 2
@@ -658,7 +666,7 @@
   where:
     name: Bowling*
   steps:
-    - import: Hips
+    - import: Hips_model
       space: VirtualLab
     - lowpass:
       order: 2

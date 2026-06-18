@@ -134,19 +134,37 @@
   set: left
   steps:
     - jointAngle: [LeftLeg_model, LeftFoot_model]
+      output: foot_vector
+    - jointAngle: [LeftLeg_model, LeftFoot_model_hindfoot]
+    - vector: [foot_vector.x, $prev.y, foot_vector.z]
+      output: hindfoot_vector
+
+    - if: exists(LeftHindfoot)
+      then: hindfoot_vector
+      else: foot_vector
+
     - multiply: [$prev, [1, -1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
-      extrapolate: KinematicsLowpassExtrapolate
+      extrapolate: KinematicsLowpassExtrapolate 
 
 - parameter: Right Ankle Angles
   set: right
   steps:
     - jointAngle: [RightLeg_model, RightFoot_model]
+      output: foot_vector
+    - jointAngle: [RightLeg_model, RightFoot_model_hindfoot]
+    - vector: [foot_vector.x, $prev.y, foot_vector.z]
+      output: hindfoot_vector
+
+    - if: exists(RightHindfoot)
+      then: hindfoot_vector
+      else: foot_vector
+
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
-      extrapolate: KinematicsLowpassExtrapolate
+      extrapolate: KinematicsLowpassExtrapolate 
 
 - parameter: Left Foot Progression
   set: left
@@ -233,7 +251,7 @@
 - parameter: Left Shoulder Girdle Angles
   set: left
   steps:
-    - angle: [Spine2, LeftShoulder]
+    - angle: [Spine2_model, LeftShoulder_model]
       unwrap: true
       rotationOrder: XYZ 
     - multiply: [$prev, [1, 1, -1]]
@@ -244,7 +262,7 @@
 - parameter: Right Shoulder Girdle Angles
   set: right
   steps:
-    - angle: [Spine2, RightShoulder]
+    - angle: [Spine2_model, RightShoulder_model]
       unwrap: true
       rotationOrder: XYZ
     - multiply: [$prev, [1, -1, 1]]
@@ -291,6 +309,7 @@
   set: left
   steps:
     - angle: [LeftArm_model, LeftForeArm_model]
+      unwrap: true
     - multiply: [$prev, [1, 1, -1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
@@ -300,6 +319,7 @@
   set: right
   steps:
     - angle: [RightArm_model, RightForeArm_model]
+      unwrap: true
     - multiply: [$prev, [1, 1, 1]]
     - lowpass:
       cutoff: KinematicsLowpassCutoffFq
