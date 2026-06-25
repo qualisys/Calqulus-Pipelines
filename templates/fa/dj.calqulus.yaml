@@ -287,6 +287,8 @@
     - max:
       output: hipMax
     - segment: Hips_model?name=Static* => hipsStatic
+    - vector: [hipsStatic.x, hipsStatic.y, hipsStatic.z]
+      output: hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -301,6 +303,8 @@
     - max:
       output: hipMax
     - segment: Hips_model?name=Static* => hipsStatic
+    - vector: [hipsStatic.x, hipsStatic.y, hipsStatic.z]
+      output: hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -315,6 +319,8 @@
     - max:
       output: hipMax
     - segment: Hips_model?name=Static* => hipsStatic
+    - vector: [hipsStatic.x, hipsStatic.y, hipsStatic.z]
+      output: hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev

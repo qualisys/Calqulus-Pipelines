@@ -210,7 +210,7 @@
 
 - parameter: Pelvis_vel_max
   steps:
-    - segment: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
     - velocity:
     - magnitude:
