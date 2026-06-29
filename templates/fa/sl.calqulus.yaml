@@ -607,7 +607,7 @@
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
 
-- parameter: Time_to_eccentric_peak_power
+- parameter: Left_time_to_eccentric_peak_power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -615,7 +615,7 @@
   steps:
     - eventDuration: [LeftPlotStart, Peak_eccentric_power]
     
-- parameter: Time_to_concentric_peak_power
+- parameter: Left_time_to_concentric_peak_power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -732,7 +732,7 @@
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
 
-- parameter: Time_to_eccentric_peak_power
+- parameter: Right_time_to_eccentric_peak_power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -740,7 +740,7 @@
   steps:
     - eventDuration: [RightPlotStart, Peak_eccentric_power]
     
-- parameter: Time_to_concentric_peak_power
+- parameter: Right_time_to_concentric_peak_power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
