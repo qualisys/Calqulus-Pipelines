@@ -1523,6 +1523,20 @@
   steps:
     - multiply: [Total GRF, PelvisCGPos_vel]
 
+- parameter: Time_to_eccentric_peak_power_CMJ_B
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - eventDuration: [PlotStart, Peak_eccentric_power]
+    
+- parameter: Time_to_concentric_peak_power_CMJ_B
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - eventDuration: [Eccentric_end, Peak_concentric_power]
+    
 - parameter: Total GRF_impulse_concentric_CMJ_B
   where:
     name: CMJ_B*
