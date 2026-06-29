@@ -697,3 +697,21 @@
   steps:
     - eventMask: [Right GRF, TouchDown, PlotEnd]
     - mean:
+
+# Time to stabilization
+- parameter: Time_to_stabilization
+  where:
+    name: ^(SLJ_|SLL_)L*
+    force: left
+  set: left
+  steps:
+    - eventDuration: [TouchDown, Stabilization_end]
+
+- parameter: Time_to_stabilization
+  where:
+    name: ^(SLJ_|SLL_)R*
+    force: right
+  set: right
+  steps:
+    - eventDuration: [TouchDown, Stabilization_end]
+

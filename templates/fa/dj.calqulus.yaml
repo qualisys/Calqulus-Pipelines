@@ -134,6 +134,14 @@
   steps:
     - divide: [FlightTime_DVJ_R,ConcentricTime_DVJ_R]
 
+# Time to stabilization
+- parameter: Time_to_stabilization_DVJ_B
+  where:
+    name: DJ_B*
+    force: both
+  steps:
+    - eventDuration: [Landing, Stabilization_end]
+
 # COM @TakeOff, max, min
 # We use Pelvis COM for now
 - parameter: COM_Z_TO_DVJ_B
