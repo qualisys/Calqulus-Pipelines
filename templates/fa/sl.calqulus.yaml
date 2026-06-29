@@ -598,6 +598,31 @@
     - eventMask: [Left GRF, TouchDown, PlotEnd]
     - mean:
 
+# Power
+- parameter: Left Power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Time_to_eccentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventDuration: [LeftPlotStart, Peak_eccentric_power]
+    
+- parameter: Time_to_concentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventDuration: [COM_MIN, Peak_concentric_power]
+
 # Right
 - parameter: Right Hip Moment_max_knee_flex
   where:
@@ -697,3 +722,30 @@
   steps:
     - eventMask: [Right GRF, TouchDown, PlotEnd]
     - mean:
+
+# Power
+- parameter: Right Power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Time_to_eccentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventDuration: [RightPlotStart, Peak_eccentric_power]
+    
+- parameter: Time_to_concentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventDuration: [COM_MIN, Peak_concentric_power]
+    
+
