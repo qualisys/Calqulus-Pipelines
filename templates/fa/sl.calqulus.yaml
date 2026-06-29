@@ -699,7 +699,7 @@
     - mean:
 
 # Time to stabilization
-- parameter: Time_to_stabilization
+- parameter: Left_time_to_stabilization
   where:
     name: ^(SLJ_|SLL_)L*
     force: left
@@ -707,7 +707,7 @@
   steps:
     - eventDuration: [TouchDown, Stabilization_end]
 
-- parameter: Time_to_stabilization
+- parameter: Right_time_to_stabilization
   where:
     name: ^(SLJ_|SLL_)R*
     force: right
