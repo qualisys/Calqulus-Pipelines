@@ -606,34 +606,15 @@
   where:
     name: DJ_B*
   steps:
-    - divide: [FlightTime_DVJ_B, ContactTime_DVJ_B]
+    - divide: [COM_displacement_MEAN_max_DVJ_B, ContactTime_DVJ_B]
 
 - parameter: Reactive_strength_index_DVJ_L
   where:
     name: DJ_L*
   steps:
-    - divide: [FlightTime_DVJ_L, ContactTime_DVJ_L]
-
-- parameter: Reactive_strength_index_DVJ_R
-  where:
-    name: DJ_R*
-  steps:
-    - divide: [FlightTime_DVJ_R, ContactTime_DVJ_R]
-
-# Modified reactive strength index
-- parameter: Reactive_strength_index_modified_DVJ_B
-  where:
-    name: DJ_B*
-  steps:
-    - divide: [COM_displacement_MEAN_max_DVJ_B, ContactTime_DVJ_B]
-
-- parameter: Reactive_strength_index_modified_DVJ_L
-  where:
-    name: DJ_L*
-  steps:
     - divide: [COM_displacement_MEAN_max_DVJ_L, ContactTime_DVJ_L]
 
-- parameter: Reactive_strength_index_modified_DVJ_R
+- parameter: Reactive_strength_index_DVJ_R
   where:
     name: DJ_R*
   steps:
