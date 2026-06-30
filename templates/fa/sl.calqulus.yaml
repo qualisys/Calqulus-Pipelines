@@ -625,6 +625,22 @@
       keep: -1
     - max:
 
+- parameter: Left_time_to_eccentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventDuration: [LeftPlotStart, Peak_eccentric_power]
+    
+- parameter: Left_time_to_concentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  set: left
+  steps:
+    - eventDuration: [COM_MIN, Peak_concentric_power]
+
 
 # Right
 - parameter: Right Hip Moment_max_knee_flex
@@ -750,4 +766,21 @@
     - eventMask: [Right_RPD, TakeOff, TouchDown]
       keep: -1
     - max:
+
+- parameter: Right_time_to_eccentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventDuration: [RightPlotStart, Peak_eccentric_power]
+    
+- parameter: Right_time_to_concentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  set: right
+  steps:
+    - eventDuration: [COM_MIN, Peak_concentric_power]
+    
 

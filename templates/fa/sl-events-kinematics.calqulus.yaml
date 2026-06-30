@@ -180,6 +180,42 @@
     - min:
       frames: true
 
+- event: Peak_eccentric_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - eventMask: [Left Power.z, LeftPlotStart, COM_MIN]
+    - min:
+      frames: true
+
+- event: Peak_concentric_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - eventMask: [Left Power.z, COM_MIN, PlotEnd]
+    - max:
+      frames: true
+
+- event: Peak_eccentric_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - eventMask: [Right Power.z, RightPlotStart, COM_MIN]
+    - min:
+      frames: true
+
+- event: Peak_concentric_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - eventMask: [Right Power.z, COM_MIN, PlotEnd]
+    - max:
+      frames: true
+
 # Unified event names for web
 - event: LeftPlotStart
   where:

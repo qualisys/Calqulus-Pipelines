@@ -250,6 +250,24 @@
       then: EccentricEnd_ML
       else: Eccentric_end_calqulus
 
+- event: Peak_eccentric_power
+  where:
+    name: CMJ_B*
+    force: both
+  steps:
+    - eventMask: [Total Power.z, PlotStart, Eccentric_end]
+    - min:
+      frames: true
+
+- event: Peak_concentric_power
+  where:
+    name: CMJ_B*
+    force: both
+  steps:
+    - eventMask: [Total Power.z, Eccentric_end, TakeOff]
+    - max:
+      frames: true
+
 # Bilateral and right
 - event: temp_R_max
   where:
