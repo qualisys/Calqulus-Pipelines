@@ -743,6 +743,23 @@
     - mean:
 
 # Rate of power development (RPD)
+# Time to stabilization
+- parameter: Left_time_to_stabilization
+  where:
+    name: ^(SLJ_|SLL_)L*
+    force: left
+  set: left
+  steps:
+    - eventDuration: [TouchDown, Stabilization_end]
+
+- parameter: Right_time_to_stabilization
+  where:
+    name: ^(SLJ_|SLL_)R*
+    force: right
+  set: right
+  steps:
+    - eventDuration: [TouchDown, Stabilization_end]
+
 - parameter: Right Power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*

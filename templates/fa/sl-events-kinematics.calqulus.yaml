@@ -215,6 +215,134 @@
     - eventMask: [Right Power.z, COM_MIN, PlotEnd]
     - max:
       frames: true
+      
+# Time to stabilization
+# time from TouchDown to 2 seconds within 5% of BW in seconds
+# Left
+- event: Stabilization_last_peak_above_5pct
+  where:
+    name: ^(SLJ_L|SLL_L)*
+    force: left
+  steps:
+    - peakFinder: Left GRF.z
+      height: 1.05
+    - eventMask: [$prev, TouchDown, EOF]
+      keep: -1
+
+- event: Stabilization_last_peak_below_5pct
+  where:
+    name: ^(SLJ_L|SLL_L)*
+    force: left
+  steps:
+    - negate: Left GRF.z
+    - peakFinder: $prev
+      height: -0.95
+    - eventMask: [$prev, TouchDown, EOF]
+      keep: -1
+
+- event: Stabilization_end
+  where:
+    name: ^(SLJ_L|SLL_L)*
+    force: left
+  steps:
+    - threshold: Left GRF.z
+      value: 0.95
+      direction: up
+    - eventMask: [$prev, Stabilization_last_peak_below_5pct, EOF]
+      output: going_up
+    - threshold: Left GRF.z
+      value: 1.05
+      direction: down
+    - eventMask: [$prev, Stabilization_last_peak_above_5pct, EOF]
+      output: going_gown
+
+    - if: Stabilization_last_peak_below_5pct > Stabilization_last_peak_above_5pct
+      then: going_up
+      else: going_gown
+
+# Right
+- event: Stabilization_last_peak_above_5pct
+  where:
+    name: ^(SLJ_R|SLL_R)*
+    force: right
+  steps:
+    - peakFinder: Right GRF.z
+      height: 1.05
+    - eventMask: [$prev, TouchDown, EOF]
+      keep: -1
+
+- event: Stabilization_last_peak_below_5pct
+  where:
+    name: ^(SLJ_R|SLL_R)*
+    force: right
+  steps:
+    - negate: Right GRF.z
+    - peakFinder: $prev
+      height: -0.95
+    - eventMask: [$prev, TouchDown, EOF]
+      keep: -1
+
+- event: Stabilization_end
+  where:
+    name: ^(SLJ_R|SLL_R)*
+    force: right
+  steps:
+    - threshold: Right GRF.z
+      value: 0.95
+      direction: up
+    - eventMask: [$prev, Stabilization_last_peak_below_5pct, EOF]
+      output: going_up
+    - threshold: Right GRF.z
+      value: 1.05
+      direction: down
+    - eventMask: [$prev, Stabilization_last_peak_above_5pct, EOF]
+      output: going_gown
+
+    - if: Stabilization_last_peak_below_5pct > Stabilization_last_peak_above_5pct
+      then: going_up
+      else: going_gown
+
+# Right
+- event: Stabilization_last_peak_above_5pct
+  where:
+    name: ^(SLJ_R|SLL_R)*
+    force: right
+  steps:
+    - peakFinder: Right GRF.z
+      height: 1.05
+    - eventMask: [$prev, TouchDown, EOF]
+      keep: -1
+
+- event: Stabilization_last_peak_below_5pct
+  where:
+    name: ^(SLJ_R|SLL_R)*
+    force: right
+  steps:
+    - negate: Right GRF.z
+    - peakFinder: $prev
+      height: -0.95
+    - eventMask: [$prev, TouchDown, EOF]
+      keep: -1
+
+- event: Stabilization_end
+  where:
+    name: ^(SLJ_R|SLL_R)*
+    force: right
+  steps:
+    - threshold: Right GRF.z
+      value: 0.95
+      direction: up
+    - eventMask: [$prev, Stabilization_last_peak_below_5pct, EOF]
+      output: going_up
+    - threshold: Right GRF.z
+      value: 1.05
+      direction: down
+    - eventMask: [$prev, Stabilization_last_peak_above_5pct, EOF]
+      output: going_gown
+
+    - if: Stabilization_last_peak_below_5pct > Stabilization_last_peak_above_5pct
+      then: going_up
+      else: going_gown
 
 # Unified event names for web
 - event: LeftPlotStart
