@@ -85,6 +85,42 @@
   steps:
     - eventDuration: [Eccentric_end,TakeOff]
 
+# Time to TakeOff
+- parameter: TimeToTakeOff_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - eventDuration: [PlotStart,TakeOff]
+- parameter: TimeToTakeOff_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - eventDuration: [PlotStart,TakeOff]
+- parameter: TimeToTakeOff_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - eventDuration: [PlotStart,TakeOff]
+
+# Modified reactive strength index
+- parameter: Reactive_strength_index_modified_CMJ_B
+  where:
+    name: CMJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_B, TimeToTakeOff_CMJ_B]
+
+- parameter: Reactive_strength_index_modified_CMJ_L
+  where:
+    name: CMJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_L, TimeToTakeOff_CMJ_L]
+
+- parameter: Reactive_strength_index_modified_CMJ_R
+  where:
+    name: CMJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_R, TimeToTakeOff_CMJ_R]
+
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_CMJ_B
   where:
