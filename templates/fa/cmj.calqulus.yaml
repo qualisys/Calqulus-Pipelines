@@ -1433,6 +1433,14 @@
       then: $prev
       else: [[]]
 
+- parameter: Left_RPD
+  where:
+    name: CMJ_B*
+    force: left
+  steps:
+    - derivative: Left Power
+    - lowpass:
+
 - parameter: Left Power
   where:
     name: CMJ_L*
@@ -1440,6 +1448,14 @@
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
 
+- parameter: Left_RPD
+  where:
+    name: CMJ_L*
+    force: left
+  steps:
+    - derivative: Left Power
+    - lowpass:
+
 - parameter: Right_RFD
   where:
     name: CMJ_B*
@@ -1449,6 +1465,24 @@
     - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
+
+- parameter: Left_RPD_concentric_max_CMJ_B
+  where:
+    name: CMJ_B*
+    force: left
+  steps:
+    - eventMask: [Left_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
+
+- parameter: Left_RPD_concentric_max_CMJ_L
+  where:
+    name: CMJ_L*
+    force: left
+  steps:
+    - eventMask: [Left_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
 
 - parameter: Right_RFD
   where:
@@ -1467,12 +1501,46 @@
       then: $prev
       else: [[]]
 
+- parameter: Right_RPD
+  where:
+    name: CMJ_B*
+    force: right
+  steps:
+    - derivative: Right Power
+    - lowpass:
+
 - parameter: Right Power
   where:
     name: CMJ_R*
     force: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right_RPD
+  where:
+    name: CMJ_R*
+    force: right
+  steps:
+    - derivative: Right Power
+    - lowpass:
+
+- parameter: Right_RPD_concentric_max_CMJ_B
+  where:
+    name: CMJ_B*
+    force: right
+  steps:
+    - eventMask: [Right_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
+
+- parameter: Right_RPD_concentric_max_CMJ_R
+  where:
+    name: CMJ_R*
+    force: right
+  steps:
+    - eventMask: [Right_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
 
 # Total
 # find out which FP is loaded
@@ -1558,6 +1626,23 @@
     force: any
   steps:
     - multiply: [Total GRF, PelvisCGPos_vel]
+
+- parameter: Total_RPD
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - derivative: Total Power
+    - lowpass:
+
+- parameter: Total_RPD_concentric_max_CMJ_B
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - eventMask: [Total_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
 
 - parameter: Total GRF_impulse_concentric_CMJ_B
   where:

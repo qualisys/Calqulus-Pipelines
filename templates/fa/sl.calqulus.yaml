@@ -497,6 +497,8 @@
       export: RFT_DistEndPos@Max_knee_flex_landing
     - subtract: [$prev(2).y, $prev.y]
     - abs:
+
+  
 # Kinetics --------
 # Left
 - parameter: Left Hip Moment_max_knee_flex
@@ -598,6 +600,32 @@
     - eventMask: [Left GRF, TouchDown, PlotEnd]
     - mean:
 
+# Rate of power development (RPD)
+- parameter: Left Power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Left_RPD
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - derivative: Left Power
+    - lowpass:
+
+- parameter: Left_RPD_concentric_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - eventMask: [Left_RPD, TakeOff, TouchDown]
+      keep: -1
+    - max:
+
+
 # Right
 - parameter: Right Hip Moment_max_knee_flex
   where:
@@ -697,3 +725,29 @@
   steps:
     - eventMask: [Right GRF, TouchDown, PlotEnd]
     - mean:
+
+# Rate of power development (RPD)
+- parameter: Right Power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right_RPD
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - derivative: Right Power
+    - lowpass:
+
+- parameter: Right_RPD_concentric_max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - eventMask: [Right_RPD, TakeOff, TouchDown]
+      keep: -1
+    - max:
+
