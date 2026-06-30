@@ -16,7 +16,7 @@
 - parameter: LFT_DistEndAcc
   set: left
   steps:
-    - segment: LeftToeBase_model
+    - vector: [LeftToeBase_model.x, LeftToeBase_model.y, LeftToeBase_model.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -35,7 +35,7 @@
 - parameter: RFT_DistEndAcc
   set: right
   steps:
-    - segment: RightToeBase_model
+    - vector: [RightToeBase_model.x, RightToeBase_model.y, RightToeBase_model.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -360,10 +360,12 @@
 - parameter: Left_Knee_COM_distance
   set: left
   steps:
-    - segment: LeftLeg_model => knee
+    - vector: [LeftLeg_model.x, LeftLeg_model.y, LeftLeg_model.z]
       space: VirtualLab
-    - segment: Hips_model => pelvis
+      output: knee
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
+      output: pelvis
     - subtract: [pelvis, knee]
     - convert: 
       from: mm
@@ -372,10 +374,12 @@
 - parameter: Right_Knee_COM_distance
   set: right
   steps:
-    - segment: RightLeg_model => knee
+    - vector: [RightLeg_model.x, RightLeg_model.y, RightLeg_model.z]
       space: VirtualLab
-    - segment: Hips_model => pelvis
+      output: knee
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
+      output: pelvis
     - subtract: [pelvis, knee]
     - convert: 
       from: mm
@@ -385,10 +389,12 @@
 - parameter: Left_Ankle_COM_distance
   set: left
   steps:
-    - segment: LeftFoot_model => foot
+    - vector: [LeftFoot_model.x, LeftFoot_model.y, LeftFoot_model.z]
       space: VirtualLab
-    - segment: Hips_model => pelvis
+      output: foot
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
+      output: pelvis
     - subtract: [pelvis, foot]
     - convert: 
       from: mm
@@ -397,10 +403,12 @@
 - parameter: Right_Ankle_COM_distance
   set: right
   steps:
-    - segment: RightFoot_model => foot
+    - vector: [RightFoot_model.x, RightFoot_model.y, RightFoot_model.z]
       space: VirtualLab
-    - segment: Hips_model => pelvis
+      output: foot
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
+      output: pelvis
     - subtract: [pelvis, foot]
     - convert: 
       from: mm

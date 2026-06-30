@@ -21,7 +21,7 @@
 
 - parameter: PelvisCGPos_vel
   steps:
-    - segment: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
     - velocity:
     - convert: $prev
@@ -31,7 +31,7 @@
 - parameter: LFT_DistEndAcc
   set: left
   steps:
-    - segment: LeftToeBase_model
+    - vector: [LeftToeBase_model.x, LeftToeBase_model.y, LeftToeBase_model.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -50,7 +50,7 @@
 - parameter: RFT_DistEndAcc
   set: right
   steps:
-    - segment: RightToeBase_model
+    - vector: [RightToeBase_model.x, RightToeBase_model.y, RightToeBase_model.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -201,7 +201,7 @@
 
 - parameter: Pelvis_vel_max
   steps:
-    - segment: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
     - velocity:
     - magnitude:
