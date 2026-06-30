@@ -1984,6 +1984,15 @@
     - integral:
       scalar: true
 
+- parameter: Left Knee Moment_impulse_DVJ_L
+  where:
+    name: DJ_L*
+    force: left
+  steps:
+    - eventMask: [Left Knee Moment, TouchDown, TakeOff]
+    - integral:
+      scalar: true
+
 # Single leg - right
 - parameter: Right Hip Moment@COM_MIN_DVJ_R
   where:
@@ -2116,6 +2125,15 @@
     force: right
   steps:
     - eventMask: [Right GRF, RightPlotStart, Eccentric_end]
+    - integral:
+      scalar: true
+
+- parameter: Right Knee Moment_impulse_DVJ_R
+  where:
+    name: DJ_R*
+    force: right
+  steps:
+    - eventMask: [Right Knee Moment, TouchDown, TakeOff]
     - integral:
       scalar: true
 
