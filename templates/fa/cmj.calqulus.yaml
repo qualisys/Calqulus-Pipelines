@@ -1397,6 +1397,13 @@
       then: $prev
       else: [[]]
 
+- parameter: Left_RPD
+  where:
+    name: CMJ_B*
+    force: left
+  steps:
+    - derivative: Left Power
+
 - parameter: Left Power
   where:
     name: CMJ_L*
@@ -1404,6 +1411,13 @@
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
 
+- parameter: Left_RPD
+  where:
+    name: CMJ_L*
+    force: left
+  steps:
+    - derivative: Left Power
+
 - parameter: Right_RFD
   where:
     name: CMJ_B*
@@ -1431,12 +1445,26 @@
       then: $prev
       else: [[]]
 
+- parameter: Right_RPD
+  where:
+    name: CMJ_B*
+    force: right
+  steps:
+    - derivative: Right Power
+
 - parameter: Right Power
   where:
     name: CMJ_R*
     force: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right_RPD
+  where:
+    name: CMJ_R*
+    force: right
+  steps:
+    - derivative: Right Power
 
 # Total
 # find out which FP is loaded
@@ -1522,6 +1550,13 @@
     force: any
   steps:
     - multiply: [Total GRF, PelvisCGPos_vel]
+
+- parameter: Total_RPD
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - derivative: Total Power
 
 - parameter: Total GRF_impulse_concentric_CMJ_B
   where:
