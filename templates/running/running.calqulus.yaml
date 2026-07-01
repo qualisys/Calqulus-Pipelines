@@ -1341,6 +1341,21 @@
       truncate: true
     - max:
 
+# max during swing
+- parameter: Left Knee Angles_MAX_swing
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - eventMask: [Left Knee Angles, LTO, LFS]
+    - max:
+
+- parameter: Right Knee Angles_MAX_swing
+  where:
+    name: ^(Gait|Run|Walk)*
+  steps:
+    - eventMask: [Right Knee Angles, RTO, RFS]
+    - max:
+      
 # --- Ankle angles ---
 # max during stance
 - parameter: Left Ankle Angles_MAX_stance
