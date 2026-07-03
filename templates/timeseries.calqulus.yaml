@@ -72,6 +72,7 @@
   set: left
   steps:
     - jointAngle: Hips_model
+      rotationOrder: ZYX
       space: VirtualLab
     - multiply: [$prev, [-1, 1, -1]]
     - lowpass:
@@ -82,6 +83,7 @@
   set: right
   steps:
     - jointAngle: Hips_model
+      rotationOrder: ZYX
       space: VirtualLab
     - multiply: [$prev, [-1, -1, 1]]
     - lowpass:
