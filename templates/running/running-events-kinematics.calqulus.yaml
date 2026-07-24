@@ -245,8 +245,11 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
+    - divide: [$framerate, 6]
+      output: window
     - peakFinder: [LForefoot2_wrt_Pelvis.y]
       height: 0
+      distance: window
       output: temp1
 
     - multiply: [$framerate, 0.05]
@@ -264,8 +267,11 @@
   where:
     name: ^(Gait|Run|Walk)*
   steps:
+    - divide: [$framerate, 6]
+      output: window
     - peakFinder: [RForefoot2_wrt_Pelvis.y]
       height: 0
+      distance: window
       output: temp1
 
     - multiply: [$framerate, 0.05]
