@@ -444,18 +444,21 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_min_CMJ_B 
+  summarize: true
   where:
     name: CMJ_B*
   steps:
     - subtract: [CenterOfMass\@PlotStart_CMJ_B, CenterOfMass_MIN_CMJ_B]
 
 - parameter: COM_displacement_MEAN_min_CMJ_L 
+  summarize: true
   where:
     name: CMJ_L*
   steps:
     - subtract: [CenterOfMass\@PlotStart_CMJ_L, CenterOfMass_MIN_CMJ_L]
 
 - parameter: COM_displacement_MEAN_min_CMJ_R
+  summarize: true
   where:
     name: CMJ_R*
   steps:
