@@ -389,6 +389,8 @@
     - eventDuration: [LOFF, LON]
 
 - parameter: Left_flight_count
+  displayName: Time from 1st to 20th contact
+  summarize: Time_from_1st_to_20th_Contact
   where:
     name: SH_L*
   set: left
@@ -446,6 +448,8 @@
     - eventDuration: [ROFF, RON]
 
 - parameter: Right_flight_count
+  displayName: Time from 1st to 20th contact
+  summarize: Time_from_1st_to_20th_Contact
   where:
     name: SH_R*
   set: right

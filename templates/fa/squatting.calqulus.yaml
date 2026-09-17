@@ -245,6 +245,8 @@
 
 # Squatting depth
 - parameter: Squatting_depth_Squat_B
+  displayName: Squatting depth
+  summarize: Squatting_Depth
   where:
     name: (Squat|Squatting)_B*
   steps:
@@ -261,6 +263,8 @@
     - subtract: [$prev(2), $prev]
 
 - parameter: Squatting_depth_Squat_L
+  displayName: Squatting depth
+  summarize: Squatting_Depth
   where:
     name: (Squat|Squatting)_L*
   set: left
@@ -278,6 +282,8 @@
     - subtract: [$prev(2), $prev]
 
 - parameter: Squatting_depth_Squat_R
+  displayName: Squatting depth
+  summarize: Squatting_Depth
   where:
     name: (Squat|Squatting)_R*
   set: right

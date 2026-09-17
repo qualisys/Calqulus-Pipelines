@@ -404,6 +404,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_min_LL_L 
+  displayName: Depth of countermovement
+  summarize: Depth_of_Countermovement
   where:
     name: LL_L*
   set: left
@@ -412,6 +414,8 @@
     - import: $prev.z
 
 - parameter: COM_displacement_MEAN_min_LL_R
+  displayName: Depth of countermovement
+  summarize: Depth_of_Countermovement
   where:
     name: LL_R*
   set: right
@@ -649,6 +653,8 @@
     - import: RFT_DistEndPos@Landing_R
 
 - parameter: Left_jump_distance
+  displayName: Jump distance
+  summarize: Jump_Distance
   where:
     name: LL_L*
   set: left
@@ -666,6 +672,8 @@
     - import: LFT_DistEndPos@Landing_L
 
 - parameter: Right_jump_distance
+  displayName: Jump distance
+  summarize: Jump_Distance
   where:
     name: LL_R*
   set: right

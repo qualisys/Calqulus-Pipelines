@@ -105,18 +105,24 @@
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_DVJ_B
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: DJ_B*
   steps:
     - divide: [FlightTime_DVJ_B,ConcentricTime_DVJ_B]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_L
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: DJ_L*
   steps:
     - divide: [FlightTime_DVJ_L,ConcentricTime_DVJ_L]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_R
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: DJ_R*
   steps:
@@ -231,6 +237,8 @@
 
 # Pelvis height
 - parameter: COM_displacement_MEAN_max_DVJ_B
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: DJ_B*
   steps:
@@ -243,6 +251,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_DVJ_L
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: DJ_L*
   steps:
@@ -255,6 +265,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_DVJ_R
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: DJ_R*
   steps:
@@ -268,6 +280,8 @@
 
 # Static trial
 - parameter: COM_displacement_MEAN_max_static_DVJ_B
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: DJ_B*
   steps:
@@ -282,6 +296,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_static_DVJ_L
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: DJ_L*
   steps:
@@ -296,6 +312,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_static_DVJ_R
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: DJ_R*
   steps:
@@ -384,18 +402,24 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_min_DVJ_B
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: DJ_B*
   steps:
     - subtract: [CenterOfMass\@Landing_end.z, CenterOfMass_MIN_DVJ_B]
 
 - parameter: COM_displacement_MEAN_min_DVJ_L
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: DJ_L*
   steps:
     - subtract: [CenterOfMass\@Landing_end.z, CenterOfMass_MIN_DVJ_L]
 
 - parameter: COM_displacement_MEAN_min_DVJ_R
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: DJ_R*
   steps:
@@ -426,18 +450,24 @@
 
 #Jump Height to Flight Time Ratio
 - parameter: Jump_height_flight_time_ratio_DVJ_B
+  displayName: Jump height / flight time
+  summarize: Jump_Height_Flight_Time
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_DVJ_B,FlightTime_DVJ_B]
 
 - parameter: Jump_height_flight_time_ratio_DVJ_L
+  displayName: Jump height / flight time
+  summarize: Jump_Height_Flight_Time
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_DVJ_L,FlightTime_DVJ_L]
 
 - parameter: Jump_height_flight_time_ratio_DVJ_R
+  displayName: Jump height / flight time
+  summarize: Jump_Height_Flight_Time
   where:
     name: DJ_R*
   steps:
@@ -499,18 +529,24 @@
 
 # Jump height to Contact Time Ratio
 - parameter: Jump_height_contact_time_ratio_DVJ_B
+  displayName: Jump height / contact time
+  summarize: Jump_Height_Contact_Time
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_DVJ_B, ContactTime_DVJ_B]
 
 - parameter: Jump_height_contact_time_ratio_DVJ_L
+  displayName: Jump height / contact time
+  summarize: Jump_Height_Contact_Time
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_DVJ_L, ContactTime_DVJ_L]
 
 - parameter: Jump_height_contact_time_ratio_DVJ_R
+  displayName: Jump height / contact time
+  summarize: Jump_Height_Contact_Time
   where:
     name: DJ_R*
   steps:
@@ -572,18 +608,24 @@
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_DVJ_B
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: DJ_B*
   steps:
     - divide: [FlightTime_DVJ_B, EccentricTime_DVJ_B]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_L
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: DJ_L*
   steps:
     - divide: [FlightTime_DVJ_L, EccentricTime_DVJ_L]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_R
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: DJ_R*
   steps:

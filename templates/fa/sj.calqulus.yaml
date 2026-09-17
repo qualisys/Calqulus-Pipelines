@@ -71,12 +71,16 @@
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_SJ_B
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: SJ_B*
   steps:
     - divide: [FlightTime_SJ_B,ConcentricTime_SJ_B]
 
 - parameter: Flight_Contraction_time_ratio_SJ_L
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: SJ_L*
   set: left
@@ -84,6 +88,8 @@
     - divide: [FlightTime_SJ_L,ConcentricTime_SJ_L]
 
 - parameter: Flight_Contraction_time_ratio_SJ_R
+  displayName: Flight time / contraction time
+  summarize: Flight_Time_Contraction_Time
   where:
     name: SJ_R*
   set: right
@@ -227,6 +233,8 @@
 
 # Pelvis height
 - parameter: COM_displacement_MEAN_max_SJ_B
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: SJ_B*
   steps:
@@ -239,6 +247,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_SJ_L
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: SJ_L*
   set: left
@@ -252,6 +262,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_SJ_R
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: SJ_R*
   set: right
@@ -266,6 +278,8 @@
 
 # Static trial
 - parameter: COM_displacement_MEAN_max_static_SJ_B
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: SJ_B*
   steps:
@@ -280,6 +294,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_static_SJ_L
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: SJ_L*
   set: left
@@ -295,6 +311,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_static_SJ_R
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: SJ_R*
   set: right
@@ -415,12 +433,16 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_min_SJ_B 
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: SJ_B*
   steps:
     - subtract: [CenterOfMass\@PlotStart_SJ_B, CenterOfMass_MIN_SJ_B]
 
 - parameter: COM_displacement_MEAN_min_SJ_L 
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: SJ_L*
   set: left
@@ -428,6 +450,8 @@
     - subtract: [CenterOfMass\@PlotStart_SJ_L, CenterOfMass_MIN_SJ_L]
 
 - parameter: COM_displacement_MEAN_min_SJ_R
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: SJ_R*
   set: right
@@ -436,12 +460,16 @@
 
 #Jump Height to Flight Time Ratio
 - parameter: Jump_height_flight_time_ratio_SJ_B
+  displayName: Jump height / flight time
+  summarize: Jump_Height_Flight_Time
   where:
     name: SJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_SJ_B,FlightTime_SJ_B]
 
 - parameter: Jump_height_flight_time_ratio_SJ_L
+  displayName: Jump height / flight time
+  summarize: Jump_Height_Flight_Time
   where:
     name: SJ_L*
   set: left
@@ -449,6 +477,8 @@
     - divide: [COM_displacement_MEAN_max_SJ_L,FlightTime_SJ_L]
 
 - parameter: Jump_height_flight_time_ratio_SJ_R
+  displayName: Jump height / flight time
+  summarize: Jump_Height_Flight_Time
   where:
     name: SJ_R*
   set: right

@@ -257,8 +257,8 @@
 
 # Bilateral ---------
 - parameter: Jump_height_PJ_B
-  where:
-    name: PJ_B*
+  displayName: Jump height
+  summarize: Jump_Height
   steps:
     - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
 
@@ -270,6 +270,8 @@
 
 # Number of repetitions
 - parameter: Right_TouchDown_count_PJ_B
+  displayName: Number of repetitions
+  summarize: Number_of_Repetitions
   where:
     name: PJ_B*
   steps:
@@ -277,6 +279,8 @@
 
 # Left ---------
 - parameter: Jump_height_PJ_L
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: PJ_L*
   set: left
@@ -292,6 +296,8 @@
 
 # Number of repetitions
 - parameter: Left_TouchDown_count_PJ_L
+  displayName: Number of repetitions
+  summarize: Number_of_Repetitions
   where:
     name: PJ_L*
   set: left
@@ -300,6 +306,8 @@
 
 # Right ---------
 - parameter: Jump_height_PJ_R
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: PJ_R*
   set: right
@@ -315,6 +323,8 @@
 
 # Number of repetitions
 - parameter: Right_TouchDown_count_PJ_R
+  displayName: Number of repetitions
+  summarize: Number_of_Repetitions
   where:
     name: PJ_R*
   set: right
@@ -323,6 +333,8 @@
 
 ### From static trial ###
 - parameter: Jump_height_static_PJ_B
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: PJ_B*
   steps:
@@ -338,6 +350,8 @@
       to: m
 
 - parameter: Jump_height_static_PJ_L
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: PJ_L*
   set: left
@@ -354,6 +368,8 @@
       to: m
 
 - parameter: Jump_height_static_PJ_R
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: PJ_R*
   set: right

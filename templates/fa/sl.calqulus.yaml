@@ -53,6 +53,8 @@
 
 # COM displacement
 - parameter: COM_displacement_Left_MEAN_range
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -250,6 +252,8 @@
 #     - abs:
 
 - parameter: Left_hop_distance
+  displayName: Jump distance
+  summarize: Jump_Distance
   where:
     name: ^(SLJ_|SLL_)L*
   set: left
@@ -284,6 +288,8 @@
 
 # COM displacement
 - parameter: COM_displacement_Right_MEAN_range
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -481,6 +487,8 @@
 #     - abs:
 
 - parameter: Right_hop_distance
+  displayName: Jump distance
+  summarize: Jump_Distance
   where:
     name: ^(SLJ_|SLL_)R*
   set: right

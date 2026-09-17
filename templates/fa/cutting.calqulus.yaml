@@ -140,6 +140,8 @@
     - import: Left Thorax Angles@Max_knee_flex
 
 - parameter: COM_displacement_Left_MEAN_range
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -344,6 +346,8 @@
     - import: Right Thorax Angles@Max_knee_flex
 
 - parameter: COM_displacement_Right_MEAN_range
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: (Cut|Cutting)_R*
   set: right
