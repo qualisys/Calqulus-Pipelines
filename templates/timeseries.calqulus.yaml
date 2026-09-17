@@ -94,7 +94,9 @@
 
 - parameter: Left Hip Angles
   set: left
-  summarize: true
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown]
   steps:
     - jointAngle: [Hips_model, LeftUpLeg_model]
     - multiply: [$prev, [1, -1, -1]]
@@ -104,7 +106,9 @@
 
 - parameter: Right Hip Angles
   set: right
-  summarize: true
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown]
   steps:
     - jointAngle: [Hips_model, RightUpLeg_model]
     - multiply: [$prev, [1, 1, 1]]
@@ -116,7 +120,9 @@
 
 - parameter: Left Knee Angles
   set: left
-  summarize: true
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex]
   steps:
     - jointAngle: [LeftUpLeg_model, LeftLeg_model]
     - multiply: [$prev, [-1, -1, -1]]
@@ -126,7 +132,9 @@
 
 - parameter: Right Knee Angles
   set: right
-  summarize: true
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex]
   steps:
     - jointAngle: [RightUpLeg_model, RightLeg_model]
     - multiply: [$prev, [-1, 1, 1]]
@@ -138,7 +146,9 @@
 
 - parameter: Left Ankle Angles
   set: left
-  summarize: true
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle]
   steps:
     - jointAngle: [LeftLeg_model, LeftFoot_model]
       output: foot_vector
@@ -157,7 +167,9 @@
 
 - parameter: Right Ankle Angles
   set: right
-  summarize: true
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle]
   steps:
     - jointAngle: [RightLeg_model, RightFoot_model]
       output: foot_vector
