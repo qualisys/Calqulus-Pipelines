@@ -38,6 +38,7 @@
 
 # Left -------------
 - parameter: Left Knee Angles@TouchDown
+  displayName: Knee flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -45,6 +46,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown
+  displayName: Hip flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -102,6 +104,7 @@
 
 # Max Knee Flex
 - parameter: Left Knee Angles@Max_knee_flex
+  displayName: Knee valgus at max flexion
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -273,6 +276,7 @@
 
 # Right -------------
 - parameter: Right Knee Angles@TouchDown
+  displayName: Knee flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -280,6 +284,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown
+  displayName: Hip flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -337,6 +342,7 @@
 
 # Max Knee Flex
 - parameter: Right Knee Angles@Max_knee_flex
+  displayName: Knee valgus at max flexion
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right

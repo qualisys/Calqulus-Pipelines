@@ -802,24 +802,28 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_CMJ_B
+  displayName: Knee flexion at heel strike
   where:
     name: CMJ_B*
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_CMJ_B
+  displayName: Knee flexion at heel strike
   where:
     name: CMJ_B*
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_CMJ_B
+  displayName: Hip flexion at heel strike
   where:
     name: CMJ_B*
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_CMJ_B
+  displayName: Hip flexion at heel strike
   where:
     name: CMJ_B*
   steps:
@@ -838,24 +842,28 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_CMJ_L
+  displayName: Knee flexion at heel strike
   where:
     name: CMJ_L*
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_CMJ_L
+  displayName: Knee flexion at heel strike
   where:
     name: CMJ_L*
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_CMJ_L
+  displayName: Hip flexion at heel strike
   where:
     name: CMJ_L*
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_CMJ_L
+  displayName: Hip flexion at heel strike
   where:
     name: CMJ_L*
   steps:
@@ -874,24 +882,28 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_CMJ_R
+  displayName: Knee flexion at heel strike
   where:
     name: CMJ_R*
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_CMJ_R
+  displayName: Knee flexion at heel strike
   where:
     name: CMJ_R*
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_CMJ_R
+  displayName: Hip flexion at heel strike
   where:
     name: CMJ_R*
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_CMJ_R
+  displayName: Hip flexion at heel strike
   where:
     name: CMJ_R*
   steps:

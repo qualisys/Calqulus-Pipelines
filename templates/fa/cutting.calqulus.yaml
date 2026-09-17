@@ -70,6 +70,7 @@
 
 # Joint angle at event
 - parameter: Left Knee Angles@TouchDown
+  displayName: Knee flexion at heel strike
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -77,6 +78,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown
+  displayName: Hip flexion at heel strike
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -119,6 +121,7 @@
     - import: Left Ankle Angles@Max_knee_flex
 
 - parameter: Left Knee Angles@Max_knee_flex
+  displayName: Knee valgus at max flexion
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -276,6 +279,7 @@
 
 # Joint angle at event
 - parameter: Right Knee Angles@TouchDown
+  displayName: Knee flexion at heel strike
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -283,6 +287,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown
+  displayName: Hip flexion at heel strike
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -325,6 +330,7 @@
     - import: Right Ankle Angles@Max_knee_flex
 
 - parameter: Right Knee Angles@Max_knee_flex
+  displayName: Knee valgus at max flexion
   where:
     name: (Cut|Cutting)_R*
   set: right

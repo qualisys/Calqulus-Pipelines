@@ -896,24 +896,28 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_DVJ_B
+  displayName: Knee flexion at heel strike
   where:
     name: DJ_B*
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_B
+  displayName: Knee flexion at heel strike
   where:
     name: DJ_B*
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_B
+  displayName: Hip flexion at heel strike
   where:
     name: DJ_B*
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_B
+  displayName: Hip flexion at heel strike
   where:
     name: DJ_B*
   steps:
@@ -932,24 +936,28 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_DVJ_L
+  displayName: Knee flexion at heel strike
   where:
     name: DJ_L*
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_L
+  displayName: Knee flexion at heel strike
   where:
     name: DJ_L*
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_L
+  displayName: Hip flexion at heel strike
   where:
     name: DJ_L*
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_L
+  displayName: Hip flexion at heel strike
   where:
     name: DJ_L*
   steps:
@@ -968,24 +976,28 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_DVJ_R
+  displayName: Knee flexion at heel strike
   where:
     name: DJ_R*
   steps:
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_R
+  displayName: Knee flexion at heel strike
   where:
     name: DJ_R*
   steps:
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_R
+  displayName: Hip flexion at heel strike
   where:
     name: DJ_R*
   steps:
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_R
+  displayName: Hip flexion at heel strike
   where:
     name: DJ_R*
   steps:

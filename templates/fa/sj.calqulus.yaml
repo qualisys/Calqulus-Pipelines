@@ -803,6 +803,7 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_SJ_B
+  displayName: Knee flexion at heel strike
   where:
     name: SJ_B*
   set: left
@@ -810,6 +811,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_B
+  displayName: Knee flexion at heel strike
   where:
     name: SJ_B*
   set: right
@@ -817,6 +819,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_B
+  displayName: Hip flexion at heel strike
   where:
     name: SJ_B*
   set: left
@@ -824,6 +827,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_B
+  displayName: Hip flexion at heel strike
   where:
     name: SJ_B*
   set: right
@@ -845,6 +849,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_SJ_L
+  displayName: Knee flexion at heel strike
   where:
     name: SJ_L*
   set: left
@@ -852,6 +857,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_L
+  displayName: Knee flexion at heel strike
   where:
     name: SJ_L*
   set: right
@@ -859,6 +865,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_L
+  displayName: Hip flexion at heel strike
   where:
     name: SJ_L*
   set: left
@@ -866,6 +873,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_L
+  displayName: Hip flexion at heel strike
   where:
     name: SJ_L*
   set: right
@@ -887,6 +895,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_SJ_R
+  displayName: Knee flexion at heel strike
   where:
     name: SJ_R*
   set: left
@@ -894,6 +903,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_R
+  displayName: Knee flexion at heel strike
   where:
     name: SJ_R*
   set: right
@@ -901,6 +911,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_R
+  displayName: Hip flexion at heel strike
   where:
     name: SJ_R*
   set: left
@@ -908,6 +919,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_R
+  displayName: Hip flexion at heel strike
   where:
     name: SJ_R*
   set: right

@@ -475,6 +475,7 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_LL_L
+  displayName: Knee flexion at touchdown
   where:
     name: LL_L*
   set: left
@@ -482,6 +483,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_LL_L
+  displayName: Hip flexion at touchdown
   where:
     name: LL_L*
   set: left
@@ -583,6 +585,7 @@
 
 # Other metrics @TouchDown
 - parameter: Right Knee Angles@TouchDown_LL_R
+  displayName: Knee flexion at touchdown
   where:
     name: LL_R*
   set: right
@@ -590,6 +593,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_LL_R
+  displayName: Hip flexion at touchdown
   where:
     name: LL_R*
   set: right
