@@ -16,7 +16,7 @@
 - parameter: LFT_DistEndAcc
   set: left
   steps:
-    - segment: LeftToeBase_model
+    - vector: [LeftToeBase_model.x, LeftToeBase_model.y, LeftToeBase_model.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -35,7 +35,7 @@
 - parameter: RFT_DistEndAcc
   set: right
   steps:
-    - segment: RightToeBase_model
+    - vector: [RightToeBase_model.x, RightToeBase_model.y, RightToeBase_model.z]
       space: VirtualLab
     - convert:
       from: mm
@@ -400,8 +400,10 @@
   steps:
     - segment: LeftLeg_model => knee
       space: VirtualLab
+    - vector: [knee.x, knee.y, knee.z] => knee
     - segment: Hips_model => pelvis
       space: VirtualLab
+    - vector: [pelvis.x, pelvis.y, pelvis.z] => pelvis
     - subtract: [pelvis, knee]
     - convert: 
       from: mm
@@ -413,8 +415,10 @@
   steps:
     - segment: RightLeg_model => knee
       space: VirtualLab
+    - vector: [knee.x, knee.y, knee.z] => knee
     - segment: Hips_model => pelvis
       space: VirtualLab
+    - vector: [pelvis.x, pelvis.y, pelvis.z] => pelvis
     - subtract: [pelvis, knee]
     - convert: 
       from: mm
@@ -427,8 +431,10 @@
   steps:
     - segment: LeftFoot_model => foot
       space: VirtualLab
+    - vector: [foot.x, foot.y, foot.z] => foot
     - segment: Hips_model => pelvis
       space: VirtualLab
+    - vector: [pelvis.x, pelvis.y, pelvis.z] => pelvis
     - subtract: [pelvis, foot]
     - convert: 
       from: mm
@@ -440,8 +446,10 @@
   steps:
     - segment: RightFoot_model => foot
       space: VirtualLab
+    - vector: [foot.x, foot.y, foot.z] => foot
     - segment: Hips_model => pelvis
       space: VirtualLab
+    - vector: [pelvis.x, pelvis.y, pelvis.z] => pelvis
     - subtract: [pelvis, foot]
     - convert: 
       from: mm
