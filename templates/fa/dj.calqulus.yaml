@@ -134,7 +134,8 @@
   where:
     name: DJ_B*
   steps:
-    - import: Hips_model@TakeOff
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
+    - import: $prev@TakeOff
     - convert:
       from: mm
       to: m
@@ -143,7 +144,8 @@
   where:
     name: DJ_L*
   steps:
-    - import: Hips_model@TakeOff
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
+    - import: $prev@TakeOff
     - convert:
       from: mm
       to: m
@@ -152,7 +154,8 @@
   where:
     name: DJ_R*
   steps:
-    - import: Hips_model@TakeOff
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
+    - import: $prev@TakeOff
     - convert:
       from: mm
       to: m
@@ -161,7 +164,7 @@
   where:
     name: DJ_B*
   steps:
-    - import: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -172,7 +175,7 @@
   where:
     name: DJ_L*
   steps:
-    - import: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -183,7 +186,7 @@
   where:
     name: DJ_R*
   steps:
-    - import: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -219,7 +222,8 @@
 
 - parameter: CenterOfMass@Landing_end
   steps:
-    - import: Hips_model@Landing_end
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
+    - import: $prev@Landing_end
     - convert:
       from: mm
       to: m
@@ -227,7 +231,7 @@
 #debugging signal, can be removed
 - parameter: Pelvis_COM
   steps:
-    - import: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - convert:
       from: mm
       to: m

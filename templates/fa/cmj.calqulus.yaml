@@ -110,7 +110,8 @@
   where:
     name: CMJ_B*
   steps:
-    - import: Hips_model@TakeOff
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
+    - import: $prev@TakeOff
     - convert:
       from: mm
       to: m
@@ -119,7 +120,8 @@
   where:
     name: CMJ_L*
   steps:
-    - import: Hips_model@TakeOff
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
+    - import: $prev@TakeOff
     - convert:
       from: mm
       to: m
@@ -128,7 +130,8 @@
   where:
     name: CMJ_R*
   steps:
-    - import: Hips_model@TakeOff
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
+    - import: $prev@TakeOff
     - convert:
       from: mm
       to: m
@@ -137,7 +140,7 @@
   where:
     name: CMJ_B*
   steps:
-    - import: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -148,7 +151,7 @@
   where:
     name: CMJ_L*
   steps:
-    - import: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:
@@ -159,7 +162,7 @@
   where:
     name: CMJ_R*
   steps:
-    - import: Hips_model
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
     - eventMask: [$prev,TakeOff,TouchDown]
     - max:
     - convert:

@@ -398,12 +398,12 @@
   set: left
   summarize: true
   steps:
-    - segment: LeftLeg_model => knee
+    - vector: [LeftLeg_model.x, LeftLeg_model.y, LeftLeg_model.z]
       space: VirtualLab
-    - vector: [knee.x, knee.y, knee.z] => knee
-    - segment: Hips_model => pelvis
+      export: knee
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
-    - vector: [pelvis.x, pelvis.y, pelvis.z] => pelvis
+      export: pelvis
     - subtract: [pelvis, knee]
     - convert: 
       from: mm
@@ -413,12 +413,12 @@
   set: right
   summarize: true
   steps:
-    - segment: RightLeg_model => knee
+    - vector: [RightLeg_model.x, RightLeg_model.y, RightLeg_model.z]
       space: VirtualLab
-    - vector: [knee.x, knee.y, knee.z] => knee
-    - segment: Hips_model => pelvis
+      export: knee
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
-    - vector: [pelvis.x, pelvis.y, pelvis.z] => pelvis
+      export: pelvis
     - subtract: [pelvis, knee]
     - convert: 
       from: mm
@@ -429,12 +429,12 @@
   set: left
   summarize: true
   steps:
-    - segment: LeftFoot_model => foot
+    - vector: [LeftFoot_model.x, LeftFoot_model.y, LeftFoot_model.z]
       space: VirtualLab
-    - vector: [foot.x, foot.y, foot.z] => foot
-    - segment: Hips_model => pelvis
+      export: foot
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
-    - vector: [pelvis.x, pelvis.y, pelvis.z] => pelvis
+      export: pelvis
     - subtract: [pelvis, foot]
     - convert: 
       from: mm
@@ -444,12 +444,12 @@
   set: right
   summarize: true
   steps:
-    - segment: RightFoot_model => foot
+    - vector: [RightFoot_model.x, RightFoot_model.y, RightFoot_model.z]
       space: VirtualLab
-    - vector: [foot.x, foot.y, foot.z] => foot
-    - segment: Hips_model => pelvis
+      export: foot
+    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
-    - vector: [pelvis.x, pelvis.y, pelvis.z] => pelvis
+      export: pelvis
     - subtract: [pelvis, foot]
     - convert: 
       from: mm
