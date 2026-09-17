@@ -95,9 +95,11 @@
       else: TouchDown_kinematics
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
-  summaryTarget: true
   set: right
   steps:
     - if: exists(RON_force)
@@ -182,6 +184,8 @@
     - import: $prev@-1
 
 - event: COM_MIN # using Pelvis for now
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
   summaryTarget: true
   steps:
     - eventMask: [Hips_model.z, TouchDown, Max_knee_flex]

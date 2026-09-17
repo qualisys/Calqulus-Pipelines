@@ -446,39 +446,49 @@
       else: Eccentric_end_calqulus
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: ^(CMJ_|SJ_)B*
-  summaryTarget: true
   steps:
     - concatenate: [TakeOff_L, TakeOff_R]
     - mean: 
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: ^(CMJ_|SJ_)L*
-  summaryTarget: true
   steps:
     - mean: TakeOff_L
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: ^(CMJ_|SJ_)R*
-  summaryTarget: true
   steps:
     - mean: TakeOff_R
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: ^(CMJ_|SJ_)B*
-  summaryTarget: true
   steps:
     - concatenate: [TouchDown_L, TouchDown_R]
     - mean: 
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: ^(CMJ_|SJ_)L*
-  summaryTarget: true
   steps:
     - mean: TouchDown_L
 

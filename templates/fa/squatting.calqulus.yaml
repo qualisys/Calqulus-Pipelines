@@ -35,6 +35,11 @@
       distance: 75
 
 - event: Pelvis_lowest
+
+  displayName: Lowest pelvis
+
+  description: Instant of lowest pelvis position
+
   summaryTarget: true
   steps:
     - divide: [$framerate, 0.5] #0.5s

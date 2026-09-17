@@ -56,9 +56,11 @@
       else: TouchDown_L_kinematics
 
 - event: Max_knee_flex
+  displayName: Max knee flexion
+  description: Instant of maximum knee flexion
+  summaryTarget: true
   where:
     name: PJ_[LB]*
-  summaryTarget: true
   steps:
     - eventMask: [Left Knee Angles.x, TouchDown_L, TakeOff_L]
     - max:
@@ -143,30 +145,38 @@
       frames: true
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: PJ_L*
-  summaryTarget: true
   steps:
     - import: TakeOff_L
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: PJ_L*
-  summaryTarget: true
   steps:
     - import: TouchDown_L
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: PJ_[RB]*
-  summaryTarget: true
   steps:
     - import: TakeOff_R
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: PJ_[RB]*
-  summaryTarget: true
   steps:
     - import: TouchDown_R
 

@@ -147,23 +147,29 @@
       else: Landing_L_kinematics
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: DJ_[LB]*
-  summaryTarget: true
   steps:
     - import: TakeOff_L
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: DJ_[LB]*
-  summaryTarget: true
   steps:
     - import: TouchDown_L
 
 - event: Landing
+  displayName: Landing
+  description: Instant of landing after flight
+  summaryTarget: true
   where:
     name: DJ_[LB]*
-  summaryTarget: true
   steps:
     - import: Landing_L
 
@@ -326,23 +332,29 @@
       else: Landing_R_kinematics
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: DJ_[RB]*
-  summaryTarget: true
   steps:
     - import: TakeOff_R
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: DJ_[RB]*
-  summaryTarget: true
   steps:
     - import: TouchDown_R
 
 - event: Landing
+  displayName: Landing
+  description: Instant of landing after flight
+  summaryTarget: true
   where:
     name: DJ_[RB]*
-  summaryTarget: true
   steps:
     - import: Landing_R
 

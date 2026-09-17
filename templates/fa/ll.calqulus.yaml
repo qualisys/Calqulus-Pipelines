@@ -106,9 +106,11 @@
       frames: true
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: LL_L*
-  summaryTarget: true
   steps:
     - if: exists(my_LON_force)
       then: my_LON_force
@@ -156,9 +158,11 @@
       sort: asc
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: LL_L*
-  summaryTarget: true
   steps:
     - if: exists(LOFF_force_ordered)
       then: LOFF_force_ordered@-1
@@ -171,9 +175,11 @@
       frames: true
 
 - event: pelvis_lowest
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   where:
     name: LL_L*
-  summaryTarget: true
   steps:
     - eventMask: [PelvisCGPos.z, LeftPlotStart, LeftPlotEnd]
     - min:
@@ -236,9 +242,11 @@
       frames: true
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: LL_R*
-  summaryTarget: true
   steps:
     - if: exists(my_RON_force)
       then: my_RON_force
@@ -296,9 +304,11 @@
       sort: asc
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: LL_R*
-  summaryTarget: true
   steps:
     - if: exists(ROFF_force_ordered)
       then: ROFF_force_ordered@-1
@@ -311,9 +321,11 @@
       frames: true
 
 - event: pelvis_lowest
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   where:
     name: LL_R*
-  summaryTarget: true
   steps:
     - eventMask: [PelvisCGPos.z, RightPlotStart, RightPlotEnd]
     - min:

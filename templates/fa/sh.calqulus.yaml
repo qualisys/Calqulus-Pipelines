@@ -36,10 +36,12 @@
       else: LON_kinematics
 
 - event: LON
+  displayName: Left on
+  description: Instant of left-foot contact
+  summaryTarget: true
   where:
     name: SH_L*
   set: left
-  summaryTarget: true
   steps:
     - if: exists(LON_force)
       then: LON_force
@@ -65,10 +67,12 @@
       else: LOFF_kinematics
 
 - event: LOFF
+  displayName: Left off
+  description: Instant of left-foot leave
+  summaryTarget: true
   where:
     name: SH_L*
   set: left
-  summaryTarget: true
   steps:
     - if: exists(LOFF_force)
       then: LOFF_force
@@ -157,10 +161,12 @@
       else: RON_kinematics
 
 - event: RON
+  displayName: Right on
+  description: Instant of right-foot contact
+  summaryTarget: true
   where:
     name: SH_R*
   set: right
-  summaryTarget: true
   steps:
     - if: exists(RON_force)
       then: RON_force
@@ -187,10 +193,12 @@
       else: ROFF_kinematics
 
 - event: ROFF
+  displayName: Right off
+  description: Instant of right-foot leave
+  summaryTarget: true
   where:
     name: SH_R*
   set: right
-  summaryTarget: true
   steps:
     - if: exists(ROFF_force)
       then: ROFF_force
