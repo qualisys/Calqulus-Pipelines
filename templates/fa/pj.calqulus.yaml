@@ -210,21 +210,21 @@
   start: TouchDown
   end: TakeOff
 
-- phase: EccentricPhase
+- phase: Eccentric
   summaryTarget: true
   description: "Time from touch-down to the max knee flexion"
   displayName: "Eccentric phase"
   start: TouchDown
   end: Max_knee_flex
 
-- phase: ConcentricPhase
+- phase: Concentric
   summaryTarget: true
   description: "Time from max knee flexion to take-off"
   displayName: "Concentric phase"
   start: Max_knee_flex
   end: TakeOff
 
-- phase: FlightPhase
+- phase: Flight
   summaryTarget: true
   description: "Time from take-off till touch-down"
   displayName: "Flight phase"

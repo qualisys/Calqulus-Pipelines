@@ -142,6 +142,10 @@
     - import: $prev@1
 
 # For SLJ and SLCDL PlotEnd is set to 1 sec after TouchDown. For SLL it is 3 sec
+- event: PlotStart
+  steps:
+    - import: TouchDown
+
 - event: PlotEnd
   where:
     name: ^(SLJ|SLCDL)*
@@ -217,16 +221,28 @@
 ## Phases ##
 #############
 
-- phase: EccentricPhase
+- phase: Eccentric
   summaryTarget: true
   description: "Time from TouchDown till the lowest position of pelvis"
   displayName: "Eccentric phase"
   start: TouchDown
   end: COM_MIN
 
-- phase: ConcentricPhase
+- phase: Concentric
   summaryTarget: true
   description: "Time from the lowest position of pelvis to 1 s after TouchDown"
   displayName: "Concentric phase"
   start: COM_MIN
+  end: PlotEnd
+
+- phase: Loading
+  summaryTarget: false
+  displayName: Loading phase
+  start: TouchDown
+  end: Max_knee_flex
+
+- phase: Plot
+  summaryTarget: false
+  displayName: Plot
+  start: PlotStart
   end: PlotEnd

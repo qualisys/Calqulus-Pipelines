@@ -483,31 +483,37 @@
 ## Phases ##
 #############
 
-- phase: EccentricPhase
+- phase: Eccentric
   summaryTarget: true
   description: "Time from TouchDown till the lowest position of pelvis"
   displayName: "Eccentric phase"
   start: TouchDown
   end: Eccentric_end
 
-- phase: ConcentricPhase
+- phase: Concentric
   summaryTarget: true
   description: "Time from the lowest position of pelvis to take-off"
   displayName: "Concentric phase"
   start: Eccentric_end
   end: TakeOff
 
-- phase: FlightPhase
+- phase: Flight
   summaryTarget: true
   description: "Time from take-off till landing"
   displayName: "Flight phase"
   start: TakeOff
   end: Landing
 
-- phase: LandingPhase
+- phase: Absorption
   summaryTarget: true
   description: "Time from the landing till end of measurement"
-  displayName: "Landing phase"
+  displayName: "Absorption phase"
   start: Landing
   end: Landing_end
+
+- phase: Propulsion
+  summaryTarget: false
+  displayName: Propulsion phase
+  start: TouchDown
+  end: TakeOff
 

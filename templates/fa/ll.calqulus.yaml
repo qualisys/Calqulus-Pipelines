@@ -352,19 +352,37 @@
 ## Phases ##
 #############
 
-- phase: EccentricPhase
+- phase: Eccentric
   summaryTarget: true
   description: "Time from TouchDown till the lowest position of pelvis"
   displayName: "Eccentric phase"
   start: PlotStart
   end: pelvis_lowest
 
-- phase: ConcentricPhase
+- phase: Concentric
   summaryTarget: true
   description: "Time from the lowest position of pelvis to take-off"
   displayName: "Concentric phase"
   start: pelvis_lowest
   end: TakeOff
+
+- phase: Plot
+  summaryTarget: false
+  displayName: Plot
+  start: PlotStart
+  end: PlotEnd
+
+- phase: LeftPlot
+  summaryTarget: false
+  displayName: Left plot
+  start: LeftPlotStart
+  end: LeftPlotEnd
+
+- phase: RightPlot
+  summaryTarget: false
+  displayName: Right plot
+  start: RightPlotStart
+  end: RightPlotEnd
 
 ############
 ## SERIES ##

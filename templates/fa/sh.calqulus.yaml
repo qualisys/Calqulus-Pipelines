@@ -300,7 +300,7 @@
   start: LON
   end: LOFF
 
-- phase: FlightPhase
+- phase: Flight
   summaryTarget: true
   where:
     name: SH_L*
@@ -318,7 +318,7 @@
   start: RON
   end: ROFF
 
-- phase: FlightPhase
+- phase: Flight
   summaryTarget: true
   where:
     name: SH_R*
