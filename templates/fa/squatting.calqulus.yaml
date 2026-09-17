@@ -149,7 +149,7 @@
 
 # ML events prioritise over calqulus based events
 - event: TOP
-  summaryTarget: true
+  summaryTarget: false
   steps:
   - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
     then: EccentricStart_ML

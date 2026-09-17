@@ -149,7 +149,7 @@
 - event: PlotEnd
   where:
     name: ^(SLJ|SLCDL)*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - multiply: [$framerate, 1] # 1 sec
     - add: [$prev, TouchDown] # 1 s after TouchDown
@@ -162,7 +162,7 @@
 - event: PlotEnd
   where:
     name: SLL*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - multiply: [$framerate, 3] #3 sec
     - add: [$prev, TouchDown] # 3 s after TouchDown

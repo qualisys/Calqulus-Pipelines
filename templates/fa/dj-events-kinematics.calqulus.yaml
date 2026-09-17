@@ -430,14 +430,14 @@
     - subtract: [$length,2]
 
 - event: Landing_end
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - if: "!empty(Landing_end_temp)"
       then: Landing_end_temp
       else: EOF-1
     
 - event: Eccentric_end
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - threshold: PelvisCGPos_vel.z
       value: 0

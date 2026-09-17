@@ -245,7 +245,7 @@
 - event: Eccentric_end
   where:
     name: CMJ_[LB]*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - if: exists(EccentricEnd_ML)
       then: EccentricEnd_ML
@@ -439,7 +439,7 @@
 - event: Eccentric_end
   where:
     name: CMJ_[RB]*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - if: exists(EccentricEnd_ML)
       then: EccentricEnd_ML
@@ -491,7 +491,7 @@
 - event: PlotStart
   where:
     name: ^(CMJ_|SJ_)B*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - concatenate: [PlotStart_L, PlotStart_R]
     - mean: 
@@ -499,21 +499,21 @@
 - event: PlotStart
   where:
     name: ^(CMJ_|SJ_)L*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - mean: PlotStart_L
 
 - event: PlotStart
   where:
     name: ^(CMJ_|SJ_)R*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - mean: PlotStart_R
   
 - event: PlotEnd
   where:
     name: ^(CMJ_|SJ_)B*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - concatenate: [PlotEnd_L, PlotEnd_R]
     - mean: 
@@ -521,14 +521,14 @@
 - event: PlotEnd
   where:
     name: ^(CMJ_|SJ_)L*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - mean: PlotEnd_L
 
 - event: PlotEnd
   where:
     name: ^(CMJ_|SJ_)R*
-  summaryTarget: true
+  summaryTarget: false
   steps:
     - mean: PlotEnd_R
   
