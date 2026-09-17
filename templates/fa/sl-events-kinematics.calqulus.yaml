@@ -97,7 +97,7 @@
 - event: TouchDown
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
-  summarize: true
+  summaryTarget: true
   set: right
   steps:
     - if: exists(RON_force)
@@ -145,7 +145,7 @@
 - event: PlotEnd
   where:
     name: ^(SLJ|SLCDL)*
-  summarize: true
+  summaryTarget: true
   steps:
     - multiply: [$framerate, 1] # 1 sec
     - add: [$prev, TouchDown] # 1 s after TouchDown
@@ -158,7 +158,7 @@
 - event: PlotEnd
   where:
     name: SLL*
-  summarize: true
+  summaryTarget: true
   steps:
     - multiply: [$framerate, 3] #3 sec
     - add: [$prev, TouchDown] # 3 s after TouchDown
@@ -178,7 +178,7 @@
     - import: $prev@-1
 
 - event: COM_MIN # using Pelvis for now
-  summarize: true
+  summaryTarget: true
   steps:
     - eventMask: [Hips_model.z, TouchDown, Max_knee_flex]
     - min:
@@ -218,12 +218,14 @@
 #############
 
 - phase: EccentricPhase
+  summaryTarget: true
   description: "Time from TouchDown till the lowest position of pelvis"
   displayName: "Eccentric phase"
   start: TouchDown
   end: COM_MIN
 
 - phase: ConcentricPhase
+  summaryTarget: true
   description: "Time from the lowest position of pelvis to 1 s after TouchDown"
   displayName: "Concentric phase"
   start: COM_MIN

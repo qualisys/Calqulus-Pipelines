@@ -35,7 +35,7 @@
       distance: 75
 
 - event: Pelvis_lowest
-  summarize: true
+  summaryTarget: true
   steps:
     - divide: [$framerate, 0.5] #0.5s
       export: window
@@ -149,7 +149,7 @@
 
 # ML events prioritise over calqulus based events
 - event: TOP
-  summarize: true
+  summaryTarget: true
   steps:
   - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
     then: EccentricStart_ML
@@ -205,12 +205,14 @@
 #############
 
 - phase: EccentricPhase
+  summaryTarget: true
   description: "Time from TouchDown till the lowest position of pelvis"
   displayName: "Eccentric phase"
   start: TOP
   end: Pelvis_lowest
 
 - phase: ConcentricPhase
+  summaryTarget: true
   description: "Time from the lowest position of pelvis to 1 s after TouchDown"
   displayName: "Concentric phase"
   start: Pelvis_lowest

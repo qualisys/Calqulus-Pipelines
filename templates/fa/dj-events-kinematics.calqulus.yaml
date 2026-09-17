@@ -149,21 +149,21 @@
 - event: TakeOff
   where:
     name: DJ_[LB]*
-  summarize: true
+  summaryTarget: true
   steps:
     - import: TakeOff_L
 
 - event: TouchDown
   where:
     name: DJ_[LB]*
-  summarize: true
+  summaryTarget: true
   steps:
     - import: TouchDown_L
 
 - event: Landing
   where:
     name: DJ_[LB]*
-  summarize: true
+  summaryTarget: true
   steps:
     - import: Landing_L
 
@@ -328,21 +328,21 @@
 - event: TakeOff
   where:
     name: DJ_[RB]*
-  summarize: true
+  summaryTarget: true
   steps:
     - import: TakeOff_R
 
 - event: TouchDown
   where:
     name: DJ_[RB]*
-  summarize: true
+  summaryTarget: true
   steps:
     - import: TouchDown_R
 
 - event: Landing
   where:
     name: DJ_[RB]*
-  summarize: true
+  summaryTarget: true
   steps:
     - import: Landing_R
 
@@ -430,14 +430,14 @@
     - subtract: [$length,2]
 
 - event: Landing_end
-  summarize: true
+  summaryTarget: true
   steps:
     - if: "!empty(Landing_end_temp)"
       then: Landing_end_temp
       else: EOF-1
     
 - event: Eccentric_end
-  summarize: true
+  summaryTarget: true
   steps:
     - threshold: PelvisCGPos_vel.z
       value: 0
@@ -484,24 +484,28 @@
 #############
 
 - phase: EccentricPhase
+  summaryTarget: true
   description: "Time from TouchDown till the lowest position of pelvis"
   displayName: "Eccentric phase"
   start: TouchDown
   end: Eccentric_end
 
 - phase: ConcentricPhase
+  summaryTarget: true
   description: "Time from the lowest position of pelvis to take-off"
   displayName: "Concentric phase"
   start: Eccentric_end
   end: TakeOff
 
 - phase: FlightPhase
+  summaryTarget: true
   description: "Time from take-off till landing"
   displayName: "Flight phase"
   start: TakeOff
   end: Landing
 
 - phase: LandingPhase
+  summaryTarget: true
   description: "Time from the landing till end of measurement"
   displayName: "Landing phase"
   start: Landing

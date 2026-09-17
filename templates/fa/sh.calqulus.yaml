@@ -39,7 +39,7 @@
   where:
     name: SH_L*
   set: left
-  summarize: true
+  summaryTarget: true
   steps:
     - if: exists(LON_force)
       then: LON_force
@@ -68,7 +68,7 @@
   where:
     name: SH_L*
   set: left
-  summarize: true
+  summaryTarget: true
   steps:
     - if: exists(LOFF_force)
       then: LOFF_force
@@ -160,7 +160,7 @@
   where:
     name: SH_R*
   set: right
-  summarize: true
+  summaryTarget: true
   steps:
     - if: exists(RON_force)
       then: RON_force
@@ -190,7 +190,7 @@
   where:
     name: SH_R*
   set: right
-  summarize: true
+  summaryTarget: true
   steps:
     - if: exists(ROFF_force)
       then: ROFF_force
@@ -292,6 +292,7 @@
 #############
 
 - phase: ContactPhase
+  summaryTarget: true
   where:
     name: SH_L*
   description: "Time from touch-down till take-off"  
@@ -300,6 +301,7 @@
   end: LOFF
 
 - phase: FlightPhase
+  summaryTarget: true
   where:
     name: SH_L*
   description: "Time from take-off till touch-down"
@@ -308,6 +310,7 @@
   end: LON
 
 - phase: ContactPhase
+  summaryTarget: true
   where:
     name: SH_R*
   description: "Time from touch-down till take-off"  
@@ -316,6 +319,7 @@
   end: ROFF
 
 - phase: FlightPhase
+  summaryTarget: true
   where:
     name: SH_R*
   description: "Time from take-off till touch-down"

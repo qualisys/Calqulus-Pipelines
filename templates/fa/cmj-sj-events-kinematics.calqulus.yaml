@@ -245,7 +245,7 @@
 - event: Eccentric_end
   where:
     name: CMJ_[LB]*
-  summarize: true
+  summaryTarget: true
   steps:
     - if: exists(EccentricEnd_ML)
       then: EccentricEnd_ML
@@ -439,7 +439,7 @@
 - event: Eccentric_end
   where:
     name: CMJ_[RB]*
-  summarize: true
+  summaryTarget: true
   steps:
     - if: exists(EccentricEnd_ML)
       then: EccentricEnd_ML
@@ -448,7 +448,7 @@
 - event: TakeOff
   where:
     name: ^(CMJ_|SJ_)B*
-  summarize: true
+  summaryTarget: true
   steps:
     - concatenate: [TakeOff_L, TakeOff_R]
     - mean: 
@@ -456,21 +456,21 @@
 - event: TakeOff
   where:
     name: ^(CMJ_|SJ_)L*
-  summarize: true
+  summaryTarget: true
   steps:
     - mean: TakeOff_L
 
 - event: TakeOff
   where:
     name: ^(CMJ_|SJ_)R*
-  summarize: true
+  summaryTarget: true
   steps:
     - mean: TakeOff_R
 
 - event: TouchDown
   where:
     name: ^(CMJ_|SJ_)B*
-  summarize: true
+  summaryTarget: true
   steps:
     - concatenate: [TouchDown_L, TouchDown_R]
     - mean: 
@@ -478,7 +478,7 @@
 - event: TouchDown
   where:
     name: ^(CMJ_|SJ_)L*
-  summarize: true
+  summaryTarget: true
   steps:
     - mean: TouchDown_L
 
@@ -491,7 +491,7 @@
 - event: PlotStart
   where:
     name: ^(CMJ_|SJ_)B*
-  summarize: true
+  summaryTarget: true
   steps:
     - concatenate: [PlotStart_L, PlotStart_R]
     - mean: 
@@ -499,21 +499,21 @@
 - event: PlotStart
   where:
     name: ^(CMJ_|SJ_)L*
-  summarize: true
+  summaryTarget: true
   steps:
     - mean: PlotStart_L
 
 - event: PlotStart
   where:
     name: ^(CMJ_|SJ_)R*
-  summarize: true
+  summaryTarget: true
   steps:
     - mean: PlotStart_R
   
 - event: PlotEnd
   where:
     name: ^(CMJ_|SJ_)B*
-  summarize: true
+  summaryTarget: true
   steps:
     - concatenate: [PlotEnd_L, PlotEnd_R]
     - mean: 
@@ -521,14 +521,14 @@
 - event: PlotEnd
   where:
     name: ^(CMJ_|SJ_)L*
-  summarize: true
+  summaryTarget: true
   steps:
     - mean: PlotEnd_L
 
 - event: PlotEnd
   where:
     name: ^(CMJ_|SJ_)R*
-  summarize: true
+  summaryTarget: true
   steps:
     - mean: PlotEnd_R
   
@@ -602,12 +602,14 @@
 #############
 
 - phase: EccentricPhase
+  summaryTarget: true
   description: "Time from movement initiation till the lowest position of pelvis"
   displayName: "Eccentric phase"
   start: PlotStart
   end: Eccentric_end
 
 - phase: ConcentricPhase
+  summaryTarget: true
   where:
     name: ^(CMJ_)*
   description: "Time from the lowest position of pelvis to take-off"
@@ -616,6 +618,7 @@
   end: TakeOff
 
 - phase: ConcentricPhase
+  summaryTarget: true
   where:
     name: ^(SJ_)*
   description: "Time from the lowest position of pelvis to take-off"
@@ -624,12 +627,14 @@
   end: TakeOff
 
 - phase: FlightPhase
+  summaryTarget: true
   description: "Time from take-off till landing"
   displayName: "Flight phase"
   start: TakeOff
   end: TouchDown
 
 - phase: LandingPhase
+  summaryTarget: true
   description: "Time from the landing till 0.75 s after landing or till the end of recording if landing is less than 0.75 s before the end of recording"
   displayName: "Landing phase"
   start: TouchDown
