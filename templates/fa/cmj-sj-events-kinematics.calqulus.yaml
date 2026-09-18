@@ -657,6 +657,7 @@
   end: TakeOff
 
 - phase: Plot
+  export: false
   summaryTarget: false
   displayName: Plot
   start: PlotStart

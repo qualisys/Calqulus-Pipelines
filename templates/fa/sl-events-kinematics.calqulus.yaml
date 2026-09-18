@@ -246,6 +246,7 @@
   end: Max_knee_flex
 
 - phase: Plot
+  export: false
   summaryTarget: false
   displayName: Plot
   start: PlotStart

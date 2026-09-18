@@ -379,18 +379,21 @@
   end: TakeOff
 
 - phase: Plot
+  export: false
   summaryTarget: false
   displayName: Plot
   start: PlotStart
   end: PlotEnd
 
 - phase: LeftPlot
+  export: false
   summaryTarget: false
   displayName: Left plot
   start: LeftPlotStart
   end: LeftPlotEnd
 
 - phase: RightPlot
+  export: false
   summaryTarget: false
   displayName: Right plot
   start: RightPlotStart
