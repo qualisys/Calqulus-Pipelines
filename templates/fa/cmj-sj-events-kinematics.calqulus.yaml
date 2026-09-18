@@ -614,7 +614,6 @@
 - phase: Eccentric
   summaryTarget: true
   description: "Time from movement initiation till the lowest position of pelvis"
-  displayName: "Eccentric phase"
   start: PlotStart
   end: Eccentric_end
 
@@ -623,7 +622,6 @@
   where:
     name: ^(CMJ_)*
   description: "Time from the lowest position of pelvis to take-off"
-  displayName: "Concentric phase"
   start: Eccentric_end
   end: TakeOff
 
@@ -632,34 +630,29 @@
   where:
     name: ^(SJ_)*
   description: "Time from the lowest position of pelvis to take-off"
-  displayName: "Concentric phase"
   start: PlotStart
   end: TakeOff
 
 - phase: Flight
   summaryTarget: true
   description: "Time from take-off till landing"
-  displayName: "Flight phase"
   start: TakeOff
   end: TouchDown
 
 - phase: Absorption
   summaryTarget: true
   description: "Time from the landing till 0.75 s after landing or till the end of recording if landing is less than 0.75 s before the end of recording"
-  displayName: "Absorption phase"
   start: TouchDown
   end: PlotEnd
 
 - phase: Propulsion
   summaryTarget: false
-  displayName: Propulsion phase
   start: PlotStart
   end: TakeOff
 
 - phase: Plot
   export: false
   summaryTarget: false
-  displayName: Plot
   start: PlotStart
   end: PlotEnd
 

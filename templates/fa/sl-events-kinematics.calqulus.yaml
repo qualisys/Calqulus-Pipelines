@@ -228,26 +228,22 @@
 - phase: Eccentric
   summaryTarget: true
   description: "Time from TouchDown till the lowest position of pelvis"
-  displayName: "Eccentric phase"
   start: TouchDown
   end: COM_MIN
 
 - phase: Concentric
   summaryTarget: true
   description: "Time from the lowest position of pelvis to 1 s after TouchDown"
-  displayName: "Concentric phase"
   start: COM_MIN
   end: PlotEnd
 
 - phase: Loading
   summaryTarget: false
-  displayName: Loading phase
   start: TouchDown
   end: Max_knee_flex
 
 - phase: Plot
   export: false
   summaryTarget: false
-  displayName: Plot
   start: PlotStart
   end: PlotEnd

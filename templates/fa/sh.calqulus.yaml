@@ -304,7 +304,6 @@
   where:
     name: SH_L*
   description: "Time from touch-down till take-off"  
-  displayName: "Contact phase"
   start: LON
   end: LOFF
 
@@ -313,7 +312,6 @@
   where:
     name: SH_L*
   description: "Time from take-off till touch-down"
-  displayName: "Flight phase"
   start: LOFF
   end: LON
 
@@ -322,7 +320,6 @@
   where:
     name: SH_R*
   description: "Time from touch-down till take-off"  
-  displayName: "Contact phase"
   start: RON
   end: ROFF
 
@@ -331,7 +328,6 @@
   where:
     name: SH_R*
   description: "Time from take-off till touch-down"
-  displayName: "Flight phase"
   start: ROFF
   end: RON
 
