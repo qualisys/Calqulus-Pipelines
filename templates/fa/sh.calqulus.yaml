@@ -299,7 +299,7 @@
 ## Phases ##
 #############
 
-- phase: ContactPhase
+- phase: Contact
   summaryTarget: true
   where:
     name: SH_L*
@@ -317,7 +317,7 @@
   start: LOFF
   end: LON
 
-- phase: ContactPhase
+- phase: Contact
   summaryTarget: true
   where:
     name: SH_R*

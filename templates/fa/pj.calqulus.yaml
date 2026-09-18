@@ -213,7 +213,7 @@
 ## Phases ##
 #############
 
-- phase: ContactPhase
+- phase: Contact
   summaryTarget: true
   description: "Time from touch-down to take-off"  
   displayName: "Contact phase"
