@@ -30,6 +30,9 @@
       else: TouchDown_kinematics
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -40,6 +43,9 @@
     - import: $prev@1
 
 - event: Max_knee_flex
+  displayName: Max knee flexion
+  description: Instant of maximum knee flexion
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -67,6 +73,9 @@
       frames: true
 
 - event: END_WA
+  displayName: End of weight acceptance
+  description: Instant of end of weight acceptance
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -108,6 +117,9 @@
     - import: $prev@1
 
 - event: Max_knee_flex
+  displayName: Max knee flexion
+  description: Instant of maximum knee flexion
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -135,6 +147,9 @@
       frames: true
 
 - event: END_WA
+  displayName: End of weight acceptance
+  description: Instant of end of weight acceptance
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -175,6 +190,9 @@
       else: EOF
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: ^(SLJ|SLL)*
   steps:

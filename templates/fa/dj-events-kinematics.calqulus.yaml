@@ -421,6 +421,9 @@
       frames: true
 
 - event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   steps:
     - import: Hips_model.z
     - eventMask: [$prev, TouchDown, TakeOff]
@@ -520,7 +523,7 @@
   end: Landing_end
 
 - phase: Propulsion
-  summaryTarget: false
+  summaryTarget: true
   start: TouchDown
   end: TakeOff
 

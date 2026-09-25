@@ -14,15 +14,12 @@
   steps:
     - subtract: [$length, 1]
 
-# used by CMJ and SJ
+# Deprecated alias of PelvisCGPos_vel (kept for old report lookups).
 - parameter: RPV_CGVel
+  deprecated: true
+  displayName: Pelvis velocity
   steps:
-    - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
-      space: VirtualLab
-    - velocity:
-    - convert: $prev
-      from: mm/s
-      to: m/s
+    - import: PelvisCGPos_vel
 
 # Bilateral and left
 - event: temp_L_max
@@ -88,7 +85,7 @@
     name: ^(CMJ_|SJ_)[LB]*
   set: left
   steps:
-    - min: RPV_CGVel.z
+    - min: PelvisCGPos_vel.z
       frames: true
     - subtract: [$prev, 1]
 
@@ -168,7 +165,7 @@
   steps:
     # - divide: [$framerate, 10]
     #   output: shift
-    - threshold: RPV_CGVel.z
+    - threshold: PelvisCGPos_vel.z
       value: -0.1
       direction: down
     - eventMask: [$prev, BOF_fixed, TakeOff_L]
@@ -183,7 +180,7 @@
   steps:
     # - divide: [$framerate, 10]
     #   output: shift
-    - threshold: RPV_CGVel.z
+    - threshold: PelvisCGPos_vel.z
       value: 0.05
       direction: up
     - eventMask: [$prev, BOF_fixed, TakeOff_L]
@@ -209,6 +206,9 @@
       frames: true
 
 - event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   where:
     name: ^(CMJ_|SJ_)[LB]*
   steps:
@@ -237,7 +237,7 @@
   where:
     name: CMJ_[LB]*
   steps:
-    - threshold: RPV_CGVel.z
+    - threshold: PelvisCGPos_vel.z
       value: 0
       direction: up
     - eventMask: [$prev, PlotStart_L, TakeOff_L]
@@ -315,7 +315,7 @@
     name: ^(CMJ_|SJ_)[RB]*
   set: right
   steps:
-    - min: RPV_CGVel.z
+    - min: PelvisCGPos_vel.z
       frames: true
     - subtract: [$prev, 1]
 
@@ -362,7 +362,7 @@
   steps:
     # - divide: [$framerate, 10]
     #   output: shift
-    - threshold: RPV_CGVel.z
+    - threshold: PelvisCGPos_vel.z
       value: -0.1
       direction: down
     - eventMask: [$prev, BOF_fixed, TakeOff_R]
@@ -376,7 +376,7 @@
   steps:
     # - divide: [$framerate, 10]
     #   output: shift
-    - threshold: RPV_CGVel.z
+    - threshold: PelvisCGPos_vel.z
       value: 0.05
       direction: up
     - eventMask: [$prev, BOF_fixed, TakeOff_R]
@@ -402,6 +402,9 @@
       frames: true
 
 - event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   where:
     name: ^(CMJ_|SJ_)[RB]*
   steps:
@@ -431,7 +434,7 @@
   where:
     name: CMJ_[RB]*
   steps:
-    - threshold: RPV_CGVel.z
+    - threshold: PelvisCGPos_vel.z
       value: 0
       direction: up
     - eventMask: [$prev, PlotStart_R, TakeOff_R]
@@ -493,6 +496,9 @@
     - mean: TouchDown_L
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: ^(CMJ_|SJ_)R*
   steps:
@@ -630,7 +636,7 @@
   where:
     name: ^(SJ_)*
   description: "Time from the lowest position of pelvis to take-off"
-  start: PlotStart
+  start: COM_MIN
   end: TakeOff
 
 - phase: Flight
@@ -646,7 +652,7 @@
   end: PlotEnd
 
 - phase: Propulsion
-  summaryTarget: false
+  summaryTarget: true
   start: PlotStart
   end: TakeOff
 

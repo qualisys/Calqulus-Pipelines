@@ -43,6 +43,9 @@
       else: TouchDown_kinematics
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -82,6 +85,9 @@
       else: TakeOff_kinematics
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -131,6 +137,9 @@
     - import: $prev@1
 
 - event: Max_knee_flex
+  displayName: Max knee flexion
+  description: Instant of maximum knee flexion
+  summaryTarget: true
   where:
     name: (Cut|Cutting)_L*
   steps:
@@ -168,6 +177,9 @@
       else: TouchDown_kinematics
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -206,6 +218,9 @@
       else: TakeOff_kinematics
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -255,6 +270,9 @@
     - import: $prev@1
 
 - event: Max_knee_flex
+  displayName: Max knee flexion
+  description: Instant of maximum knee flexion
+  summaryTarget: true
   where:
     name: (Cut|Cutting)_R*
   steps:
