@@ -806,6 +806,7 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_SJ_B
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: SJ_B*
@@ -814,6 +815,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_B
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: SJ_B*
@@ -822,6 +824,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_B
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: SJ_B*
@@ -830,6 +833,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_B
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: SJ_B*
@@ -838,6 +842,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: left
@@ -845,6 +850,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: right
@@ -852,6 +858,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_SJ_L
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: SJ_L*
@@ -860,6 +867,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_L
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: SJ_L*
@@ -868,6 +876,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_L
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: SJ_L*
@@ -876,6 +885,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_L
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: SJ_L*
@@ -884,6 +894,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: left
@@ -891,6 +902,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: right
@@ -898,6 +910,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_SJ_R
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: SJ_R*
@@ -906,6 +919,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_SJ_R
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: SJ_R*
@@ -914,6 +928,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_SJ_R
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: SJ_R*
@@ -922,6 +937,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_SJ_R
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: SJ_R*
@@ -930,6 +946,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: left
@@ -937,6 +954,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: right
@@ -945,6 +963,7 @@
 
 # @COM_MIN
 - parameter: Left Ankle Angles@COM_MIN_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: left
@@ -952,6 +971,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: right
@@ -959,6 +979,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: left
@@ -966,6 +987,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: right
@@ -973,6 +995,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: left
@@ -980,6 +1003,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: right
@@ -987,6 +1011,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: left
@@ -994,6 +1019,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   set: right
@@ -1001,6 +1027,7 @@
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: left
@@ -1008,6 +1035,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: right
@@ -1015,6 +1043,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: left
@@ -1022,6 +1051,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: right
@@ -1029,6 +1059,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: left
@@ -1036,6 +1067,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: right
@@ -1043,6 +1075,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: left
@@ -1050,6 +1083,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_SJ_L
+  deprecated: true
   where:
     name: SJ_L*
   set: right
@@ -1057,6 +1091,7 @@
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: left
@@ -1064,6 +1099,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: right
@@ -1071,6 +1107,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: left
@@ -1078,6 +1115,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: right
@@ -1085,6 +1123,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: left
@@ -1092,6 +1131,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: right
@@ -1099,6 +1139,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: left
@@ -1106,6 +1147,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
   set: right
@@ -1500,6 +1542,8 @@
 
 # Kinetics -------------
 - parameter: Left_RFD
+  summarize:
+    include: [TouchDown_100ms]
   where:
     name: ^SJ_[BL]*
     force: left
@@ -1508,6 +1552,7 @@
     - derivative: Left GRF
 
 - parameter: Left Power
+  summarize: true
   where:
     name: ^SJ_[BL]*
   set: left
@@ -1515,6 +1560,8 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Right_RFD
+  summarize:
+    include: [TouchDown_100ms]
   where:
     name: ^SJ_[BR]*
     force: right
@@ -1523,6 +1570,7 @@
     - derivative: Right GRF
 
 - parameter: Right Power
+  summarize: true
   where:
     name: ^SJ_[BR]*
   set: right
@@ -1531,12 +1579,15 @@
 
 # Bilateral - Total
 - parameter: Total GRF
+  summarize: true
   where:
     name: SJ_B*
   steps:
     - add: [Left GRF, Right GRF]
 
 - parameter: Total_RFD
+  summarize:
+    include: [TouchDown_100ms]
   where:
     name: SJ_B*
     force: both
@@ -1544,12 +1595,14 @@
     - derivative: Total GRF
 
 - parameter: Total Power
+  summarize: true
   where:
     name: SJ_B*
   steps:
     - multiply: [Total GRF, PelvisCGPos_vel]
 
 - parameter: Total Power_max_concentric_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   steps:
@@ -1557,6 +1610,7 @@
     - max:
 
 - parameter: Total_RFD@TouchDown_100ms_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
     force: both
@@ -1564,6 +1618,7 @@
     - import: Total_RFD@TouchDown_100ms
 
 - parameter: Total Power_mean_concentric_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   steps:
@@ -1579,6 +1634,7 @@
       scalar: true
 
 - parameter: Total GRF_max_concentric_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   steps:
@@ -1586,6 +1642,7 @@
     - max:
 
 - parameter: Total GRF_max_landing_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   steps:
@@ -1593,6 +1650,7 @@
     - max:
 
 - parameter: Total GRF_mean_landing_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
   steps:
@@ -1601,6 +1659,7 @@
 
 # Bilateral - Left
 - parameter: Left_RFD@TouchDown_100ms_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
     force: both
@@ -1609,6 +1668,7 @@
     - import: Left_RFD@TouchDown_100ms
 
 - parameter: Left Power_max_concentric_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: left
@@ -1617,6 +1677,7 @@
     - max:
 
 - parameter: Left Power_mean_concentric_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: left
@@ -1634,6 +1695,7 @@
       scalar: true
 
 - parameter: Left GRF_max_concentric_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: left
@@ -1642,6 +1704,7 @@
     - max:
 
 - parameter: Left GRF_max_landing_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: left
@@ -1650,6 +1713,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: left
@@ -1679,6 +1743,7 @@
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left Knee Moment_max_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: left
@@ -1687,6 +1752,7 @@
     - max:
 
 - parameter: Left Knee Moment_max_landing_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: left
@@ -1696,6 +1762,7 @@
 
 # Bilateral - Right
 - parameter: Right_RFD@TouchDown_100ms_SJ_B
+  deprecated: true
   where:
     name: SJ_B*
     force: both
@@ -1704,6 +1771,7 @@
     - import: Right_RFD@TouchDown_100ms
 
 - parameter: Right Power_max_concentric_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: right
@@ -1712,6 +1780,7 @@
     - max:
 
 - parameter: Right Power_mean_concentric_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: right
@@ -1729,6 +1798,7 @@
       scalar: true
 
 - parameter: Right GRF_max_concentric_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: right
@@ -1737,6 +1807,7 @@
     - max:
 
 - parameter: Right GRF_max_landing_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: right
@@ -1745,6 +1816,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: right
@@ -1774,6 +1846,7 @@
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right Knee Moment_max_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: right
@@ -1782,6 +1855,7 @@
     - max:
 
 - parameter: Right Knee Moment_max_landing_SJ_B
+  deprecated: true
   where:
     name: ^SJ_B*
   set: right
@@ -1791,6 +1865,7 @@
 
 # Single leg - Left
 - parameter: Left_RFD@TouchDown_100ms_SJ_L
+  deprecated: true
   where:
     name: ^SJ_L*
     force: left
@@ -1799,6 +1874,7 @@
     - import: Left_RFD@TouchDown_100ms
 
 - parameter: Left Power_max_concentric_SJ_L
+  deprecated: true
   where:
     name: ^SJ_L*
   set: left
@@ -1807,6 +1883,7 @@
     - max:
 
 - parameter: Left Power_mean_concentric_SJ_L
+  deprecated: true
   where:
     name: ^SJ_L*
   set: left
@@ -1824,6 +1901,7 @@
       scalar: true
 
 - parameter: Left GRF_max_concentric_SJ_L
+  deprecated: true
   where:
     name: ^SJ_L*
   set: left
@@ -1832,6 +1910,7 @@
     - max:
 
 - parameter: Left GRF_max_landing_SJ_L
+  deprecated: true
   where:
     name: ^SJ_L*
   set: left
@@ -1840,6 +1919,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing_SJ_L
+  deprecated: true
   where:
     name: ^SJ_L*
   set: left
@@ -1869,6 +1949,7 @@
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left Knee Moment_max_SJ_L
+  deprecated: true
   where:
     name: ^SJ_L*
   set: left
@@ -1877,6 +1958,7 @@
     - max:
 
 - parameter: Left Knee Moment_max_landing_SJ_L
+  deprecated: true
   where:
     name: ^SJ_L*
   set: left
@@ -1886,6 +1968,7 @@
 
 # Single leg - Right
 - parameter: Right_RFD@TouchDown_100ms_SJ_R
+  deprecated: true
   where:
     name: SJ_R*
     force: right
@@ -1894,6 +1977,7 @@
     - import: Right_RFD@TouchDown_100ms
 
 - parameter: Right Power_max_concentric_SJ_R
+  deprecated: true
   where:
     name: ^SJ_R*
   set: right
@@ -1902,6 +1986,7 @@
     - max:
 
 - parameter: Right Power_mean_concentric_SJ_R
+  deprecated: true
   where:
     name: ^SJ_R*
   set: right
@@ -1919,6 +2004,7 @@
       scalar: true
 
 - parameter: Right GRF_max_concentric_SJ_R
+  deprecated: true
   where:
     name: ^SJ_R*
   set: right
@@ -1927,6 +2013,7 @@
     - max:
 
 - parameter: Right GRF_max_landing_SJ_R
+  deprecated: true
   where:
     name: ^SJ_R*
   set: right
@@ -1935,6 +2022,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing_SJ_R
+  deprecated: true
   where:
     name: ^SJ_R*
   set: right
@@ -1964,6 +2052,7 @@
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right Knee Moment_max_SJ_R
+  deprecated: true
   where:
     name: ^SJ_R*
   set: right
@@ -1972,6 +2061,7 @@
     - max:
 
 - parameter: Right Knee Moment_max_landing_SJ_R
+  deprecated: true
   where:
     name: ^SJ_R*
   set: right

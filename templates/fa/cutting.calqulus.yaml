@@ -70,6 +70,7 @@
 
 # Joint angle at event
 - parameter: Left Knee Angles@TouchDown
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: (Cut|Cutting)_L*
@@ -78,6 +79,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: (Cut|Cutting)_L*
@@ -86,6 +88,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown
+  deprecated: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -93,6 +96,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TakeOff
+  deprecated: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -100,6 +104,7 @@
     - import: Left Knee Angles@TakeOff
 
 - parameter: Left Hip Angles@TakeOff
+  deprecated: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -107,6 +112,7 @@
     - import: Left Hip Angles@TakeOff
 
 - parameter: Left Thorax Angles@TakeOff
+  deprecated: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -114,6 +120,7 @@
     - import: Left Thorax Angles@TakeOff
 
 - parameter: Left Ankle Angles@Max_knee_flex
+  deprecated: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -121,6 +128,7 @@
     - import: Left Ankle Angles@Max_knee_flex
 
 - parameter: Left Knee Angles@Max_knee_flex
+  deprecated: true
   displayName: Knee valgus at max flexion
   where:
     name: (Cut|Cutting)_L*
@@ -129,6 +137,7 @@
     - import: Left Knee Angles@Max_knee_flex
 
 - parameter: Left Hip Angles@Max_knee_flex
+  deprecated: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -136,6 +145,7 @@
     - import: Left Hip Angles@Max_knee_flex
 
 - parameter: Left Thorax Angles@Max_knee_flex
+  deprecated: true
   where:
     name: (Cut|Cutting)_L*
   set: left
@@ -279,6 +289,7 @@
 
 # Joint angle at event
 - parameter: Right Knee Angles@TouchDown
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: (Cut|Cutting)_R*
@@ -287,6 +298,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: (Cut|Cutting)_R*
@@ -295,6 +307,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown
+  deprecated: true
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -302,6 +315,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Right Knee Angles@TakeOff
+  deprecated: true
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -309,6 +323,7 @@
     - import: Right Knee Angles@TakeOff
 
 - parameter: Right Hip Angles@TakeOff
+  deprecated: true
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -316,6 +331,7 @@
     - import: Right Hip Angles@TakeOff
 
 - parameter: Right Thorax Angles@TakeOff
+  deprecated: true
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -323,6 +339,7 @@
     - import: Right Thorax Angles@TakeOff
 
 - parameter: Right Ankle Angles@Max_knee_flex
+  deprecated: true
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -330,6 +347,7 @@
     - import: Right Ankle Angles@Max_knee_flex
 
 - parameter: Right Knee Angles@Max_knee_flex
+  deprecated: true
   displayName: Knee valgus at max flexion
   where:
     name: (Cut|Cutting)_R*
@@ -338,6 +356,7 @@
     - import: Right Knee Angles@Max_knee_flex
 
 - parameter: Right Hip Angles@Max_knee_flex
+  deprecated: true
   where:
     name: (Cut|Cutting)_R*
   set: right
@@ -345,6 +364,7 @@
     - import: Right Hip Angles@Max_knee_flex
 
 - parameter: Right Thorax Angles@Max_knee_flex
+  deprecated: true
   where:
     name: (Cut|Cutting)_R*
   set: right

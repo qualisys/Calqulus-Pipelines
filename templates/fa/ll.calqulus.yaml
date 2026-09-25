@@ -487,6 +487,7 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_LL_L
+  deprecated: true
   displayName: Knee flexion at touchdown
   where:
     name: LL_L*
@@ -495,6 +496,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_LL_L
+  deprecated: true
   displayName: Hip flexion at touchdown
   where:
     name: LL_L*
@@ -503,6 +505,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -511,6 +514,7 @@
 
 # @COM_MIN
 - parameter: Left Ankle Angles@COM_MIN_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -518,6 +522,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -525,6 +530,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -597,6 +603,7 @@
 
 # Other metrics @TouchDown
 - parameter: Right Knee Angles@TouchDown_LL_R
+  deprecated: true
   displayName: Knee flexion at touchdown
   where:
     name: LL_R*
@@ -605,6 +612,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_LL_R
+  deprecated: true
   displayName: Hip flexion at touchdown
   where:
     name: LL_R*
@@ -613,6 +621,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -621,6 +630,7 @@
 
 # @COM_MIN
 - parameter: Right Ankle Angles@COM_MIN_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -628,6 +638,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -635,6 +646,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -739,6 +751,7 @@
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left GRF_max_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -747,6 +760,7 @@
     - max:
 
 - parameter: Left GRF_max_landing_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -755,6 +769,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -763,6 +778,7 @@
     - mean:
 
 - parameter: Left GRF_max_concentric_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -771,6 +787,7 @@
     - max:
 
 - parameter: Left GRF_mean_concentric_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -779,6 +796,7 @@
     - mean:
 
 - parameter: Left GRF_max_eccentric_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -787,6 +805,7 @@
     - max:
 
 - parameter: Left GRF_mean_eccentric_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -825,6 +844,7 @@
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right GRF_max_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -833,6 +853,7 @@
     - max:
 
 - parameter: Right GRF_max_landing_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -841,6 +862,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -849,6 +871,7 @@
     - mean:
 
 - parameter: Right GRF_max_concentric_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -857,6 +880,7 @@
     - max:
 
 - parameter: Right GRF_mean_concentric_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -865,6 +889,7 @@
     - mean:
 
 - parameter: Right GRF_max_eccentric_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -873,6 +898,7 @@
     - max:
 
 - parameter: Right GRF_mean_eccentric_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right

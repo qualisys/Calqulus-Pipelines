@@ -461,6 +461,7 @@
 # Kinetics ------------
 # Bilateral - left
 - parameter: Left Power
+  summarize: true
   where:
     name: PJ_B*
     force: both
@@ -469,6 +470,7 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Left Power_min_ecc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -487,6 +489,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_ecc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -496,6 +499,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_conc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -505,6 +509,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -551,6 +556,7 @@
 
 # Bilateral - right
 - parameter: Right Power
+  summarize: true
   where:
     name: PJ_B*
     force: both
@@ -559,6 +565,7 @@
     - multiply: [Right GRF, PelvisCGPos_vel]
 
 - parameter: Right Power_min_ecc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -577,6 +584,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_ecc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -586,6 +594,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_conc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -595,6 +604,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -641,6 +651,7 @@
 
 # Single leg - Left
 - parameter: Left Power
+  summarize: true
   where:
     name: PJ_L*
     force: left
@@ -649,6 +660,7 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Left Power_min_ecc_PJ_L
+  deprecated: true
   where:
     name: PJ_L*
     force: left
@@ -666,6 +678,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_ecc_PJ_L
+  deprecated: true
   where:
     name: PJ_L*
     force: left
@@ -675,6 +688,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_conc_PJ_L
+  deprecated: true
   where:
     name: PJ_L*
     force: left
@@ -684,6 +698,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_PJ_L
+  deprecated: true
   where:
     name: PJ_L*
     force: left
@@ -730,6 +745,7 @@
 
 # Single leg - Right
 - parameter: Right Power
+  summarize: true
   where:
     name: PJ_R*
     force: right
@@ -738,6 +754,7 @@
     - multiply: [Right GRF, PelvisCGPos_vel]
 
 - parameter: Right Power_min_ecc_PJ_R
+  deprecated: true
   where:
     name: PJ_R*
     force: right
@@ -756,6 +773,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_ecc_PJ_R
+  deprecated: true
   where:
     name: PJ_R*
     force: right
@@ -765,6 +783,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_conc_PJ_R
+  deprecated: true
   where:
     name: PJ_R*
     force: right
@@ -774,6 +793,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_PJ_R
+  deprecated: true
   where:
     name: PJ_R*
     force: right

@@ -463,6 +463,7 @@
 # Kinetics ----------------
 # Left
 - parameter: Left GRF_max_Left_FP
+  deprecated: true
   where:
     name: SH_L*
   set: left
@@ -473,6 +474,7 @@
     - max: $prev(2)
 
 - parameter: Left GRF_max_Right_FP
+  deprecated: true
   where:
     name: SH_L*
   set: left
@@ -532,6 +534,7 @@
 
 # Right
 - parameter: Right GRF_max_Right_FP
+  deprecated: true
   where:
     name: SH_R*
   set: right
@@ -542,6 +545,7 @@
     - max: $prev(2)
 
 - parameter: Right GRF_max_Left_FP
+  deprecated: true
   where:
     name: SH_R*
   set: right

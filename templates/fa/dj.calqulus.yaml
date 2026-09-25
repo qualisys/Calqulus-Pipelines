@@ -432,6 +432,7 @@
 
 #COM peak eccentric velocity
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
@@ -439,6 +440,7 @@
     - eventMask: [$prev,TouchDown,COM_MIN]
 
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
@@ -446,6 +448,7 @@
     - eventMask: [$prev,TouchDown,COM_MIN]
 
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
@@ -900,6 +903,7 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_DVJ_B
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: DJ_B*
@@ -907,6 +911,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_B
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: DJ_B*
@@ -914,6 +919,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_B
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: DJ_B*
@@ -921,6 +927,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_B
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: DJ_B*
@@ -928,18 +935,21 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_DVJ_L
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: DJ_L*
@@ -947,6 +957,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_L
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: DJ_L*
@@ -954,6 +965,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_L
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: DJ_L*
@@ -961,6 +973,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_L
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: DJ_L*
@@ -968,18 +981,21 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_DVJ_R
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: DJ_R*
@@ -987,6 +1003,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_R
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: DJ_R*
@@ -994,6 +1011,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_R
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: DJ_R*
@@ -1001,6 +1019,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_R
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: DJ_R*
@@ -1008,12 +1027,14 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
@@ -1021,144 +1042,168 @@
 
 # @COM_MIN
 - parameter: Left Ankle Angles@COM_MIN_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
   steps:
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
   steps:
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
   steps:
@@ -1339,6 +1384,8 @@
 # Kinetics ----------
 # Bilateral
 - parameter: Left_RFD
+  summarize:
+    include: [TouchDown_100ms]
   where:
     name: DJ_B*
     force: left
@@ -1349,6 +1396,8 @@
       else: [[]]
 
 - parameter: Left_RFD
+  summarize:
+    include: [TouchDown_100ms]
   where:
     name: DJ_L*
     force: left
@@ -1356,6 +1405,7 @@
     - derivative: Left GRF
 
 - parameter: Left Power
+  summarize: true
   where:
     name: DJ_B*
     force: left
@@ -1366,6 +1416,7 @@
       else: [[]]
 
 - parameter: Left Power
+  summarize: true
   where:
     name: DJ_L*
     force: left
@@ -1373,6 +1424,8 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Right_RFD
+  summarize:
+    include: [TouchDown_100ms]
   where:
     name: DJ_B*
     force: right
@@ -1383,6 +1436,8 @@
       else: [[]]
 
 - parameter: Right_RFD
+  summarize:
+    include: [TouchDown_100ms]
   where:
     name: DJ_R*
     force: right
@@ -1390,6 +1445,7 @@
     - derivative: Right GRF
 
 - parameter: Right Power
+  summarize: true
   where:
     name: DJ_B*
     force: right
@@ -1400,6 +1456,7 @@
       else: [[]]
 
 - parameter: Right Power
+  summarize: true
   where:
     name: DJ_R*
     force: right
@@ -1469,6 +1526,7 @@
       else: [[]]
 
 - parameter: Total GRF
+  summarize: true
   where:
     name: DJ_B*
     force: any
@@ -1476,6 +1534,15 @@
     - if: "!empty(Total GRF_both.x)"
       then: Total GRF_both
       else: Total GRF_single
+
+- parameter: Total_RFD
+  summarize:
+    include: [TouchDown_100ms]
+  where:
+    name: DJ_B*
+    force: any
+  steps:
+    - derivative: Total GRF
 
 # Bilateral Power
 # Power = F * v
@@ -1502,6 +1569,7 @@
       else: [[]]
 
 - parameter: Bilateral Power
+  summarize: true
   where:
     name: DJ_B*
     force: any
@@ -1511,6 +1579,7 @@
       else: Bilateral Power_single
 
 - parameter: Bilateral Power_max_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: any
@@ -1519,6 +1588,7 @@
     - max:
 
 - parameter: Bilateral Power_mean_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: any
@@ -1527,6 +1597,7 @@
     - mean:
 
 - parameter: Bilateral Power_min_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: any
@@ -1535,6 +1606,7 @@
     - min:
 
 - parameter: Bilateral Power_mean_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: any
@@ -1542,7 +1614,6 @@
     - eventMask: [Bilateral Power, TouchDown, Eccentric_end]
     - mean:
 
-# Bilateral - left
 - parameter: Left Hip Moment@COM_MIN_DVJ_B
   where:
     name: DJ_B*
@@ -1574,6 +1645,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1585,6 +1657,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_landing_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1596,6 +1669,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_landing_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1607,6 +1681,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1618,6 +1693,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1629,6 +1705,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1640,6 +1717,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1651,6 +1729,7 @@
       else: [[]]
 
 - parameter: Left_RFD@TouchDown_100ms_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1661,6 +1740,7 @@
       else: [[]]
 
 - parameter: Left Power_max_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1672,6 +1752,7 @@
       else: [[]]
 
 - parameter: Left Power_mean_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1683,6 +1764,7 @@
       else: [[]]
   
 - parameter: Left Power_min_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1694,6 +1776,7 @@
       else: [[]]
 
 - parameter: Left Power_mean_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: left
@@ -1760,6 +1843,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1771,6 +1855,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_landing_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1782,6 +1867,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_landing_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1793,6 +1879,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1804,6 +1891,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1815,6 +1903,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1826,6 +1915,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1837,6 +1927,7 @@
       else: [[]]
 
 - parameter: Right_RFD@TouchDown_100ms_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1847,6 +1938,7 @@
       else: [[]]
 
 - parameter: Right Power_max_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1858,6 +1950,7 @@
       else: [[]]
 
 - parameter: Right Power_mean_concentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1869,6 +1962,7 @@
       else: [[]]
   
 - parameter: Right Power_min_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1880,6 +1974,7 @@
       else: [[]]
 
 - parameter: Right Power_mean_eccentric_DVJ_B
+  deprecated: true
   where:
     name: DJ_B*
     force: right
@@ -1937,6 +2032,7 @@
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left GRF_max_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -1945,6 +2041,7 @@
     - max:
 
 - parameter: Left GRF_max_landing_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -1953,6 +2050,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -1961,6 +2059,7 @@
     - mean:
 
 - parameter: Left GRF_max_concentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -1969,6 +2068,7 @@
     - max:
 
 - parameter: Left GRF_mean_concentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -1977,6 +2077,7 @@
     - mean:
 
 - parameter: Left GRF_max_eccentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -1985,6 +2086,7 @@
     - max:
 
 - parameter: Left GRF_mean_eccentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -1993,6 +2095,7 @@
     - mean:
 
 - parameter: Left_RFD@TouchDown_100ms_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -2000,6 +2103,7 @@
     - import: Left_RFD@TouchDown_100ms
 
 - parameter: Left Power_max_concentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -2008,6 +2112,7 @@
     - max:
 
 - parameter: Left Power_mean_concentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -2016,6 +2121,7 @@
     - mean:
   
 - parameter: Left Power_min_eccentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -2024,6 +2130,7 @@
     - min:
 
 - parameter: Left Power_mean_eccentric_DVJ_L
+  deprecated: true
   where:
     name: DJ_L*
     force: left
@@ -2072,6 +2179,7 @@
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right GRF_max_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2080,6 +2188,7 @@
     - max:
 
 - parameter: Right GRF_max_landing_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2088,6 +2197,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2096,6 +2206,7 @@
     - mean:
 
 - parameter: Right GRF_max_concentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2104,6 +2215,7 @@
     - max:
 
 - parameter: Right GRF_mean_concentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2112,6 +2224,7 @@
     - mean:
 
 - parameter: Right GRF_max_eccentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2120,6 +2233,7 @@
     - max:
 
 - parameter: Right GRF_mean_eccentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2128,6 +2242,7 @@
     - mean:
 
 - parameter: Right_RFD@TouchDown_100ms_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2135,6 +2250,7 @@
     - import: Right_RFD@TouchDown_100ms
 
 - parameter: Right Power_max_concentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2143,6 +2259,7 @@
     - max:
 
 - parameter: Right Power_mean_concentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2151,6 +2268,7 @@
     - mean:
   
 - parameter: Right Power_min_eccentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right
@@ -2159,6 +2277,7 @@
     - min:
 
 - parameter: Right Power_mean_eccentric_DVJ_R
+  deprecated: true
   where:
     name: DJ_R*
     force: right

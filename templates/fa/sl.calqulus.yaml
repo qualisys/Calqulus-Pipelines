@@ -38,6 +38,7 @@
 
 # Left -------------
 - parameter: Left Knee Angles@TouchDown
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
@@ -46,6 +47,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
@@ -104,6 +106,7 @@
 
 # Max Knee Flex
 - parameter: Left Knee Angles@Max_knee_flex
+  deprecated: true
   displayName: Knee valgus at max flexion
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
@@ -112,6 +115,7 @@
     - import: Left Knee Angles@Max_knee_flex
 
 - parameter: Left Thorax Angles@Max_knee_flex
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -120,6 +124,7 @@
 
 # Weight Acceptance
 - parameter: Left Knee Angles@END_WA
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -128,6 +133,7 @@
     - import: Left Knee Angles@END_WA
 
 - parameter: Left Thorax Angles@END_WA
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -276,6 +282,7 @@
 
 # Right -------------
 - parameter: Right Knee Angles@TouchDown
+  deprecated: true
   displayName: Knee flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
@@ -284,6 +291,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown
+  deprecated: true
   displayName: Hip flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
@@ -342,6 +350,7 @@
 
 # Max Knee Flex
 - parameter: Right Knee Angles@Max_knee_flex
+  deprecated: true
   displayName: Knee valgus at max flexion
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
@@ -350,6 +359,7 @@
     - import: Right Knee Angles@Max_knee_flex
 
 - parameter: Right Thorax Angles@Max_knee_flex
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -358,6 +368,7 @@
 
 # Weight Acceptance
 - parameter: Right Knee Angles@END_WA
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -366,6 +377,7 @@
     - import: Right Knee Angles@END_WA
 
 - parameter: Right Thorax Angles@END_WA
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -595,6 +607,7 @@
     - max: 
 
 - parameter: Left GRF_max_landing
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -604,6 +617,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -695,6 +709,7 @@
     - max: 
 
 - parameter: Right GRF_max_landing
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -704,6 +719,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
