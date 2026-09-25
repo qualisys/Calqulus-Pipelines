@@ -20,6 +20,7 @@
     - subtract: [$length, 1]
 
 - parameter: PelvisCGPos_vel
+  displayName: Pelvis velocity
   steps:
     - segment: Hips_model
       space: VirtualLab

@@ -4,6 +4,8 @@
 
 # Parameters needed for kinematics event detection in FA
 - parameter: PelvisCGPos_vel
+  displayName: Pelvis velocity
+  summarize: true
   steps:
     - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
@@ -96,7 +98,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown]
+    include: [Plot, Propulsion, Absorption, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, LeftUpLeg_model]
     - multiply: [$prev, [1, -1, -1]]
@@ -108,7 +110,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown]
+    include: [Plot, Propulsion, Absorption, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, RightUpLeg_model]
     - multiply: [$prev, [1, 1, 1]]
@@ -122,7 +124,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex]
+    include: [Plot, Propulsion, Absorption, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [LeftUpLeg_model, LeftLeg_model]
     - multiply: [$prev, [-1, -1, -1]]
@@ -134,7 +136,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex]
+    include: [Plot, Propulsion, Absorption, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [RightUpLeg_model, RightLeg_model]
     - multiply: [$prev, [-1, 1, 1]]
@@ -148,7 +150,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle]
+    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [LeftLeg_model, LeftFoot_model]
       output: foot_vector
@@ -169,7 +171,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle]
+    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [RightLeg_model, RightFoot_model]
       output: foot_vector
@@ -257,7 +259,9 @@
 
 - parameter: Left Thorax Angles
   set: left
-  summarize: true
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, 1, -1]]
@@ -267,7 +271,9 @@
 
 - parameter: Right Thorax Angles
   set: right
-  summarize: true
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, -1, 1]]
