@@ -494,24 +494,24 @@
   where:
     name: CMJ_B*
   steps:
-    - min: RPV_CGVel
-    - eventMask: [$prev,PlotStart,Eccentric_end]
+    - eventMask: [PelvisCGPos_vel, PlotStart, Eccentric_end]
+    - min:
 
 - parameter: PelvisCGPos_vel_min_eccentric_CMJ_L
   deprecated: true
   where:
     name: CMJ_L*
   steps:
-    - min: RPV_CGVel
-    - eventMask: [$prev,PlotStart,Eccentric_end]
+    - eventMask: [PelvisCGPos_vel, PlotStart, Eccentric_end]
+    - min:
 
 - parameter: PelvisCGPos_vel_min_eccentric_CMJ_R
   deprecated: true
   where:
     name: CMJ_R*
   steps:
-    - min: RPV_CGVel
-    - eventMask: [$prev,PlotStart,Eccentric_end]
+    - eventMask: [PelvisCGPos_vel, PlotStart, Eccentric_end]
+    - min:
 
 #Jump Height to Flight Time Ratio
 - parameter: Jump_height_flight_time_ratio_CMJ_B

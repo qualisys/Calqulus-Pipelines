@@ -436,24 +436,24 @@
   where:
     name: DJ_B*
   steps:
-    - min: PelvisCGPos_vel
-    - eventMask: [$prev,TouchDown,COM_MIN]
+    - eventMask: [PelvisCGPos_vel, TouchDown, COM_MIN]
+    - min:
 
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_L
   deprecated: true
   where:
     name: DJ_L*
   steps:
-    - min: PelvisCGPos_vel
-    - eventMask: [$prev,TouchDown,COM_MIN]
+    - eventMask: [PelvisCGPos_vel, TouchDown, COM_MIN]
+    - min:
 
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_R
   deprecated: true
   where:
     name: DJ_R*
   steps:
-    - min: PelvisCGPos_vel
-    - eventMask: [$prev,TouchDown,COM_MIN]
+    - eventMask: [PelvisCGPos_vel, TouchDown, COM_MIN]
+    - min:
 
 #Jump Height to Flight Time Ratio
 - parameter: Jump_height_flight_time_ratio_DVJ_B
