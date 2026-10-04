@@ -67,6 +67,7 @@
       frames: true
 
 - event: TakeOff_full_cycle
+  set: left
   where:
     name: PJ_L*
   steps:
@@ -74,6 +75,7 @@
       sequence: [TakeOff_L, TouchDown_L]
 
 - event: COM_MIN
+  set: left
   where:
     name: PJ_L*
   steps:
@@ -145,6 +147,7 @@
       frames: true
 
 - event: TakeOff
+  set: left
   displayName: Take-off
   description: Instant the foot leaves the ground
   summaryTarget: true
@@ -154,6 +157,7 @@
     - import: TakeOff_L
 
 - event: TouchDown
+  set: left
   displayName: Touchdown
   description: Instant of initial ground contact
   summaryTarget: true
@@ -263,12 +267,14 @@
 
 # Bilateral ---------
 - parameter: Jump_height_PJ_B
+  set: total
   displayName: Jump height
   summarize: Jump_Height
   steps:
     - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
 
 - parameter: Jump_height_PJ_B_max
+  set: total
   where:
     name: PJ_B*
   steps:
@@ -276,6 +282,7 @@
 
 # Number of repetitions
 - parameter: Right_TouchDown_count_PJ_B
+  set: right
   displayName: Number of repetitions
   summarize: Number_of_Repetitions
   where:
@@ -339,6 +346,7 @@
 
 ### From static trial ###
 - parameter: Jump_height_static_PJ_B
+  set: total
   displayName: Jump height (using static trial)
   summarize: Jump_Height_Static
   where:
@@ -392,6 +400,7 @@
       to: m
 
 - parameter: Jump_height_static_PJ_B_max
+  set: total
   where:
     name: PJ_B*
   steps:
@@ -413,6 +422,7 @@
 
 ### From takeoff velocity ###
 - parameter: Jump_height_takeoff_vel_PJ_B
+  set: total
   where:
     name: PJ_B*
   steps:
@@ -439,6 +449,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: Jump_height_takeoff_vel_PJ_B_max
+  set: total
   where:
     name: PJ_B*
   steps:
@@ -660,6 +671,7 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Left Power_min_ecc_PJ_L
+  set: left
   deprecated: true
   where:
     name: PJ_L*
