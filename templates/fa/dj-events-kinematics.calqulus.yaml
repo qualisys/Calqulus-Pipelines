@@ -359,6 +359,7 @@
     - import: Landing_R
 
 - event: TakeOff_zero # used for jump height
+  set: total
   where:
     name: DJ_B*
     force: both
@@ -370,6 +371,7 @@
       keep: -1
 
 - event: TakeOff_zero # used for jump height
+  set: left
   where:
     name: DJ_L*
     force: left
@@ -381,6 +383,7 @@
       keep: -1
 
 - event: TakeOff_zero # used for jump height
+  set: right
   where:
     name: DJ_R*
     force: right

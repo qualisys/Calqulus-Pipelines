@@ -29,18 +29,21 @@
 
 # Contact time
 - parameter: ContactTime_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - eventDuration: [TouchDown,TakeOff]
 
 - parameter: ContactTime_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - eventDuration: [TouchDown,TakeOff]
 
 - parameter: ContactTime_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -48,18 +51,21 @@
 
 # Flight Time
 - parameter: FlightTime_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - eventDuration: [TakeOff,Landing]
 
 - parameter: FlightTime_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - eventDuration: [TakeOff,Landing]
 
 - parameter: FlightTime_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -67,18 +73,21 @@
 
 # Eccentric time
 - parameter: EccentricTime_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - eventDuration: [TouchDown,COM_MIN]
 
 - parameter: EccentricTime_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - eventDuration: [TouchDown,COM_MIN]
 
 - parameter: EccentricTime_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -86,18 +95,21 @@
 
 # Concentric time
 - parameter: ConcentricTime_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - eventDuration: [COM_MIN,TakeOff]
 
 - parameter: ConcentricTime_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - eventDuration: [COM_MIN,TakeOff]
 
 - parameter: ConcentricTime_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -105,6 +117,7 @@
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_DVJ_B
+  set: total
   displayName: Flight time / contraction time
   summarize: Flight_Time_Contraction_Time
   where:
@@ -113,6 +126,7 @@
     - divide: [FlightTime_DVJ_B,ConcentricTime_DVJ_B]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_L
+  set: left
   displayName: Flight time / contraction time
   summarize: Flight_Time_Contraction_Time
   where:
@@ -121,6 +135,7 @@
     - divide: [FlightTime_DVJ_L,ConcentricTime_DVJ_L]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_R
+  set: right
   displayName: Flight time / contraction time
   summarize: Flight_Time_Contraction_Time
   where:
@@ -131,6 +146,7 @@
 # COM @TakeOff, max, min
 # We use Pelvis COM for now
 - parameter: COM_Z_TO_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
@@ -141,6 +157,7 @@
       to: m
 
 - parameter: COM_Z_TO_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
@@ -151,6 +168,7 @@
       to: m
 
 - parameter: COM_Z_TO_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -161,6 +179,7 @@
       to: m
 
 - parameter: CenterOfMass_MAX_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
@@ -172,6 +191,7 @@
       to: m
 
 - parameter: CenterOfMass_MAX_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
@@ -183,6 +203,7 @@
       to: m
 
 - parameter: CenterOfMass_MAX_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -194,6 +215,7 @@
       to: m
 
 - parameter: CenterOfMass_MIN_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
@@ -203,6 +225,7 @@
       to: m
 
 - parameter: CenterOfMass_MIN_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
@@ -212,6 +235,7 @@
       to: m
 
 - parameter: CenterOfMass_MIN_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -241,6 +265,7 @@
 
 # Pelvis height
 - parameter: COM_displacement_MEAN_max_DVJ_B
+  set: total
   displayName: Jump height
   summarize: Jump_Height
   where:
@@ -255,6 +280,7 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_DVJ_L
+  set: left
   displayName: Jump height
   summarize: Jump_Height
   where:
@@ -269,6 +295,7 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_DVJ_R
+  set: right
   displayName: Jump height
   summarize: Jump_Height
   where:
@@ -284,6 +311,7 @@
 
 # Static trial
 - parameter: COM_displacement_MEAN_max_static_DVJ_B
+  set: total
   displayName: Jump height (using static trial)
   summarize: Jump_Height_Static
   where:
@@ -300,6 +328,7 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_static_DVJ_L
+  set: left
   displayName: Jump height (using static trial)
   summarize: Jump_Height_Static
   where:
@@ -316,6 +345,7 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_static_DVJ_R
+  set: right
   displayName: Jump height (using static trial)
   summarize: Jump_Height_Static
   where:
@@ -333,6 +363,7 @@
 
 # Takeoff velocity (vel@takeoff^2 /2g)
 - parameter: COM_displacement_MEAN_max_takeoff_vel_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
@@ -341,6 +372,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_max_takeoff_vel_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
@@ -349,6 +381,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_max_takeoff_vel_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -358,6 +391,7 @@
 
 # Impulse (vel = impulse/m, h = vel@takeoff^2 /2g)
 - parameter: COM_displacement_MEAN_max_impulse_DVJ_B
+  set: total
   where:
     name: DJ_B*
     force: both
@@ -374,6 +408,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_max_impulse_DVJ_L
+  set: left
   where:
     name: DJ_L*
     force: left
@@ -390,6 +425,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_max_impulse_DVJ_R
+  set: right
   where:
     name: DJ_R*
     force: right
@@ -406,6 +442,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_min_DVJ_B
+  set: total
   displayName: Depth of movement
   summarize: Depth_of_movement
   where:
@@ -414,6 +451,7 @@
     - subtract: [CenterOfMass\@Landing_end.z, CenterOfMass_MIN_DVJ_B]
 
 - parameter: COM_displacement_MEAN_min_DVJ_L
+  set: left
   displayName: Depth of movement
   summarize: Depth_of_movement
   where:
@@ -422,6 +460,7 @@
     - subtract: [CenterOfMass\@Landing_end.z, CenterOfMass_MIN_DVJ_L]
 
 - parameter: COM_displacement_MEAN_min_DVJ_R
+  set: right
   displayName: Depth of movement
   summarize: Depth_of_movement
   where:
@@ -432,6 +471,7 @@
 
 #COM peak eccentric velocity
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_B
+  set: total
   deprecated: true
   where:
     name: DJ_B*
@@ -440,6 +480,7 @@
     - min:
 
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -448,6 +489,7 @@
     - min:
 
 - parameter: PelvisCGPos_vel_min_eccentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -457,6 +499,7 @@
 
 #Jump Height to Flight Time Ratio
 - parameter: Jump_height_flight_time_ratio_DVJ_B
+  set: total
   displayName: Jump height / flight time
   summarize: Jump_Height_Flight_Time
   where:
@@ -465,6 +508,7 @@
     - divide: [COM_displacement_MEAN_max_DVJ_B,FlightTime_DVJ_B]
 
 - parameter: Jump_height_flight_time_ratio_DVJ_L
+  set: left
   displayName: Jump height / flight time
   summarize: Jump_Height_Flight_Time
   where:
@@ -473,6 +517,7 @@
     - divide: [COM_displacement_MEAN_max_DVJ_L,FlightTime_DVJ_L]
 
 - parameter: Jump_height_flight_time_ratio_DVJ_R
+  set: right
   displayName: Jump height / flight time
   summarize: Jump_Height_Flight_Time
   where:
@@ -481,54 +526,63 @@
     - divide: [COM_displacement_MEAN_max_DVJ_R,FlightTime_DVJ_R]
 
 - parameter: Jump_height_flight_time_ratio_static_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_static_DVJ_B,FlightTime_DVJ_B]
 
 - parameter: Jump_height_flight_time_ratio_static_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_static_DVJ_L,FlightTime_DVJ_L]
 
 - parameter: Jump_height_flight_time_ratio_static_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_static_DVJ_R,FlightTime_DVJ_R]
 
 - parameter: Jump_height_flight_time_ratio_takeoff_vel_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_B,FlightTime_DVJ_B]
 
 - parameter: Jump_height_flight_time_ratio_takeoff_vel_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_L,FlightTime_DVJ_L]
 
 - parameter: Jump_height_flight_time_ratio_takeoff_vel_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_R,FlightTime_DVJ_R]
 
 - parameter: Jump_height_flight_time_ratio_impulse_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_impulse_DVJ_B,FlightTime_DVJ_B]
 
 - parameter: Jump_height_flight_time_ratio_impulse_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_impulse_DVJ_L,FlightTime_DVJ_L]
 
 - parameter: Jump_height_flight_time_ratio_impulse_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -536,6 +590,7 @@
 
 # Jump height to Contact Time Ratio
 - parameter: Jump_height_contact_time_ratio_DVJ_B
+  set: total
   displayName: Jump height / contact time
   summarize: Jump_Height_Contact_Time
   where:
@@ -544,6 +599,7 @@
     - divide: [COM_displacement_MEAN_max_DVJ_B, ContactTime_DVJ_B]
 
 - parameter: Jump_height_contact_time_ratio_DVJ_L
+  set: left
   displayName: Jump height / contact time
   summarize: Jump_Height_Contact_Time
   where:
@@ -552,6 +608,7 @@
     - divide: [COM_displacement_MEAN_max_DVJ_L, ContactTime_DVJ_L]
 
 - parameter: Jump_height_contact_time_ratio_DVJ_R
+  set: right
   displayName: Jump height / contact time
   summarize: Jump_Height_Contact_Time
   where:
@@ -560,54 +617,63 @@
     - divide: [COM_displacement_MEAN_max_DVJ_R, ContactTime_DVJ_R]
 
 - parameter: Jump_height_contact_time_ratio_static_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_static_DVJ_B, ContactTime_DVJ_B]
 
 - parameter: Jump_height_contact_time_ratio_static_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_static_DVJ_L, ContactTime_DVJ_L]
 
 - parameter: Jump_height_contact_time_ratio_static_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_static_DVJ_R, ContactTime_DVJ_R]
 
 - parameter: Jump_height_contact_time_ratio_takeoff_vel_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_B, ContactTime_DVJ_B]
 
 - parameter: Jump_height_contact_time_ratio_takeoff_vel_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_L, ContactTime_DVJ_L]
 
 - parameter: Jump_height_contact_time_ratio_takeoff_vel_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_DVJ_R, ContactTime_DVJ_R]
 
 - parameter: Jump_height_contact_time_ratio_impulse_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_impulse_DVJ_B, ContactTime_DVJ_B]
 
 - parameter: Jump_height_contact_time_ratio_impulse_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_impulse_DVJ_L, ContactTime_DVJ_L]
 
 - parameter: Jump_height_contact_time_ratio_impulse_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -615,6 +681,7 @@
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_DVJ_B
+  set: total
   displayName: Flight time / contraction time
   summarize: Flight_Time_Contraction_Time
   where:
@@ -623,6 +690,7 @@
     - divide: [FlightTime_DVJ_B, EccentricTime_DVJ_B]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_L
+  set: left
   displayName: Flight time / contraction time
   summarize: Flight_Time_Contraction_Time
   where:
@@ -631,6 +699,7 @@
     - divide: [FlightTime_DVJ_L, EccentricTime_DVJ_L]
 
 - parameter: Flight_Contraction_time_ratio_DVJ_R
+  set: right
   displayName: Flight time / contraction time
   summarize: Flight_Time_Contraction_Time
   where:
@@ -640,18 +709,21 @@
 
 # Reactive strength index
 - parameter: Reactive_strength_index_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - divide: [FlightTime_DVJ_B, ContactTime_DVJ_B]
 
 - parameter: Reactive_strength_index_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - divide: [FlightTime_DVJ_L, ContactTime_DVJ_L]
 
 - parameter: Reactive_strength_index_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -659,18 +731,21 @@
 
 # Modified reactive strength index
 - parameter: Reactive_strength_index_modified_DVJ_B
+  set: total
   where:
     name: DJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_DVJ_B, ContactTime_DVJ_B]
 
 - parameter: Reactive_strength_index_modified_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_DVJ_L, ContactTime_DVJ_L]
 
 - parameter: Reactive_strength_index_modified_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -684,72 +759,84 @@
 # COM distance to knee and ankle
 # @TouchDown
 - parameter: Left_Knee_COM_distance@TouchDown_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -757,72 +844,84 @@
 
 # @TakeOff
 - parameter: Left_Knee_COM_distance@TakeOff_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
 - parameter: Left_Knee_COM_distance@TakeOff_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
 - parameter: Left_Knee_COM_distance@TakeOff_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -830,72 +929,84 @@
 
 # @Pelvis_lowest
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -903,6 +1014,7 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_DVJ_B
+  set: left
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -911,6 +1023,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_B
+  set: right
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -919,6 +1032,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_B
+  set: left
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -927,6 +1041,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_B
+  set: right
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -935,6 +1050,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -942,6 +1058,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -949,6 +1066,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_DVJ_L
+  set: left
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -957,6 +1075,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_L
+  set: right
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -965,6 +1084,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_L
+  set: left
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -973,6 +1093,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_L
+  set: right
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -981,6 +1102,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -988,6 +1110,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_DVJ_L
+  set: right
   deprecated: true
   where:
     name: DJ_L*
@@ -995,6 +1118,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_DVJ_R
+  set: left
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -1003,6 +1127,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_DVJ_R
+  set: right
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -1011,6 +1136,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_DVJ_R
+  set: left
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -1019,6 +1145,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_DVJ_R
+  set: right
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -1027,6 +1154,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_DVJ_R
+  set: left
   deprecated: true
   where:
     name: DJ_R*
@@ -1034,6 +1162,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -1042,6 +1171,7 @@
 
 # @COM_MIN
 - parameter: Left Ankle Angles@COM_MIN_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1049,6 +1179,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1056,6 +1187,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1063,6 +1195,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1070,6 +1203,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1077,6 +1211,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1084,6 +1219,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1091,6 +1227,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1098,6 +1235,7 @@
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -1105,6 +1243,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_DVJ_L
+  set: right
   deprecated: true
   where:
     name: DJ_L*
@@ -1112,6 +1251,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -1119,6 +1259,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_DVJ_L
+  set: right
   deprecated: true
   where:
     name: DJ_L*
@@ -1126,6 +1267,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -1133,6 +1275,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_DVJ_L
+  set: right
   deprecated: true
   where:
     name: DJ_L*
@@ -1140,6 +1283,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -1147,6 +1291,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_DVJ_L
+  set: right
   deprecated: true
   where:
     name: DJ_L*
@@ -1154,6 +1299,7 @@
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_DVJ_R
+  set: left
   deprecated: true
   where:
     name: DJ_R*
@@ -1161,6 +1307,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -1168,6 +1315,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_DVJ_R
+  set: left
   deprecated: true
   where:
     name: DJ_R*
@@ -1175,6 +1323,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -1182,6 +1331,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_DVJ_R
+  set: left
   deprecated: true
   where:
     name: DJ_R*
@@ -1189,6 +1339,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -1196,6 +1347,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_DVJ_R
+  set: left
   deprecated: true
   where:
     name: DJ_R*
@@ -1203,6 +1355,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -1212,6 +1365,7 @@
 # Maximum during takeoff ---
 # Bilateral
 - parameter: Left Hip Angles_max_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
@@ -1219,6 +1373,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
@@ -1226,6 +1381,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
@@ -1233,6 +1389,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
@@ -1240,6 +1397,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
@@ -1247,6 +1405,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
@@ -1254,6 +1413,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_DVJ_B
+  set: left
   where:
     name: DJ_B*
   steps:
@@ -1261,6 +1421,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_DVJ_B
+  set: right
   where:
     name: DJ_B*
   steps:
@@ -1269,6 +1430,7 @@
 
 # Left
 - parameter: Left Hip Angles_max_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
@@ -1276,6 +1438,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
@@ -1283,6 +1446,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
@@ -1290,6 +1454,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
@@ -1297,6 +1462,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
@@ -1304,6 +1470,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
@@ -1311,6 +1478,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_DVJ_L
+  set: left
   where:
     name: DJ_L*
   steps:
@@ -1318,6 +1486,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_DVJ_L
+  set: right
   where:
     name: DJ_L*
   steps:
@@ -1326,6 +1495,7 @@
 
 # Right
 - parameter: Left Hip Angles_max_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
@@ -1333,6 +1503,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -1340,6 +1511,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
@@ -1347,6 +1519,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -1354,6 +1527,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
@@ -1361,6 +1535,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -1368,6 +1543,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_DVJ_R
+  set: left
   where:
     name: DJ_R*
   steps:
@@ -1375,6 +1551,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_DVJ_R
+  set: right
   where:
     name: DJ_R*
   steps:
@@ -1384,6 +1561,7 @@
 # Kinetics ----------
 # Bilateral
 - parameter: Left_RFD
+  set: left
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1396,6 +1574,7 @@
       else: [[]]
 
 - parameter: Left_RFD
+  set: left
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1405,6 +1584,7 @@
     - derivative: Left GRF
 
 - parameter: Left Power
+  set: left
   summarize: true
   where:
     name: DJ_B*
@@ -1416,6 +1596,7 @@
       else: [[]]
 
 - parameter: Left Power
+  set: left
   summarize: true
   where:
     name: DJ_L*
@@ -1424,6 +1605,7 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Right_RFD
+  set: right
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1436,6 +1618,7 @@
       else: [[]]
 
 - parameter: Right_RFD
+  set: right
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1445,6 +1628,7 @@
     - derivative: Right GRF
 
 - parameter: Right Power
+  set: right
   summarize: true
   where:
     name: DJ_B*
@@ -1456,6 +1640,7 @@
       else: [[]]
 
 - parameter: Right Power
+  set: right
   summarize: true
   where:
     name: DJ_R*
@@ -1468,6 +1653,7 @@
 # it is assumed that only two FPs are connected to the system
 # It can be one or two loaded FPs
 - parameter: FP1_load
+  set: total
   where:
     name: DJ_B*
     force: any
@@ -1479,6 +1665,7 @@
     - mean:
 
 - parameter: FP2_load
+  set: total
   where:
     name: DJ_B*
     force: any
@@ -1490,6 +1677,7 @@
     - mean:
 
 - parameter: GRF_loaded_FP
+  set: total
   where:
     name: DJ_B*
     force: any
@@ -1506,6 +1694,7 @@
       extrapolate: 75
 
 - parameter: Total GRF_both
+  set: total
   where:
     name: DJ_B*
     force: both
@@ -1516,6 +1705,7 @@
       else: [[]]
 
 - parameter: Total GRF_single
+  set: total
   where:
     name: DJ_B*
     force: any
@@ -1526,6 +1716,7 @@
       else: [[]]
 
 - parameter: Total GRF
+  set: total
   summarize: true
   where:
     name: DJ_B*
@@ -1536,6 +1727,7 @@
       else: Total GRF_single
 
 - parameter: Total_RFD
+  set: total
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1547,6 +1739,7 @@
 # Bilateral Power
 # Power = F * v
 - parameter: Bilateral Power_both
+  set: total
   where:
     name: DJ_B*
     force: both
@@ -1558,6 +1751,7 @@
       else: [[]]
 
 - parameter: Bilateral Power_single
+  set: total
   where:
     name: DJ_B*
     force: any
@@ -1569,6 +1763,7 @@
       else: [[]]
 
 - parameter: Bilateral Power
+  set: total
   summarize: true
   where:
     name: DJ_B*
@@ -1579,6 +1774,7 @@
       else: Bilateral Power_single
 
 - parameter: Bilateral Power_max_concentric_DVJ_B
+  set: total
   deprecated: true
   where:
     name: DJ_B*
@@ -1588,6 +1784,7 @@
     - max:
 
 - parameter: Bilateral Power_mean_concentric_DVJ_B
+  set: total
   deprecated: true
   where:
     name: DJ_B*
@@ -1597,6 +1794,7 @@
     - mean:
 
 - parameter: Bilateral Power_min_eccentric_DVJ_B
+  set: total
   deprecated: true
   where:
     name: DJ_B*
@@ -1606,6 +1804,7 @@
     - min:
 
 - parameter: Bilateral Power_mean_eccentric_DVJ_B
+  set: total
   deprecated: true
   where:
     name: DJ_B*
@@ -1615,6 +1814,7 @@
     - mean:
 
 - parameter: Left Hip Moment@COM_MIN_DVJ_B
+  set: left
   where:
     name: DJ_B*
     force: left
@@ -1625,6 +1825,7 @@
       else: [[]]
 
 - parameter: Left Knee Moment@COM_MIN_DVJ_B
+  set: left
   where:
     name: DJ_B*
     force: left
@@ -1635,6 +1836,7 @@
       else: [[]]
 
 - parameter: Left Ankle Moment@COM_MIN_DVJ_B
+  set: left
   where:
     name: DJ_B*
     force: left
@@ -1645,6 +1847,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1657,6 +1860,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_landing_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1669,6 +1873,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_landing_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1681,6 +1886,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_concentric_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1693,6 +1899,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_concentric_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1705,6 +1912,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_eccentric_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1717,6 +1925,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_eccentric_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1729,6 +1938,7 @@
       else: [[]]
 
 - parameter: Left_RFD@TouchDown_100ms_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1740,6 +1950,7 @@
       else: [[]]
 
 - parameter: Left Power_max_concentric_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1752,6 +1963,7 @@
       else: [[]]
 
 - parameter: Left Power_mean_concentric_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1764,6 +1976,7 @@
       else: [[]]
   
 - parameter: Left Power_min_eccentric_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1776,6 +1989,7 @@
       else: [[]]
 
 - parameter: Left Power_mean_eccentric_DVJ_B
+  set: left
   deprecated: true
   where:
     name: DJ_B*
@@ -1788,6 +2002,7 @@
       else: [[]]
 
 - parameter: Left GRF_impulse_concentric_DVJ_B
+  set: left
   where:
     name: DJ_B*
     force: left
@@ -1800,6 +2015,7 @@
       else: [[]]
 
 - parameter: Left GRF_impulse_eccentric_DVJ_B
+  set: left
   where:
     name: DJ_B*
     force: left
@@ -1813,6 +2029,7 @@
 
 # Bilateral - right
 - parameter: Right Hip Moment@COM_MIN_DVJ_B
+  set: right
   where:
     name: DJ_B*
     force: right
@@ -1823,6 +2040,7 @@
       else: [[]]
 
 - parameter: Right Knee Moment@COM_MIN_DVJ_B
+  set: right
   where:
     name: DJ_B*
     force: right
@@ -1833,6 +2051,7 @@
       else: [[]]
 
 - parameter: Right Ankle Moment@COM_MIN_DVJ_B
+  set: right
   where:
     name: DJ_B*
     force: right
@@ -1843,6 +2062,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1855,6 +2075,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_landing_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1867,6 +2088,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_landing_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1879,6 +2101,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_concentric_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1891,6 +2114,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_concentric_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1903,6 +2127,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_eccentric_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1915,6 +2140,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_eccentric_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1927,6 +2153,7 @@
       else: [[]]
 
 - parameter: Right_RFD@TouchDown_100ms_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1938,6 +2165,7 @@
       else: [[]]
 
 - parameter: Right Power_max_concentric_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1950,6 +2178,7 @@
       else: [[]]
 
 - parameter: Right Power_mean_concentric_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1962,6 +2191,7 @@
       else: [[]]
   
 - parameter: Right Power_min_eccentric_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1974,6 +2204,7 @@
       else: [[]]
 
 - parameter: Right Power_mean_eccentric_DVJ_B
+  set: right
   deprecated: true
   where:
     name: DJ_B*
@@ -1986,6 +2217,7 @@
       else: [[]]
 
 - parameter: Right GRF_impulse_concentric_DVJ_B
+  set: right
   where:
     name: DJ_B*
     force: right
@@ -1998,6 +2230,7 @@
       else: [[]]
 
 - parameter: Right GRF_impulse_eccentric_DVJ_B
+  set: right
   where:
     name: DJ_B*
     force: right
@@ -2011,6 +2244,7 @@
 
 # Single leg - left
 - parameter: Left Hip Moment@COM_MIN_DVJ_L
+  set: left
   where:
     name: DJ_L*
     force: left
@@ -2018,6 +2252,7 @@
     - import: Left Hip Moment@COM_MIN
 
 - parameter: Left Knee Moment@COM_MIN_DVJ_L
+  set: left
   where:
     name: DJ_L*
     force: left
@@ -2025,6 +2260,7 @@
     - import: Left Knee Moment@COM_MIN
 
 - parameter: Left Ankle Moment@COM_MIN_DVJ_L
+  set: left
   where:
     name: DJ_L*
     force: left
@@ -2032,6 +2268,7 @@
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left GRF_max_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2041,6 +2278,7 @@
     - max:
 
 - parameter: Left GRF_max_landing_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2050,6 +2288,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2059,6 +2298,7 @@
     - mean:
 
 - parameter: Left GRF_max_concentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2068,6 +2308,7 @@
     - max:
 
 - parameter: Left GRF_mean_concentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2077,6 +2318,7 @@
     - mean:
 
 - parameter: Left GRF_max_eccentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2086,6 +2328,7 @@
     - max:
 
 - parameter: Left GRF_mean_eccentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2095,6 +2338,7 @@
     - mean:
 
 - parameter: Left_RFD@TouchDown_100ms_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2103,6 +2347,7 @@
     - import: Left_RFD@TouchDown_100ms
 
 - parameter: Left Power_max_concentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2112,6 +2357,7 @@
     - max:
 
 - parameter: Left Power_mean_concentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2121,6 +2367,7 @@
     - mean:
   
 - parameter: Left Power_min_eccentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2130,6 +2377,7 @@
     - min:
 
 - parameter: Left Power_mean_eccentric_DVJ_L
+  set: left
   deprecated: true
   where:
     name: DJ_L*
@@ -2139,6 +2387,7 @@
     - mean:
 
 - parameter: Left GRF_impulse_concentric_DVJ_L
+  set: left
   where:
     name: DJ_L*
     force: left
@@ -2148,6 +2397,7 @@
       scalar: true
 
 - parameter: Left GRF_impulse_eccentric_DVJ_L
+  set: left
   where:
     name: DJ_L*
     force: left
@@ -2158,6 +2408,7 @@
 
 # Single leg - right
 - parameter: Right Hip Moment@COM_MIN_DVJ_R
+  set: right
   where:
     name: DJ_R*
     force: right
@@ -2165,6 +2416,7 @@
     - import: Right Hip Moment@COM_MIN
 
 - parameter: Right Knee Moment@COM_MIN_DVJ_R
+  set: right
   where:
     name: DJ_R*
     force: right
@@ -2172,6 +2424,7 @@
     - import: Right Knee Moment@COM_MIN
 
 - parameter: Right Ankle Moment@COM_MIN_DVJ_R
+  set: right
   where:
     name: DJ_R*
     force: right
@@ -2179,6 +2432,7 @@
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right GRF_max_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2188,6 +2442,7 @@
     - max:
 
 - parameter: Right GRF_max_landing_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2197,6 +2452,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2206,6 +2462,7 @@
     - mean:
 
 - parameter: Right GRF_max_concentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2215,6 +2472,7 @@
     - max:
 
 - parameter: Right GRF_mean_concentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2224,6 +2482,7 @@
     - mean:
 
 - parameter: Right GRF_max_eccentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2233,6 +2492,7 @@
     - max:
 
 - parameter: Right GRF_mean_eccentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2242,6 +2502,7 @@
     - mean:
 
 - parameter: Right_RFD@TouchDown_100ms_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2250,6 +2511,7 @@
     - import: Right_RFD@TouchDown_100ms
 
 - parameter: Right Power_max_concentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2259,6 +2521,7 @@
     - max:
 
 - parameter: Right Power_mean_concentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2268,6 +2531,7 @@
     - mean:
   
 - parameter: Right Power_min_eccentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2277,6 +2541,7 @@
     - min:
 
 - parameter: Right Power_mean_eccentric_DVJ_R
+  set: right
   deprecated: true
   where:
     name: DJ_R*
@@ -2286,6 +2551,7 @@
     - mean:
 
 - parameter: Right GRF_impulse_concentric_DVJ_R
+  set: right
   where:
     name: DJ_R*
     force: right
@@ -2295,6 +2561,7 @@
       scalar: true
 
 - parameter: Right GRF_impulse_eccentric_DVJ_R
+  set: right
   where:
     name: DJ_R*
     force: right
