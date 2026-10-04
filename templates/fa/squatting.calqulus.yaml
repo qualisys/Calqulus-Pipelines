@@ -161,6 +161,7 @@
     else: TOP_calqulus
 
 - event: TOP_L
+  set: left
   where:
     name: ((Squat|Squatting)_(L|B))*
   steps:
@@ -169,6 +170,7 @@
     else: TOP_L_calqulus
 
 - event: TOP_R
+  set: right
   where:
     name: ((Squat|Squatting)_(R|B))*
   steps:
@@ -254,6 +256,7 @@
 
 # Squat depth
 - parameter: Squatting_depth_Squat_B
+  set: total
   displayName: Squat depth
   summarize: Squat_Depth
   where:
@@ -412,6 +415,7 @@
 # Kinetics ------------
 # Bilateral - Total
 - parameter: Total GRF
+  set: total
   summarize: true
   where:
     name: (Squat|Squatting)_B*
@@ -420,6 +424,7 @@
     - add: [Left GRF, Right GRF]
 
 - parameter: Total GRF_max_concentric_Squat_B
+  set: total
   deprecated: true
   where:
     name: (Squat|Squatting)_B*
@@ -429,6 +434,7 @@
     - max:
 
 - parameter: Total GRF_mean_concentric_Squat_B
+  set: total
   deprecated: true
   where:
     name: (Squat|Squatting)_B*
@@ -438,6 +444,7 @@
     - mean:
 
 - parameter: Total GRF_max_eccentric_Squat_B
+  set: total
   deprecated: true
   where:
     name: (Squat|Squatting)_B*
@@ -447,6 +454,7 @@
     - max:
 
 - parameter: Total GRF_mean_eccentric_Squat_B
+  set: total
   deprecated: true
   where:
     name: (Squat|Squatting)_B*

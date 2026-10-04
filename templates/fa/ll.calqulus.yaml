@@ -47,6 +47,7 @@
 
 # Left
 - event: LFT_DistEndVel_max
+  set: left
   where:
     name: LL_L*
   steps:
@@ -54,6 +55,7 @@
       frames: true
 
 - event: LFT_DistEndVel_min
+  set: left
   where:
     name: LL_L*
   steps:
@@ -61,6 +63,7 @@
       frames: true
 
 - event: LFT_DistEndVel_first
+  set: left
   where:
     name: LL_L*
   steps:
@@ -69,6 +72,7 @@
       else: LFT_DistEndVel_min
 
 - event: LFT_DistEndVel_second
+  set: left
   where:
     name: LL_L*
   steps:
@@ -77,6 +81,7 @@
       else: LFT_DistEndVel_min
 
 - event: TouchDown_kinematics
+  set: left
   where:
     name: LL_L*
   steps:
@@ -95,6 +100,7 @@
     - import: [[-1]] #this creates empty signal
 
 - event: my_LON_force
+  set: left
   where:
     name: LL_L*
     force: left
@@ -106,6 +112,7 @@
       frames: true
 
 - event: TouchDown
+  set: left
   displayName: Touchdown
   description: Instant of initial ground contact
   summaryTarget: true
@@ -117,6 +124,7 @@
       else: TouchDown_kinematics
 
 - event: TouchDown_prio
+  set: left
   where:
     name: LL_L*
   steps:
@@ -131,6 +139,7 @@
       else: TouchDown
 
 - event: PlotStart
+  set: left
   where:
     name: LL_L*
   steps:
@@ -139,6 +148,7 @@
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
+  set: left
   where:
     name: LL_L*
   steps:
@@ -149,6 +159,7 @@
     - import: $prev@-1
 
 - event: LOFF_force_ordered
+  set: left
   where:
     name: LL_L*
     force: left
@@ -158,6 +169,7 @@
       sort: asc
 
 - event: TakeOff
+  set: left
   displayName: Take-off
   description: Instant the foot leaves the ground
   summaryTarget: true
@@ -169,12 +181,14 @@
       else: TakeOff_kinematics
 
 - event: Landing_L
+  set: left
   steps:
     - eventMask: [LFT_DistEndAcc.z, TakeOff, EOF]
     - max:
       frames: true
 
 - event: pelvis_lowest
+  set: left
   displayName: Lowest pelvis
   description: Instant of lowest pelvis position
   summaryTarget: true
@@ -187,6 +201,7 @@
 
 # Right
 - event: RFT_DistEndVel_max
+  set: right
   where:
     name: LL_R*
   steps:
@@ -195,6 +210,7 @@
       frames: true
 
 - event: RFT_DistEndVel_min
+  set: right
   where:
     name: LL_R*
   steps:
@@ -203,6 +219,7 @@
       frames: true
 
 - event: RFT_DistEndVel_first
+  set: right
   where:
     name: LL_R*
   steps:
@@ -211,6 +228,7 @@
       else: RFT_DistEndVel_min
 
 - event: RFT_DistEndVel_second
+  set: right
   where:
     name: LL_R*
   steps:
@@ -219,6 +237,7 @@
       else: RFT_DistEndVel_min
 
 - event: TouchDown_kinematics
+  set: right
   where:
     name: LL_R*
   steps:
@@ -231,6 +250,7 @@
       frames: true
 
 - event: my_RON_force
+  set: right
   where:
     name: LL_R*
     force: right
@@ -242,6 +262,7 @@
       frames: true
 
 - event: TouchDown
+  set: right
   displayName: Touchdown
   description: Instant of initial ground contact
   summaryTarget: true
@@ -261,6 +282,7 @@
       to: m
 
 - event: TouchDown_prio
+  set: right
   where:
     name: LL_R*
   steps:
@@ -276,6 +298,7 @@
       else: TouchDown
 
 - event: PlotStart
+  set: right
   where:
     name: LL_R*
   steps:
@@ -284,6 +307,7 @@
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
+  set: right
   where:
     name: LL_R*
   steps:
@@ -295,6 +319,7 @@
     - import: $prev@-1
 
 - event: ROFF_force_ordered
+  set: right
   where:
     name: LL_R*
     force: right
@@ -304,6 +329,7 @@
       sort: asc
 
 - event: TakeOff
+  set: right
   displayName: Take-off
   description: Instant the foot leaves the ground
   summaryTarget: true
@@ -315,12 +341,14 @@
       else: TakeOff_kinematics
 
 - event: Landing_R
+  set: right
   steps:
     - eventMask: [RFT_DistEndAcc.z, TakeOff, EOF]
     - max:
       frames: true
 
 - event: pelvis_lowest
+  set: right
   displayName: Lowest pelvis
   description: Instant of lowest pelvis position
   summaryTarget: true
@@ -409,6 +437,7 @@
 # COM @TakeOff, max, min
 # We use Pelvis COM for now
 - parameter: COM_Z_TO_LL_L
+  set: left
   where:
     name: LL_L*
   steps:
@@ -714,6 +743,7 @@
     - import: RFT_DistEndPos@TakeOff
 
 - parameter: LFT_DistEndPos@Landing_L
+  set: left
   steps:
     - import: LFT_DistEndPos@Landing_L
 
