@@ -30,18 +30,21 @@
 
 # Flight Time
 - parameter: FlightTime_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
     - eventDuration: [TakeOff,TouchDown]
 
 - parameter: FlightTime_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - eventDuration: [TakeOff,TouchDown]
 
 - parameter: FlightTime_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -49,18 +52,21 @@
 
 # Eccentric time
 - parameter: EccentricTime_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
     - eventDuration: [PlotStart,Eccentric_end]
 
 - parameter: EccentricTime_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - eventDuration: [PlotStart,Eccentric_end]
 
 - parameter: EccentricTime_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -68,18 +74,21 @@
 
 # Concentric time
 - parameter: ConcentricTime_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
     - eventDuration: [Eccentric_end,TakeOff]
 
 - parameter: ConcentricTime_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - eventDuration: [Eccentric_end,TakeOff]
 
 - parameter: ConcentricTime_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -87,18 +96,21 @@
 
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
     - divide: [FlightTime_CMJ_B,ConcentricTime_CMJ_B]
 
 - parameter: Flight_Contraction_time_ratio_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - divide: [FlightTime_CMJ_L,ConcentricTime_CMJ_L]
 
 - parameter: Flight_Contraction_time_ratio_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -107,6 +119,7 @@
 # COM @TakeOff, max, min
 # We use Prlvis COM for now
 - parameter: COM_Z_TO_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
@@ -117,6 +130,7 @@
       to: m
 
 - parameter: COM_Z_TO_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -127,6 +141,7 @@
       to: m
 
 - parameter: COM_Z_TO_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -137,6 +152,7 @@
       to: m
 
 - parameter: CenterOfMass_MAX_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
@@ -148,6 +164,7 @@
       to: m
 
 - parameter: CenterOfMass_MAX_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -159,6 +176,7 @@
       to: m
 
 - parameter: CenterOfMass_MAX_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -170,6 +188,7 @@
       to: m
 
 - parameter: CenterOfMass_MIN_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
@@ -179,6 +198,7 @@
       to: m
 
 - parameter: CenterOfMass_MIN_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -188,6 +208,7 @@
       to: m
 
 - parameter: CenterOfMass_MIN_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -197,6 +218,7 @@
       to: m
 
 - parameter: CenterOfMass@PlotStart_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
@@ -206,6 +228,7 @@
       to: m
 
 - parameter: CenterOfMass@PlotStart_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -215,6 +238,7 @@
       to: m
 
 - parameter: CenterOfMass@PlotStart_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -225,6 +249,7 @@
 
 # Takeoff velocity
 - parameter: CenterOfMass_vel@TakeOff_CMJ_B
+  set: total
   summarize: Takeoff_velocity
   displayName: Takeoff velocity
   where:
@@ -238,6 +263,7 @@
     - import: $prev@TakeOff
 
 - parameter: CenterOfMass_vel@TakeOff_CMJ_L
+  set: left
   summarize: Takeoff_velocity
   displayName: Takeoff velocity
   where:
@@ -251,6 +277,7 @@
     - import: $prev@TakeOff
 
 - parameter: CenterOfMass_vel@TakeOff_CMJ_R
+  set: right
   summarize: Takeoff_velocity
   displayName: Takeoff velocity
   where:
@@ -275,6 +302,7 @@
 
 # Pelvis height
 - parameter: COM_displacement_MEAN_max_CMJ_B
+  set: total
   displayName: Jump height
   summarize: Jump_Height
   where:
@@ -289,6 +317,7 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_CMJ_L
+  set: left
   displayName: Jump height
   summarize: Jump_Height
   where:
@@ -303,6 +332,7 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_CMJ_R
+  set: right
   displayName: Jump height
   summarize: Jump_Height
   where:
@@ -318,6 +348,7 @@
 
 # Static trial
 - parameter: COM_displacement_MEAN_max_static_CMJ_B
+  set: total
   displayName: Jump height (using static trial)
   summarize: Jump_Height_Static
   where:
@@ -334,6 +365,7 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_static_CMJ_L
+  set: left
   displayName: Jump height (using static trial)
   summarize: Jump_Height_Static
   where:
@@ -350,6 +382,7 @@
       to: m
 
 - parameter: COM_displacement_MEAN_max_static_CMJ_R
+  set: right
   displayName: Jump height (using static trial)
   summarize: Jump_Height_Static
   where:
@@ -367,6 +400,7 @@
 
 # Takeoff velocity (vel@takeoff^2 /2g)
 - parameter: COM_displacement_MEAN_max_takeoff_vel_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
@@ -375,6 +409,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_max_takeoff_vel_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -383,6 +418,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_max_takeoff_vel_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -392,6 +428,7 @@
 
 # Flight time (1/2g(t/2)^2)
 - parameter: COM_displacement_MEAN_max_flight_time_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
@@ -400,6 +437,7 @@
     - multiply: [4.905, $prev]
 
 - parameter: COM_displacement_MEAN_max_flight_time_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -408,6 +446,7 @@
     - multiply: [4.905, $prev]
 
 - parameter: COM_displacement_MEAN_max_flight_time_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -417,6 +456,7 @@
 
 # Impulse (vel = impulse/m, h = vel@takeoff^2 /2g)
 - parameter: COM_displacement_MEAN_max_impulse_CMJ_B
+  set: total
   where:
     name: CMJ_B*
     force: both
@@ -433,6 +473,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_max_impulse_CMJ_L
+  set: left
   where:
     name: CMJ_L*
     force: left
@@ -449,6 +490,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_max_impulse_CMJ_R
+  set: right
   where:
     name: CMJ_R*
     force: right
@@ -465,6 +507,7 @@
     - divide: [$prev, 19.62] #(2 * 9.81)
 
 - parameter: COM_displacement_MEAN_min_CMJ_B 
+  set: total
   displayName: Depth of movement
   summarize: Depth_of_movement
   where:
@@ -473,6 +516,7 @@
     - subtract: [CenterOfMass\@PlotStart_CMJ_B, CenterOfMass_MIN_CMJ_B]
 
 - parameter: COM_displacement_MEAN_min_CMJ_L 
+  set: left
   displayName: Depth of movement
   summarize: Depth_of_movement
   where:
@@ -481,6 +525,7 @@
     - subtract: [CenterOfMass\@PlotStart_CMJ_L, CenterOfMass_MIN_CMJ_L]
 
 - parameter: COM_displacement_MEAN_min_CMJ_R
+  set: right
   displayName: Depth of movement
   summarize: Depth_of_movement
   where:
@@ -490,6 +535,7 @@
 
 #COM peak eccentric velocity
 - parameter: PelvisCGPos_vel_min_eccentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -498,6 +544,7 @@
     - min:
 
 - parameter: PelvisCGPos_vel_min_eccentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -506,6 +553,7 @@
     - min:
 
 - parameter: PelvisCGPos_vel_min_eccentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -515,6 +563,7 @@
 
 #Jump Height to Flight Time Ratio
 - parameter: Jump_height_flight_time_ratio_CMJ_B
+  set: total
   displayName: Jump height / flight time
   summarize: Jump_Height_Flight_Time
   where:
@@ -523,6 +572,7 @@
     - divide: [COM_displacement_MEAN_max_CMJ_B,FlightTime_CMJ_B]
 
 - parameter: Jump_height_flight_time_ratio_CMJ_L
+  set: left
   displayName: Jump height / flight time
   summarize: Jump_Height_Flight_Time
   where:
@@ -531,6 +581,7 @@
     - divide: [COM_displacement_MEAN_max_CMJ_L,FlightTime_CMJ_L]
 
 - parameter: Jump_height_flight_time_ratio_CMJ_R
+  set: right
   displayName: Jump height / flight time
   summarize: Jump_Height_Flight_Time
   where:
@@ -539,54 +590,63 @@
     - divide: [COM_displacement_MEAN_max_CMJ_R,FlightTime_CMJ_R]
 
 - parameter: Jump_height_flight_time_ratio_static_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_static_CMJ_B,FlightTime_CMJ_B]
 
 - parameter: Jump_height_flight_time_ratio_static_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_static_CMJ_L,FlightTime_CMJ_L]
 
 - parameter: Jump_height_flight_time_ratio_static_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_static_CMJ_R,FlightTime_CMJ_R]
 
 - parameter: Jump_height_flight_time_ratio_takeoff_vel_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_CMJ_B,FlightTime_CMJ_B]
 
 - parameter: Jump_height_flight_time_ratio_takeoff_vel_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_CMJ_L,FlightTime_CMJ_L]
 
 - parameter: Jump_height_flight_time_ratio_takeoff_vel_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
     - divide: [COM_displacement_MEAN_max_takeoff_vel_CMJ_R,FlightTime_CMJ_R]
 
 - parameter: Jump_height_flight_time_ratio_impulse_CMJ_B
+  set: total
   where:
     name: CMJ_B*
   steps:
     - divide: [COM_displacement_MEAN_max_impulse_CMJ_B,FlightTime_CMJ_B]
 
 - parameter: Jump_height_flight_time_ratio_impulse_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - divide: [COM_displacement_MEAN_max_impulse_CMJ_L,FlightTime_CMJ_L]
 
 - parameter: Jump_height_flight_time_ratio_impulse_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -595,72 +655,84 @@
 # COM distance to knee and ankle
 # @TouchDown
 - parameter: Left_Knee_COM_distance@TouchDown_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
     - import: Right_Ankle_COM_distance@TouchDown
 
 - parameter: Left_Knee_COM_distance@TouchDown_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
     - import: Left_Knee_COM_distance@TouchDown
 
 - parameter: Right_Knee_COM_distance@TouchDown_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
     - import: Right_Knee_COM_distance@TouchDown
 
 - parameter: Left_Ankle_COM_distance@TouchDown_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
     - import: Left_Ankle_COM_distance@TouchDown
 
 - parameter: Right_Ankle_COM_distance@TouchDown_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -668,72 +740,84 @@
 
 # @TakeOff
 - parameter: Left_Knee_COM_distance@TakeOff_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
 - parameter: Left_Knee_COM_distance@TakeOff_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
     - import: Right_Ankle_COM_distance@TakeOff
 
 - parameter: Left_Knee_COM_distance@TakeOff_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
     - import: Left_Knee_COM_distance@TakeOff
 
 - parameter: Right_Knee_COM_distance@TakeOff_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
     - import: Right_Knee_COM_distance@TakeOff
 
 - parameter: Left_Ankle_COM_distance@TakeOff_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
     - import: Left_Ankle_COM_distance@TakeOff
 
 - parameter: Right_Ankle_COM_distance@TakeOff_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -741,72 +825,84 @@
 
 # @Pelvis_lowest
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
     - import: Right_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Left_Knee_COM_distance@Pelvis_lowest_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
     - import: Left_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Right_Knee_COM_distance@Pelvis_lowest_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
     - import: Right_Knee_COM_distance@Pelvis_lowest
 
 - parameter: Left_Ankle_COM_distance@Pelvis_lowest_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
     - import: Left_Ankle_COM_distance@Pelvis_lowest
 
 - parameter: Right_Ankle_COM_distance@Pelvis_lowest_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -814,6 +910,7 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_CMJ_B
+  set: left
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -822,6 +919,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_CMJ_B
+  set: right
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -830,6 +928,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_CMJ_B
+  set: left
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -838,6 +937,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_CMJ_B
+  set: right
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -846,6 +946,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -853,6 +954,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -860,6 +962,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_CMJ_L
+  set: left
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -868,6 +971,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_CMJ_L
+  set: right
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -876,6 +980,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_CMJ_L
+  set: left
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -884,6 +989,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_CMJ_L
+  set: right
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -892,6 +998,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -899,6 +1006,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_CMJ_L
+  set: right
   deprecated: true
   where:
     name: CMJ_L*
@@ -906,6 +1014,7 @@
     - import: Right Thorax Angles@TouchDown
 
 - parameter: Left Knee Angles@TouchDown_CMJ_R
+  set: left
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -914,6 +1023,7 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Right Knee Angles@TouchDown_CMJ_R
+  set: right
   deprecated: true
   displayName: Knee flexion at heel strike
   where:
@@ -922,6 +1032,7 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_CMJ_R
+  set: left
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -930,6 +1041,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_CMJ_R
+  set: right
   deprecated: true
   displayName: Hip flexion at heel strike
   where:
@@ -938,6 +1050,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_CMJ_R
+  set: left
   deprecated: true
   where:
     name: CMJ_R*
@@ -945,6 +1058,7 @@
     - import: Left Thorax Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -953,6 +1067,7 @@
 
 # @COM_MIN
 - parameter: Left Ankle Angles@COM_MIN_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -960,6 +1075,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -967,6 +1083,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -974,6 +1091,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -981,6 +1099,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -988,6 +1107,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -995,6 +1115,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1002,6 +1123,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -1009,6 +1131,7 @@
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -1016,6 +1139,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_CMJ_L
+  set: right
   deprecated: true
   where:
     name: CMJ_L*
@@ -1023,6 +1147,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -1030,6 +1155,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_CMJ_L
+  set: right
   deprecated: true
   where:
     name: CMJ_L*
@@ -1037,6 +1163,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -1044,6 +1171,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_CMJ_L
+  set: right
   deprecated: true
   where:
     name: CMJ_L*
@@ -1051,6 +1179,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -1058,6 +1187,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_CMJ_L
+  set: right
   deprecated: true
   where:
     name: CMJ_L*
@@ -1065,6 +1195,7 @@
     - import: Right Thorax Angles@COM_MIN
 
 - parameter: Left Ankle Angles@COM_MIN_CMJ_R
+  set: left
   deprecated: true
   where:
     name: CMJ_R*
@@ -1072,6 +1203,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Right Ankle Angles@COM_MIN_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -1079,6 +1211,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_CMJ_R
+  set: left
   deprecated: true
   where:
     name: CMJ_R*
@@ -1086,6 +1219,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -1093,6 +1227,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_CMJ_R
+  set: left
   deprecated: true
   where:
     name: CMJ_R*
@@ -1100,6 +1235,7 @@
     - import: Left Hip Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -1107,6 +1243,7 @@
     - import: Right Hip Angles@COM_MIN
 
 - parameter: Left Thorax Angles@COM_MIN_CMJ_R
+  set: left
   deprecated: true
   where:
     name: CMJ_R*
@@ -1114,6 +1251,7 @@
     - import: Left Thorax Angles@COM_MIN
 
 - parameter: Right Thorax Angles@COM_MIN_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -1122,6 +1260,7 @@
 
 #Maximum during takeoff
 - parameter: Left Hip Angles_max_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
@@ -1129,6 +1268,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
@@ -1136,6 +1276,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
@@ -1143,6 +1284,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
@@ -1150,6 +1292,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
@@ -1157,6 +1300,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
@@ -1164,6 +1308,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
@@ -1171,6 +1316,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
@@ -1178,6 +1324,7 @@
     - max:
 
 - parameter: Left Hip Angles_max_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -1185,6 +1332,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
@@ -1192,6 +1340,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -1199,6 +1348,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
@@ -1206,6 +1356,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -1213,6 +1364,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
@@ -1220,6 +1372,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -1227,6 +1380,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
@@ -1234,6 +1388,7 @@
     - max:
 
 - parameter: Left Hip Angles_max_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
@@ -1241,6 +1396,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -1248,6 +1404,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
@@ -1255,6 +1412,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -1262,6 +1420,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
@@ -1269,6 +1428,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -1276,6 +1436,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
@@ -1283,6 +1444,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -1291,6 +1453,7 @@
 
 #Maximum during landing
 - parameter: Left Hip Angles_max_landing_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
@@ -1298,6 +1461,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_landing_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
@@ -1305,6 +1469,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_landing_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
@@ -1312,6 +1477,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_landing_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
@@ -1319,6 +1485,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_landing_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
@@ -1326,6 +1493,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_landing_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
@@ -1333,6 +1501,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_landing_CMJ_B
+  set: left
   where:
     name: CMJ_B*
   steps:
@@ -1340,6 +1509,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_landing_CMJ_B
+  set: right
   where:
     name: CMJ_B*
   steps:
@@ -1347,6 +1517,7 @@
     - max:
 
 - parameter: Left Hip Angles_max_landing_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -1354,6 +1525,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_landing_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
@@ -1361,6 +1533,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_landing_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -1368,6 +1541,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_landing_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
@@ -1375,6 +1549,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_landing_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -1382,6 +1557,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_landing_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
@@ -1389,6 +1565,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_landing_CMJ_L
+  set: left
   where:
     name: CMJ_L*
   steps:
@@ -1396,6 +1573,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_landing_CMJ_L
+  set: right
   where:
     name: CMJ_L*
   steps:
@@ -1403,6 +1581,7 @@
     - max:
 
 - parameter: Left Hip Angles_max_landing_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
@@ -1410,6 +1589,7 @@
     - max:
 
 - parameter: Right Hip Angles_max_landing_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -1417,6 +1597,7 @@
     - max:
 
 - parameter: Left Knee Angles_max_landing_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
@@ -1424,6 +1605,7 @@
     - max:
 
 - parameter: Right Knee Angles_max_landing_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -1431,6 +1613,7 @@
     - max:
 
 - parameter: Left Ankle Angles_max_landing_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
@@ -1438,6 +1621,7 @@
     - max:
 
 - parameter: Right Ankle Angles_max_landing_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -1445,6 +1629,7 @@
     - max:
 
 - parameter: Left Foot Progression_max_landing_CMJ_R
+  set: left
   where:
     name: CMJ_R*
   steps:
@@ -1452,6 +1637,7 @@
     - max:
 
 - parameter: Right Foot Progression_max_landing_CMJ_R
+  set: right
   where:
     name: CMJ_R*
   steps:
@@ -1461,6 +1647,7 @@
 # Kinetics metrics --------
 # Bilateral ---
 - parameter: Left_RFD
+  set: left
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1473,6 +1660,7 @@
       else: [[]]
 
 - parameter: Left_RFD
+  set: left
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1482,6 +1670,7 @@
     - derivative: Left GRF
 
 - parameter: Left Power
+  set: left
   summarize: true
   where:
     name: CMJ_B*
@@ -1493,6 +1682,7 @@
       else: [[]]
 
 - parameter: Left Power
+  set: left
   summarize: true
   where:
     name: CMJ_L*
@@ -1501,6 +1691,7 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Right_RFD
+  set: right
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1513,6 +1704,7 @@
       else: [[]]
 
 - parameter: Right_RFD
+  set: right
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1522,6 +1714,7 @@
     - derivative: Right GRF
 
 - parameter: Right Power
+  set: right
   summarize: true
   where:
     name: CMJ_B*
@@ -1533,6 +1726,7 @@
       else: [[]]
 
 - parameter: Right Power
+  set: right
   summarize: true
   where:
     name: CMJ_R*
@@ -1545,6 +1739,7 @@
 # it is assumed that only two FPs are connected to the system
 # It can be one or two loaded FPs
 - parameter: FP1_load
+  set: total
   where:
     name: CMJ_B*
     force: any
@@ -1556,6 +1751,7 @@
     - mean:
 
 - parameter: FP2_load
+  set: total
   where:
     name: CMJ_B*
     force: any
@@ -1567,6 +1763,7 @@
     - mean:
 
 - parameter: GRF_loaded_FP
+  set: total
   where:
     name: CMJ_B*
     force: any
@@ -1583,6 +1780,7 @@
       extrapolate: 75
 
 - parameter: Total GRF_both
+  set: total
   where:
     name: CMJ_B*
     force: both
@@ -1593,6 +1791,7 @@
       else: [[]]
 
 - parameter: Total GRF_single
+  set: total
   where:
     name: CMJ_B*
     force: any
@@ -1603,6 +1802,7 @@
       else: [[]]
 
 - parameter: Total GRF
+  set: total
   summarize: true
   where:
     name: CMJ_B*
@@ -1613,6 +1813,7 @@
       else: Total GRF_single
 
 - parameter: Total_RFD
+  set: total
   summarize:
     include: [TouchDown_100ms]
   where:
@@ -1622,6 +1823,7 @@
     - derivative: Total GRF
 
 - parameter: Total Power
+  set: total
   summarize: true
   where:
     name: CMJ_B*
@@ -1630,6 +1832,7 @@
     - multiply: [Total GRF, PelvisCGPos_vel]
 
 - parameter: Total GRF_impulse_concentric_CMJ_B
+  set: total
   where:
     name: CMJ_B*
     force: any
@@ -1639,6 +1842,7 @@
       scalar: true
 
 - parameter: Total_RFD@TouchDown_100ms_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1647,6 +1851,7 @@
     - import: Total_RFD@TouchDown_100ms
 
 - parameter: Total Power_max_concentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1656,6 +1861,7 @@
     - max:
 
 - parameter: Total Power_mean_concentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1665,6 +1871,7 @@
     - mean:
   
 - parameter: Total Power_min_eccentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1674,6 +1881,7 @@
     - min:
 
 - parameter: Total Power_mean_eccentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1683,6 +1891,7 @@
     - mean:
 
 - parameter: Total GRF_impulse_concentric_CMJ_B
+  set: total
   where:
     name: CMJ_B*
     force: any
@@ -1692,6 +1901,7 @@
       scalar: true
 
 - parameter: Total GRF_impulse_eccentric_CMJ_B
+  set: total
   where:
     name: CMJ_B*
     force: any
@@ -1701,6 +1911,7 @@
       scalar: true
 
 - parameter: Total GRF_max_concentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1710,6 +1921,7 @@
     - max:
 
 - parameter: Total GRF_max_eccentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1719,6 +1931,7 @@
     - max:
 
 - parameter: Total GRF_mean_concentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1728,6 +1941,7 @@
     - mean:
 
 - parameter: Total GRF_mean_eccentric_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1737,6 +1951,7 @@
     - mean:
 
 - parameter: Total GRF_max_landing_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1746,6 +1961,7 @@
     - max:
 
 - parameter: Total GRF_mean_landing_CMJ_B
+  set: total
   deprecated: true
   where:
     name: CMJ_B*
@@ -1756,6 +1972,7 @@
 
 # Bilateral - Left
 - parameter: Left_RFD@TouchDown_100ms_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1767,6 +1984,7 @@
       else: [[]]
 
 - parameter: Left Power_max_concentric_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1779,6 +1997,7 @@
       else: [[]]
 
 - parameter: Left Power_mean_concentric_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1791,6 +2010,7 @@
       else: [[]]
   
 - parameter: Left Power_min_eccentric_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1803,6 +2023,7 @@
       else: [[]]
 
 - parameter: Left Power_mean_eccentric_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1815,6 +2036,7 @@
       else: [[]]
 
 - parameter: Left GRF_impulse_concentric_CMJ_B
+  set: left
   where:
     name: CMJ_B*
     force: left
@@ -1827,6 +2049,7 @@
       else: [[]]
 
 - parameter: Left GRF_impulse_eccentric_CMJ_B
+  set: left
   where:
     name: CMJ_B*
     force: left
@@ -1839,6 +2062,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_concentric_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1851,6 +2075,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_eccentric_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1863,6 +2088,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_concentric_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1875,6 +2101,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_eccentric_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1887,6 +2114,7 @@
       else: [[]]
 
 - parameter: Left GRF_max_landing_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1899,6 +2127,7 @@
       else: [[]]
 
 - parameter: Left GRF_mean_landing_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1911,6 +2140,7 @@
       else: [[]]
 
 - parameter: Left Hip Moment@COM_MIN_CMJ_B
+  set: left
   where:
     name: CMJ_B*
     force: left
@@ -1921,6 +2151,7 @@
       else: [[]]
 
 - parameter: Left Knee Moment@COM_MIN_CMJ_B
+  set: left
   where:
     name: CMJ_B*
     force: left
@@ -1931,6 +2162,7 @@
       else: [[]]
 
 - parameter: Left Ankle Moment@COM_MIN_CMJ_B
+  set: left
   where:
     name: CMJ_B*
     force: left
@@ -1941,6 +2173,7 @@
       else: [[]]
 
 - parameter: Left Knee Moment_max_CMJ_B
+  set: left
   where:
     name: CMJ_B*
     force: left
@@ -1952,6 +2185,7 @@
       else: [[]]
 
 - parameter: Left Knee Moment_max_landing_CMJ_B
+  set: left
   deprecated: true
   where:
     name: CMJ_B*
@@ -1965,6 +2199,7 @@
 
 # Single leg - Left
 - parameter: Left_RFD@TouchDown_100ms_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -1973,6 +2208,7 @@
     - import: Left_RFD@TouchDown_100ms
 
 - parameter: Left Power_max_concentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -1982,6 +2218,7 @@
     - max:
 
 - parameter: Left Power_mean_concentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -1991,6 +2228,7 @@
     - mean:
   
 - parameter: Left Power_min_eccentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2000,6 +2238,7 @@
     - min:
 
 - parameter: Left Power_mean_eccentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2009,6 +2248,7 @@
     - mean:
 
 - parameter: Left GRF_impulse_concentric_CMJ_L
+  set: left
   where:
     name: CMJ_L*
     force: left
@@ -2018,6 +2258,7 @@
       scalar: true
 
 - parameter: Left GRF_impulse_eccentric_CMJ_L
+  set: left
   where:
     name: CMJ_L*
     force: left
@@ -2027,6 +2268,7 @@
       scalar: true
 
 - parameter: Left GRF_max_concentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2036,6 +2278,7 @@
     - max:
 
 - parameter: Left GRF_max_eccentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2045,6 +2288,7 @@
     - max:
 
 - parameter: Left GRF_mean_concentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2054,6 +2298,7 @@
     - mean:
 
 - parameter: Left GRF_mean_eccentric_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2063,6 +2308,7 @@
     - mean:
 
 - parameter: Left GRF_max_landing_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2072,6 +2318,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2081,6 +2328,7 @@
     - mean:
 
 - parameter: Left Hip Moment@COM_MIN_CMJ_L
+  set: left
   where:
     name: CMJ_L*
     force: left
@@ -2088,6 +2336,7 @@
     - import: Left Hip Moment@COM_MIN
 
 - parameter: Left Knee Moment@COM_MIN_CMJ_L
+  set: left
   where:
     name: CMJ_L*
     force: left
@@ -2095,6 +2344,7 @@
     - import: Left Knee Moment@COM_MIN
 
 - parameter: Left Ankle Moment@COM_MIN_CMJ_L
+  set: left
   where:
     name: CMJ_L*
     force: left
@@ -2102,6 +2352,7 @@
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left Knee Moment_max_CMJ_L
+  set: left
   where:
     name: CMJ_L*
     force: left
@@ -2110,6 +2361,7 @@
     - max: 
 
 - parameter: Left Knee Moment_max_landing_CMJ_L
+  set: left
   deprecated: true
   where:
     name: CMJ_L*
@@ -2120,6 +2372,7 @@
 
 # Bilateral - Right
 - parameter: Right_RFD@TouchDown_100ms_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2131,6 +2384,7 @@
       else: [[]]
 
 - parameter: Right Power_max_concentric_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2143,6 +2397,7 @@
       else: [[]]
 
 - parameter: Right Power_mean_concentric_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2155,6 +2410,7 @@
       else: [[]]
   
 - parameter: Right Power_min_eccentric_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2167,6 +2423,7 @@
       else: [[]]
 
 - parameter: Right Power_mean_eccentric_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2179,6 +2436,7 @@
       else: [[]]
 
 - parameter: Right GRF_impulse_concentric_CMJ_B
+  set: right
   where:
     name: CMJ_B*
     force: right
@@ -2191,6 +2449,7 @@
       else: [[]]
 
 - parameter: Right GRF_impulse_eccentric_CMJ_B
+  set: right
   where:
     name: CMJ_B*
     force: right
@@ -2203,6 +2462,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_concentric_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2215,6 +2475,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_eccentric_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2227,6 +2488,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_concentric_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2239,6 +2501,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_eccentric_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2251,6 +2514,7 @@
       else: [[]]
 
 - parameter: Right GRF_max_landing_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2263,6 +2527,7 @@
       else: [[]]
 
 - parameter: Right GRF_mean_landing_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2275,6 +2540,7 @@
       else: [[]]
 
 - parameter: Right Hip Moment@COM_MIN_CMJ_B
+  set: right
   where:
     name: CMJ_B*
     force: right
@@ -2285,6 +2551,7 @@
       else: [[]]
 
 - parameter: Right Knee Moment@COM_MIN_CMJ_B
+  set: right
   where:
     name: CMJ_B*
     force: right
@@ -2295,6 +2562,7 @@
       else: [[]]
 
 - parameter: Right Ankle Moment@COM_MIN_CMJ_B
+  set: right
   where:
     name: CMJ_B*
     force: right
@@ -2305,6 +2573,7 @@
       else: [[]]
 
 - parameter: Right Knee Moment_max_CMJ_B
+  set: right
   where:
     name: CMJ_B*
     force: right
@@ -2316,6 +2585,7 @@
       else: [[]]
 
 - parameter: Right Knee Moment_max_landing_CMJ_B
+  set: right
   deprecated: true
   where:
     name: CMJ_B*
@@ -2329,6 +2599,7 @@
 
 # Single leg - Right
 - parameter: Right_RFD@TouchDown_100ms_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2337,6 +2608,7 @@
     - import: Right_RFD@TouchDown_100ms
 
 - parameter: Right Power_max_concentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2346,6 +2618,7 @@
     - max:
 
 - parameter: Right Power_mean_concentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2355,6 +2628,7 @@
     - mean:
   
 - parameter: Right Power_min_eccentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2364,6 +2638,7 @@
     - min:
 
 - parameter: Right Power_mean_eccentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2373,6 +2648,7 @@
     - mean:
 
 - parameter: Right GRF_impulse_concentric_CMJ_R
+  set: right
   where:
     name: CMJ_R*
     force: right
@@ -2382,6 +2658,7 @@
       scalar: true
 
 - parameter: Right GRF_impulse_eccentric_CMJ_R
+  set: right
   where:
     name: CMJ_R*
     force: right
@@ -2391,6 +2668,7 @@
       scalar: true
 
 - parameter: Right GRF_max_concentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2400,6 +2678,7 @@
     - max:
 
 - parameter: Right GRF_max_eccentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2409,6 +2688,7 @@
     - max:
 
 - parameter: Right GRF_mean_concentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2418,6 +2698,7 @@
     - mean:
 
 - parameter: Right GRF_mean_eccentric_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2427,6 +2708,7 @@
     - mean:
 
 - parameter: Right GRF_max_landing_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2436,6 +2718,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
@@ -2445,6 +2728,7 @@
     - mean:
 
 - parameter: Right Hip Moment@COM_MIN_CMJ_R
+  set: right
   where:
     name: CMJ_R*
     force: right
@@ -2452,6 +2736,7 @@
     - import: Right Hip Moment@COM_MIN
 
 - parameter: Right Knee Moment@COM_MIN_CMJ_R
+  set: right
   where:
     name: CMJ_R*
     force: right
@@ -2459,6 +2744,7 @@
     - import: Right Knee Moment@COM_MIN
 
 - parameter: Right Ankle Moment@COM_MIN_CMJ_R
+  set: right
   where:
     name: CMJ_R*
     force: right
@@ -2466,6 +2752,7 @@
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right Knee Moment_max_CMJ_R
+  set: right
   where:
     name: CMJ_R*
     force: right
@@ -2474,6 +2761,7 @@
     - max: 
 
 - parameter: Right Knee Moment_max_landing_CMJ_R
+  set: right
   deprecated: true
   where:
     name: CMJ_R*
