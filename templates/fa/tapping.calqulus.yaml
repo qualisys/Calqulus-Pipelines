@@ -131,6 +131,7 @@
     - eventDuration: [LON, LON]
 
 - parameter: Left_frequency_min
+  set: left
   steps:
     - divide: [1, LON_contact_time]
       export: Left_frequency
