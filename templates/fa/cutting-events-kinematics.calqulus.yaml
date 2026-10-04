@@ -137,6 +137,7 @@
     - import: $prev@1
 
 - event: Max_knee_flex
+  set: left
   displayName: Max knee flexion
   description: Instant of maximum knee flexion
   summaryTarget: true
@@ -270,6 +271,7 @@
     - import: $prev@1
 
 - event: Max_knee_flex
+  set: right
   displayName: Max knee flexion
   description: Instant of maximum knee flexion
   summaryTarget: true

@@ -167,24 +167,28 @@
       
 # Unified event names for web
 - event: LeftPlotStart
+  set: left
   where:
     name: Acc_L*
   steps:
     - import: LON
 
 - event: LeftPlotEnd
+  set: left
   where:
     name: Acc_L*
   steps:
     - import: LOFF
 
 - event: RightPlotStart
+  set: right
   where:
     name: Acc_R*
   steps:
     - import: RON
 
 - event: RightPlotEnd
+  set: right
   where:
     name: Acc_R*
   steps:

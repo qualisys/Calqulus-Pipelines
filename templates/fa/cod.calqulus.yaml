@@ -61,6 +61,7 @@
 
 #Left 
 - event: temp_pre
+  set: left
   where:
     name: COD_L*
   steps:
@@ -69,6 +70,7 @@
       frames: true
 
 - event: temp_post
+  set: left
   where:
     name: COD_L*
   steps:
@@ -116,6 +118,7 @@
 
 # Right
 - event: temp_pre
+  set: right
   where:
     name: COD_R*
   steps:
@@ -124,6 +127,7 @@
       frames: true
 
 - event: temp_post
+  set: right
   where:
     name: COD_R*
   steps:
