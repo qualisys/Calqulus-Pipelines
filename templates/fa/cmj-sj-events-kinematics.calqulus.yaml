@@ -663,8 +663,9 @@
   start: TakeOff
   end: TouchDown
 
-- phase: Absorption
+- phase: PostFlight
   summaryTarget: true
+  displayName: Post-flight
   description: "Time from the landing till 0.75 s after landing or till the end of recording if landing is less than 0.75 s before the end of recording"
   start: TouchDown
   end: PlotEnd

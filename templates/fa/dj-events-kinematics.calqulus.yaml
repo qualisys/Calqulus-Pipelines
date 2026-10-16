@@ -562,8 +562,9 @@
   start: TakeOff
   end: Landing
 
-- phase: Absorption
+- phase: PostFlight
   summaryTarget: true
+  displayName: Post-flight
   description: "Time from the landing till end of measurement"
   start: Landing
   end: Landing_end

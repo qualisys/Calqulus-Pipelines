@@ -100,7 +100,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, Absorption, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, Propulsion, PostFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, LeftUpLeg_model]
     - multiply: [$prev, [1, -1, -1]]
@@ -112,7 +112,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, Absorption, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, Propulsion, PostFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, RightUpLeg_model]
     - multiply: [$prev, [1, 1, 1]]
@@ -126,7 +126,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, Absorption, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, Propulsion, PostFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [LeftUpLeg_model, LeftLeg_model]
     - multiply: [$prev, [-1, -1, -1]]
@@ -138,7 +138,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, Absorption, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, Propulsion, PostFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [RightUpLeg_model, RightLeg_model]
     - multiply: [$prev, [-1, 1, 1]]
