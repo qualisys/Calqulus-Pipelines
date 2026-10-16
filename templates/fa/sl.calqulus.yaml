@@ -523,6 +523,8 @@
       export: RFT_DistEndPos@Max_knee_flex_landing
     - subtract: [$prev(2).y, $prev.y]
     - abs:
+
+  
 # Kinetics --------
 # Left
 - parameter: Left Hip Moment_max_knee_flex
@@ -626,6 +628,60 @@
     - eventMask: [Left GRF, TouchDown, PlotEnd]
     - mean:
 
+# Rate of power development (RPD)
+- parameter: Left Power
+  set: left
+  summarize: true
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - multiply: [Left GRF, PelvisCGPos_vel]
+
+- parameter: Left_RPD
+  set: left
+  displayName: Rate of power development (RPD)
+  summarize: true
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - derivative: Left Power
+    - lowpass:
+
+- parameter: Left_RPD_concentric_max
+  set: left
+  displayName: Max concentric rate of power development (RPD)
+  summarize: RPD_Concentric_Max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - eventMask: [Left_RPD, TakeOff, TouchDown]
+      keep: -1
+    - max:
+
+- parameter: Left_time_to_eccentric_peak_power
+  set: left
+  displayName: Time to eccentric peak power
+  summarize: Time_to_eccentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - eventDuration: [LeftPlotStart, Peak_eccentric_power]
+
+- parameter: Left_time_to_concentric_peak_power
+  set: left
+  displayName: Time to concentric peak power
+  summarize: Time_to_concentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)L*
+    force: left
+  steps:
+    - eventDuration: [COM_MIN, Peak_concentric_power]
+
+
 # Right
 - parameter: Right Hip Moment_max_knee_flex
   where:
@@ -727,3 +783,79 @@
   steps:
     - eventMask: [Right GRF, TouchDown, PlotEnd]
     - mean:
+
+# Time to stabilization
+- parameter: Left_time_to_stabilization
+  set: left
+  displayName: Time to stabilization
+  summarize: Time_to_stabilization
+  where:
+    name: ^(SLJ_|SLL_)L*
+    force: left
+  steps:
+    - eventDuration: [TouchDown, Stabilization_end]
+
+- parameter: Right_time_to_stabilization
+  set: right
+  displayName: Time to stabilization
+  summarize: Time_to_stabilization
+  where:
+    name: ^(SLJ_|SLL_)R*
+    force: right
+  steps:
+    - eventDuration: [TouchDown, Stabilization_end]
+
+# Rate of power development (RPD)
+- parameter: Right Power
+  set: right
+  summarize: true
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right_RPD
+  set: right
+  displayName: Rate of power development (RPD)
+  summarize: true
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - derivative: Right Power
+    - lowpass:
+
+- parameter: Right_RPD_concentric_max
+  set: right
+  displayName: Max concentric rate of power development (RPD)
+  summarize: RPD_Concentric_Max
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - eventMask: [Right_RPD, TakeOff, TouchDown]
+      keep: -1
+    - max:
+
+- parameter: Right_time_to_eccentric_peak_power
+  set: right
+  displayName: Time to eccentric peak power
+  summarize: Time_to_eccentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - eventDuration: [RightPlotStart, Peak_eccentric_power]
+
+- parameter: Right_time_to_concentric_peak_power
+  set: right
+  displayName: Time to concentric peak power
+  summarize: Time_to_concentric_peak_power
+  where:
+    name: ^(SLJ_|SLL_|SLCDL_)R*
+    force: right
+  steps:
+    - eventDuration: [COM_MIN, Peak_concentric_power]
+    
+

@@ -58,6 +58,11 @@
     fields: 
       Session Type: Generic*
 
+- template: templates/generic/generic.calqulus.yaml
+  where:
+    fields: 
+      OnTraq Analysis: Generic
+
 - template: templates/running/running.calqulus.yaml
   where:
     name: ^(Gait|Run|Walk)*

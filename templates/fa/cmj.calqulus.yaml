@@ -94,6 +94,56 @@
   steps:
     - eventDuration: [Eccentric_end,TakeOff]
 
+# Time to TakeOff (same interval as Propulsion; kept for mRSI)
+- parameter: TimeToTakeOff_CMJ_B
+  set: total
+  where:
+    name: CMJ_B*
+  steps:
+    - eventDuration: [PlotStart,TakeOff]
+
+- parameter: TimeToTakeOff_CMJ_L
+  set: left
+  where:
+    name: CMJ_L*
+  steps:
+    - eventDuration: [PlotStart,TakeOff]
+
+- parameter: TimeToTakeOff_CMJ_R
+  set: right
+  where:
+    name: CMJ_R*
+  steps:
+    - eventDuration: [PlotStart,TakeOff]
+
+# Modified reactive strength index
+- parameter: Reactive_strength_index_modified_CMJ_B
+  set: total
+  displayName: Modified reactive strength index (mRSI)
+  summarize: Reactive_Strength_Index_Modified
+  where:
+    name: CMJ_B*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_B, TimeToTakeOff_CMJ_B]
+
+- parameter: Reactive_strength_index_modified_CMJ_L
+  set: left
+  displayName: Modified reactive strength index (mRSI)
+  summarize: Reactive_Strength_Index_Modified
+  where:
+    name: CMJ_L*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_L, TimeToTakeOff_CMJ_L]
+
+- parameter: Reactive_strength_index_modified_CMJ_R
+  set: right
+  displayName: Modified reactive strength index (mRSI)
+  summarize: Reactive_Strength_Index_Modified
+  where:
+    name: CMJ_R*
+  steps:
+    - divide: [COM_displacement_MEAN_max_CMJ_R, TimeToTakeOff_CMJ_R]
+
 # Flight time to Contraction time ratio
 - parameter: Flight_Contraction_time_ratio_CMJ_B
   set: total
@@ -358,6 +408,8 @@
     - max:
       output: hipMax
     - segment: Hips_model?name=Static* => hipsStatic
+    - vector: [hipsStatic.x, hipsStatic.y, hipsStatic.z]
+      output: hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -375,6 +427,8 @@
     - max:
       output: hipMax
     - segment: Hips_model?name=Static* => hipsStatic
+    - vector: [hipsStatic.x, hipsStatic.y, hipsStatic.z]
+      output: hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -392,6 +446,8 @@
     - max:
       output: hipMax
     - segment: Hips_model?name=Static* => hipsStatic
+    - vector: [hipsStatic.x, hipsStatic.y, hipsStatic.z]
+      output: hipsStatic
     - mean: hipsStatic
     - subtract: [hipMax, $prev.z]
     - convert: $prev
@@ -1681,6 +1737,17 @@
       then: $prev
       else: [[]]
 
+- parameter: Left_RPD
+  set: left
+  displayName: Rate of power development (RPD)
+  summarize: true
+  where:
+    name: CMJ_B*
+    force: left
+  steps:
+    - derivative: Left Power
+    - lowpass:
+
 - parameter: Left Power
   set: left
   summarize: true
@@ -1690,6 +1757,17 @@
   steps:
     - multiply: [Left GRF, PelvisCGPos_vel]
 
+- parameter: Left_RPD
+  set: left
+  displayName: Rate of power development (RPD)
+  summarize: true
+  where:
+    name: CMJ_L*
+    force: left
+  steps:
+    - derivative: Left Power
+    - lowpass:
+
 - parameter: Right_RFD
   set: right
   summarize:
@@ -1702,6 +1780,30 @@
     - if: "!empty(Total GRF_both.x)"
       then: $prev
       else: [[]]
+
+- parameter: Left_RPD_concentric_max_CMJ_B
+  set: left
+  deprecated: true
+  displayName: Max concentric rate of power development (RPD)
+  where:
+    name: CMJ_B*
+    force: left
+  steps:
+    - eventMask: [Left_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
+
+- parameter: Left_RPD_concentric_max_CMJ_L
+  set: left
+  deprecated: true
+  displayName: Max concentric rate of power development (RPD)
+  where:
+    name: CMJ_L*
+    force: left
+  steps:
+    - eventMask: [Left_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
 
 - parameter: Right_RFD
   set: right
@@ -1725,6 +1827,17 @@
       then: $prev
       else: [[]]
 
+- parameter: Right_RPD
+  set: right
+  displayName: Rate of power development (RPD)
+  summarize: true
+  where:
+    name: CMJ_B*
+    force: right
+  steps:
+    - derivative: Right Power
+    - lowpass:
+
 - parameter: Right Power
   set: right
   summarize: true
@@ -1733,6 +1846,41 @@
     force: right
   steps:
     - multiply: [Right GRF, PelvisCGPos_vel]
+
+- parameter: Right_RPD
+  set: right
+  displayName: Rate of power development (RPD)
+  summarize: true
+  where:
+    name: CMJ_R*
+    force: right
+  steps:
+    - derivative: Right Power
+    - lowpass:
+
+- parameter: Right_RPD_concentric_max_CMJ_B
+  set: right
+  deprecated: true
+  displayName: Max concentric rate of power development (RPD)
+  where:
+    name: CMJ_B*
+    force: right
+  steps:
+    - eventMask: [Right_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
+
+- parameter: Right_RPD_concentric_max_CMJ_R
+  set: right
+  deprecated: true
+  displayName: Max concentric rate of power development (RPD)
+  where:
+    name: CMJ_R*
+    force: right
+  steps:
+    - eventMask: [Right_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
 
 # Total
 # find out which FP is loaded
@@ -1831,6 +1979,49 @@
   steps:
     - multiply: [Total GRF, PelvisCGPos_vel]
 
+- parameter: Total_RPD
+  set: total
+  displayName: Rate of power development (RPD)
+  summarize: true
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - derivative: Total Power
+    - lowpass:
+
+- parameter: Total_RPD_concentric_max_CMJ_B
+  set: total
+  deprecated: true
+  displayName: Max concentric rate of power development (RPD)
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - eventMask: [Total_RPD, Eccentric_end, TakeOff]
+      keep: -1
+    - max:
+
+- parameter: Time_to_eccentric_peak_power_CMJ_B
+  set: total
+  displayName: Time to eccentric peak power
+  summarize: Time_to_eccentric_peak_power
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - eventDuration: [PlotStart, Peak_eccentric_power]
+
+- parameter: Time_to_concentric_peak_power_CMJ_B
+  set: total
+  displayName: Time to concentric peak power
+  summarize: Time_to_concentric_peak_power
+  where:
+    name: CMJ_B*
+    force: any
+  steps:
+    - eventDuration: [Eccentric_end, Peak_concentric_power]
+    
 - parameter: Total GRF_impulse_concentric_CMJ_B
   set: total
   where:
