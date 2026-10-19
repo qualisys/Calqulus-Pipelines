@@ -169,12 +169,12 @@
     # - divide: [$framerate, 10]
     #   output: shift
     - threshold: RPV_CGVel.z
-      value: -0.1
+      value: 0
       direction: down
     - eventMask: [$prev, BOF_fixed, TakeOff_L]
     - import: $prev@-1
       # keep: -1
-    - subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
+    #- subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
 
 - event: PlotStart_L_calqulus
   where:
@@ -380,11 +380,11 @@
     # - divide: [$framerate, 10]
     #   output: shift
     - threshold: RPV_CGVel.z
-      value: -0.1
+      value: 0
       direction: down
     - eventMask: [$prev, BOF_fixed, TakeOff_R]
       keep: -1
-    - subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
+    #- subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
 
 - event: PlotStart_R_calqulus
   where:
