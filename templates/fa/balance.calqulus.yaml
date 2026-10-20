@@ -213,7 +213,7 @@
     
 - parameter: DPSI
   steps:
-    - multiply: [$bodyMass, 9.81]
+    - multiply: [$bodyMass, $g]
       output: bw
 
     - vector: [loaded_FP.x, loaded_FP.y, loaded_FP.z]

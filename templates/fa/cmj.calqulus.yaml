@@ -443,7 +443,7 @@
     name: CMJ_B*
     force: both
   steps:
-    - multiply: [$bodyMass, 9.81]
+    - multiply: [$bodyMass, $g]
     - multiply: [Total GRF, $prev]
     - subtract: [$prev, $prev(2)]
     - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
@@ -459,7 +459,7 @@
     name: CMJ_L*
     force: left
   steps:
-    - multiply: [$bodyMass, 9.81]
+    - multiply: [$bodyMass, $g]
     - multiply: [Left GRF, $prev]
     - subtract: [$prev, $prev(2)]
     - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
@@ -475,7 +475,7 @@
     name: CMJ_R*
     force: right
   steps:
-    - multiply: [$bodyMass, 9.81]
+    - multiply: [$bodyMass, $g]
     - multiply: [Right GRF, $prev]
     - subtract: [$prev, $prev(2)]
     - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
