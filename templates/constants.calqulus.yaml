@@ -1,0 +1,4 @@
+- parameter: DOUBLE_GRAVITY
+  export: false
+  steps:
+    - multiply: [$g, 2]
