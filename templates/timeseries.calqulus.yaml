@@ -1,3 +1,5 @@
+- template: constants.calqulus.yaml
+
 ############
 ## SERIES ##
 ############
@@ -422,7 +424,7 @@
 # ----
 - parameter: BodyWeightNewton
   steps:
-    - multiply: [$bodyMass, 9.81]
+    - multiply: [$bodyMass, $g]
 
 # Dummy value to skip kinetics calculation
 # For CMJ_B/DJ_B (bilateral): skip kinetics unless BOTH force plates exist

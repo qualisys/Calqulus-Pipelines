@@ -384,7 +384,7 @@
       direction: down
     - eventMask: [$prev, BOF_fixed, TakeOff_R]
       keep: -1
-    - subtract: [$prev, 2] #shift by 2 frames to be closer to actual initioation of motion
+    - subtract: [$prev, 2] #shift by 2 frames to be closer to actual initiation of motion
 
 - event: PlotStart_R_calqulus
   where:
