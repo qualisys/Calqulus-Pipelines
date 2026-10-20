@@ -419,7 +419,7 @@
   steps:
     - divide: [FlightTime_CMJ_B, 2]
     - power:
-    - multiply: [4.905, $prev]
+    - multiply: [HALF_GRAVITY, $prev]
 
 - parameter: COM_displacement_MEAN_max_flight_time_CMJ_L
   where:
@@ -427,7 +427,7 @@
   steps:
     - divide: [FlightTime_CMJ_L, 2]
     - power:
-    - multiply: [4.905, $prev]
+    - multiply: [HALF_GRAVITY, $prev]
 
 - parameter: COM_displacement_MEAN_max_flight_time_CMJ_R
   where:
@@ -435,7 +435,7 @@
   steps:
     - divide: [FlightTime_CMJ_R, 2]
     - power:
-    - multiply: [4.905, $prev]
+    - multiply: [HALF_GRAVITY, $prev]
 
 # Impulse (vel = impulse/m, h = vel@takeoff^2 /2g)
 - parameter: COM_displacement_MEAN_max_impulse_CMJ_B
