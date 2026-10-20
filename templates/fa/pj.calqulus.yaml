@@ -363,7 +363,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: Jump_height_takeoff_vel_PJ_L
   where:
@@ -372,7 +372,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: Jump_height_takeoff_vel_PJ_R
   where:
@@ -381,7 +381,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: Jump_height_takeoff_vel_PJ_B_max
   where:

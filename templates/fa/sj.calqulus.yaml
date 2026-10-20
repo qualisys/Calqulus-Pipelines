@@ -322,7 +322,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_max_takeoff_vel_SJ_L
   where:
@@ -331,7 +331,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_max_takeoff_vel_SJ_R
   where:
@@ -340,7 +340,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 # Flight time (1/2g(t/2)^2)
 - parameter: COM_displacement_MEAN_max_flight_time_SJ_B
@@ -384,7 +384,7 @@
       scalar: true
     - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_max_impulse_SJ_L
   where:
@@ -401,7 +401,7 @@
       scalar: true
     - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_max_impulse_SJ_R
   where:
@@ -418,7 +418,7 @@
       scalar: true
     - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_min_SJ_B 
   where:
