@@ -394,7 +394,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_max_takeoff_vel_CMJ_L
   where:
@@ -402,7 +402,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_max_takeoff_vel_CMJ_R
   where:
@@ -410,7 +410,7 @@
   steps:
     - import: PelvisCGPos_vel.z@TakeOff
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 # Flight time (1/2g(t/2)^2)
 - parameter: COM_displacement_MEAN_max_flight_time_CMJ_B
@@ -419,7 +419,7 @@
   steps:
     - divide: [FlightTime_CMJ_B, 2]
     - power:
-    - multiply: [4.905, $prev]
+    - multiply: [HALF_GRAVITY, $prev]
 
 - parameter: COM_displacement_MEAN_max_flight_time_CMJ_L
   where:
@@ -427,7 +427,7 @@
   steps:
     - divide: [FlightTime_CMJ_L, 2]
     - power:
-    - multiply: [4.905, $prev]
+    - multiply: [HALF_GRAVITY, $prev]
 
 - parameter: COM_displacement_MEAN_max_flight_time_CMJ_R
   where:
@@ -435,7 +435,7 @@
   steps:
     - divide: [FlightTime_CMJ_R, 2]
     - power:
-    - multiply: [4.905, $prev]
+    - multiply: [HALF_GRAVITY, $prev]
 
 # Impulse (vel = impulse/m, h = vel@takeoff^2 /2g)
 - parameter: COM_displacement_MEAN_max_impulse_CMJ_B
@@ -443,7 +443,7 @@
     name: CMJ_B*
     force: both
   steps:
-    - multiply: [$bodyMass, 9.81]
+    - multiply: [$bodyMass, $g]
     - multiply: [Total GRF, $prev]
     - subtract: [$prev, $prev(2)]
     - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
@@ -452,14 +452,14 @@
       scalar: true
     - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_max_impulse_CMJ_L
   where:
     name: CMJ_L*
     force: left
   steps:
-    - multiply: [$bodyMass, 9.81]
+    - multiply: [$bodyMass, $g]
     - multiply: [Left GRF, $prev]
     - subtract: [$prev, $prev(2)]
     - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
@@ -468,14 +468,14 @@
       scalar: true
     - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_max_impulse_CMJ_R
   where:
     name: CMJ_R*
     force: right
   steps:
-    - multiply: [$bodyMass, 9.81]
+    - multiply: [$bodyMass, $g]
     - multiply: [Right GRF, $prev]
     - subtract: [$prev, $prev(2)]
     - eventMask: [$prev.z, pelvis_lowest, TakeOff_zero]
@@ -484,7 +484,7 @@
       scalar: true
     - divide: [$prev, $bodyMass] #this is takeoff velocity
     - power:
-    - divide: [$prev, 19.62] #(2 * 9.81)
+    - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: COM_displacement_MEAN_min_CMJ_B 
   where:
