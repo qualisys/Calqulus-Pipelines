@@ -90,14 +90,26 @@
       then: TakeOff_prio
       else: TakeOff_kinematics
 
+- event: temp_R0
+  where:
+    name: (Cut|Cutting)_L*
+  set: left
+  steps:
+    - threshold: LFT_DistEndPos.z
+      value: 0.06
+      direction: up
+    - concatenate: [BOF, $prev]
+    - eventMask: [$prev, BOF, TouchDown]
+      keep: -1
+
 - event: temp_R1
   where:
     name: (Cut|Cutting)_L*
   set: left
   steps:
-    - eventMask: [RFT_DistEndVel.y, BOF, TouchDown]
+    - eventMask: [RFT_DistEndVel.y, temp_R0, TouchDown]
       # keep: -1
-    - min: 
+    - min:
       frames: true
 
 - event: Right Penultimate TouchDown
@@ -107,7 +119,7 @@
   steps:
     - negate: RFT_DistEndVel.z
     - peakFinder: [$prev]
-    - eventMask: [$prev, BOF, temp_R1]
+    - eventMask: [$prev, temp_R0, temp_R1]
       keep: -1
 
 - event: temp_R2
@@ -214,14 +226,26 @@
       then: TakeOff_prio
       else: TakeOff_kinematics
 
+- event: temp_L0
+  where:
+    name: (Cut|Cutting)_R*
+  set: right
+  steps:
+    - threshold: RFT_DistEndPos.z
+      value: 0.06
+      direction: up
+    - concatenate: [BOF, $prev]
+    - eventMask: [$prev, BOF, TouchDown]
+      keep: -1
+
 - event: temp_L1
   where:
     name: (Cut|Cutting)_R*
   set: right
   steps:
-    - eventMask: [LFT_DistEndVel.y, BOF, TouchDown]
+    - eventMask: [LFT_DistEndVel.y, temp_L0, TouchDown]
       # keep: -1
-    - min: 
+    - min:
       frames: true
 
 - event: Left Penultimate TouchDown
@@ -231,7 +255,7 @@
   steps:
     - negate: LFT_DistEndVel.z
     - peakFinder: [$prev]
-    - eventMask: [$prev, BOF, temp_L1]
+    - eventMask: [$prev, temp_L0, temp_L1]
       keep: -1
 
 - event: temp_L2
