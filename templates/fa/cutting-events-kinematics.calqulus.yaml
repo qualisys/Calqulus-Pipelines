@@ -127,7 +127,7 @@
     name: (Cut|Cutting)_L*
   set: left
   steps:
-    - eventMask: [RFT_DistEndVel.z, BOF, TakeOff]
+    - eventMask: [RFT_DistEndVel.z, temp_R1, TakeOff]
     - max:
       frames: true
 
@@ -263,7 +263,7 @@
     name: (Cut|Cutting)_R*
   set: right
   steps:
-    - eventMask: [LFT_DistEndVel.z, BOF, TakeOff]
+    - eventMask: [LFT_DistEndVel.z, temp_L1, TakeOff]
     - max:
       frames: true
 
