@@ -107,7 +107,8 @@
     name: (Cut|Cutting)_L*
   set: left
   steps:
-    - eventMask: [RFT_DistEndVel.y, temp_R0, TouchDown]
+    - abs: RFT_DistEndVel.y
+    - eventMask: [$prev, temp_R0, TouchDown]
       # keep: -1
     - min:
       frames: true
@@ -243,7 +244,8 @@
     name: (Cut|Cutting)_R*
   set: right
   steps:
-    - eventMask: [LFT_DistEndVel.y, temp_L0, TouchDown]
+    - abs: LFT_DistEndVel.y
+    - eventMask: [$prev, temp_L0, TouchDown]
       # keep: -1
     - min:
       frames: true
