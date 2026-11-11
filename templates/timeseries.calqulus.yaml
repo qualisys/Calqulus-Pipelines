@@ -410,10 +410,10 @@
   steps:
     - vector: [LeftLeg_model.x, LeftLeg_model.y, LeftLeg_model.z]
       space: VirtualLab
-      export: knee
+      output: knee
     - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
-      export: pelvis
+      output: pelvis
     - subtract: [pelvis, knee]
     - convert: 
       from: mm
@@ -425,10 +425,10 @@
   steps:
     - vector: [RightLeg_model.x, RightLeg_model.y, RightLeg_model.z]
       space: VirtualLab
-      export: knee
+      output: knee
     - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
-      export: pelvis
+      output: pelvis
     - subtract: [pelvis, knee]
     - convert: 
       from: mm
@@ -441,10 +441,10 @@
   steps:
     - vector: [LeftFoot_model.x, LeftFoot_model.y, LeftFoot_model.z]
       space: VirtualLab
-      export: foot
+      output: foot
     - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
-      export: pelvis
+      output: pelvis
     - subtract: [pelvis, foot]
     - convert: 
       from: mm
@@ -456,10 +456,10 @@
   steps:
     - vector: [RightFoot_model.x, RightFoot_model.y, RightFoot_model.z]
       space: VirtualLab
-      export: foot
+      output: foot
     - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
-      export: pelvis
+      output: pelvis
     - subtract: [pelvis, foot]
     - convert: 
       from: mm
