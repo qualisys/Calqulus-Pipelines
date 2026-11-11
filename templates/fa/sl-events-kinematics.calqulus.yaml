@@ -69,6 +69,7 @@
   set: left
   steps:
     - eventMask: [Left Knee Angles.x, TouchDown, EOF]
+      includeEqual: true
     - max:
       frames: true
 
@@ -143,6 +144,7 @@
   set: right
   steps:
     - eventMask: [Right Knee Angles.x, TouchDown, EOF]
+      includeEqual: true
     - max:
       frames: true
 
