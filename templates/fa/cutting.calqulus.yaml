@@ -2,35 +2,32 @@
 ############
 ## SPACES ##
 ############
-- parameter: HipsStart
+
+# To avoid situation with Virtual lab not being created if measurement starts without skeleton data for pelvis, find pelvis maximum and derived Virtual lab orinetation from it    
+- event: hips_max
   steps:
-    - eventMask: [Hips_model, BOF, BOF_10fr]
-      truncate: true
+    - import: Hips_model.z
+    - max:
+      frames: true
 
 - space: VirtualLab
   alignWithSegment:
-    segment: HipsStart
+    segment: Hips_model@hips_max
 
 ############
 ## EVENTS ##
 ############
-
 - template: /templates/events-kinetics.calqulus.yaml
   where:
     force: any
-
 - template: cutting-events-kinematics.calqulus.yaml
-
 ############
 ## SERIES ##
 ############
-
 - template: /templates/timeseries.calqulus.yaml
-
 #############
 ## Metrics ##
 #############
-
 # Magnitude velocity of COM in horizontal plane
 - parameter: PelvisCGPos_vel_mag
   steps:

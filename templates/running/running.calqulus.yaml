@@ -747,6 +747,7 @@
 
 # Steps/min
 # 60 / ((left mean step time + right mean step time) / 2)
+# Outputs unit (1/s) which might need to be adjusted for display.
 - parameter: Steps_Per_Minute_Mean
   where:
     name: ^(Gait|Run|Walk)*

@@ -582,7 +582,9 @@
 
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [L_Pedal_Y, L_Pedal_Z]
-    - multiply: [$prev, 57.2958] #to deg
+    - convert:
+      from: rad
+      to: deg
     - add: [180, $prev]
 
 - parameter: Left_Crank_Angle_ML #markerless or crank marker on crank
@@ -618,7 +620,9 @@
 
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [L_Pedal_Y, L_Pedal_Z]
-    - multiply: [$prev, 57.2958] #to deg
+    - convert:
+      from: rad
+      to: deg
     - multiply: [$prev, -1]
     - add: [180, $prev]
 
@@ -767,7 +771,9 @@
       
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [R_Pedal_Y, R_Pedal_Z]
-    - multiply: [$prev, 57.2958] #to deg
+    - convert:
+      from: rad
+      to: deg
     - add: [180, $prev]
 
 - parameter: Right_Crank_Angle_ML
@@ -803,7 +809,9 @@
       
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [R_Pedal_Y, R_Pedal_Z]
-    - multiply: [$prev, 57.2958] #to deg
+    - convert:
+      from: rad
+      to: deg
     - multiply: [$prev, -1]
     - add: [180, $prev]
 
@@ -1041,6 +1049,9 @@
     - subtract: [$prev, 1]
       export: Cycle_count
     - multiply: [$prev, 360]
+    - convert:
+      from: deg
+      to: deg
       output: cyc_count_cor_m
 
     - eventTime: L_TDC => TDC_times
