@@ -270,6 +270,8 @@
   set: total
   displayName: Jump height
   summarize: Jump_Height
+  where:
+    name: PJ_B*
   steps:
     - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
 
