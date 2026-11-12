@@ -6,6 +6,8 @@
 
 # Parameters needed for kinematics event detection in FA
 - parameter: PelvisCGPos_vel
+  displayName: Pelvis velocity
+  summarize: true
   steps:
     - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
@@ -72,6 +74,7 @@
 
 - parameter: Left Pelvic Angles
   set: left
+  summarize: true
   steps:
     - jointAngle: Hips_model
       rotationOrder: ZYX
@@ -83,6 +86,7 @@
 
 - parameter: Right Pelvic Angles
   set: right
+  summarize: true
   steps:
     - jointAngle: Hips_model
       rotationOrder: ZYX
@@ -96,6 +100,9 @@
 
 - parameter: Left Hip Angles
   set: left
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, PostFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, LeftUpLeg_model]
     - multiply: [$prev, [1, -1, -1]]
@@ -105,6 +112,9 @@
 
 - parameter: Right Hip Angles
   set: right
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, PostFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, RightUpLeg_model]
     - multiply: [$prev, [1, 1, 1]]
@@ -116,6 +126,9 @@
 
 - parameter: Left Knee Angles
   set: left
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, PostFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [LeftUpLeg_model, LeftLeg_model]
     - multiply: [$prev, [-1, -1, -1]]
@@ -125,6 +138,9 @@
 
 - parameter: Right Knee Angles
   set: right
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, PostFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [RightUpLeg_model, RightLeg_model]
     - multiply: [$prev, [-1, 1, 1]]
@@ -136,6 +152,9 @@
 
 - parameter: Left Ankle Angles
   set: left
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [LeftLeg_model, LeftFoot_model]
       output: foot_vector
@@ -154,6 +173,9 @@
 
 - parameter: Right Ankle Angles
   set: right
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [RightLeg_model, RightFoot_model]
       output: foot_vector
@@ -172,6 +194,7 @@
 
 - parameter: Left Foot Progression
   set: left
+  summarize: true
   steps:
     - jointAngle: LeftFoot_model
       space: VirtualLab
@@ -182,6 +205,7 @@
 
 - parameter: Right Foot Progression
   set: right
+  summarize: true
   steps:
     - jointAngle: RightFoot_model
       space: VirtualLab
@@ -192,6 +216,7 @@
 
 - parameter: Left Foot Pitch Angles
   set: left
+  summarize: true
   steps:
     - jointAngle: LeftFoot_model
       space: VirtualLab
@@ -202,6 +227,7 @@
 
 - parameter: Right Foot Pitch Angles
   set: right
+  summarize: true
   steps:
     - jointAngle: RightFoot_model
       space: VirtualLab
@@ -215,6 +241,7 @@
 # Thorax
 - parameter: Left Thorax_Lab Angles
   set: left
+  summarize: true
   steps:
     - jointAngle: Spine2_model
       space: VirtualLab
@@ -225,6 +252,7 @@
 
 - parameter: Right Thorax_Lab Angles
   set: right
+  summarize: true
   steps:
     - jointAngle: Spine2_model
       space: VirtualLab
@@ -235,6 +263,9 @@
 
 - parameter: Left Thorax Angles
   set: left
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, 1, -1]]
@@ -244,6 +275,9 @@
 
 - parameter: Right Thorax Angles
   set: right
+  summarize:
+    defaultTargets: true
+    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, -1, 1]]
@@ -254,6 +288,7 @@
 # Shoulder girdles
 - parameter: Left Shoulder Girdle Angles
   set: left
+  summarize: true
   steps:
     - angle: [Spine2_model, LeftShoulder_model]
       unwrap: true
@@ -265,6 +300,7 @@
 
 - parameter: Right Shoulder Girdle Angles
   set: right
+  summarize: true
   steps:
     - angle: [Spine2_model, RightShoulder_model]
       unwrap: true
@@ -277,6 +313,7 @@
 # Shoulders
 - parameter: Left Shoulder Angles
   set: left
+  summarize: true
   steps:
     - angle: [Spine2_model, LeftArm_model]
       unwrap: true
@@ -288,6 +325,7 @@
 
 - parameter: Right Shoulder Angles
   set: right
+  summarize: true
   steps:
     - angle: [Spine2_model, RightArm_model]
       unwrap: true
@@ -299,11 +337,13 @@
 
 - parameter: Left Shoulder Ang Vel
   set: left
+  summarize: true
   steps:
     - angularVelocity: [LeftShoulder_model, LeftArm_model, LeftShoulder_model, LeftArm_model]
 
 - parameter: Right Shoulder Ang Vel
   set: right
+  summarize: true
   steps:
     - angularVelocity: [RightShoulder_model, RightArm_model, RightShoulder_model, RightArm_model]
 
@@ -311,6 +351,7 @@
 
 - parameter: Left Elbow Angles
   set: left
+  summarize: true
   steps:
     - angle: [LeftArm_model, LeftForeArm_model]
       unwrap: true
@@ -321,6 +362,7 @@
 
 - parameter: Right Elbow Angles
   set: right
+  summarize: true
   steps:
     - angle: [RightArm_model, RightForeArm_model]
       unwrap: true
@@ -333,6 +375,7 @@
 
 - parameter: Left Wrist Angles
   set: left
+  summarize: true
   steps:
     - angle: [LeftForeArm_model, LeftHand_model]
     - multiply: [$prev, [1, -1, 1]]
@@ -342,6 +385,7 @@
 
 - parameter: Right Wrist Angles
   set: right
+  summarize: true
   steps:
     - angle: [RightForeArm_model, RightHand_model]
     - multiply: [$prev, [1, 1, -1]]
@@ -352,6 +396,7 @@
 # --- Head ---
 
 - parameter: Head Angles
+  summarize: true
   steps:
     - angle: [Head_model, Spine2_model]
     - lowpass:
@@ -363,6 +408,7 @@
 # for now using pelvis COM instead of body COM
 - parameter: Left_Knee_COM_distance
   set: left
+  summarize: true
   steps:
     - vector: [LeftLeg_model.x, LeftLeg_model.y, LeftLeg_model.z]
       space: VirtualLab
@@ -377,6 +423,7 @@
 
 - parameter: Right_Knee_COM_distance
   set: right
+  summarize: true
   steps:
     - vector: [RightLeg_model.x, RightLeg_model.y, RightLeg_model.z]
       space: VirtualLab
@@ -392,6 +439,7 @@
 
 - parameter: Left_Ankle_COM_distance
   set: left
+  summarize: true
   steps:
     - vector: [LeftFoot_model.x, LeftFoot_model.y, LeftFoot_model.z]
       space: VirtualLab
@@ -406,6 +454,7 @@
 
 - parameter: Right_Ankle_COM_distance
   set: right
+  summarize: true
   steps:
     - vector: [RightFoot_model.x, RightFoot_model.y, RightFoot_model.z]
       space: VirtualLab
@@ -448,6 +497,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - import: LeftFootContact => foot
     - vector: [foot.fx, foot.fy, foot.fz]
@@ -461,6 +511,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - vector: [LeftHip.mx, LeftHip.my, LeftHip.mz]
     - divide: [$prev, $bodyMass]
@@ -473,6 +524,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - vector: [LeftHip.p, LeftHip.p, LeftHip.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
@@ -484,6 +536,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - vector: [LeftKnee.mx, LeftKnee.my, LeftKnee.mz]
     - divide: [$prev, $bodyMass]
@@ -495,6 +548,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - vector: [LeftKnee.p, LeftKnee.p, LeftKnee.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
@@ -506,6 +560,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - vector: [LeftAnkle.mx, LeftAnkle.my, LeftAnkle.mz]
     - divide: [$prev, $bodyMass]
@@ -518,6 +573,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - vector: [LeftAnkle.p, LeftAnkle.p, LeftAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
@@ -529,6 +585,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - import: LeftFootContact => foot
     - vector: [foot.x, foot.y, foot.z]
@@ -543,6 +600,7 @@
   where:
     force: left
   set: left
+  summarize: true
   steps:
     - import: Left_COP
       space: VirtualLab
@@ -556,6 +614,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - import: RightFootContact => foot
     - vector: [foot.fx, foot.fy, foot.fz]
@@ -570,6 +629,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - vector: [RightHip.mx, RightHip.my, RightHip.mz]
     - divide: [$prev, $bodyMass]
@@ -582,6 +642,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - vector: [RightHip.p, RightHip.p, RightHip.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
@@ -593,6 +654,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - vector: [RightKnee.mx, RightKnee.my, RightKnee.mz]
     - divide: [$prev, $bodyMass]
@@ -605,6 +667,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - vector: [RightKnee.p, RightKnee.p, RightKnee.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
@@ -616,6 +679,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - vector: [RightAnkle.mx, RightAnkle.my, RightAnkle.mz]
     - divide: [$prev, $bodyMass]
@@ -628,6 +692,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - vector: [RightAnkle.p, RightAnkle.p, RightAnkle.p] #for compatibility with V3D power requires components
     - divide: [$prev, $bodyMass]
@@ -639,6 +704,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - import: RightFootContact => foot
     - vector: [foot.x, foot.y, foot.z]
@@ -653,6 +719,7 @@
   where:
     force: right
   set: right
+  summarize: true
   steps:
     - import: Right_COP
       space: VirtualLab

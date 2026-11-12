@@ -147,18 +147,27 @@
       else: Landing_L_kinematics
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: DJ_[LB]*
   steps:
     - import: TakeOff_L
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: DJ_[LB]*
   steps:
     - import: TouchDown_L
 
 - event: Landing
+  displayName: Landing
+  description: Instant of landing after flight
+  summaryTarget: true
   where:
     name: DJ_[LB]*
   steps:
@@ -323,24 +332,34 @@
       else: Landing_R_kinematics
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: DJ_[RB]*
   steps:
     - import: TakeOff_R
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: DJ_[RB]*
   steps:
     - import: TouchDown_R
 
 - event: Landing
+  displayName: Landing
+  description: Instant of landing after flight
+  summaryTarget: true
   where:
     name: DJ_[RB]*
   steps:
     - import: Landing_R
 
 - event: TakeOff_zero # used for jump height
+  set: total
   where:
     name: DJ_B*
     force: both
@@ -352,6 +371,7 @@
       keep: -1
 
 - event: TakeOff_zero # used for jump height
+  set: left
   where:
     name: DJ_L*
     force: left
@@ -363,6 +383,7 @@
       keep: -1
 
 - event: TakeOff_zero # used for jump height
+  set: right
   where:
     name: DJ_R*
     force: right
@@ -403,6 +424,9 @@
       frames: true
 
 - event: COM_MIN # we do not have body COM so we use pelvis COM instead
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   steps:
     - import: Hips_model.z
     - eventMask: [$prev, TouchDown, TakeOff]
@@ -411,37 +435,27 @@
 
 # Landing end 
 # Place Landing_end at EOF if Landing_end cannot be created because there is no descending zero crossing of PelvisCGPos_vel after landing.
-# - event: Landing_end_temp
-#   steps:
-#     - threshold: PelvisCGPos_vel.z
-#       value: 0
-#       direction: down
-#     - eventMask: [$prev, Landing, EOF]
-#       keep: 1
-
-# - event: EOF-1
-#   steps:
-#     - import: EOF
-#       frames: true
-#     - subtract: [$length,2]
-
-- event: Landing_end
+- event: Landing_end_temp
   steps:
     - threshold: PelvisCGPos_vel.z
       value: 0
       direction: down
     - eventMask: [$prev, Landing, EOF]
       keep: 1
-      export: Landing_end_temp
 
+- event: EOF-1
+  steps:
     - subtract: [$length,2]
-      export: EOF-1
 
-    - if: Landing_end_temp
+- event: Landing_end
+  summaryTarget: false
+  steps:
+    - if: "!empty(Landing_end_temp)"
       then: Landing_end_temp
       else: EOF-1
-
+    
 - event: Eccentric_end
+  summaryTarget: false
   steps:
     - threshold: PelvisCGPos_vel.z
       value: 0
@@ -525,3 +539,38 @@
   set: right
   steps:
     - import: TakeOff_R
+
+#############
+## Phases ##
+#############
+
+- phase: Eccentric
+  summaryTarget: true
+  description: "Time from TouchDown till the lowest position of pelvis"
+  start: TouchDown
+  end: Eccentric_end
+
+- phase: Concentric
+  summaryTarget: true
+  description: "Time from the lowest position of pelvis to take-off"
+  start: Eccentric_end
+  end: TakeOff
+
+- phase: Flight
+  summaryTarget: true
+  description: "Time from take-off till landing"
+  start: TakeOff
+  end: Landing
+
+- phase: PostFlight
+  summaryTarget: true
+  displayName: Post-flight
+  description: "Time from the landing till end of measurement"
+  start: Landing
+  end: Landing_end
+
+- phase: Propulsion
+  summaryTarget: true
+  start: TouchDown
+  end: TakeOff
+

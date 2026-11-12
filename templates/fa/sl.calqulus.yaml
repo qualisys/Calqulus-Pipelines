@@ -38,6 +38,8 @@
 
 # Left -------------
 - parameter: Left Knee Angles@TouchDown
+  deprecated: true
+  displayName: Knee flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -45,6 +47,8 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown
+  deprecated: true
+  displayName: Hip flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -53,6 +57,8 @@
 
 # COM displacement
 - parameter: COM_displacement_Left_MEAN_range
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -100,6 +106,8 @@
 
 # Max Knee Flex
 - parameter: Left Knee Angles@Max_knee_flex
+  deprecated: true
+  displayName: Knee valgus at max flexion
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -107,6 +115,7 @@
     - import: Left Knee Angles@Max_knee_flex
 
 - parameter: Left Thorax Angles@Max_knee_flex
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -115,6 +124,7 @@
 
 # Weight Acceptance
 - parameter: Left Knee Angles@END_WA
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -123,6 +133,7 @@
     - import: Left Knee Angles@END_WA
 
 - parameter: Left Thorax Angles@END_WA
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -250,6 +261,8 @@
 #     - abs:
 
 - parameter: Left_hop_distance
+  displayName: Jump distance
+  summarize: Jump_Distance
   where:
     name: ^(SLJ_|SLL_)L*
   set: left
@@ -269,6 +282,8 @@
 
 # Right -------------
 - parameter: Right Knee Angles@TouchDown
+  deprecated: true
+  displayName: Knee flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -276,6 +291,8 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown
+  deprecated: true
+  displayName: Hip flexion at heel strike
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -284,6 +301,8 @@
 
 # COM displacement
 - parameter: COM_displacement_Right_MEAN_range
+  displayName: Depth of movement
+  summarize: Depth_of_movement
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -331,6 +350,8 @@
 
 # Max Knee Flex
 - parameter: Right Knee Angles@Max_knee_flex
+  deprecated: true
+  displayName: Knee valgus at max flexion
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -338,6 +359,7 @@
     - import: Right Knee Angles@Max_knee_flex
 
 - parameter: Right Thorax Angles@Max_knee_flex
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -346,6 +368,7 @@
 
 # Weight Acceptance
 - parameter: Right Knee Angles@END_WA
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -354,6 +377,7 @@
     - import: Right Knee Angles@END_WA
 
 - parameter: Right Thorax Angles@END_WA
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -481,6 +505,8 @@
 #     - abs:
 
 - parameter: Right_hop_distance
+  displayName: Jump distance
+  summarize: Jump_Distance
   where:
     name: ^(SLJ_|SLL_)R*
   set: right
@@ -583,6 +609,7 @@
     - max: 
 
 - parameter: Left GRF_max_landing
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -592,6 +619,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -602,6 +630,8 @@
 
 # Rate of power development (RPD)
 - parameter: Left Power
+  set: left
+  summarize: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -609,6 +639,9 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Left_RPD
+  set: left
+  displayName: Rate of power development (RPD)
+  summarize: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -617,6 +650,9 @@
     - lowpass:
 
 - parameter: Left_RPD_concentric_max
+  set: left
+  displayName: Max concentric rate of power development (RPD)
+  summarize: RPD_Concentric_Max
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -626,18 +662,22 @@
     - max:
 
 - parameter: Left_time_to_eccentric_peak_power
+  set: left
+  displayName: Time to eccentric peak power
+  summarize: Time_to_eccentric_peak_power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
-  set: left
   steps:
     - eventDuration: [LeftPlotStart, Peak_eccentric_power]
-    
+
 - parameter: Left_time_to_concentric_peak_power
+  set: left
+  displayName: Time to concentric peak power
+  summarize: Time_to_concentric_peak_power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
-  set: left
   steps:
     - eventDuration: [COM_MIN, Peak_concentric_power]
 
@@ -725,6 +765,7 @@
     - max: 
 
 - parameter: Right GRF_max_landing
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -734,6 +775,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing
+  deprecated: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -742,25 +784,31 @@
     - eventMask: [Right GRF, TouchDown, PlotEnd]
     - mean:
 
-# Rate of power development (RPD)
 # Time to stabilization
 - parameter: Left_time_to_stabilization
+  set: left
+  displayName: Time to stabilization
+  summarize: Time_to_stabilization
   where:
     name: ^(SLJ_|SLL_)L*
     force: left
-  set: left
   steps:
     - eventDuration: [TouchDown, Stabilization_end]
 
 - parameter: Right_time_to_stabilization
+  set: right
+  displayName: Time to stabilization
+  summarize: Time_to_stabilization
   where:
     name: ^(SLJ_|SLL_)R*
     force: right
-  set: right
   steps:
     - eventDuration: [TouchDown, Stabilization_end]
 
+# Rate of power development (RPD)
 - parameter: Right Power
+  set: right
+  summarize: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -768,6 +816,9 @@
     - multiply: [Right GRF, PelvisCGPos_vel]
 
 - parameter: Right_RPD
+  set: right
+  displayName: Rate of power development (RPD)
+  summarize: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -776,6 +827,9 @@
     - lowpass:
 
 - parameter: Right_RPD_concentric_max
+  set: right
+  displayName: Max concentric rate of power development (RPD)
+  summarize: RPD_Concentric_Max
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -785,18 +839,22 @@
     - max:
 
 - parameter: Right_time_to_eccentric_peak_power
+  set: right
+  displayName: Time to eccentric peak power
+  summarize: Time_to_eccentric_peak_power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
-  set: right
   steps:
     - eventDuration: [RightPlotStart, Peak_eccentric_power]
-    
+
 - parameter: Right_time_to_concentric_peak_power
+  set: right
+  displayName: Time to concentric peak power
+  summarize: Time_to_concentric_peak_power
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
-  set: right
   steps:
     - eventDuration: [COM_MIN, Peak_concentric_power]
     

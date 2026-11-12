@@ -106,6 +106,7 @@
 
 # Calculate combined COP for double leg balance (it is assumed that both FPs are loaded)
 - parameter: COP_direct
+  set: total
   where: 
     name: Balance_B*
   steps:
@@ -203,6 +204,7 @@
     - vector: [$prev.fx, $prev.fy, $prev.fz]
 
 - parameter: loaded_FP
+  set: total
   where:
     name: Balance_B*
   steps:

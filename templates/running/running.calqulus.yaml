@@ -1344,6 +1344,7 @@
 
 # max during swing
 - parameter: Left Knee Angles_MAX_swing
+  deprecated: true
   where:
     name: ^(Gait|Run|Walk)*
   steps:
@@ -1351,6 +1352,7 @@
     - max:
 
 - parameter: Right Knee Angles_MAX_swing
+  deprecated: true
   where:
     name: ^(Gait|Run|Walk)*
   steps:

@@ -20,6 +20,7 @@
     - subtract: [$length, 1]
 
 - parameter: PelvisCGPos_vel
+  displayName: Pelvis velocity
   steps:
     - vector: [Hips_model.x, Hips_model.y, Hips_model.z]
       space: VirtualLab
@@ -166,24 +167,28 @@
       
 # Unified event names for web
 - event: LeftPlotStart
+  set: left
   where:
     name: Acc_L*
   steps:
     - import: LON
 
 - event: LeftPlotEnd
+  set: left
   where:
     name: Acc_L*
   steps:
     - import: LOFF
 
 - event: RightPlotStart
+  set: right
   where:
     name: Acc_R*
   steps:
     - import: RON
 
 - event: RightPlotEnd
+  set: right
   where:
     name: Acc_R*
   steps:

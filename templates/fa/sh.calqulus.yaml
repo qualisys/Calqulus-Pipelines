@@ -36,6 +36,9 @@
       else: LON_kinematics
 
 - event: LON
+  displayName: Left on
+  description: Instant of left-foot contact
+  summaryTarget: true
   where:
     name: SH_L*
   set: left
@@ -64,6 +67,9 @@
       else: LOFF_kinematics
 
 - event: LOFF
+  displayName: Left off
+  description: Instant of left-foot leave
+  summaryTarget: true
   where:
     name: SH_L*
   set: left
@@ -155,6 +161,9 @@
       else: RON_kinematics
 
 - event: RON
+  displayName: Right on
+  description: Instant of right-foot contact
+  summaryTarget: true
   where:
     name: SH_R*
   set: right
@@ -184,6 +193,9 @@
       else: ROFF_kinematics
 
 - event: ROFF
+  displayName: Right off
+  description: Instant of right-foot leave
+  summaryTarget: true
   where:
     name: SH_R*
   set: right
@@ -283,6 +295,43 @@
   steps:
     - import: ROFF
 
+#############
+## Phases ##
+#############
+
+- phase: Contact
+  summaryTarget: true
+  where:
+    name: SH_L*
+  description: "Time from touch-down till take-off"  
+  start: LON
+  end: LOFF
+
+- phase: Flight
+  summaryTarget: true
+  where:
+    name: SH_L*
+  description: "Time from take-off till touch-down"
+  start: LOFF
+  end: LON
+
+- phase: Contact
+  summaryTarget: true
+  where:
+    name: SH_R*
+  description: "Time from touch-down till take-off"  
+  start: RON
+  end: ROFF
+
+- phase: Flight
+  summaryTarget: true
+  where:
+    name: SH_R*
+  description: "Time from take-off till touch-down"
+  start: ROFF
+  end: RON
+
+
 ############
 ## SERIES ##
 ############
@@ -344,6 +393,8 @@
     - eventDuration: [LOFF, LON]
 
 - parameter: Left_flight_count
+  displayName: Time from 1st to 20th contact
+  summarize: Time_from_1st_to_20th_Contact
   where:
     name: SH_L*
   set: left
@@ -401,6 +452,8 @@
     - eventDuration: [ROFF, RON]
 
 - parameter: Right_flight_count
+  displayName: Time from 1st to 20th contact
+  summarize: Time_from_1st_to_20th_Contact
   where:
     name: SH_R*
   set: right
@@ -410,6 +463,7 @@
 # Kinetics ----------------
 # Left
 - parameter: Left GRF_max_Left_FP
+  deprecated: true
   where:
     name: SH_L*
   set: left
@@ -420,6 +474,7 @@
     - max: $prev(2)
 
 - parameter: Left GRF_max_Right_FP
+  deprecated: true
   where:
     name: SH_L*
   set: left
@@ -479,6 +534,7 @@
 
 # Right
 - parameter: Right GRF_max_Right_FP
+  deprecated: true
   where:
     name: SH_R*
   set: right
@@ -489,6 +545,7 @@
     - max: $prev(2)
 
 - parameter: Right GRF_max_Left_FP
+  deprecated: true
   where:
     name: SH_R*
   set: right

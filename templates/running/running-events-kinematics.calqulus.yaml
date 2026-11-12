@@ -970,3 +970,21 @@
   steps:
     - import: RON_force
 
+#############
+## Phases ##
+#############
+
+- phase: LeftSwing
+  summaryTarget: true
+  displayName: Left swing
+  description: "Time from left toe-off till the next left foot strike"
+  start: LTO
+  end: LFS
+
+- phase: RightSwing
+  summaryTarget: true
+  displayName: Right swing
+  description: "Time from right toe-off till the next right foot strike"
+  start: RTO
+  end: RFS
+

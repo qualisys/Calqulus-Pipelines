@@ -47,6 +47,7 @@
 
 # Left
 - event: LFT_DistEndVel_max
+  set: left
   where:
     name: LL_L*
   steps:
@@ -54,6 +55,7 @@
       frames: true
 
 - event: LFT_DistEndVel_min
+  set: left
   where:
     name: LL_L*
   steps:
@@ -61,6 +63,7 @@
       frames: true
 
 - event: LFT_DistEndVel_first
+  set: left
   where:
     name: LL_L*
   steps:
@@ -69,6 +72,7 @@
       else: LFT_DistEndVel_min
 
 - event: LFT_DistEndVel_second
+  set: left
   where:
     name: LL_L*
   steps:
@@ -77,6 +81,7 @@
       else: LFT_DistEndVel_min
 
 - event: TouchDown_kinematics
+  set: left
   where:
     name: LL_L*
   steps:
@@ -95,6 +100,7 @@
     - import: [[-1]] #this creates empty signal
 
 - event: my_LON_force
+  set: left
   where:
     name: LL_L*
     force: left
@@ -106,6 +112,10 @@
       frames: true
 
 - event: TouchDown
+  set: left
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: LL_L*
   steps:
@@ -114,6 +124,7 @@
       else: TouchDown_kinematics
 
 - event: TouchDown_prio
+  set: left
   where:
     name: LL_L*
   steps:
@@ -128,6 +139,7 @@
       else: TouchDown
 
 - event: PlotStart
+  set: left
   where:
     name: LL_L*
   steps:
@@ -136,6 +148,7 @@
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
+  set: left
   where:
     name: LL_L*
   steps:
@@ -146,6 +159,7 @@
     - import: $prev@-1
 
 - event: LOFF_force_ordered
+  set: left
   where:
     name: LL_L*
     force: left
@@ -155,6 +169,10 @@
       sort: asc
 
 - event: TakeOff
+  set: left
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: LL_L*
   steps:
@@ -163,12 +181,17 @@
       else: TakeOff_kinematics
 
 - event: Landing_L
+  set: left
   steps:
     - eventMask: [LFT_DistEndAcc.z, TakeOff, EOF]
     - max:
       frames: true
 
 - event: pelvis_lowest
+  set: left
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   where:
     name: LL_L*
   steps:
@@ -178,6 +201,7 @@
 
 # Right
 - event: RFT_DistEndVel_max
+  set: right
   where:
     name: LL_R*
   steps:
@@ -186,6 +210,7 @@
       frames: true
 
 - event: RFT_DistEndVel_min
+  set: right
   where:
     name: LL_R*
   steps:
@@ -194,6 +219,7 @@
       frames: true
 
 - event: RFT_DistEndVel_first
+  set: right
   where:
     name: LL_R*
   steps:
@@ -202,6 +228,7 @@
       else: RFT_DistEndVel_min
 
 - event: RFT_DistEndVel_second
+  set: right
   where:
     name: LL_R*
   steps:
@@ -210,6 +237,7 @@
       else: RFT_DistEndVel_min
 
 - event: TouchDown_kinematics
+  set: right
   where:
     name: LL_R*
   steps:
@@ -222,6 +250,7 @@
       frames: true
 
 - event: my_RON_force
+  set: right
   where:
     name: LL_R*
     force: right
@@ -233,6 +262,10 @@
       frames: true
 
 - event: TouchDown
+  set: right
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: LL_R*
   steps:
@@ -249,6 +282,7 @@
       to: m
 
 - event: TouchDown_prio
+  set: right
   where:
     name: LL_R*
   steps:
@@ -264,6 +298,7 @@
       else: TouchDown
 
 - event: PlotStart
+  set: right
   where:
     name: LL_R*
   steps:
@@ -272,6 +307,7 @@
       else: TouchDown_prio
 
 - event: TakeOff_kinematics
+  set: right
   where:
     name: LL_R*
   steps:
@@ -283,6 +319,7 @@
     - import: $prev@-1
 
 - event: ROFF_force_ordered
+  set: right
   where:
     name: LL_R*
     force: right
@@ -292,6 +329,10 @@
       sort: asc
 
 - event: TakeOff
+  set: right
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: LL_R*
   steps:
@@ -300,12 +341,17 @@
       else: TakeOff_kinematics
 
 - event: Landing_R
+  set: right
   steps:
     - eventMask: [RFT_DistEndAcc.z, TakeOff, EOF]
     - max:
       frames: true
 
 - event: pelvis_lowest
+  set: right
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   where:
     name: LL_R*
   steps:
@@ -342,6 +388,42 @@
   steps:
     - import: TakeOff
 
+#############
+## Phases ##
+#############
+
+- phase: Eccentric
+  summaryTarget: true
+  description: "Time from TouchDown till the lowest position of pelvis"
+  start: PlotStart
+  end: pelvis_lowest
+
+- phase: Concentric
+  summaryTarget: true
+  description: "Time from the lowest position of pelvis to take-off"
+  start: pelvis_lowest
+  end: TakeOff
+
+- phase: Plot
+  export: false
+  summaryTarget: false
+  start: PlotStart
+  end: PlotEnd
+
+- phase: LeftPlot
+  export: false
+  summaryTarget: false
+  displayName: Left plot
+  start: LeftPlotStart
+  end: LeftPlotEnd
+
+- phase: RightPlot
+  export: false
+  summaryTarget: false
+  displayName: Right plot
+  start: RightPlotStart
+  end: RightPlotEnd
+
 ############
 ## SERIES ##
 ############
@@ -369,6 +451,7 @@
 # COM @TakeOff, max, min
 # We use Pelvis COM for now
 - parameter: COM_Z_TO_LL_L
+  set: left
   where:
     name: LL_L*
   steps:
@@ -394,6 +477,8 @@
       to: m
 
 - parameter: COM_displacement_MEAN_min_LL_L 
+  displayName: Depth of countermovement
+  summarize: Depth_of_Countermovement
   where:
     name: LL_L*
   set: left
@@ -402,6 +487,8 @@
     - import: $prev.z
 
 - parameter: COM_displacement_MEAN_min_LL_R
+  displayName: Depth of countermovement
+  summarize: Depth_of_Countermovement
   where:
     name: LL_R*
   set: right
@@ -443,6 +530,8 @@
 
 # Other metrics @TouchDown
 - parameter: Left Knee Angles@TouchDown_LL_L
+  deprecated: true
+  displayName: Knee flexion at touchdown
   where:
     name: LL_L*
   set: left
@@ -450,6 +539,8 @@
     - import: Left Knee Angles@TouchDown
 
 - parameter: Left Hip Angles@TouchDown_LL_L
+  deprecated: true
+  displayName: Hip flexion at touchdown
   where:
     name: LL_L*
   set: left
@@ -457,6 +548,7 @@
     - import: Left Hip Angles@TouchDown
 
 - parameter: Left Thorax Angles@TouchDown_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -465,6 +557,7 @@
 
 # @COM_MIN
 - parameter: Left Ankle Angles@COM_MIN_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -472,6 +565,7 @@
     - import: Left Ankle Angles@COM_MIN
 
 - parameter: Left Knee Angles@COM_MIN_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -479,6 +573,7 @@
     - import: Left Knee Angles@COM_MIN
 
 - parameter: Left Hip Angles@COM_MIN_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -551,6 +646,8 @@
 
 # Other metrics @TouchDown
 - parameter: Right Knee Angles@TouchDown_LL_R
+  deprecated: true
+  displayName: Knee flexion at touchdown
   where:
     name: LL_R*
   set: right
@@ -558,6 +655,8 @@
     - import: Right Knee Angles@TouchDown
 
 - parameter: Right Hip Angles@TouchDown_LL_R
+  deprecated: true
+  displayName: Hip flexion at touchdown
   where:
     name: LL_R*
   set: right
@@ -565,6 +664,7 @@
     - import: Right Hip Angles@TouchDown
 
 - parameter: Right Thorax Angles@TouchDown_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -573,6 +673,7 @@
 
 # @COM_MIN
 - parameter: Right Ankle Angles@COM_MIN_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -580,6 +681,7 @@
     - import: Right Ankle Angles@COM_MIN
 
 - parameter: Right Knee Angles@COM_MIN_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -587,6 +689,7 @@
     - import: Right Knee Angles@COM_MIN
 
 - parameter: Right Hip Angles@COM_MIN_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -639,6 +742,8 @@
     - import: RFT_DistEndPos@Landing_R
 
 - parameter: Left_jump_distance
+  displayName: Jump distance
+  summarize: Jump_Distance
   where:
     name: LL_L*
   set: left
@@ -652,10 +757,13 @@
     - import: RFT_DistEndPos@TakeOff
 
 - parameter: LFT_DistEndPos@Landing_L
+  set: left
   steps:
     - import: LFT_DistEndPos@Landing_L
 
 - parameter: Right_jump_distance
+  displayName: Jump distance
+  summarize: Jump_Distance
   where:
     name: LL_R*
   set: right
@@ -687,6 +795,7 @@
     - import: Left Ankle Moment@COM_MIN
 
 - parameter: Left GRF_max_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -695,6 +804,7 @@
     - max:
 
 - parameter: Left GRF_max_landing_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -703,6 +813,7 @@
     - max:
 
 - parameter: Left GRF_mean_landing_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -711,6 +822,7 @@
     - mean:
 
 - parameter: Left GRF_max_concentric_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -719,6 +831,7 @@
     - max:
 
 - parameter: Left GRF_mean_concentric_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -727,6 +840,7 @@
     - mean:
 
 - parameter: Left GRF_max_eccentric_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -735,6 +849,7 @@
     - max:
 
 - parameter: Left GRF_mean_eccentric_LL_L
+  deprecated: true
   where:
     name: LL_L*
   set: left
@@ -773,6 +888,7 @@
     - import: Right Ankle Moment@COM_MIN
 
 - parameter: Right GRF_max_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -781,6 +897,7 @@
     - max:
 
 - parameter: Right GRF_max_landing_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -789,6 +906,7 @@
     - max:
 
 - parameter: Right GRF_mean_landing_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -797,6 +915,7 @@
     - mean:
 
 - parameter: Right GRF_max_concentric_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -805,6 +924,7 @@
     - max:
 
 - parameter: Right GRF_mean_concentric_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -813,6 +933,7 @@
     - mean:
 
 - parameter: Right GRF_max_eccentric_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right
@@ -821,6 +942,7 @@
     - max:
 
 - parameter: Right GRF_mean_eccentric_LL_R
+  deprecated: true
   where:
     name: LL_R*
   set: right

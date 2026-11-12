@@ -35,6 +35,12 @@
       distance: 75
 
 - event: Pelvis_lowest
+
+  displayName: Lowest pelvis
+
+  description: Instant of lowest pelvis position
+
+  summaryTarget: true
   steps:
     - divide: [$framerate, 0.5] #0.5s
       export: window
@@ -148,12 +154,14 @@
 
 # ML events prioritise over calqulus based events
 - event: TOP
+  summaryTarget: false
   steps:
   - if: exists(EccentricStart_ML) && Pelvis_lowest_count == ML_cycles_count && ML_cycles_count > 1
     then: EccentricStart_ML
     else: TOP_calqulus
 
 - event: TOP_L
+  set: left
   where:
     name: ((Squat|Squatting)_(L|B))*
   steps:
@@ -162,6 +170,7 @@
     else: TOP_L_calqulus
 
 - event: TOP_R
+  set: right
   where:
     name: ((Squat|Squatting)_(R|B))*
   steps:
@@ -198,6 +207,28 @@
   steps:
     - import: TOP_R
 
+#############
+## Phases ##
+#############
+
+- phase: Eccentric
+  summaryTarget: true
+  description: "Time from TouchDown till the lowest position of pelvis"
+  start: TOP
+  end: Pelvis_lowest
+
+- phase: Concentric
+  summaryTarget: true
+  description: "Time from the lowest position of pelvis to 1 s after TouchDown"
+  start: Pelvis_lowest
+  end: TOP
+
+- phase: SquatCycle
+  summaryTarget: false
+  displayName: Squat cycle
+  start: TOP
+  end: TOP
+
 ############
 ## SERIES ##
 ############
@@ -223,8 +254,11 @@
   steps:
     - count: EccentricEnd_ML_temp
 
-# Squatting depth
+# Squat depth
 - parameter: Squatting_depth_Squat_B
+  set: total
+  displayName: Squat depth
+  summarize: Squat_Depth
   where:
     name: (Squat|Squatting)_B*
   steps:
@@ -241,6 +275,8 @@
     - subtract: [$prev(2), $prev]
 
 - parameter: Squatting_depth_Squat_L
+  displayName: Squat depth
+  summarize: Squat_Depth
   where:
     name: (Squat|Squatting)_L*
   set: left
@@ -258,6 +294,8 @@
     - subtract: [$prev(2), $prev]
 
 - parameter: Squatting_depth_Squat_R
+  displayName: Squat depth
+  summarize: Squat_Depth
   where:
     name: (Squat|Squatting)_R*
   set: right
@@ -377,6 +415,8 @@
 # Kinetics ------------
 # Bilateral - Total
 - parameter: Total GRF
+  set: total
+  summarize: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -384,6 +424,8 @@
     - add: [Left GRF, Right GRF]
 
 - parameter: Total GRF_max_concentric_Squat_B
+  set: total
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -392,6 +434,8 @@
     - max:
 
 - parameter: Total GRF_mean_concentric_Squat_B
+  set: total
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -400,6 +444,8 @@
     - mean:
 
 - parameter: Total GRF_max_eccentric_Squat_B
+  set: total
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -408,6 +454,8 @@
     - max:
 
 - parameter: Total GRF_mean_eccentric_Squat_B
+  set: total
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -417,6 +465,7 @@
 
 # Bilateral - Left
 - parameter: Left GRF_max_concentric_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -426,6 +475,7 @@
     - max:
 
 - parameter: Left GRF_mean_concentric_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -435,6 +485,7 @@
     - mean:
 
 - parameter: Left GRF_max_eccentric_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -444,6 +495,7 @@
     - max:
 
 - parameter: Left GRF_mean_eccentric_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -453,6 +505,7 @@
     - mean:
 
 - parameter: Left GRF_max_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -463,6 +516,7 @@
 
 # Bilateral - Right
 - parameter: Right GRF_max_concentric_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -472,6 +526,7 @@
     - max:
 
 - parameter: Right GRF_mean_concentric_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -481,6 +536,7 @@
     - mean:
 
 - parameter: Right GRF_max_eccentric_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -490,6 +546,7 @@
     - max:
 
 - parameter: Right GRF_mean_eccentric_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -499,6 +556,7 @@
     - mean:
 
 - parameter: Right GRF_max_Squat_B
+  deprecated: true
   where:
     name: (Squat|Squatting)_B*
     force: both
@@ -509,6 +567,7 @@
 
 # Single leg - Left
 - parameter: Left GRF_max_concentric_Squat_L
+  deprecated: true
   where:
     name: (Squat|Squatting)_L*
     force: left
@@ -518,6 +577,7 @@
     - max:
 
 - parameter: Left GRF_mean_concentric_Squat_L
+  deprecated: true
   where:
     name: (Squat|Squatting)_L*
     force: left
@@ -527,6 +587,7 @@
     - mean:
 
 - parameter: Left GRF_max_eccentric_Squat_L
+  deprecated: true
   where:
     name: (Squat|Squatting)_L*
     force: left
@@ -536,6 +597,7 @@
     - max:
 
 - parameter: Left GRF_mean_eccentric_Squat_L
+  deprecated: true
   where:
     name: (Squat|Squatting)_L*
     force: left
@@ -545,6 +607,7 @@
     - mean:
 
 - parameter: Left GRF_max_Squat_L
+  deprecated: true
   where:
     name: (Squat|Squatting)_L*
     force: left
@@ -555,6 +618,7 @@
 
 # Single leg - Right
 - parameter: Right GRF_max_concentric_Squat_R
+  deprecated: true
   where:
     name: (Squat|Squatting)_R*
     force: right
@@ -564,6 +628,7 @@
     - max:
 
 - parameter: Right GRF_mean_concentric_Squat_R
+  deprecated: true
   where:
     name: (Squat|Squatting)_R*
     force: right
@@ -573,6 +638,7 @@
     - mean:
 
 - parameter: Right GRF_max_eccentric_Squat_R
+  deprecated: true
   where:
     name: (Squat|Squatting)_R*
     force: right
@@ -582,6 +648,7 @@
     - max:
 
 - parameter: Right GRF_mean_eccentric_Squat_R
+  deprecated: true
   where:
     name: (Squat|Squatting)_R*
     force: right
@@ -591,6 +658,7 @@
     - mean:
 
 - parameter: Right GRF_max_Squat_R
+  deprecated: true
   where:
     name: (Squat|Squatting)_R*
     force: right

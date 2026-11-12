@@ -30,6 +30,9 @@
       else: TouchDown_kinematics
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -40,6 +43,9 @@
     - import: $prev@1
 
 - event: Max_knee_flex
+  displayName: Max knee flexion
+  description: Instant of maximum knee flexion
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
   set: left
@@ -63,10 +69,14 @@
   set: left
   steps:
     - eventMask: [Left Knee Angles.x, TouchDown, EOF]
+      includeEqual: true
     - max:
       frames: true
 
 - event: END_WA
+  displayName: End of weight acceptance
+  description: Instant of end of weight acceptance
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)L*
     force: left
@@ -95,6 +105,9 @@
       else: TouchDown_kinematics
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -105,6 +118,9 @@
     - import: $prev@1
 
 - event: Max_knee_flex
+  displayName: Max knee flexion
+  description: Instant of maximum knee flexion
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
   set: right
@@ -128,10 +144,14 @@
   set: right
   steps:
     - eventMask: [Right Knee Angles.x, TouchDown, EOF]
+      includeEqual: true
     - max:
       frames: true
 
 - event: END_WA
+  displayName: End of weight acceptance
+  description: Instant of end of weight acceptance
+  summaryTarget: true
   where:
     name: ^(SLJ_|SLL_|SLCDL_)R*
     force: right
@@ -141,9 +161,14 @@
     - import: $prev@1
 
 # For SLJ and SLCDL PlotEnd is set to 1 sec after TouchDown. For SLL it is 3 sec
+- event: PlotStart
+  steps:
+    - import: TouchDown
+
 - event: PlotEnd
   where:
     name: ^(SLJ|SLCDL)*
+  summaryTarget: false
   steps:
     - multiply: [$framerate, 1] # 1 sec
     - add: [$prev, TouchDown] # 1 s after TouchDown
@@ -156,6 +181,7 @@
 - event: PlotEnd
   where:
     name: SLL*
+  summaryTarget: false
   steps:
     - multiply: [$framerate, 3] #3 sec
     - add: [$prev, TouchDown] # 3 s after TouchDown
@@ -166,6 +192,9 @@
       else: EOF
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: ^(SLJ|SLL)*
   steps:
@@ -175,6 +204,9 @@
     - import: $prev@-1
 
 - event: COM_MIN # using Pelvis for now
+  displayName: Lowest pelvis
+  description: Instant of lowest pelvis position
+  summaryTarget: true
   steps:
     - eventMask: [Hips_model.z, TouchDown, Max_knee_flex]
     - min:
@@ -329,3 +361,30 @@
   set: right
   steps:
     - import: PlotEnd
+
+#############
+## Phases ##
+#############
+
+- phase: Eccentric
+  summaryTarget: true
+  description: "Time from TouchDown till the lowest position of pelvis"
+  start: TouchDown
+  end: COM_MIN
+
+- phase: Concentric
+  summaryTarget: true
+  description: "Time from the lowest position of pelvis to 1 s after TouchDown"
+  start: COM_MIN
+  end: PlotEnd
+
+- phase: Loading
+  summaryTarget: false
+  start: TouchDown
+  end: Max_knee_flex
+
+- phase: Plot
+  export: false
+  summaryTarget: false
+  start: PlotStart
+  end: PlotEnd

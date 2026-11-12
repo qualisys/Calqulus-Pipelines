@@ -56,6 +56,9 @@
       else: TouchDown_L_kinematics
 
 - event: Max_knee_flex
+  displayName: Max knee flexion
+  description: Instant of maximum knee flexion
+  summaryTarget: true
   where:
     name: PJ_[LB]*
   steps:
@@ -64,6 +67,7 @@
       frames: true
 
 - event: TakeOff_full_cycle
+  set: left
   where:
     name: PJ_L*
   steps:
@@ -71,6 +75,7 @@
       sequence: [TakeOff_L, TouchDown_L]
 
 - event: COM_MIN
+  set: left
   where:
     name: PJ_L*
   steps:
@@ -142,24 +147,38 @@
       frames: true
 
 - event: TakeOff
+  set: left
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: PJ_L*
   steps:
     - import: TakeOff_L
 
 - event: TouchDown
+  set: left
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: PJ_L*
   steps:
     - import: TouchDown_L
 
 - event: TakeOff
+  displayName: Take-off
+  description: Instant the foot leaves the ground
+  summaryTarget: true
   where:
     name: PJ_[RB]*
   steps:
     - import: TakeOff_R
 
 - event: TouchDown
+  displayName: Touchdown
+  description: Instant of initial ground contact
+  summaryTarget: true
   where:
     name: PJ_[RB]*
   steps:
@@ -194,6 +213,36 @@
   steps:
     - import: TakeOff_R
 
+#############
+## Phases ##
+#############
+
+- phase: Contact
+  summaryTarget: true
+  description: "Time from touch-down to take-off"  
+  start: TouchDown
+  end: TakeOff
+
+- phase: Eccentric
+  summaryTarget: true
+  description: "Time from touch-down to the max knee flexion"
+  start: TouchDown
+  end: Max_knee_flex
+
+- phase: Concentric
+  summaryTarget: true
+  description: "Time from max knee flexion to take-off"
+  start: Max_knee_flex
+  end: TakeOff
+
+- phase: Flight
+  summaryTarget: true
+  description: "Time from take-off till touch-down"
+  start: TakeOff
+  end: TouchDown
+
+
+
 ############
 ## SERIES ##
 ############
@@ -218,12 +267,16 @@
 
 # Bilateral ---------
 - parameter: Jump_height_PJ_B
+  set: total
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: PJ_B*
   steps:
     - subtract: [PelvisCGPos_max, PelvisCGPos\@TakeOff]
 
 - parameter: Jump_height_PJ_B_max
+  set: total
   where:
     name: PJ_B*
   steps:
@@ -231,6 +284,9 @@
 
 # Number of repetitions
 - parameter: Right_TouchDown_count_PJ_B
+  set: right
+  displayName: Number of repetitions
+  summarize: Number_of_Repetitions
   where:
     name: PJ_B*
   steps:
@@ -238,6 +294,8 @@
 
 # Left ---------
 - parameter: Jump_height_PJ_L
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: PJ_L*
   set: left
@@ -253,6 +311,8 @@
 
 # Number of repetitions
 - parameter: Left_TouchDown_count_PJ_L
+  displayName: Number of repetitions
+  summarize: Number_of_Repetitions
   where:
     name: PJ_L*
   set: left
@@ -261,6 +321,8 @@
 
 # Right ---------
 - parameter: Jump_height_PJ_R
+  displayName: Jump height
+  summarize: Jump_Height
   where:
     name: PJ_R*
   set: right
@@ -276,6 +338,8 @@
 
 # Number of repetitions
 - parameter: Right_TouchDown_count_PJ_R
+  displayName: Number of repetitions
+  summarize: Number_of_Repetitions
   where:
     name: PJ_R*
   set: right
@@ -284,6 +348,9 @@
 
 ### From static trial ###
 - parameter: Jump_height_static_PJ_B
+  set: total
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: PJ_B*
   steps:
@@ -301,6 +368,8 @@
       to: m
 
 - parameter: Jump_height_static_PJ_L
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: PJ_L*
   set: left
@@ -319,6 +388,8 @@
       to: m
 
 - parameter: Jump_height_static_PJ_R
+  displayName: Jump height (using static trial)
+  summarize: Jump_Height_Static
   where:
     name: PJ_R*
   set: right
@@ -337,6 +408,7 @@
       to: m
 
 - parameter: Jump_height_static_PJ_B_max
+  set: total
   where:
     name: PJ_B*
   steps:
@@ -358,6 +430,7 @@
 
 ### From takeoff velocity ###
 - parameter: Jump_height_takeoff_vel_PJ_B
+  set: total
   where:
     name: PJ_B*
   steps:
@@ -384,6 +457,7 @@
     - divide: [$prev, DOUBLE_GRAVITY]
 
 - parameter: Jump_height_takeoff_vel_PJ_B_max
+  set: total
   where:
     name: PJ_B*
   steps:
@@ -406,6 +480,7 @@
 # Kinetics ------------
 # Bilateral - left
 - parameter: Left Power
+  summarize: true
   where:
     name: PJ_B*
     force: both
@@ -414,6 +489,7 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Left Power_min_ecc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -432,6 +508,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_ecc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -441,6 +518,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_conc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -450,6 +528,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -496,6 +575,7 @@
 
 # Bilateral - right
 - parameter: Right Power
+  summarize: true
   where:
     name: PJ_B*
     force: both
@@ -504,6 +584,7 @@
     - multiply: [Right GRF, PelvisCGPos_vel]
 
 - parameter: Right Power_min_ecc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -522,6 +603,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_ecc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -531,6 +613,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_conc_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -540,6 +623,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_PJ_B
+  deprecated: true
   where:
     name: PJ_B*
     force: both
@@ -586,6 +670,7 @@
 
 # Single leg - Left
 - parameter: Left Power
+  summarize: true
   where:
     name: PJ_L*
     force: left
@@ -594,6 +679,8 @@
     - multiply: [Left GRF, PelvisCGPos_vel]
 
 - parameter: Left Power_min_ecc_PJ_L
+  set: left
+  deprecated: true
   where:
     name: PJ_L*
     force: left
@@ -611,6 +698,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_ecc_PJ_L
+  deprecated: true
   where:
     name: PJ_L*
     force: left
@@ -620,6 +708,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_conc_PJ_L
+  deprecated: true
   where:
     name: PJ_L*
     force: left
@@ -629,6 +718,7 @@
     - max: $prev.z
 
 - parameter: Left GRF_max_PJ_L
+  deprecated: true
   where:
     name: PJ_L*
     force: left
@@ -675,6 +765,7 @@
 
 # Single leg - Right
 - parameter: Right Power
+  summarize: true
   where:
     name: PJ_R*
     force: right
@@ -683,6 +774,7 @@
     - multiply: [Right GRF, PelvisCGPos_vel]
 
 - parameter: Right Power_min_ecc_PJ_R
+  deprecated: true
   where:
     name: PJ_R*
     force: right
@@ -701,6 +793,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_ecc_PJ_R
+  deprecated: true
   where:
     name: PJ_R*
     force: right
@@ -710,6 +803,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_conc_PJ_R
+  deprecated: true
   where:
     name: PJ_R*
     force: right
@@ -719,6 +813,7 @@
     - max: $prev.z
 
 - parameter: Right GRF_max_PJ_R
+  deprecated: true
   where:
     name: PJ_R*
     force: right
