@@ -158,20 +158,27 @@
       keep: -1
 
 # Plotstart
-- event: PlotStart_L_calqulus
+# Descending zero-crossing of pelvis vertical velocity before take-off.
+# If the trial already starts in the eccentric (no crossing), fall back to BOF_fixed.
+- event: PlotStart_L_calqulus_temp
   where:
     name: ^CMJ_[LB]*
   set: left
   steps:
-    # - divide: [$framerate, 10]
-    #   output: shift
     - threshold: PelvisCGPos_vel.z
       value: 0
       direction: down
     - eventMask: [$prev, BOF_fixed, TakeOff_L]
     - import: $prev@-1
-      # keep: -1
-    #- subtract: [$prev, 2] #shift by 2 frames to be closer to actual initiation of motion
+
+- event: PlotStart_L_calqulus
+  where:
+    name: ^CMJ_[LB]*
+  set: left
+  steps:
+    - if: empty(PlotStart_L_calqulus_temp)
+      then: BOF_fixed
+      else: PlotStart_L_calqulus_temp
 
 - event: PlotStart_L_calqulus
   where:
@@ -373,19 +380,27 @@
       else: RON_kinematics
 
 # Plotstart
-- event: PlotStart_R_calqulus
+# Descending zero-crossing of pelvis vertical velocity before take-off.
+# If the trial already starts in the eccentric (no crossing), fall back to BOF_fixed.
+- event: PlotStart_R_calqulus_temp
   where:
     name: ^CMJ_[RB]*
   set: right
   steps:
-    # - divide: [$framerate, 10]
-    #   output: shift
     - threshold: PelvisCGPos_vel.z
       value: 0
       direction: down
     - eventMask: [$prev, BOF_fixed, TakeOff_R]
       keep: -1
-    #- subtract: [$prev, 2] #shift by 2 frames to be closer to actual initiation of motion
+
+- event: PlotStart_R_calqulus
+  where:
+    name: ^CMJ_[RB]*
+  set: right
+  steps:
+    - if: empty(PlotStart_R_calqulus_temp)
+      then: BOF_fixed
+      else: PlotStart_R_calqulus_temp
 
 - event: PlotStart_R_calqulus
   where:
