@@ -670,8 +670,10 @@
   start: TouchDown
   end: PlotEnd
 
-- phase: Propulsion
+- phase: PreFlight
   summaryTarget: true
+  displayName: Pre-flight
+  description: "Time from movement initiation till take-off"
   start: PlotStart
   end: TakeOff
 

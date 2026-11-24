@@ -102,7 +102,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, PostFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, PreFlight, PostFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, LeftUpLeg_model]
     - multiply: [$prev, [1, -1, -1]]
@@ -114,7 +114,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, PostFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, PreFlight, PostFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, RightUpLeg_model]
     - multiply: [$prev, [1, 1, 1]]
@@ -128,7 +128,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, PostFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, PreFlight, PostFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [LeftUpLeg_model, LeftLeg_model]
     - multiply: [$prev, [-1, -1, -1]]
@@ -140,7 +140,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, PostFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, PreFlight, PostFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [RightUpLeg_model, RightLeg_model]
     - multiply: [$prev, [-1, 1, 1]]
@@ -154,7 +154,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, PreFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [LeftLeg_model, LeftFoot_model]
       output: foot_vector
@@ -175,7 +175,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, PreFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [RightLeg_model, RightFoot_model]
       output: foot_vector
@@ -265,7 +265,7 @@
   set: left
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, PreFlight, LeftPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, 1, -1]]
@@ -277,7 +277,7 @@
   set: right
   summarize:
     defaultTargets: true
-    include: [Plot, Propulsion, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
+    include: [Plot, PreFlight, RightPlot, Loading, SquatCycle, TouchDown, Max_knee_flex, TakeOff, END_WA, COM_MIN]
   steps:
     - jointAngle: [Hips_model, Spine2_model]
     - multiply: [$prev, [-1, -1, 1]]
