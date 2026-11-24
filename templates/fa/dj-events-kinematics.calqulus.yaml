@@ -569,8 +569,10 @@
   start: Landing
   end: Landing_end
 
-- phase: Propulsion
+- phase: PreFlight
   summaryTarget: true
+  displayName: Pre-flight
+  description: "Time from touch-down till take-off"
   start: TouchDown
   end: TakeOff
 

@@ -94,7 +94,7 @@
   steps:
     - eventDuration: [Eccentric_end,TakeOff]
 
-# Time to TakeOff (same interval as Propulsion; kept for mRSI)
+# Time to TakeOff (same interval as PreFlight; kept for mRSI)
 - parameter: TimeToTakeOff_CMJ_B
   set: total
   where:
