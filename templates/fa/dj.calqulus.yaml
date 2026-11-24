@@ -739,6 +739,8 @@
 # Reactive strength index
 - parameter: Reactive_strength_index_DVJ_B
   set: total
+  displayName: Reactive strength index
+  summarize: Reactive_Strength_Index
   where:
     name: DJ_B*
   steps:
@@ -746,6 +748,8 @@
 
 - parameter: Reactive_strength_index_DVJ_L
   set: left
+  displayName: Reactive strength index
+  summarize: Reactive_Strength_Index
   where:
     name: DJ_L*
   steps:
@@ -753,6 +757,8 @@
 
 - parameter: Reactive_strength_index_DVJ_R
   set: right
+  displayName: Reactive strength index
+  summarize: Reactive_Strength_Index
   where:
     name: DJ_R*
   steps:
