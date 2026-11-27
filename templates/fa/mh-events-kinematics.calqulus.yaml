@@ -1,0 +1,281 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1] 
+
+#LEFT
+# Left: final pelvis vertical velocity minimum
+- event: TouchDown_kinematics_Pelvis_candidates
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+- event: TouchDown_kinematics_Pelvis
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - eventMask: [TouchDown_kinematics_Pelvis_candidates, BOF, EOF]
+      keep: -1
+    - add: [$prev, 1]
+
+# Left: final foot distal end vertical velocity minimum
+- event: TouchDown_kinematics_DisFoot_candidates
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - negate: LFT_DistEndVel.z
+    - lowpass:
+    - peakFinder:
+      height: 0.5 # Change to 0.5 to avoid missing the peak due to low velocity
+      distance: 20
+
+- event: TouchDown_kinematics_DisFoot
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - eventMask: [TouchDown_kinematics_DisFoot_candidates, BOF, EOF]
+      keep: -1
+    - add: [$prev, 1]
+
+- event: TouchDown_kinematics
+  where:
+    name: MH_L*
+  set: left
+  steps:
+  - if: empty(TouchDown_kinematics_DisFoot) || (!empty(TouchDown_kinematics_Pelvis) &&  TouchDown_kinematics_Pelvis < TouchDown_kinematics_DisFoot) 
+    then: TouchDown_kinematics_Pelvis
+    else: TouchDown_kinematics_DisFoot
+  # Looking for the earlier event
+
+- event: TouchDown
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - if: empty(LON_force)
+      then: TouchDown_kinematics 
+      else: LON_force
+    - import: $prev@1
+# Alternative
+    # - if: "!empty(LON_force)"
+    #   then: LON_force
+    #   else: TouchDown_kinematics
+    # - import: $prev@1
+
+- event: END_WA # This corresponds to END1 at V3s
+  where:
+    name: MH_L*
+  steps:
+    - multiply: [1, $framerate]
+    - add: [TouchDown, $prev]
+      output: boundary
+    - if: EOF > boundary
+      then: boundary
+      else: EOF
+# Added TouchDown + 1 s calculation boundary, capped at EOF
+
+- event: Max_knee_flex
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles.x, TouchDown, END_WA]
+    - max:
+      frames: true
+# The order of END_WA and MaxKneeFlex is different to SL, to search MaxKneeFlex between LON and LON+1s
+
+# RIGHT 
+# Right: final pelvis vertical velocity minimum
+- event: TouchDown_kinematics_Pelvis_candidates
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+- event: TouchDown_kinematics_Pelvis
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - eventMask: [TouchDown_kinematics_Pelvis_candidates, BOF, EOF]
+      keep: -1
+    - add: [$prev, 1]
+
+# Right: final foot distal end vertical velocity minimum
+- event: TouchDown_kinematics_DisFoot_candidates
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - negate: RFT_DistEndVel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+- event: TouchDown_kinematics_DisFoot
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - eventMask: [TouchDown_kinematics_DisFoot_candidates, BOF, EOF]
+      keep: -1
+    - add: [$prev, 1]
+
+- event: TouchDown_kinematics
+  where:
+    name: MH_R*
+  set: right
+  steps:
+  - if: empty(TouchDown_kinematics_DisFoot) || (!empty(TouchDown_kinematics_Pelvis) &&  TouchDown_kinematics_Pelvis < TouchDown_kinematics_DisFoot) 
+    then: TouchDown_kinematics_Pelvis
+    else: TouchDown_kinematics_DisFoot
+
+- event: TouchDown
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - if: empty(RON_force)
+      then: TouchDown_kinematics
+      else: RON_force
+    - import: $prev@1
+# Alternative
+    # - if: "!empty(RON_force)"
+    #   then: RON_force
+    #   else: TouchDown_kinematics
+    # - import: $prev@1
+  
+- event: END_WA
+  where:
+    name: MH_R*
+  steps:
+    - multiply: [1, $framerate]
+    - add: [TouchDown, $prev]
+      output: boundary
+    - if: EOF > boundary
+      then: boundary
+      else: EOF
+
+- event: Max_knee_flex
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles.x, TouchDown, END_WA]
+    - max:
+      frames: true
+
+# Final landing plot window
+- event: PlotEnd
+  where:
+    name: MH*
+  steps:
+    - multiply: [$framerate, 2]
+    - add: [$prev, TouchDown]
+      export: end_fr
+    - if: EOF > end_fr
+      then: end_fr
+      else: EOF
+
+## TAKE OFF EVENT - SINGLE MEDIAL HOP
+
+# Left: 
+- event: TakeOff_kinematics_candidates
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - lowpass: LFT_DistEndVel.z 
+    - peakFinder:
+      height: 0.5      # Threshold might be too high
+      distance: 10     
+
+# Select the last takeoff candidate before final landing
+- event: TakeOff 
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - eventMask: [TakeOff_kinematics_candidates, BOF, TouchDown]
+      keep: -1 
+    - add: [$prev, 1]
+
+# Right
+- event: TakeOff_kinematics_candidates
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - lowpass: RFT_DistEndVel.z 
+    - peakFinder:
+      height: 0.5      
+      distance: 10     
+
+- event: TakeOff
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - eventMask: [TakeOff_kinematics_candidates, BOF, TouchDown]
+      keep: -1
+    - add: [$prev, 1]
+
+## Events for metrics calculation
+- event: COM_MIN
+  where:
+    name: MH*
+  steps:
+    - eventMask: [Hips_model.z, TouchDown, Max_knee_flex]
+    - min:
+      frames: true
+        
+# Unified event names for web - same as old sl-event-kinetic
+- event: LeftPlotStart
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - import: TouchDown
+
+- event: LeftPlotEnd
+  where:
+    name: MH_L*
+  set: left
+  steps:
+    - import: PlotEnd
+
+- event: RightPlotStart
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - import: TouchDown
+
+- event: RightPlotEnd
+  where:
+    name: MH_R*
+  set: right
+  steps:
+    - import: PlotEnd

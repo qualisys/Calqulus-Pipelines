@@ -1,0 +1,376 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1] 
+
+################
+## LEFT SIDE ##
+################
+
+# Detect all positive pelvis velocity peaks
+- event: TOFF_kinematics_Pelvis_candidates
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - lowpass: PelvisCGPos_vel.z
+    - peakFinder:
+      height: 1
+      distance: 20
+
+# First jump
+- event: TOFF_kinematics_Pelvis0
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - import: TOFF_kinematics_Pelvis_candidates@1
+    - add: [$prev, 3] 
+
+# Second jump - which is used as takeoff kinematic
+- event: TOFF_kinematics_Pelvis
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - import: TOFF_kinematics_Pelvis_candidates@2
+
+# Second jump TOFF Kinematics
+- event: TakeOff_kinematics
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - add: [TOFF_kinematics_Pelvis, 3] # Add 3 frames for 85Hz data 
+
+# LEFT Kinetic Events
+# Second jump TOFF Kinetic - LOFF
+- event: TakeOff_prio
+  where:
+    name: VH_L*
+    force: left
+  set: left
+  steps:
+    - refineEvent: LOFF_force
+      sequence: [LOFF_force, LON_force, LOFF_force, LON_force]
+      cyclic: false
+    - import: $prev@2
+# CHANGED: Match force TOFF1 -> TD1 -> TOFF2 -> TD2; select the second OFF (TO2). 
+
+- event: TakeOff
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - if: empty(TakeOff_prio)
+      then: TakeOff_kinematics 
+      else: TakeOff_prio
+
+# Detect all negative pelvis velocity peaks
+- event: TouchDown_kinematics_Pelvis_candidates
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+# First jump TD - LON_0
+- event: TouchDown_kinematics_Pelvis0
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - import: TouchDown_kinematics_Pelvis_candidates@1
+    - subtract: [$prev, 3] # Subtract 3 frame when using 85Hz
+
+# First jump TD - kinetic
+- event: TouchDown_kinetic_first
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - if: empty(LON_force)
+      then: TouchDown_kinematics_Pelvis0
+      else: LON_force
+    - import: $prev@1
+
+# Second jump TD -  LON
+- event: TouchDown_kinematics_Pelvis
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - import: TouchDown_kinematics_Pelvis_candidates@2
+
+# Second jump TD Kinematics
+- event: TouchDown_kinematics
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - subtract: [TouchDown_kinematics_Pelvis, 3] # Subtract 3 frame when using 85Hz
+
+# Second jump TD Kinetic - LON
+- event: TouchDown_prio
+  where:
+    name: VH_L*
+    force: left    
+  set: left
+  steps:
+    - refineEvent: LON_force
+      sequence: [LOFF_force, LON_force, LOFF_force, LON_force]
+      cyclic: false
+    - import: $prev@2
+# CHANGED: Match force TOFF1 -> TD1 -> TOFF2 -> TD2; select the second ON (TD2).
+
+- event: TouchDown
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - if: empty(TouchDown_prio)
+      then: TouchDown_kinematics
+      else: TouchDown_prio 
+
+# LEFT Kinematic Events
+- event: END_WA
+  where:
+    name: VH_L*
+  steps:
+    - multiply: [1, $framerate]
+    - add: [TouchDown, $prev]
+      output: boundary
+    - if: EOF > boundary
+      then: boundary
+      else: EOF
+# Project definition: END_WA = TouchDown + 1 second, capped at EOF; available with or without force data.
+
+- event: Max_knee_flex
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles.x, TouchDown, END_WA]
+    - max:
+      frames: true
+
+################
+## RIGHT SIDE ##
+################
+
+# RIGHT
+# Detect all positive pelvis velocity peaks
+- event: TOFF_kinematics_Pelvis_candidates
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - lowpass: PelvisCGPos_vel.z
+    - peakFinder:
+      height: 1
+      distance: 20
+
+# First jump
+- event: TOFF_kinematics_Pelvis0
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - import: TOFF_kinematics_Pelvis_candidates@1
+    - add: [$prev, 3] 
+
+# Second jump - which is used as takeoff kinematic
+- event: TOFF_kinematics_Pelvis
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - import: TOFF_kinematics_Pelvis_candidates@2
+
+# Second jump TOFF Kinematics
+- event: TakeOff_kinematics
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - add: [TOFF_kinematics_Pelvis, 3] # Add 3 frames for 85Hz data 
+
+# RIGHT Kinetic Events
+# Second jump TOFF Kinetic - ROFF
+- event: TakeOff_prio
+  where:
+    name: VH_R*
+    force: right
+  set: right
+  steps:
+    - refineEvent: ROFF_force
+      sequence: [ROFF_force, RON_force, ROFF_force, RON_force]
+      cyclic: false
+    - import: $prev@2
+# CHANGED: Match force TOFF1 -> TD1 -> TOFF2 -> TD2; select the second TOFF (TOFF2).
+
+- event: TakeOff
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - if: empty(TakeOff_prio)
+      then: TakeOff_kinematics
+      else: TakeOff_prio
+
+# Detect all negative pelvis velocity peaks
+- event: TouchDown_kinematics_Pelvis_candidates
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+# First jump TD - RON_0
+- event: TouchDown_kinematics_Pelvis0
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - import: TouchDown_kinematics_Pelvis_candidates@1
+    - subtract: [$prev, 3] # Subtract 3 frames for 85Hz example data
+
+# First jump TD - kinetic
+- event: TouchDown_kinetic_first
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - if: empty(RON_force)
+      then: TouchDown_kinematics_Pelvis0
+      else: RON_force
+    - import: $prev@1
+
+# Second jump TD - RON
+- event: TouchDown_kinematics_Pelvis
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - import: TouchDown_kinematics_Pelvis_candidates@2
+
+# Second jump TD Kinematics
+- event: TouchDown_kinematics
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - subtract: [TouchDown_kinematics_Pelvis, 3] # Subtract 3 frame when using 85Hz
+
+# Second jump TD Kinetic - RON
+- event: TouchDown_prio
+  where:
+    name: VH_R*
+    force: right 
+  set: right
+  steps:
+    - refineEvent: RON_force
+      sequence: [ROFF_force, RON_force, ROFF_force, RON_force]
+      cyclic: false
+    - import: $prev@2
+# CHANGED: Match force TOFF1 -> TD1 -> TOFF2 -> TD2; select the second ON (TD2).
+
+- event: TouchDown
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - if: empty(TouchDown_prio)
+      then: TouchDown_kinematics
+      else: TouchDown_prio 
+
+# RIGHT Kinematic Events
+- event: END_WA
+  where:
+    name: VH_R*
+  steps:
+    - multiply: [1, $framerate]
+    - add: [TouchDown, $prev]
+      output: boundary
+    - if: EOF > boundary
+      then: boundary
+      else: EOF
+# Project definition: END_WA = TouchDown + 1 second, capped at EOF; available with or without force data.
+
+- event: Max_knee_flex
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles.x, TouchDown, END_WA]
+    - max:
+      frames: true
+
+############################
+##     Calqulus EVENTS    ##
+############################
+
+- event: PlotEnd
+  where:
+    name: VH*
+  steps:
+    - multiply: [$framerate, 2]
+    - add: [$prev, TouchDown]
+      export: end_fr
+    - if: EOF > end_fr
+      then: end_fr
+      else: EOF
+
+- event: COM_MIN
+  where:
+    name: VH*
+  steps:
+    - eventMask: [Hips_model.z, TouchDown, Max_knee_flex]
+    - min:
+      frames: true
+
+# Unified event names for web - same as old sl-event-kinetic
+- event: LeftPlotStart
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - import: TouchDown
+
+- event: LeftPlotEnd # This should be 2 second after TouchDown
+  where:
+    name: VH_L*
+  set: left
+  steps:
+    - import: PlotEnd
+
+- event: RightPlotStart
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - import: TouchDown
+
+- event: RightPlotEnd
+  where:
+    name: VH_R*
+  set: right
+  steps:
+    - import: PlotEnd
+
+###  END OF THE EVENT CODE ###

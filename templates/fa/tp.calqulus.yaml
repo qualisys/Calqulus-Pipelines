@@ -1,0 +1,1411 @@
+############
+## SPACES ##
+############
+
+- space: VirtualLab
+  alignWithSegment:
+    segment: Hips_model
+
+############
+## EVENTS ##
+############
+
+- event: LOFF_force
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - if: exists(LeftFootContact.events.off)
+      then: LeftFootContact.events.off
+      else: [[]]
+
+- event: ROFF_force
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - if: exists(RightFootContact.events.off)
+      then: RightFootContact.events.off
+      else: [[]]
+
+# Return an empty event when LOFF/ROFF absent. Trials without force skip this block.
+
+- template: /templates/events-kinetics.calqulus.yaml
+  where:
+    force: any
+
+- template: tp-events-kinematics.calqulus.yaml
+
+############
+## SERIES ##
+############
+
+- template: /templates/timeseries.calqulus.yaml
+
+
+################# TouchDown ##############
+
+# Left â€” Kinematics
+
+- parameter: Left Hip Angles_TouchDown_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Hip Angles@TouchDown
+
+- parameter: Left Knee Angles_TouchDown_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Knee Angles@TouchDown
+
+- parameter: Left Ankle Angles_TouchDown_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Ankle Angles@TouchDown
+
+- parameter: Left Foot Progression_TouchDown_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Foot Progression@TouchDown    
+
+- parameter: Left Pelvic Angles_TouchDown_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Pelvic Angles@TouchDown
+
+- parameter: Left Thorax Angles_TouchDown_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Thorax Angles@TouchDown
+
+- parameter: Left Thorax_Lab Angles_TouchDown_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Thorax_Lab Angles@TouchDown
+
+# Left â€” Kinetics â€” Moments
+
+- parameter: Left Hip Moment_TouchDown_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Hip Moment@TouchDown
+
+- parameter: Left Knee Moment_TouchDown_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Knee Moment@TouchDown
+
+- parameter: Left Ankle Moment_TouchDown_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Ankle Moment@TouchDown
+
+# Left â€” Kinetics â€” Powers 
+## This is not yet calculated ##
+
+- parameter: Left Hip Power_TouchDown_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Hip Power@TouchDown
+
+- parameter: Left Knee Power_TouchDown_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Knee Power@TouchDown
+
+- parameter: Left Ankle Power_TouchDown_TH_L  
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Ankle Power@TouchDown
+
+# Right â€” Kinematics
+
+- parameter: Right Hip Angles_TouchDown_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Hip Angles@TouchDown
+
+- parameter: Right Knee Angles_TouchDown_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Knee Angles@TouchDown
+
+- parameter: Right Ankle Angles_TouchDown_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Ankle Angles@TouchDown
+
+- parameter: Right Foot Progression_TouchDown_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Foot Progression@TouchDown
+
+- parameter: Right Pelvic Angles_TouchDown_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Pelvic Angles@TouchDown
+
+- parameter: Right Thorax Angles_TouchDown_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Thorax Angles@TouchDown
+
+- parameter: Right Thorax_Lab Angles_TouchDown_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Thorax_Lab Angles@TouchDown
+
+# Right â€” Kinetics â€” Moments
+
+- parameter: Right Hip Moment_TouchDown_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Hip Moment@TouchDown
+
+- parameter: Right Knee Moment_TouchDown_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Knee Moment@TouchDown
+
+- parameter: Right Ankle Moment_TouchDown_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Ankle Moment@TouchDown
+
+# Right â€” Kinetics â€” Powers
+
+- parameter: Right Hip Power_TouchDown_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Hip Power@TouchDown
+
+- parameter: Right Knee Power_TouchDown_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Knee Power@TouchDown
+
+- parameter: Right Ankle Power_TouchDown_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Ankle Power@TouchDown
+
+################# Max_knee_flex #################
+
+# Left â€” Kinematics
+
+- parameter: Left Hip Angles_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Hip Angles@Max_knee_flex
+
+- parameter: Left Knee Angles_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Knee Angles@Max_knee_flex
+
+- parameter: Left Ankle Angles_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Ankle Angles@Max_knee_flex
+
+- parameter: Left Foot Progression_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Foot Progression@Max_knee_flex
+
+- parameter: Left Pelvic Angles_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Pelvic Angles@Max_knee_flex
+
+- parameter: Left Thorax Angles_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Thorax Angles@Max_knee_flex
+
+- parameter: Left Thorax_Lab Angles_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: Left Thorax_Lab Angles@Max_knee_flex
+
+# Left â€” Kinetics â€” Moments
+
+- parameter: Left Hip Moment_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Hip Moment@Max_knee_flex
+
+- parameter: Left Knee Moment_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Knee Moment@Max_knee_flex
+
+- parameter: Left Ankle Moment_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Ankle Moment@Max_knee_flex
+
+    # Left â€” Kinetics â€” Powers
+
+- parameter: Left Hip Power_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Hip Power@Max_knee_flex
+
+- parameter: Left Knee Power_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Knee Power@Max_knee_flex
+
+- parameter: Left Ankle Power_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left Ankle Power@Max_knee_flex
+  
+# Left â€” Kinetics â€” GRF
+
+- parameter: Left GRF_max_knee_flex_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - import: Left GRF@Max_knee_flex
+
+# Right â€” Kinematics
+
+- parameter: Right Hip Angles_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Hip Angles@Max_knee_flex
+
+- parameter: Right Knee Angles_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Knee Angles@Max_knee_flex
+
+- parameter: Right Ankle Angles_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Ankle Angles@Max_knee_flex
+
+- parameter: Right Foot Progression_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Foot Progression@Max_knee_flex
+
+- parameter: Right Pelvic Angles_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Pelvic Angles@Max_knee_flex
+
+- parameter: Right Thorax Angles_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Thorax Angles@Max_knee_flex
+
+- parameter: Right Thorax_Lab Angles_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: Right Thorax_Lab Angles@Max_knee_flex   
+
+# Right â€” Kinetics â€” Moments
+
+- parameter: Right Hip Moment_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Hip Moment@Max_knee_flex
+
+- parameter: Right Knee Moment_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Knee Moment@Max_knee_flex
+
+- parameter: Right Ankle Moment_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Ankle Moment@Max_knee_flex
+
+# Right â€” Kinetics â€” Powers
+
+- parameter: Right Hip Power_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Hip Power@Max_knee_flex
+
+- parameter: Right Knee Power_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Knee Power@Max_knee_flex
+
+- parameter: Right Ankle Power_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right Ankle Power@Max_knee_flex    
+
+# Right â€” Kinetics â€” GRF
+
+- parameter: Right GRF_max_knee_flex_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - import: Right GRF@Max_knee_flex
+
+################# CHANGE #################
+# This calculates the change between TouchDown and Max_knee_flex
+
+# Left â€” Kinematics
+
+- parameter: Left Hip Angles_Change_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - subtract: [Left Hip Angles_max_knee_flex_TH_L, Left Hip Angles_TouchDown_TH_L]
+
+- parameter: Left Knee Angles_Change_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - subtract: [Left Knee Angles_max_knee_flex_TH_L, Left Knee Angles_TouchDown_TH_L]
+
+- parameter: Left Ankle Angles_Change_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - subtract: [Left Ankle Angles_max_knee_flex_TH_L, Left Ankle Angles_TouchDown_TH_L]
+
+- parameter: Left Foot Progression_Change_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - subtract: [Left Foot Progression_max_knee_flex_TH_L, Left Foot Progression_TouchDown_TH_L]
+
+- parameter: Left Pelvic Angles_Change_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - subtract: [Left Pelvic Angles_max_knee_flex_TH_L, Left Pelvic Angles_TouchDown_TH_L]
+
+- parameter: Left Thorax Angles_Change_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - subtract: [Left Thorax Angles_max_knee_flex_TH_L, Left Thorax Angles_TouchDown_TH_L]
+
+- parameter: Left Thorax_Lab Angles_Change_TH_L
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - subtract: [Left Thorax_Lab Angles_max_knee_flex_TH_L, Left Thorax_Lab Angles_TouchDown_TH_L]
+
+# Left â€” Kinetics â€” Moments
+
+- parameter: Left Hip Moment_Change_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - subtract: [Left Hip Moment_max_knee_flex_TH_L, Left Hip Moment_TouchDown_TH_L]
+
+- parameter: Left Knee Moment_Change_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - subtract: [Left Knee Moment_max_knee_flex_TH_L, Left Knee Moment_TouchDown_TH_L]
+
+- parameter: Left Ankle Moment_Change_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - subtract: [Left Ankle Moment_max_knee_flex_TH_L, Left Ankle Moment_TouchDown_TH_L]
+
+# Left â€” Kinetics â€” Powers
+
+- parameter: Left Hip Power_Change_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - subtract: [Left Hip Power_max_knee_flex_TH_L, Left Hip Power_TouchDown_TH_L]
+
+- parameter: Left Knee Power_Change_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - subtract: [Left Knee Power_max_knee_flex_TH_L, Left Knee Power_TouchDown_TH_L]
+
+- parameter: Left Ankle Power_Change_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - subtract: [Left Ankle Power_max_knee_flex_TH_L, Left Ankle Power_TouchDown_TH_L]
+
+# Right â€” Kinematics
+
+- parameter: Right Hip Angles_Change_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - subtract: [Right Hip Angles_max_knee_flex_TH_R, Right Hip Angles_TouchDown_TH_R]
+
+- parameter: Right Knee Angles_Change_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - subtract: [Right Knee Angles_max_knee_flex_TH_R, Right Knee Angles_TouchDown_TH_R]
+
+- parameter: Right Ankle Angles_Change_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - subtract: [Right Ankle Angles_max_knee_flex_TH_R, Right Ankle Angles_TouchDown_TH_R]
+
+- parameter: Right Foot Progression_Change_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - subtract: [Right Foot Progression_max_knee_flex_TH_R, Right Foot Progression_TouchDown_TH_R]
+
+- parameter: Right Pelvic Angles_Change_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - subtract: [Right Pelvic Angles_max_knee_flex_TH_R, Right Pelvic Angles_TouchDown_TH_R]
+
+- parameter: Right Thorax Angles_Change_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - subtract: [Right Thorax Angles_max_knee_flex_TH_R, Right Thorax Angles_TouchDown_TH_R]
+
+- parameter: Right Thorax_Lab Angles_Change_TH_R
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - subtract: [Right Thorax_Lab Angles_max_knee_flex_TH_R, Right Thorax_Lab Angles_TouchDown_TH_R]
+
+
+# Right â€” Kinetics â€” Moments
+
+- parameter: Right Hip Moment_Change_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - subtract: [Right Hip Moment_max_knee_flex_TH_R, Right Hip Moment_TouchDown_TH_R]
+
+- parameter: Right Knee Moment_Change_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - subtract: [Right Knee Moment_max_knee_flex_TH_R, Right Knee Moment_TouchDown_TH_R]
+
+- parameter: Right Ankle Moment_Change_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - subtract: [Right Ankle Moment_max_knee_flex_TH_R, Right Ankle Moment_TouchDown_TH_R]
+
+# Right â€” Kinetics â€” Powers
+
+- parameter: Right Hip Power_Change_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - subtract: [Right Hip Power_max_knee_flex_TH_R, Right Hip Power_TouchDown_TH_R]
+
+- parameter: Right Knee Power_Change_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - subtract: [Right Knee Power_max_knee_flex_TH_R, Right Knee Power_TouchDown_TH_R]
+
+- parameter: Right Ankle Power_Change_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - subtract: [Right Ankle Power_max_knee_flex_TH_R, Right Ankle Power_TouchDown_TH_R]    
+
+################# Moment Contribution #################
+# Calculation applied to the signal.x only
+
+# Contribution â€“ Left
+
+- parameter: MomentContri_SUM_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - add: [Left Hip Moment_max_knee_flex_TH_L.x, Left Knee Moment_max_knee_flex_TH_L.x, Left Ankle Moment_max_knee_flex_TH_L.x]
+
+- parameter: MomentContri_Hip_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - divide: [Left Hip Moment_max_knee_flex_TH_L.x, MomentContri_SUM_TH_L]
+    - multiply: [$prev, 100]
+
+- parameter: MomentContri_Knee_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - divide: [Left Knee Moment_max_knee_flex_TH_L.x, MomentContri_SUM_TH_L]
+    - multiply: [$prev, 100]
+
+- parameter: MomentContri_Ankle_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - divide: [Left Ankle Moment_max_knee_flex_TH_L.x, MomentContri_SUM_TH_L]
+    - multiply: [$prev, 100]
+
+# Contribution â€“ Right
+
+- parameter: MomentContri_SUM_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - add: [Right Hip Moment_max_knee_flex_TH_R.x, Right Knee Moment_max_knee_flex_TH_R.x, Right Ankle Moment_max_knee_flex_TH_R.x]
+
+- parameter: MomentContri_Hip_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - divide: [Right Hip Moment_max_knee_flex_TH_R.x, MomentContri_SUM_TH_R]
+    - multiply: [$prev, 100]
+
+- parameter: MomentContri_Knee_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - divide: [Right Knee Moment_max_knee_flex_TH_R.x, MomentContri_SUM_TH_R]
+    - multiply: [$prev, 100]
+
+- parameter: MomentContri_Ankle_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - divide: [Right Ankle Moment_max_knee_flex_TH_R.x, MomentContri_SUM_TH_R]
+    - multiply: [$prev, 100]
+
+
+################# MAX_GRF #################
+# One vertical peak per side over TouchDown to END_WA
+
+- parameter: Left GRF_max_TD_END_WA_TH_L
+  where:
+    name: TH_L*
+    force: left
+  set: left
+  steps:
+    - eventMask: [Left GRF.z, TouchDown, END_WA] 
+    - max:
+
+- parameter: Right GRF_max_TD_END_WA_TH_R
+  where:
+    name: TH_R*
+    force: right
+  set: right
+  steps:
+    - eventMask: [Right GRF.z, TouchDown, END_WA]
+    - max:
+
+# .z is removed in accordance with other pipelines, which will return all components of the vector, but only the vertical component is required #
+
+################# Symmetry Index ################# 
+# 200*(R-L)/(R+L)
+
+# TouchDown - seven XYZ signals
+# Angles & Moments â€“ Hip â€“ Knee â€“ Ankle
+
+- parameter: Hip_Angles_SYM_TouchDown_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Hip Angles_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Hip Angles_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Angles_SYM_TouchDown_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Hip Angles_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Hip Angles_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Angles_SYM_TouchDown_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Hip_Angles_SYM_TouchDown_mean_TH_R, Hip_Angles_SYM_TouchDown_mean_TH_L]
+
+    - add: [Hip_Angles_SYM_TouchDown_mean_TH_R, Hip_Angles_SYM_TouchDown_mean_TH_L]
+
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Hip_Moments_SYM_TouchDown_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Hip Moment_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Hip Moment_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Moments_SYM_TouchDown_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Hip Moment_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Hip Moment_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Moments_SYM_TouchDown_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Hip_Moments_SYM_TouchDown_mean_TH_R, Hip_Moments_SYM_TouchDown_mean_TH_L]
+
+    - add: [Hip_Moments_SYM_TouchDown_mean_TH_R, Hip_Moments_SYM_TouchDown_mean_TH_L]
+
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Knee_Angles_SYM_TouchDown_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Knee Angles_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Knee Angles_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Angles_SYM_TouchDown_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Knee Angles_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Knee Angles_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Angles_SYM_TouchDown_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Knee_Angles_SYM_TouchDown_mean_TH_R, Knee_Angles_SYM_TouchDown_mean_TH_L]
+
+    - add: [Knee_Angles_SYM_TouchDown_mean_TH_R, Knee_Angles_SYM_TouchDown_mean_TH_L]
+
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Knee_Moments_SYM_TouchDown_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Knee Moment_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Knee Moment_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Moments_SYM_TouchDown_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Knee Moment_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Knee Moment_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Moments_SYM_TouchDown_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Knee_Moments_SYM_TouchDown_mean_TH_R, Knee_Moments_SYM_TouchDown_mean_TH_L]
+
+    - add: [Knee_Moments_SYM_TouchDown_mean_TH_R, Knee_Moments_SYM_TouchDown_mean_TH_L]
+
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Ankle_Angles_SYM_TouchDown_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Ankle Angles_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Ankle Angles_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Angles_SYM_TouchDown_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Ankle Angles_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Ankle Angles_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Angles_SYM_TouchDown_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Ankle_Angles_SYM_TouchDown_mean_TH_R, Ankle_Angles_SYM_TouchDown_mean_TH_L]
+    
+    - add: [Ankle_Angles_SYM_TouchDown_mean_TH_R, Ankle_Angles_SYM_TouchDown_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Ankle_Moments_SYM_TouchDown_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Ankle Moment_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Ankle Moment_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Moments_SYM_TouchDown_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Ankle Moment_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Ankle Moment_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Moment_SYM_TouchDown_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Ankle_Moments_SYM_TouchDown_mean_TH_R, Ankle_Moments_SYM_TouchDown_mean_TH_L]
+    
+    - add: [Ankle_Moments_SYM_TouchDown_mean_TH_R, Ankle_Moments_SYM_TouchDown_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: ThoraxWrtLab_SYM_TouchDown_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Thorax_Lab Angles_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Thorax_Lab Angles_TouchDown_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: ThoraxWrtLab_SYM_TouchDown_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Thorax_Lab Angles_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Thorax_Lab Angles_TouchDown_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: ThoraxWrtLab_SYM_TouchDown_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [ThoraxWrtLab_SYM_TouchDown_mean_TH_R, ThoraxWrtLab_SYM_TouchDown_mean_TH_L]
+    
+    - add: [ThoraxWrtLab_SYM_TouchDown_mean_TH_R, ThoraxWrtLab_SYM_TouchDown_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+# max_knee_flex - seven XYZ signals
+# Angles & Moments â€“ Hip â€“ Knee â€“ Ankle
+
+- parameter: Hip_Angles_SYM_max_knee_flex_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Hip Angles_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Hip Angles_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Angles_SYM_max_knee_flex_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Hip Angles_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Hip Angles_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Angles_SYM_max_knee_flex_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Hip_Angles_SYM_max_knee_flex_mean_TH_R, Hip_Angles_SYM_max_knee_flex_mean_TH_L]
+    
+    - add: [Hip_Angles_SYM_max_knee_flex_mean_TH_R, Hip_Angles_SYM_max_knee_flex_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Hip_Moments_SYM_max_knee_flex_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Hip Moment_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Hip Moment_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Moments_SYM_max_knee_flex_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Hip Moment_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Hip Moment_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Moments_SYM_max_knee_flex_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Hip_Moments_SYM_max_knee_flex_mean_TH_R, Hip_Moments_SYM_max_knee_flex_mean_TH_L]
+    
+    - add: [Hip_Moments_SYM_max_knee_flex_mean_TH_R, Hip_Moments_SYM_max_knee_flex_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Knee_Angles_SYM_max_knee_flex_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Knee Angles_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Knee Angles_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Angles_SYM_max_knee_flex_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Knee Angles_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Knee Angles_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Angles_SYM_max_knee_flex_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Knee_Angles_SYM_max_knee_flex_mean_TH_R, Knee_Angles_SYM_max_knee_flex_mean_TH_L]
+    
+    - add: [Knee_Angles_SYM_max_knee_flex_mean_TH_R, Knee_Angles_SYM_max_knee_flex_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Knee_Moments_SYM_max_knee_flex_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Knee Moment_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Knee Moment_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Moments_SYM_max_knee_flex_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Knee Moment_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Knee Moment_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Moments_SYM_max_knee_flex_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Knee_Moments_SYM_max_knee_flex_mean_TH_R, Knee_Moments_SYM_max_knee_flex_mean_TH_L]
+    
+    - add: [Knee_Moments_SYM_max_knee_flex_mean_TH_R, Knee_Moments_SYM_max_knee_flex_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Ankle_Angles_SYM_max_knee_flex_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Ankle Angles_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Ankle Angles_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Angles_SYM_max_knee_flex_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Ankle Angles_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Ankle Angles_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Angles_SYM_max_knee_flex_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Ankle_Angles_SYM_max_knee_flex_mean_TH_R, Ankle_Angles_SYM_max_knee_flex_mean_TH_L]
+    
+    - add: [Ankle_Angles_SYM_max_knee_flex_mean_TH_R, Ankle_Angles_SYM_max_knee_flex_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Ankle_Moments_SYM_max_knee_flex_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Ankle Moment_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Ankle Moment_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Moments_SYM_max_knee_flex_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Ankle Moment_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Ankle Moment_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Moments_SYM_max_knee_flex_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Ankle_Moments_SYM_max_knee_flex_mean_TH_R, Ankle_Moments_SYM_max_knee_flex_mean_TH_L]
+    
+    - add: [Ankle_Moments_SYM_max_knee_flex_mean_TH_R, Ankle_Moments_SYM_max_knee_flex_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: ThoraxWrtLab_SYM_max_knee_flex_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Thorax_Lab Angles_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Thorax_Lab Angles_max_knee_flex_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: ThoraxWrtLab_SYM_max_knee_flex_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Thorax_Lab Angles_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Thorax_Lab Angles_max_knee_flex_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: ThoraxWrtLab_SYM_max_knee_flex_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [ThoraxWrtLab_SYM_max_knee_flex_mean_TH_R, ThoraxWrtLab_SYM_max_knee_flex_mean_TH_L]
+    
+    - add: [ThoraxWrtLab_SYM_max_knee_flex_mean_TH_R, ThoraxWrtLab_SYM_max_knee_flex_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+# Change - seven XYZ signals
+# Angles & Moments â€“ Hip â€“ Knee â€“ Ankle
+
+- parameter: Hip_Angles_SYM_Change_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Hip Angles_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Hip Angles_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Angles_SYM_Change_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Hip Angles_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Hip Angles_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Angles_SYM_Change_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Hip_Angles_SYM_Change_mean_TH_R, Hip_Angles_SYM_Change_mean_TH_L]
+    
+    - add: [Hip_Angles_SYM_Change_mean_TH_R, Hip_Angles_SYM_Change_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Hip_Moments_SYM_Change_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Hip Moment_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Hip Moment_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Moments_SYM_Change_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Hip Moment_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Hip Moment_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Hip_Moments_SYM_Change_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Hip_Moments_SYM_Change_mean_TH_R, Hip_Moments_SYM_Change_mean_TH_L]
+    
+    - add: [Hip_Moments_SYM_Change_mean_TH_R, Hip_Moments_SYM_Change_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Knee_Angles_SYM_Change_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Knee Angles_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Knee Angles_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Angles_SYM_Change_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Knee Angles_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Knee Angles_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Angles_SYM_Change_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Knee_Angles_SYM_Change_mean_TH_R, Knee_Angles_SYM_Change_mean_TH_L]
+    
+    - add: [Knee_Angles_SYM_Change_mean_TH_R, Knee_Angles_SYM_Change_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Knee_Moments_SYM_Change_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Knee Moment_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Knee Moment_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Moments_SYM_Change_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Knee Moment_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Knee Moment_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Knee_Moments_SYM_Change_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Knee_Moments_SYM_Change_mean_TH_R, Knee_Moments_SYM_Change_mean_TH_L]
+    
+    - add: [Knee_Moments_SYM_Change_mean_TH_R, Knee_Moments_SYM_Change_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Ankle_Angles_SYM_Change_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Ankle Angles_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Ankle Angles_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Angles_SYM_Change_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Ankle Angles_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Ankle Angles_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Angles_SYM_Change_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Ankle_Angles_SYM_Change_mean_TH_R, Ankle_Angles_SYM_Change_mean_TH_L]
+   
+    - add: [Ankle_Angles_SYM_Change_mean_TH_R, Ankle_Angles_SYM_Change_mean_TH_L]
+   
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: Ankle_Moments_SYM_Change_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Ankle Moment_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Ankle Moment_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Moments_SYM_Change_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Ankle Moment_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Ankle Moment_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: Ankle_Moments_SYM_Change_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [Ankle_Moments_SYM_Change_mean_TH_R, Ankle_Moments_SYM_Change_mean_TH_L]
+    
+    - add: [Ankle_Moments_SYM_Change_mean_TH_R, Ankle_Moments_SYM_Change_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: ThoraxWrtLab_SYM_Change_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [Left Thorax_Lab Angles_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, Left Thorax_Lab Angles_Change_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: ThoraxWrtLab_SYM_Change_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [Right Thorax_Lab Angles_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, Right Thorax_Lab Angles_Change_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: ThoraxWrtLab_SYM_Change_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [ThoraxWrtLab_SYM_Change_mean_TH_R, ThoraxWrtLab_SYM_Change_mean_TH_L]
+    
+    - add: [ThoraxWrtLab_SYM_Change_mean_TH_R, ThoraxWrtLab_SYM_Change_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+# Moment Contribution - three signals
+# Hip â€“ Knee â€“ Ankle
+
+- parameter: MomentContri_Hip_SYM_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [MomentContri_Hip_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, MomentContri_Hip_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: MomentContri_Hip_SYM_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [MomentContri_Hip_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, MomentContri_Hip_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: MomentContribution_Hip_SYM_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [MomentContri_Hip_SYM_mean_TH_R, MomentContri_Hip_SYM_mean_TH_L]
+    
+    - add: [MomentContri_Hip_SYM_mean_TH_R, MomentContri_Hip_SYM_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: MomentContri_Knee_SYM_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [MomentContri_Knee_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, MomentContri_Knee_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: MomentContri_Knee_SYM_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [MomentContri_Knee_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, MomentContri_Knee_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: MomentContribution_Knee_SYM_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [MomentContri_Knee_SYM_mean_TH_R, MomentContri_Knee_SYM_mean_TH_L]
+    
+    - add: [MomentContri_Knee_SYM_mean_TH_R, MomentContri_Knee_SYM_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+- parameter: MomentContri_Ankle_SYM_mean_TH_L
+  where:
+    name: TH*
+  steps:
+    - add: [MomentContri_Ankle_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=first, MomentContri_Ankle_TH_L?name=Lab%20Defined%20-%20Triple%20Hop%20Left*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: MomentContri_Ankle_SYM_mean_TH_R
+  where:
+    name: TH*
+  steps:
+    - add: [MomentContri_Ankle_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=first, MomentContri_Ankle_TH_R?name=Lab%20Defined%20-%20Triple%20Hop%20Right*&index=last]
+    - divide: [$prev, 2]
+
+- parameter: MomentContribution_Ankle_SYM_TH
+  where:
+    name: TH*
+  steps:
+    - subtract: [MomentContri_Ankle_SYM_mean_TH_R, MomentContri_Ankle_SYM_mean_TH_L]
+    
+    - add: [MomentContri_Ankle_SYM_mean_TH_R, MomentContri_Ankle_SYM_mean_TH_L]
+    
+    - divide: [$prev(2), $prev]
+    - multiply: [$prev, 200]
+
+

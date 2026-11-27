@@ -53,6 +53,18 @@
   where:
     name: Lunge*
 
+- template: templates/fa/mh.calqulus.yaml
+  where:
+    name: MH*
+
+- template: templates/fa/vh.calqulus.yaml
+  where:
+    name: VH*
+
+- template: templates/fa/th.calqulus.yaml
+  where:
+    name: TH*
+
 - template: templates/generic/generic.calqulus.yaml
   where:
     fields: 

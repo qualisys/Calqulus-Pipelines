@@ -1,0 +1,420 @@
+############
+## EVENTS ##
+############
+
+- event: BOF
+  steps:
+    - import: [0]
+
+- event: EOF
+  steps:
+    - subtract: [$length, 1] 
+
+#LEFT
+# Left: final pelvis vertical velocity minimum
+- event: TouchDown_kinematics_Pelvis_candidates
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+- event: TouchDown_kinematics_Pelvis
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - eventMask: [TouchDown_kinematics_Pelvis_candidates, BOF, EOF]
+      keep: -1
+    - add: [$prev, 1]
+
+# Left: final foot distal end vertical velocity minimum
+- event: TouchDown_kinematics_DisFoot_candidates
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - negate: LFT_DistEndVel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+- event: TouchDown_kinematics_DisFoot
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - eventMask: [TouchDown_kinematics_DisFoot_candidates, BOF, EOF]
+      keep: -1
+    - add: [$prev, 1]
+
+- event: TouchDown_kinematics
+  where:
+    name: TH_L*
+  set: left
+  steps:
+      # If both candidate events are empty, the result stays empty.
+  - if: empty(TouchDown_kinematics_DisFoot) || (!empty(TouchDown_kinematics_Pelvis) &&  TouchDown_kinematics_Pelvis > TouchDown_kinematics_DisFoot)
+    then: TouchDown_kinematics_Pelvis
+    else: TouchDown_kinematics_DisFoot
+  
+- event: TouchDown
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - if: empty(LON_force)
+      then: TouchDown_kinematics
+      else: LON_force
+    - import: $prev@1
+    # - if: empty(LON_force)
+    #   then: TouchDown_kinematics
+    #   else: LON_force
+    # - import: $prev@1
+    # # As an alternative if running without FP
+
+- event: END_WA
+  where:
+    name: TH_L*
+  steps:
+    - multiply: [1, $framerate]
+    - add: [TouchDown, $prev]
+      output: boundary
+    - if: EOF > boundary
+      then: boundary
+      else: EOF
+# Project definition: END_WA = TouchDown + 1 second, capped at EOF; available with or without force data.
+    # Original code to looking for local min Fz
+    # - eventMask: [Left GRF.z, TouchDown, EOF]
+    # - peakFinder:
+    # - import: $prev@1
+    
+- event: Max_knee_flex
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - eventMask: [Left Knee Angles.x, TouchDown, END_WA]
+    - max:
+      frames: true
+
+# RIGHT 
+# Right: final pelvis vertical velocity minimum
+- event: TouchDown_kinematics_Pelvis_candidates
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - negate: PelvisCGPos_vel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+- event: TouchDown_kinematics_Pelvis
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - eventMask: [TouchDown_kinematics_Pelvis_candidates, BOF, EOF]
+      keep: -1
+    - add: [$prev, 1]
+
+# Right: final foot distal end vertical velocity minimum
+- event: TouchDown_kinematics_DisFoot_candidates
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - negate: RFT_DistEndVel.z
+    - lowpass:
+    - peakFinder:
+      height: 1
+      distance: 20
+
+- event: TouchDown_kinematics_DisFoot
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - eventMask: [TouchDown_kinematics_DisFoot_candidates, BOF, EOF]
+      keep: -1
+    - add: [$prev, 1]
+
+- event: TouchDown_kinematics
+  where:
+    name: TH_R*
+  set: right
+  steps:
+  - if: empty(TouchDown_kinematics_DisFoot) || (!empty(TouchDown_kinematics_Pelvis) &&  TouchDown_kinematics_Pelvis > TouchDown_kinematics_DisFoot)
+    then: TouchDown_kinematics_Pelvis
+    else: TouchDown_kinematics_DisFoot
+
+- event: TouchDown
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - if: empty(RON_force)
+      then: TouchDown_kinematics
+      else: RON_force
+    - import: $prev@1
+
+- event: END_WA
+  where:
+    name: TH_R*
+  steps:
+    - multiply: [1, $framerate]
+    - add: [TouchDown, $prev]
+      output: boundary
+    - if: EOF > boundary
+      then: boundary
+      else: EOF
+#     - eventMask: [Right GRF.z, TouchDown, EOF]
+#     - peakFinder:
+#     - import: $prev@1
+
+- event: Max_knee_flex
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - eventMask: [Right Knee Angles.x, TouchDown, END_WA]
+    - max:
+      frames: true
+
+# Final landing plot window
+- event: PlotEnd
+  where:
+    name: TH*
+  steps:
+    - multiply: [$framerate, 2]
+    - add: [$prev, TouchDown]
+      export: end_fr
+    - if: EOF > end_fr
+      then: end_fr
+      else: EOF
+
+## LOOKING FOR TAKE OFF EVENT - THIRD JUMP TAKEOFF
+# Order of events: TouchDown>TakeOff_3>TouchDown_2>TakeOff_2>TouchDown_1>TakeOff_1>BOF
+
+# Left: 
+- event: TakeOff_kinematics_candidates
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - lowpass: LFT_DistEndVel.z 
+    - peakFinder:
+      height: 0.5      
+      distance: 10     
+
+# Not considering the where previous 2 jump are exist; Looking for last takeoff before FP contact
+- event: TakeOff 
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - eventMask: [TakeOff_kinematics_candidates, BOF, TouchDown]
+      keep: -1 
+
+# Right
+- event: TakeOff_kinematics_candidates
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - lowpass: RFT_DistEndVel.z 
+    - peakFinder:
+      height: 0.5      
+      distance: 10     
+
+- event: TakeOff
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - eventMask: [TakeOff_kinematics_candidates, BOF, TouchDown]
+      keep: -1
+
+## Events for metrics calculation
+- event: COM_MIN
+  where:
+    name: TH*
+  steps:
+    - eventMask: [Hips_model.z, TouchDown, Max_knee_flex]
+    - min:
+      frames: true
+
+
+        
+# Unified event names for web - same as old sl-event-kinetic
+- event: LeftPlotStart
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: TouchDown
+
+- event: LeftPlotEnd # This should be 2 second after TouchDown
+  where:
+    name: TH_L*
+  set: left
+  steps:
+    - import: PlotEnd
+
+- event: RightPlotStart
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: TouchDown
+
+- event: RightPlotEnd
+  where:
+    name: TH_R*
+  set: right
+  steps:
+    - import: PlotEnd
+
+###  END OF THE EVENT CODE ###
+
+
+# Import of peak power events from kinetic analysis
+# Need to varify if this should go to metrics yaml; Also whether the outcome is joint power or total power
+# - event: Peak_eccentric_power
+#   where:
+#     name: TH_L*
+#     force: left
+#   steps:
+#     - eventMask: [Left Power.z, LeftPlotStart, COM_MIN] # COM_MIN almost the same frame as to Max_knee_flex
+#     - min:
+#         frames: true
+
+# - event: Peak_concentric_power
+#   where:
+#     name: TH_L*
+#     force: left
+#   steps:
+#     - eventMask: [Left Power.z, COM_MIN, PlotEnd]
+#     - max:
+#         frames: true
+
+# - event: Peak_eccentric_power
+#   where:
+#     name: TH_R*
+#     force: right
+#   steps:
+#     - eventMask: [Right Power.z, RightPlotStart, COM_MIN]
+#     - min:
+#         frames: true
+
+# - event: Peak_concentric_power
+#   where:
+#     name: TH_R*
+#     force: right
+#   steps:
+#     - eventMask: [Right Power.z, COM_MIN, PlotEnd]
+#     - max:
+#         frames: true    
+
+# # Time to stabilization --> time from TouchDown to 1 seconds within 5% of BW in seconds
+# # Left
+# - event: Stabilization_last_peak_above_5pct
+#   where:
+#     name: TH_L*
+#     force: left
+#   steps:
+#     - peakFinder: Left GRF.z
+#       height: 1.05
+#     - eventMask: [$prev, TouchDown, End_WA]
+#       keep: -1 # Looking at the last value on the trial.
+
+# - event: Stabilization_last_peak_below_5pct
+#   where:
+#     name: TH_L*
+#     force: left
+#   steps:
+#     - negate: Left GRF.z #ç¿»è½¬ä¿¡å·æ‰¾åˆ°GRDä½ŽäºŽ0.95BWçš„è°·å€¼
+#     - peakFinder: $prev
+#       height: -0.95
+#     - eventMask: [$prev, TouchDown, End_WA]
+#       keep: -1
+
+# - event: Stabilization_end
+#   where:
+#     name: TH_L*
+#     force: left
+#   steps:
+#     - threshold: Left GRF.z
+#       value: 0.95
+#       direction: up
+#     - eventMask: [$prev, Stabilization_last_peak_below_5pct, End_WA]
+#       output: going_up
+#     - threshold: Left GRF.z
+#       value: 1.05
+#       direction: down
+#     - eventMask: [$prev, Stabilization_last_peak_above_5pct, End_WA]
+#       output: going_down
+
+#     - if: Stabilization_last_peak_below_5pct > Stabilization_last_peak_above_5pct
+#       then: going_up
+#       else: going_down
+
+# # Right
+# - event: Stabilization_last_peak_above_5pct
+#   where:
+#     name: TH_R*
+#     force: right
+#   steps:
+#     - peakFinder: Right GRF.z
+#       height: 1.05
+#     - eventMask: [$prev, TouchDown, End_WA]
+#       keep: -1 # Looking at the last value on the trial.
+
+# - event: Stabilization_last_peak_below_5pct
+#   where:
+#     name: TH_R*
+#     force: right
+#   steps:
+#     - negate: Right GRF.z #ç¿»è½¬ä¿¡å·æ‰¾åˆ°GRDä½ŽäºŽ0.95BWçš„è°·å€¼
+#     - peakFinder: $prev
+#       height: -0.95
+#     - eventMask: [$prev, TouchDown, End_WA]
+#       keep: -1
+
+# - event: Stabilization_end
+#   where:
+#     name: TH_R*
+#     force: right
+#   steps:
+#     - threshold: Right GRF.z
+#       value: 0.95
+#       direction: up
+#     - eventMask: [$prev, Stabilization_last_peak_below_5pct, End_WA]
+#       output: going_up
+#     - threshold: Right GRF.z
+#       value: 1.05
+#       direction: down
+#     - eventMask: [$prev, Stabilization_last_peak_above_5pct, End_WA]
+#       output: going_down
+
+#     - if: Stabilization_last_peak_below_5pct > Stabilization_last_peak_above_5pct
+#       then: going_up
+#       else: going_down
+
+
+
+
+
+
+
+
+
+
+
