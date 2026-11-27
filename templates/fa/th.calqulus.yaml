@@ -36,7 +36,7 @@
   where:
     force: any
 
-- template: tp-events-kinematics.calqulus.yaml
+- template: th-events-kinematics.calqulus.yaml
 
 ############
 ## SERIES ##
